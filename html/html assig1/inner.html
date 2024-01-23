@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/inner.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="icon" href="images/favicon.ico">
+    <title>Analysis</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-xxl bg-white">
+
+
+        <div class="menubar">
+            <img src="images\menu-bar.svg" alt="menubar" width="29px" height="18px" onclick="sidebar()">
+            <img src="images\logo.svg" alt="logo" width="142px" height="30px">
+        </div>
+
+        <div class="searchicon">
+            <div><img src="images\search-icon.svg" alt="search icon" width="16px" height="16px"> </div>
+            <div>
+                <p class="s">Search</p>
+            </div>
+        </div>
+
+        <div class="name">
+            <img src="images\notification-icon.svg" alt="notification icon" width="22px" height="21px">
+            <img src="images\profile.png" alt="profile" width="44px" height="44px">
+            <p>John Doe</p>
+            <img src="images\downward-arrow.svg" alt="arrow" width="10px" height="16px">
+        </div>
+        
+    </nav>
+
+    <!-- </header> -->
+    <div class="content">
+        <div class="d-none d-lg-flex flex-column bg-white"
+            style="width: 242px; justify-content: flex-start; padding-left: 10px;" id="sidebarID">
+            <!-- <div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel"> -->
+            <div class="das">
+                <img src="images\dashboard-active.svg" alt="dashboard-active" width="15px" height="15px">
+                dashboard
+            </div>
+
+            <div class="das">
+                <img src="images\graph-default.svg" alt="graph default" width="19px" height="18px">
+                <a href="dashboard.html">Analysis</a>
+            </div>
+
+
+            <div class="das">
+                <img src="images\inbox-default.svg" alt="inbox" width="15px" height="15px">
+                Inbox
+            </div>
+
+            <div class="das">
+                <img src="images\clock-default.svg" alt="clock" width="16px" height="16px">
+                History
+            </div>
+
+            <div class="das">
+                <img src="images\user-default.svg" alt="user-default" width="15px" height="15px">
+                User
+            </div>
+
+            <div class="das">
+                <img src="images\maintenance-default.svg" alt="main-def" width="13px" height="18px">
+                Maintainence
+            </div>
+
+
+            <div class="das">
+                <img src="images\setting-default.svg" alt="setting-def" width="17px" height="18px">
+                setting
+            </div>
+        </div>
+        <div class="cont">
+            <h1 class="h">Analysis</h1>
+            <div class="contentform">
+                <div class="he"><b>One Column</b></div>
+
+                <form action="">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+                            <div class="col1">
+                                <select class="form-select">
+                                    <option select>Dropdown</option>
+                                    <option 1>1</option>
+                                    <option 2>2</option>
+                                    <option 3>3</option>
+                                </select>
+                            </div>
+                            <div class="col1">
+                                <input class="form-control" type="textarea" placeholder="Multiple lines"
+                                    line-height:10;>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="he"><b>Two Column</b></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+                            <div class="col1">
+                                <input class="form-control" type="password" placeholder="password">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+                            <div class="col1">
+                                <select class="form-select">
+                                    <option select>Dropdown</option>
+                                    <option 1>1</option>
+                                    <option 2>2</option>
+                                    <option 3>3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="he"><b>Three Column</b></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="he"><b>Four Column</b></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                            <div class="col1">
+                                <input class="form-control" type="text" placeholder="Name">
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                            <div class="col1">
+                                <select class="form-control">
+                                    <option select>Dropdown</option>
+                                    <option 1>1</option>
+                                    <option 2>2</option>
+                                    <option 3>3</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="he"><b>Other Design Elements</b></div>
+                    <div class="hee">File upload</div>
+                    <div class="mfile">
+                        <div class="file">
+                            <div class="fimg">
+                                <img src="images/cloud-upload-icon.svg" alt="">
+                            </div>
+                            <div class="msg">
+                                upload
+                            </div>
+
+                        </div>
+                        <p class="f">no item selected</p>
+                    </div>
+                    <div class="he"><b>Radio button</b></div>
+                    <div class="radiobn">
+                        <div class="rad">
+                            <input type="radio">
+                            option1
+                        </div>
+                        <div class="rad">
+                            <input type="radio">
+                            option2
+                        </div>
+                    </div>
+                    <div class="he"><b>checkbox</b></div>
+                    <div class="radiobn">
+                        <div class="rad">
+                            <input type="checkbox">
+                            option1
+                        </div>
+                        <div class="rad">
+                            <input type="checkbox">
+                            option2
+                        </div>
+                    </div>
+                    <div class="he"><b>Snackbar</b></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                            <div class="pink">
+                                <div> <img src="images/error-icon.svg" alt="" width="44px"> </div>
+                                <div>this is a error message</div>
+                            </div>
+                            <div class="yellow">
+                                <div> <img src="images/warning-icon.svg" alt="" width="44px"> </div>
+                                <div>this is a warning message</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                            <div class="blue">
+                                <div> <img src="images/info-icon.svg" alt="" width="44px"> </div>
+                                <div>this is a information message</div>
+                            </div>
+                            <div class="green">
+                                <div> <img src="images/success-icon.svg" alt="" width="44px"> </div>
+                                <div>this is a success message</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="he"><b>call to action</b></div>
+                    <div class="bt">
+                        <div class="bt1">
+                            <div>Primary</div>
+                        </div>
+                        <div class="bt2">
+                            <div>Secondary</div>
+                        </div>
+                    </div>
+
+                    <div class="he"><b>Tabs</b></div>
+                    <div class="tab">
+                        <div>Tab1</div>
+                        <div class="te">Tab2</div>
+                        <div class="te">Tab3</div>
+                    </div>
+                    <hr>
+                    <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets containing</div>
+
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+    <script src="js/custom.js"></script>
+</body>
+
+</html>

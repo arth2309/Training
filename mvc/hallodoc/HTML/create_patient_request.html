@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/create_patient_request.css">
+    <link rel="stylesheet" href="CSS/international-telephone-input.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myModal").modal('show');
+        });
+    </script>
+    
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+              <img src="images/Screenshot 2024-01-19 160841.png" alt="alert">
+              <div class="h1">Information</div>
+            <div style="text-align: left;">While submitting a request you must provide the correct information about the patient or the resposibly party. 
+                Failure to provide the correct email and phone will delay service or be declined.  </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="ct ">
+        <div class="shadow  bg-body-tertiary rounded">
+            <header>
+                <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 60px;">
+                </div>
+                <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme" onclick="myFunction()"></div>
+            </header>
+        </div>
+
+        <div id="back" class="back">
+           <a href="Submit_request.html" style="text-decoration: none;"> &lt; Back</a></div>
+                <div class="mainct shadow">
+                    <form action="">
+                        <p class="h4 ">Patient information</p>
+                        <div class="row ">
+                            <div class="col">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Enter brief details of symptons(optional)"></textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="first name">
+                            </div>
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="last name">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="col-md-12 col-lg-6 wt"></div>
+                        </div>
+                        <p class="h4 vt">Patient Contact information</p>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 wt">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Enter email">
+                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                        anyone else.</small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="phone">
+                            </div>
+                        </div>
+                        <p class="h4 vt">Patient Location</p>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control " placeholder="Street">
+                            </div>
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="city">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="state">
+                            </div>
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="zip code">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 wt">
+                                <input type="text" class="form-control" placeholder="Room#/Suite(optional)">
+                            </div>
+                            <div class="col-md-12 col-lg-6 wt">
+
+                            </div>
+                        </div>
+                        <p class="h4 vt">(optional) add photo or documents</p>
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="inputGroupFile02">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                        <div class="mbt wt">
+                            <div class="bt">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Submit
+                                  </button>
+                                <button type="button" class="btn btn-outline-info">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+                <div class="t">
+                <div class="policy">Terms and conditions privacy policy</div>
+            </div>
+
+                </div>
+                
+
+</body>
+
+</html>

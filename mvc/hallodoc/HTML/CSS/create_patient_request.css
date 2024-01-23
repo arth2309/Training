@@ -1,0 +1,134 @@
+body
+{
+    background-color: #fafafa;
+}
+
+.ct
+{
+    height: 100vh;
+    justify-content: space-between;
+    background-color: #fafafa;
+}
+
+header
+{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    
+}
+
+.theme
+{
+    
+    border: 1px solid #00B9E1;
+    border-radius: 1px;
+    opacity: 1;
+    align-items: center;
+    text-align: center;
+    height: 25px;
+    
+   
+}
+
+.img1
+{
+    height: 60px;
+}
+
+#back
+{
+    
+    color: rgb(35, 150, 150);
+    border-radius: 5px;
+    opacity: 1;
+    border: 1px solid #00B9E1;
+    width:50px;
+}
+
+.back
+{
+    margin-left: auto;
+    margin-right: 20%;
+    margin-top: 12px;
+}
+
+.mainct
+{
+    background-color: white;
+    width: 60%;
+    margin-left: 20%;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 12px;
+    margin-top: 12px;
+}
+
+.wt
+{
+    margin-top: 12px;
+}
+
+.mbt
+{
+    display: flex;
+}
+
+.bt
+{
+    margin-left: auto;
+}
+
+
+.policy
+{
+    margin-left: auto;
+    padding-right: 10px;
+}
+
+@media only screen and (max-width:993px)
+{
+
+    .ct
+    {
+        height: 100%;
+    }
+    .mainct
+    {
+           width: 90vw;
+           margin-left: 5%;
+           font-size: x-small;
+
+        }
+        .back
+        {
+            width: 100vw;
+            margin-right: 5%;
+        }
+    }
+
+    .vt
+    {
+        margin-top: 20px;
+    }
+
+.t
+{
+    padding-top: 6%;
+    text-align: right;
+}
+
+.policy
+{
+    background-color: black;
+    color:white;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+  }
+
+

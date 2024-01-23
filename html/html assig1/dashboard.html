@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css\dashboard.css">
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <link rel="icon" href="images/favicon.ico">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <div class="menumark">
+            <img src="images\menu-bar.svg" alt="menubar" width="29px"
+                height="18px" onclick="sidebar()">
+        </div>
+
+        <div class="logo">
+            <img src="images\logo.svg" alt="logo" width="142px" height="30px">
+        </div>
+
+        <div class="searchicon">
+            <img src="images\search-icon.svg" alt="search icon" width="16px"
+                height="16px">
+        </div>
+
+        <div class="search">
+            <p>Search</p>
+        </div>
+
+
+        <div class="he3">
+            <div class="notification">
+                <img src="images\notification-icon.svg" alt="notification icon"
+                    width="22px" height="21px">
+            </div>
+
+            <div class="profile">
+                <img src="images\profile.png" alt="profile" width="44px"
+                    height="44px">
+            </div>
+
+            <div class="name">
+                <p>John Doe</p>
+            </div>
+
+            <div class="down-arrow">
+                <img src="images\downward-arrow.svg" alt="arrow" width="10px"
+                    height="16px">
+            </div>
+        </div>
+
+    </header>
+
+    <div class="content">
+        <div class="d-none d-lg-flex flex-column bg-white" style="width: 242px; justify-content: flex-start; padding-left: 10px;" id="sidebarID">
+            <div class="das">
+                <img src="images\dashboard-active.svg" alt="dashboard-active"
+                    width="15px" height="15px" >
+                <a href="inner.html">dashboard</a>
+            </div>
+
+            <div class="das">
+                <img src="images\graph-default.svg" alt="graph default"
+                    width="19px" height="18px">
+                Analysis
+            </div>
+
+
+            <div class="das">
+                <img src="images\inbox-default.svg" alt="inbox" width="15px"
+                    height="15px">
+                Inbox
+            </div>
+
+            <div class="das">
+                <img src="images\clock-default.svg" alt="clock" width="16px"
+                    height="16px">
+                History
+            </div>
+
+            <div class="das">
+                <img src="images\user-default.svg" alt="user-default" width="15px"
+                    height="15px">
+                User
+            </div>
+
+            <div class="das">
+                <img src="images\maintenance-default.svg" alt="main-def"
+                    width="13px" height="18px">
+                Maintainence
+            </div>
+
+
+            <div class="das">
+                <img src="images\setting-default.svg" alt="setting-def"
+                    width="17px" height="18px">
+                setting
+            </div>
+        </div>
+
+        <div class="cont">
+            <h1 class="d"> Dashboard</h1>
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="stats1">
+                        <img src="images/star.svg" alt="star" width="33" height="33">
+
+                        <div>
+                            <p class="numeric">23,456</p>
+                            <p class="about">New Products</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="stats1">
+                        <img src="images/new-product.svg" alt="plus" width="33" height="33">
+
+                        <div>
+                            <p class="numeric">2345</p>
+                            <p class="about">added Products</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="stats1">
+                        <img src="images/total-product.svg" alt="plus" width="33" height="33">
+
+                        <div>
+                            <p class="numeric">32456</p>
+                            <p class="about">Total Products</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="stats1">
+                        <img src="images/dollar-filled.svg" alt="plus" width="33" height="33">
+
+                        <div>
+                            <p class="numeric">5678</p>
+                            <p class="about">Today sales</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="stats1">
+                        <img src="images/money-bag.svg" alt="plus" width="33" height="33">
+
+                        <div>
+                            <p class="numeric">33,542</p>
+                            <p class="about">Total sales</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="cont2">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                        <div class="graphcon">
+                            <div class="num">
+                                <div>
+                                    Sales
+                                </div>
+                                <div>
+                                    Weekly
+                                    Monthly
+                                    yearly
+                                </div>
+                            </div>
+                            <img src="images/data-graph.png" alt="" class="h-100 w-100">
+
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+
+                        <div class="bg-white d-flex-column align-items-center">
+                            <div>Sales by Country</div>
+                            <img src=images/pie-chart.svg alt="">
+                            <div class="colors">
+                                <div class="color">
+                                    <div>
+                                        <img src="images/radio-checked-icon.svg" alt="" width="18" height="18">
+                                        United States of America
+                                    </div>
+                                    <div>
+                                        <img src="images/radio-checked-icon.svg" alt="" width="18" height="18">
+                                        Russia
+                                    </div>
+                                </div>
+                                <div class="color">
+                                    <div>
+                                        <img src="images/radio-checked-icon.svg" alt="" width="18" height="18">
+                                        Canada
+                                    </div>
+                                    <div>
+                                        <img src="images/radio-checked-icon.svg" alt="" width="18" height="18">
+                                        India
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="cont3">
+                <div class="invoices">
+                    <div>
+                        Invoices
+                    </div>
+                    <div>
+                        View All
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">INVOICE</th>
+                                <th scope="col">COMPANY NAME</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">STATUS</th>
+                                <th scope="col">DUE DATE</th>
+                                <th scope="col">AMOUNT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col">651535</td>
+                                <td scope="col">Public Adjusting Firm</td>
+                                <td scope="col">georgia.young@example.com</td>
+                                <td scope="col">Paid</td>
+                                <td scope="col">24 May, 2020</td>
+                                <td scope="col">$47,800</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">558612</td>
+                                <td scope="col">Other</td>
+                                <td scope="col">georgia.young@example.com</td>
+                                <td scope="col">Paid</td>
+                                <td scope="col">24 May, 2020</td>
+                                <td scope="col">$98,000</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">558612</td>
+                                <td scope="col">Vendor</td>
+                                <td scope="col">alma.lawson@example.com</td>
+                                <td scope="col" id="paid">Paid</td>
+                                <td scope="col">STATUS</td>
+                                <td scope="col">AMOUNT</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">558612</td>
+                                <td scope="col">Property Management Company</td>
+                                <td scope="col">kenzi.lawson@example.com</td>
+                                <td scope="col">Paid</td>
+                                <td scope="col">8 Sep, 2020</td>
+                                <td scope="col">$20,900</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">651535</td>
+                                <td scope="col">Subcontractor Company</td>
+                                <td scope="col">jackson.graham@example.com</td>
+                                <td scope="col">Failed</td>
+                                <td scope="col">22 Oct, 2020</td>
+                                <td scope="col">$10,570</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">651518</td>
+                                <td scope="col">Mortgage Company</td>
+                                <td scope="col">felicia.reid@example.com</td>
+                                <td scope="col">Pending</td>
+                                <td scope="col">1 Feb, 2020</td>
+                                <td scope="col">$10,200</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">487441</td>
+                                <td scope="col">TPA</td>
+                                <td scope="col">dolores.chambers@example.com</td>
+                                <td scope="col">Paid</td>
+                                <td scope="col">22 Oct, 2020</td>
+                                <td scope="col">$12,600</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">267400</td>
+                                <td scope="col">Fire Department</td>
+                                <td scope="col">nevaeh.simmons@example.com</td>
+                                <td scope="col">Failed</td>
+                                <td scope="col">17 Oct, 2020</td>
+                                <td scope="col">$28,000</td>
+                            </tr>
+                            <tr>
+                                <td scope="col">449003</td>
+                                <td scope="col">Insurance Carrier</td>
+                                <td scope="col">curtis.weaver@example.com</td>
+                                <td scope="col">Paid</td>
+                                <td scope="col">21 Sep, 2020</td>
+                                <td scope="col">$10,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </dis>
+                </div>
+
+            </div>
+
+        </div>
+        <script src="js/custom.js"></script>
+</body>
+
+</html>
