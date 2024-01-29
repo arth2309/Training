@@ -148,6 +148,7 @@ padding-right: 3px;
    width: 180px;
    margin: 0px;
    margin-left: 30px;
+   margin-top: 12px;
    
   
    
@@ -183,6 +184,8 @@ padding-right: 3px;
 .about
 {
     font-size: 20px;
+    text-align: left;
+    
 }
 
 .d
@@ -254,6 +257,7 @@ height: 26px;
 background: #EBFFEF 0% 0% no-repeat padding-box;
 border-radius: 5px;
 opacity: 1;
+color: green;
 }
 
 @media  only screen  and  (max-width:480px)
