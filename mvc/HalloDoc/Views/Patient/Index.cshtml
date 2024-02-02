@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/patient/index.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="ct">
+        <header>
+            <div><p></p></div>
+            <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc"></div>
+            <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </header>
+        <div class="patient_site">
+            <div class="bt"><a asp-controller="Patient" asp-action="SubmitRequest"  style="text-decoration: none; color: white;"><button type="button" class="btn btn-primary wt">Submit a Request</button></a></div>
+            <div class="bt"><a  asp-controller="Patient" asp-action="PatientLogin" style="text-decoration: none; color: white;"><button type="button" class="btn btn-info wt">Registered Patients</button></a></div>
+            <footer>
+                <div class="policy"><p>Terms and conditions   privacy policy</p></div>
+            </footer>
+        </div>
+        <script>
+            function myFunction() {
+                var element = document.body;
+                element.classList.toggle("dark-mode");
+            }
+        </script>
+        </div>
+</body>
+</html>

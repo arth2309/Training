@@ -1,0 +1,122 @@
+
+.theme
+{
+    margin-top: 3%;
+    margin-right: 5%;
+    margin-left: auto;
+    border: 1px solid #00B9E1;
+    border-radius: 5px;
+    opacity: 1;
+    align-items: center;
+    text-align: center;
+    
+   
+}
+
+header{
+    display: flex;
+    
+    width:100vw;
+}
+
+
+
+.hallodocimage
+{
+    text-align: center;
+}
+
+.policy
+{
+    text-align: center;
+    
+}
+
+.text
+{
+    margin-top: 50px;
+}
+
+.username1
+{
+    margin-top:35px;
+}
+
+
+.loginbtn
+{
+    margin-top: 30px;
+    color: #00B9E1;
+    align-items: center;
+    background-color: aqua;
+    
+}
+
+.u1
+{
+    border: 1px solid #ADADAD;
+    border-radius: 5px;
+    opacity: 1;
+    width: 468px;
+    min-width: 280px;
+    height: 49px;
+}
+
+button
+{
+    color: white;
+    background-color: #00B9E1;
+    width: 468px;
+    min-width: 280px;
+    height: 49px;
+    border-radius: 5px;
+}
+
+.fplink
+{
+    margin-top: 35px;
+}
+
+
+
+.Patient_Login
+{
+    background-color: #fafafa;
+}
+.ct
+{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+}
+
+#eyeicon
+{
+    position: absolute;
+    top: 16px;
+    right: 25px;
+}
+
+#per
+{
+    position: absolute;
+    top: 16px;
+    right: 25px;
+}
+
+.bgimg
+{
+    height: 100vh;
+    width: 70vw;
+    position: absolute;
+    z-index: -1;
+    opacity: 0.2;
+
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+  }
