@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\HalloDoc\\HalloDoc\\HalloDoc.csproj": {}
+    "D:\\Projects\\assig\\mvc\\HalloDoc\\HalloDoc.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\HalloDoc\\HalloDoc\\HalloDoc.csproj": {
+    "D:\\Projects\\assig\\mvc\\HalloDoc\\HalloDoc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\HalloDoc\\HalloDoc\\HalloDoc.csproj",
+        "projectUniqueName": "D:\\Projects\\assig\\mvc\\HalloDoc\\HalloDoc.csproj",
         "projectName": "HalloDoc",
-        "projectPath": "D:\\Projects\\HalloDoc\\HalloDoc\\HalloDoc.csproj",
+        "projectPath": "D:\\Projects\\assig\\mvc\\HalloDoc\\HalloDoc.csproj",
         "packagesPath": "C:\\Users\\pce105\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\HalloDoc\\HalloDoc\\obj\\",
+        "outputPath": "D:\\Projects\\assig\\mvc\\HalloDoc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pce105\\AppData\\Roaming\\NuGet\\NuGet.Config",

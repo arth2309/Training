@@ -9,25 +9,36 @@
 </head>
 <body>
 
-    <div class="ct">
-        <header>
-            <div><p></p></div>
-            <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc"></div>
-            <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
-        </header>
-        <div class="patient_site">
-            <div class="bt"><a asp-controller="Patient" asp-action="SubmitRequest"  style="text-decoration: none; color: white;"><button type="button" class="btn btn-primary wt">Submit a Request</button></a></div>
-            <div class="bt"><a  asp-controller="Patient" asp-action="PatientLogin" style="text-decoration: none; color: white;"><button type="button" class="btn btn-info wt">Registered Patients</button></a></div>
+    <div class="mct">
+        <div class="bgimg">
+            <img src="~/images/11116016_415-removebg-preview.png" alt="hallodoc" style="height: 100%; width: 100%;">
+        </div>
+
+        <div class="ct">
+
+            <header>
+                <div><p></p></div>
+                <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc"></div>
+                <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
+            </header>
+            <div class="patient_site">
+                <div class="bt"><a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none; color: white;"><button type="button" class="btn btn-info wt"><b>Submit A Request</b></button></a></div>
+                <div class="bt"><a asp-controller="Patient" asp-action="PatientLogin" style="text-decoration: none; color: white;"><button type="button" class="btn btn-primary wt"><b>Registered Patients</b></button></a></div>
+               
+            </div>
+            <script>
+                function myFunction() {
+                    var element = document.body;
+                    element.classList.toggle("dark-mode");
+                }
+            </script>
             <footer>
                 <div class="policy"><p>Terms and conditions   privacy policy</p></div>
             </footer>
         </div>
-        <script>
-            function myFunction() {
-                var element = document.body;
-                element.classList.toggle("dark-mode");
-            }
-        </script>
-        </div>
+    </div>
+   
+    
+
 </body>
 </html>

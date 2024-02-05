@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\patient\\Submit_request.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\create_request.css",
+      "PackagePath": "staticwebassets\\css\\patient\\create_request.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\index.css",
       "PackagePath": "staticwebassets\\css\\patient\\index.css"
     },
