@@ -78,6 +78,11 @@ footer {
     .patient_site
     {
         margin-top:75%;
+        
+    }
+    .bt
+    {
+        background:transparent;
     }
 }
 

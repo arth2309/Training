@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",
+      "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\Submit_request.css",
       "PackagePath": "staticwebassets\\css\\patient\\Submit_request.css"
     },
@@ -63,6 +67,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\images\\icons8-moon-symbol-25.png",
       "PackagePath": "staticwebassets\\images\\icons8-moon-symbol-25.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\international-telephone-input.js",
+      "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\site.js",

@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+
     <script>
         $(document).ready(function () {
             $("#myModal").modal('show');
@@ -33,7 +37,7 @@
         </div>
     </div>
 
-    <div class="ct ">
+    <div class="ct1">
         <div class="shadow  bg-body-tertiary rounded">
             <header>
                 <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
@@ -48,27 +52,27 @@
             <form action="">
                 <p class="h4 ">family/friend information</p>
                 <div class="row ">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder=" Your first name">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder=" Your last name">
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="phone">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="email" class="form-control" placeholder="Your email">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="Relation with patient">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt"></div>
+                    <div class="col-md-12 col-lg-6 wt "></div>
                 </div>
                 <p class="h4 vt">Patient information</p>
                 <div class="row ">
@@ -81,53 +85,53 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="first name">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="last name">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="date" class="form-control">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt"></div>
+                    <div class="col-md-12 col-lg-6 wt "></div>
                 </div>
                 <p class="h4 vt">Patient Contact information</p>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <div class="form-group">
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="phone">
+                    <div class="col-md-12 col-lg-6 wt  form-floating">
+                        <input type="tel" class="form-control" id="patientMobileNumber">
                     </div>
                 </div>
                 <p class="h4 vt">Patient Location</p>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control " placeholder="Street">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="city">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="state">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="zip code">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder="Room#/Suite(optional)">
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt ">
                     </div>
                 </div>
                 <p class="h4 vt">(optional) add photo or documents</p>
@@ -135,7 +139,7 @@
                     <input type="file" class="form-control" id="inputGroupFile02">
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
                 </div>
-                <div class="mbt wt">
+                <div class="mbt wt ">
                     <div class="bt">
                         <button type="button" class="btn btn-info">Submit</button>
                         <button type="button" class="btn btn-outline-info">Cancel</button>
@@ -150,10 +154,11 @@
 
     </div>
     <script>
-        function myFunction() {
-            var element = document.body;
-            element.classList.toggle("dark-mode");
-        }
+        const phoneInputField = document.getElementById("patientMobileNumber");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
     </script>
 
 </body>

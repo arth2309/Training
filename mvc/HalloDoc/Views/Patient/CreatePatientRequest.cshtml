@@ -8,17 +8,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
     <script>
         $(document).ready(function(){
             $("#myModal").modal('show');
         });
     </script>
-    <script>
-        $("input").intlTelInput({
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.4.6/js/utils.js"
-        });
-    </script>
-
     <title>Document</title>
 </head>
 
@@ -42,7 +39,7 @@
         </div>
     </div>
 
-    <div class="ct ">
+    <div class="ct1">
         <div class="shadow  bg-body-tertiary rounded">
             <header>
                 <div class="img1">
@@ -94,7 +91,7 @@
                     <div class="col-md-12 col-lg-6 wt">
                         <form>
                             <div class="input-group">
-                                <input type="tel" class="form-control">
+                                <input type="tel" class="form-control" id="patientMobileNumber">
                             </div>
                         </form>
                     </div>
@@ -144,6 +141,13 @@
         </div>
 
     </div>
+    <script>
+        const phoneInputField = document.getElementById("patientMobileNumber");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
 
 
 </body>

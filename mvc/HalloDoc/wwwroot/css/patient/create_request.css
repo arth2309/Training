@@ -4,7 +4,7 @@ body
     height:100vh;
 }
 
-.ct
+.ct1
 {
     
     justify-content: space-between;
@@ -157,5 +157,12 @@ header
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 0;
 }
+
+.iti {
+    width: 100%;
+    z-index: 14;
+}
+
+    
 
 
