@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model HalloDoc.DataModels.User
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -53,7 +54,7 @@
             <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> &lt; Back</a>
         </div>
         <div class="mainct shadow">
-            <form action="">
+            <form asp-controller="Patient" asp-action="CreatePatientRequest">
                 <p class="h4">Patient information</p>
                 <div class="row ">
                     <div class="col">
@@ -67,15 +68,15 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="first name">
+                        <input type="text" class="form-control" placeholder="first name" asp-for="FirstName">
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="last name">
+                        <input type="text" class="form-control" placeholder="last name" asp-for="LastName">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="date" class="form-control">
+                        <input type="date" class="form-control" asp-for="IntDate">
                     </div>
                     <div class="col-md-12 col-lg-6 wt"></div>
                 </div>
@@ -84,14 +85,14 @@
                     <div class="col-md-12 col-lg-6 wt">
                         <div class="form-group">
                             <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" placeholder="Enter email">
+                                   aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
                            
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
                         <form>
                             <div class="input-group">
-                                <input type="tel" class="form-control" id="patientMobileNumber">
+                                <input type="tel" class="form-control" id="patientMobileNumber" asp-for="Mobile">
                             </div>
                         </form>
                     </div>
@@ -99,18 +100,18 @@
                 <p class="h4 vt">Patient Location</p>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control " placeholder="Street">
+                        <input type="text" class="form-control " placeholder="Street" asp-for="Street">
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="city">
+                        <input type="text" class="form-control" placeholder="city" asp-for="City">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="state">
+                        <input type="text" class="form-control" placeholder="state" asp-for="State">
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="zip code">
+                        <input type="text" class="form-control" placeholder="zip code"asp-for="ZipCode">
                     </div>
                 </div>
                 <div class="row">
@@ -127,7 +128,7 @@
                 </div>
                 <div class="mbt wt">
                     <div class="bt">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="submit" class="btn btn-primary" >
                             Submit
                         </button>
                         <button type="button" class="btn btn-outline-info">Cancel</button>

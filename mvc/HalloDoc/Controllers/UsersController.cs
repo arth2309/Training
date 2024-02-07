@@ -12,9 +12,9 @@ namespace HalloDoc.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly ApplicationDBContext _context;
+        private readonly HalloDoc.DataContext.ApplicationDbContext _context;
 
-        public UsersController(ApplicationDBContext context)
+        public UsersController(HalloDoc.DataContext.ApplicationDbContext context)
         {
             _context = context;
         }

@@ -1,15 +1,17 @@
 ﻿using HalloDoc.DataContext;
 using HalloDoc.DataModels;
+using HalloDoc.ModelView;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HalloDoc.Controllers
 {
     public class PatientController : Controller
     {
 
-        private readonly ApplicationDBContext _dbContext;
+        private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(ApplicationDBContext dbContext)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -47,18 +49,43 @@ namespace HalloDoc.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult PatientLogin(AspNetUser user)
+        public IActionResult PatientLogin(PatientLoginValidation user)
         {
-            var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Username == user.Username);
+            var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
             if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
             {
-                return View(userFromDb);
+                return RedirectToAction("SubmitRequest");
             }
             else
             {
-                return View(null);
+                return RedirectToAction("PatientLogin");
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> CreatePatientRequest(User user)
+        {
+            User user1 = new()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IntDate = user.IntDate,
+                Email = user.Email,
+                Mobile = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                CreatedBy = "arth"
+            };
+
+            _dbContext.Users.Add(user1);
+            await _dbContext.SaveChangesAsync();
+            user1 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+            return RedirectToAction("Index", "Users");
+
+
+        }
+        
     }
 }
 
