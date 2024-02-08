@@ -3,83 +3,59 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using HalloDoc.DataModels;
 using Microsoft.EntityFrameworkCore;
+
 namespace HalloDoc.ModelView
 {
     public class AddPatientRequest
     {
-        [Key]
-        public int UserId { get; set; }
-
-        [StringLength(128)]
-        public string? AspNetUserId { get; set; }
-
         [StringLength(100)]
+        [Required(ErrorMessage = "this field is required")]
         public string FirstName { get; set; } = null!;
 
         [StringLength(100)]
+        [Required(ErrorMessage = "this field is required")]
         public string? LastName { get; set; }
 
         [StringLength(50)]
+        [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "please enter valid Email")]
+        [Required(ErrorMessage = "this field is required")]
         public string Email { get; set; } = null!;
 
+        
+
         [StringLength(20)]
+        [RegularExpression(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$", ErrorMessage = "please enter valid mobile number")]
+        [Required(ErrorMessage = "this field is required")]
         public string? Mobile { get; set; }
 
-        [Column(TypeName = "bit(1)")]
-        public BitArray? IsMobile { get; set; }
-
         [StringLength(100)]
+        [Required(ErrorMessage = "this field is required")]
         public string? Street { get; set; }
 
         [StringLength(100)]
+        [Required(ErrorMessage = "this field is required")]
         public string? City { get; set; }
 
         [StringLength(100)]
+        [Required(ErrorMessage = "this field is required")]
         public string? State { get; set; }
 
-        public int? RegionId { get; set; }
 
         [StringLength(10)]
+        [Required(ErrorMessage = "this field is required")]
         public string? ZipCode { get; set; }
 
-        [Column("strMonth")]
-        [StringLength(20)]
-        public string? StrMonth { get; set; }
-
-        [Column("intYear")]
-        public int? IntYear { get; set; }
-
-        [Column("intDate")]
-        public int? IntDate { get; set; }
+        [StringLength(512)]
+        public string? symptoms { get; set; }
 
         [StringLength(128)]
-        public string CreatedBy { get; set; } = null!;
+        public string? roomsuite { get; set; }
 
-        [Column(TypeName = "timestamp without time zone")]
-        public DateTime CreatedDate { get; set; }
 
-        [StringLength(128)]
-        public string? ModifiedBy { get; set; }
 
-        [Column(TypeName = "timestamp without time zone")]
-        public DateTime? ModifiedDate { get; set; }
 
-        public short? Status { get; set; }
 
-        [Column(TypeName = "bit(1)")]
-        public BitArray? IsDeleted { get; set; }
 
-        [Column("IP")]
-        [StringLength(20)]
-        public string? Ip { get; set; }
-
-        [Column(TypeName = "bit(1)")]
-        public BitArray? IsRequestWithEmail { get; set; }
-
-        [ForeignKey("AspNetUserId")]
-        [InverseProperty("Users")]
-        public virtual AspNetUser? AspNetUser { get; set; }
     }
-}
+    }

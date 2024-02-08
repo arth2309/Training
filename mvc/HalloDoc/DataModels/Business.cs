@@ -16,8 +16,6 @@ public partial class Business
     [StringLength(100)]
     public string Name { get; set; } = null!;
 
-    public int? BusinessTypeId { get; set; }
-
     [StringLength(500)]
     public string? Address1 { get; set; }
 
@@ -41,14 +39,12 @@ public partial class Business
     [Column(TypeName = "bit(1)")]
     public BitArray? IsRegistered { get; set; }
 
-    [StringLength(128)]
-    public string? CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
 
-    [StringLength(128)]
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
@@ -61,10 +57,6 @@ public partial class Business
     [Column("IP")]
     [StringLength(20)]
     public string? Ip { get; set; }
-
-    [ForeignKey("BusinessTypeId")]
-    [InverseProperty("Businesses")]
-    public virtual BusinessType? BusinessType { get; set; }
 
     [ForeignKey("CreatedBy")]
     [InverseProperty("BusinessCreatedByNavigations")]

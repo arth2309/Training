@@ -13,7 +13,7 @@ public partial class ShiftDetail
     [Key]
     public int ShiftDetailId { get; set; }
 
-    public int? ShiftId { get; set; }
+    public int ShiftId { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime ShiftDate { get; set; }
@@ -29,8 +29,7 @@ public partial class ShiftDetail
     [Column(TypeName = "bit(1)")]
     public BitArray IsDeleted { get; set; } = null!;
 
-    [StringLength(128)]
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
@@ -50,7 +49,7 @@ public partial class ShiftDetail
 
     [ForeignKey("ShiftId")]
     [InverseProperty("ShiftDetails")]
-    public virtual Shift? Shift { get; set; }
+    public virtual Shift Shift { get; set; } = null!;
 
     [InverseProperty("ShiftDetail")]
     public virtual ICollection<ShiftDetailRegion> ShiftDetailRegions { get; set; } = new List<ShiftDetailRegion>();

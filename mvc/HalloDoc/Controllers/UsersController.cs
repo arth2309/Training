@@ -12,9 +12,9 @@ namespace HalloDoc.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly HalloDoc.DataContext.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UsersController(HalloDoc.DataContext.ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,8 +22,8 @@ namespace HalloDoc.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var applicationDBContext = _context.Users.Include(u => u.AspNetUser);
-            return View(await applicationDBContext.ToListAsync());
+            var applicationDbContext = _context.Users.Include(u => u.AspNetUser).Include(u => u.CreatedByNavigation).Include(u => u.ModifiedByNavigation);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -36,6 +36,8 @@ namespace HalloDoc.Controllers
 
             var user = await _context.Users
                 .Include(u => u.AspNetUser)
+                .Include(u => u.CreatedByNavigation)
+                .Include(u => u.ModifiedByNavigation)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -49,6 +51,8 @@ namespace HalloDoc.Controllers
         public IActionResult Create()
         {
             ViewData["AspNetUserId"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id");
             return View();
         }
 
@@ -66,6 +70,8 @@ namespace HalloDoc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AspNetUserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.AspNetUserId);
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.ModifiedBy);
             return View(user);
         }
 
@@ -83,6 +89,8 @@ namespace HalloDoc.Controllers
                 return NotFound();
             }
             ViewData["AspNetUserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.AspNetUserId);
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.ModifiedBy);
             return View(user);
         }
 
@@ -119,6 +127,8 @@ namespace HalloDoc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AspNetUserId"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.AspNetUserId);
+            ViewData["CreatedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.CreatedBy);
+            ViewData["ModifiedBy"] = new SelectList(_context.AspNetUsers, "Id", "Id", user.ModifiedBy);
             return View(user);
         }
 
@@ -132,6 +142,8 @@ namespace HalloDoc.Controllers
 
             var user = await _context.Users
                 .Include(u => u.AspNetUser)
+                .Include(u => u.CreatedByNavigation)
+                .Include(u => u.ModifiedByNavigation)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -148,7 +160,7 @@ namespace HalloDoc.Controllers
         {
             if (_context.Users == null)
             {
-                return Problem("Entity set 'ApplicationDBContext.Users'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
             }
             var user = await _context.Users.FindAsync(id);
             if (user != null)

@@ -1,4 +1,5 @@
-﻿@model HalloDoc.DataModels.User
+﻿@model HalloDoc.ModelView.AddPatientRequest
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,7 +61,7 @@
                     <div class="col">
                         <div class="form-group">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                      placeholder="Enter brief details of symptons(optional)"></textarea>
+                                      placeholder="Enter brief details of symptons(optional)" asp-for="symptoms"></textarea>
 
                         </div>
                     </div>
@@ -69,14 +70,17 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
                         <input type="text" class="form-control" placeholder="first name" asp-for="FirstName">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
                         <input type="text" class="form-control" placeholder="last name" asp-for="LastName">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="date" class="form-control" asp-for="IntDate">
+                        <input type="date" class="form-control">
+                       
                     </div>
                     <div class="col-md-12 col-lg-6 wt"></div>
                 </div>
@@ -86,37 +90,43 @@
                         <div class="form-group">
                             <input type="email" class="form-control" id="exampleInputEmail1"
                                    aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
                            
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
-                        <form>
+                        
                             <div class="input-group">
                                 <input type="tel" class="form-control" id="patientMobileNumber" asp-for="Mobile">
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
                 <p class="h4 vt">Patient Location</p>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
                         <input type="text" class="form-control " placeholder="Street" asp-for="Street">
+                        <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
                         <input type="text" class="form-control" placeholder="city" asp-for="City">
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
                         <input type="text" class="form-control" placeholder="state" asp-for="State">
+                        <span asp-validation-for="State" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
                         <input type="text" class="form-control" placeholder="zip code"asp-for="ZipCode">
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="Room#/Suite(optional)">
+                        <input type="text" class="form-control" placeholder="Room#/Suite(optional)" asp-for="roomsuite">
                     </div>
                     <div class="col-md-12 col-lg-6 wt">
                     </div>
@@ -128,10 +138,10 @@
                 </div>
                 <div class="mbt wt">
                     <div class="bt">
-                        <button type="submit" class="btn btn-primary" >
+                        <button type="button" class="btn btn-primary" >
                             Submit
                         </button>
-                        <button type="button" class="btn btn-outline-info">Cancel</button>
+                        <button type="submit" class="btn btn-outline-info">Cancel</button>
                     </div>
                 </div>
             </form>

@@ -11,6 +11,7 @@ namespace HalloDoc.DataModels;
 public partial class PhysicianNotification
 {
     [Key]
+    [Column("id")]
     public int Id { get; set; }
 
     public int PhysicianId { get; set; }

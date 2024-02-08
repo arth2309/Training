@@ -25,7 +25,7 @@ public partial class BlockRequest
     public string? Reason { get; set; }
 
     [StringLength(50)]
-    public string? RequestId { get; set; }
+    public string RequestId { get; set; } = null!;
 
     [Column("IP")]
     [StringLength(20)]

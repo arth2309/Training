@@ -11,7 +11,7 @@ public partial class RequestNote
     [Key]
     public int RequestNotesId { get; set; }
 
-    public int? RequestId { get; set; }
+    public int RequestId { get; set; }
 
     [Column("strMonth")]
     [StringLength(20)]
@@ -29,14 +29,12 @@ public partial class RequestNote
     [StringLength(500)]
     public string? AdminNotes { get; set; }
 
-    [StringLength(128)]
-    public string CreatedBy { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
 
-    [StringLength(128)]
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
@@ -48,7 +46,15 @@ public partial class RequestNote
     [StringLength(500)]
     public string? AdministrativeNotes { get; set; }
 
+    [ForeignKey("CreatedBy")]
+    [InverseProperty("RequestNoteCreatedByNavigations")]
+    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
+
+    [ForeignKey("ModifiedBy")]
+    [InverseProperty("RequestNoteModifiedByNavigations")]
+    public virtual AspNetUser? ModifiedByNavigation { get; set; }
+
     [ForeignKey("RequestId")]
     [InverseProperty("RequestNotes")]
-    public virtual Request? Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
 }

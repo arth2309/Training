@@ -13,7 +13,7 @@ public partial class Request
     [Key]
     public int RequestId { get; set; }
 
-    public int? RequestTypeId { get; set; }
+    public int RequestTypeId { get; set; }
 
     public int? UserId { get; set; }
 
@@ -49,7 +49,7 @@ public partial class Request
     public string? DeclinedBy { get; set; }
 
     [Column(TypeName = "bit(1)")]
-    public BitArray IsUrgentEmailSent { get; set; } = null!;
+    public BitArray? IsUrgentEmailSent { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? LastWellnessDate { get; set; }
@@ -89,6 +89,14 @@ public partial class Request
 
     public int? CreatedUserId { get; set; }
 
+    [Column("symptoms")]
+    [StringLength(512)]
+    public string? Symptoms { get; set; }
+
+    [Column("roomsuite")]
+    [StringLength(128)]
+    public string? Roomsuite { get; set; }
+
     [ForeignKey("PhysicianId")]
     [InverseProperty("Requests")]
     public virtual Physician? Physician { get; set; }
@@ -110,10 +118,6 @@ public partial class Request
 
     [InverseProperty("Request")]
     public virtual ICollection<RequestStatusLog> RequestStatusLogs { get; set; } = new List<RequestStatusLog>();
-
-    [ForeignKey("RequestTypeId")]
-    [InverseProperty("Requests")]
-    public virtual RequestType? RequestType { get; set; }
 
     [InverseProperty("Request")]
     public virtual ICollection<RequestWiseFile> RequestWiseFiles { get; set; } = new List<RequestWiseFile>();

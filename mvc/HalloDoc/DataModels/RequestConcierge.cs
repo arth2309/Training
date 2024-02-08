@@ -12,9 +12,9 @@ public partial class RequestConcierge
     [Key]
     public int Id { get; set; }
 
-    public int? RequestId { get; set; }
+    public int RequestId { get; set; }
 
-    public int? ConciergeId { get; set; }
+    public int ConciergeId { get; set; }
 
     [Column("IP")]
     [StringLength(20)]
@@ -22,9 +22,9 @@ public partial class RequestConcierge
 
     [ForeignKey("ConciergeId")]
     [InverseProperty("RequestConcierges")]
-    public virtual Concierge? Concierge { get; set; }
+    public virtual Concierge Concierge { get; set; } = null!;
 
     [ForeignKey("RequestId")]
     [InverseProperty("RequestConcierges")]
-    public virtual Request? Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
 }

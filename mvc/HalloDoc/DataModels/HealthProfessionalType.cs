@@ -11,7 +11,7 @@ namespace HalloDoc.DataModels;
 public partial class HealthProfessionalType
 {
     [Key]
-    public int HealthProfessionalTypeId { get; set; }
+    public int HealthProfessionalId { get; set; }
 
     [StringLength(50)]
     public string ProfessionName { get; set; } = null!;

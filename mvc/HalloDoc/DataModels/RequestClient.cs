@@ -13,7 +13,7 @@ public partial class RequestClient
     [Key]
     public int RequestClientId { get; set; }
 
-    public int? RequestId { get; set; }
+    public int RequestId { get; set; }
 
     [StringLength(100)]
     public string FirstName { get; set; } = null!;
@@ -83,10 +83,10 @@ public partial class RequestClient
 
     public short? IsReservationReminderSent { get; set; }
 
-    [Precision(9, 0)]
+    [Precision(9, 6)]
     public decimal? Latitude { get; set; }
 
-    [Precision(9, 0)]
+    [Precision(9, 6)]
     public decimal? Longitude { get; set; }
 
     [ForeignKey("RegionId")]
@@ -95,5 +95,5 @@ public partial class RequestClient
 
     [ForeignKey("RequestId")]
     [InverseProperty("RequestClients")]
-    public virtual Request? Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
 }

@@ -13,7 +13,7 @@ public partial class HealthProfessional
     public int VendorId { get; set; }
 
     [StringLength(100)]
-    public string? VendorName { get; set; }
+    public string VendorName { get; set; } = null!;
 
     public int? Profession { get; set; }
 

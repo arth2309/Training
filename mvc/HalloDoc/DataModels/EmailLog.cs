@@ -11,14 +11,17 @@ namespace HalloDoc.DataModels;
 public partial class EmailLog
 {
     [Key]
-    public int EmailLogId { get; set; }
+    [Column("EmailLogID")]
+    [Precision(9, 0)]
+    public decimal EmailLogId { get; set; }
 
     [Column(TypeName = "character varying")]
-    public string EmailTemplate { get; set; } = null!;
+    public string? EmailTemplate { get; set; }
 
     [StringLength(200)]
     public string SubjectName { get; set; } = null!;
 
+    [Column("EmailID")]
     [StringLength(200)]
     public string EmailId { get; set; } = null!;
 

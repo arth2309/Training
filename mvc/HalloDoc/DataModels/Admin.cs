@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,8 +12,7 @@ public partial class Admin
     [Key]
     public int AdminId { get; set; }
 
-    [StringLength(128)]
-    public string AspNetUserId { get; set; } = null!;
+    public int AspNetUserId { get; set; }
 
     [StringLength(100)]
     public string FirstName { get; set; } = null!;
@@ -45,22 +43,19 @@ public partial class Admin
     [StringLength(20)]
     public string? AltPhone { get; set; }
 
-    [StringLength(128)]
-    public string CreatedBy { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
 
-    [StringLength(128)]
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
 
     public short? Status { get; set; }
 
-    [Column(TypeName = "bit(1)")]
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public int? RoleId { get; set; }
 
@@ -70,6 +65,10 @@ public partial class Admin
     [ForeignKey("AspNetUserId")]
     [InverseProperty("AdminAspNetUsers")]
     public virtual AspNetUser AspNetUser { get; set; } = null!;
+
+    [ForeignKey("CreatedBy")]
+    [InverseProperty("AdminCreatedByNavigations")]
+    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
 
     [ForeignKey("ModifiedBy")]
     [InverseProperty("AdminModifiedByNavigations")]

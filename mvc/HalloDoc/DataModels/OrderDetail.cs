@@ -21,10 +21,9 @@ public partial class OrderDetail
     [StringLength(50)]
     public string? Email { get; set; }
 
-    [StringLength(50)]
+    [StringLength(100)]
     public string? BusinessContact { get; set; }
 
-    [Column(TypeName = "character varying")]
     public string? Prescription { get; set; }
 
     public int? NoOfRefill { get; set; }

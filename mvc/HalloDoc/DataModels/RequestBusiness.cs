@@ -12,9 +12,9 @@ public partial class RequestBusiness
     [Key]
     public int RequestBusinessId { get; set; }
 
-    public int? RequestId { get; set; }
+    public int RequestId { get; set; }
 
-    public int? BusinessId { get; set; }
+    public int BusinessId { get; set; }
 
     [Column("IP")]
     [StringLength(20)]
@@ -22,9 +22,9 @@ public partial class RequestBusiness
 
     [ForeignKey("BusinessId")]
     [InverseProperty("RequestBusinesses")]
-    public virtual Business? Business { get; set; }
+    public virtual Business Business { get; set; } = null!;
 
     [ForeignKey("RequestId")]
     [InverseProperty("RequestBusinesses")]
-    public virtual Request? Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
 }

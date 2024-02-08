@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,10 +13,9 @@ public partial class Menu
     public int MenuId { get; set; }
 
     [StringLength(50)]
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    [Column(TypeName = "bit(1)")]
-    public BitArray? AccountType { get; set; }
+    public short AccountType { get; set; }
 
     public int? SortOrder { get; set; }
 

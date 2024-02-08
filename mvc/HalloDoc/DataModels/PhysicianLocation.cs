@@ -14,10 +14,10 @@ public partial class PhysicianLocation
 
     public int PhysicianId { get; set; }
 
-    [Precision(9, 0)]
+    [Precision(9, 6)]
     public decimal? Latitude { get; set; }
 
-    [Precision(9, 0)]
+    [Precision(9, 6)]
     public decimal? Longitude { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
@@ -28,8 +28,4 @@ public partial class PhysicianLocation
 
     [StringLength(500)]
     public string? Address { get; set; }
-
-    [ForeignKey("PhysicianId")]
-    [InverseProperty("PhysicianLocations")]
-    public virtual Physician Physician { get; set; } = null!;
 }

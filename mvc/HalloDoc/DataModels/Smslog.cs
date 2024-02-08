@@ -12,9 +12,11 @@ public partial class Smslog
 {
     [Key]
     [Column("SMSLogID")]
-    public int SmslogId { get; set; }
+    [Precision(9, 0)]
+    public decimal SmslogId { get; set; }
 
-    [Column("SMSTemplate", TypeName = "character varying")]
+    [Column("SMSTemplate")]
+    [StringLength(1)]
     public string Smstemplate { get; set; } = null!;
 
     [StringLength(50)]

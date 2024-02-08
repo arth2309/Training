@@ -13,7 +13,7 @@ public partial class RequestStatusLog
     [Key]
     public int RequestStatusLogId { get; set; }
 
-    public int? RequestId { get; set; }
+    public int RequestId { get; set; }
 
     public short Status { get; set; }
 
@@ -46,7 +46,7 @@ public partial class RequestStatusLog
 
     [ForeignKey("RequestId")]
     [InverseProperty("RequestStatusLogs")]
-    public virtual Request? Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
 
     [InverseProperty("RequestStatusLog")]
     public virtual ICollection<RequestClosed> RequestCloseds { get; set; } = new List<RequestClosed>();

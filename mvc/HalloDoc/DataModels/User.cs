@@ -13,8 +13,7 @@ public partial class User
     [Key]
     public int UserId { get; set; }
 
-    [StringLength(128)]
-    public string? AspNetUserId { get; set; }
+    public int? AspNetUserId { get; set; }
 
     [StringLength(100)]
     public string FirstName { get; set; } = null!;
@@ -55,14 +54,12 @@ public partial class User
     [Column("intDate")]
     public int? IntDate { get; set; }
 
-    [StringLength(128)]
-    public string CreatedBy { get; set; } = null!;
+    public int CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
 
-    [StringLength(128)]
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
@@ -80,8 +77,16 @@ public partial class User
     public BitArray? IsRequestWithEmail { get; set; }
 
     [ForeignKey("AspNetUserId")]
-    [InverseProperty("Users")]
+    [InverseProperty("UserAspNetUsers")]
     public virtual AspNetUser? AspNetUser { get; set; }
+
+    [ForeignKey("CreatedBy")]
+    [InverseProperty("UserCreatedByNavigations")]
+    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
+
+    [ForeignKey("ModifiedBy")]
+    [InverseProperty("UserModifiedByNavigations")]
+    public virtual AspNetUser? ModifiedByNavigation { get; set; }
 
     [InverseProperty("User")]
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();

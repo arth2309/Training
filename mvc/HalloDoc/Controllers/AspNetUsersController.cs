@@ -12,9 +12,9 @@ namespace HalloDoc.Controllers
 {
     public class AspNetUsersController : Controller
     {
-        private readonly HalloDoc.DataContext.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public AspNetUsersController(HalloDoc.DataContext.ApplicationDbContext context)
+        public AspNetUsersController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -24,11 +24,11 @@ namespace HalloDoc.Controllers
         {
               return _context.AspNetUsers != null ? 
                           View(await _context.AspNetUsers.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDBContext.AspNetUsers'  is null.");
+                          Problem("Entity set 'ApplicationDbContext.AspNetUsers'  is null.");
         }
 
         // GET: AspNetUsers/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.AspNetUsers == null)
             {
@@ -56,7 +56,7 @@ namespace HalloDoc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,PasswordHash,SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,Ip,CorePasswordHash,HashVersion,ModifiedDate")] AspNetUser aspNetUser)
+        public async Task<IActionResult> Create([Bind("Id,UserName,PasswordHash,Email,PhoneNumber,Ip,CreatedDate")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace HalloDoc.Controllers
         }
 
         // GET: AspNetUsers/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.AspNetUsers == null)
             {
@@ -88,7 +88,7 @@ namespace HalloDoc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Username,PasswordHash,SecurityStamp,Email,EmailConfirmed,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,Ip,CorePasswordHash,HashVersion,ModifiedDate")] AspNetUser aspNetUser)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,PasswordHash,Email,PhoneNumber,Ip,CreatedDate")] AspNetUser aspNetUser)
         {
             if (id != aspNetUser.Id)
             {
@@ -119,7 +119,7 @@ namespace HalloDoc.Controllers
         }
 
         // GET: AspNetUsers/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.AspNetUsers == null)
             {
@@ -139,11 +139,11 @@ namespace HalloDoc.Controllers
         // POST: AspNetUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.AspNetUsers == null)
             {
-                return Problem("Entity set 'ApplicationDBContext.AspNetUsers'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.AspNetUsers'  is null.");
             }
             var aspNetUser = await _context.AspNetUsers.FindAsync(id);
             if (aspNetUser != null)
@@ -155,7 +155,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AspNetUserExists(string id)
+        private bool AspNetUserExists(int id)
         {
           return (_context.AspNetUsers?.Any(e => e.Id == id)).GetValueOrDefault();
         }

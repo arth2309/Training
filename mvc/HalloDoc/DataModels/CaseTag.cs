@@ -13,5 +13,5 @@ public partial class CaseTag
     public int CaseTagId { get; set; }
 
     [StringLength(50)]
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 }

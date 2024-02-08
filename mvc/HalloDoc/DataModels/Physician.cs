@@ -13,8 +13,7 @@ public partial class Physician
     [Key]
     public int PhysicianId { get; set; }
 
-    [StringLength(128)]
-    public string? AspNetUserId { get; set; }
+    public int? AspNetUserId { get; set; }
 
     [StringLength(100)]
     public string FirstName { get; set; } = null!;
@@ -66,14 +65,12 @@ public partial class Physician
     [StringLength(20)]
     public string? AltPhone { get; set; }
 
-    [StringLength(128)]
-    public string CreatedBy { get; set; } = null!;
+    public int? CreatedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedDate { get; set; }
 
-    [StringLength(128)]
-    public string? ModifiedBy { get; set; }
+    public int? ModifiedBy { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ModifiedDate { get; set; }
@@ -116,14 +113,11 @@ public partial class Physician
 
     [ForeignKey("CreatedBy")]
     [InverseProperty("PhysicianCreatedByNavigations")]
-    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
+    public virtual AspNetUser? CreatedByNavigation { get; set; }
 
     [ForeignKey("ModifiedBy")]
     [InverseProperty("PhysicianModifiedByNavigations")]
     public virtual AspNetUser? ModifiedByNavigation { get; set; }
-
-    [InverseProperty("Physician")]
-    public virtual ICollection<PhysicianLocation> PhysicianLocations { get; set; } = new List<PhysicianLocation>();
 
     [InverseProperty("Physician")]
     public virtual ICollection<PhysicianNotification> PhysicianNotifications { get; set; } = new List<PhysicianNotification>();

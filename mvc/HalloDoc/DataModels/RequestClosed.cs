@@ -12,9 +12,9 @@ public partial class RequestClosed
     [Key]
     public int RequestClosedId { get; set; }
 
-    public int? RequestId { get; set; }
+    public int RequestId { get; set; }
 
-    public int? RequestStatusLogId { get; set; }
+    public int RequestStatusLogId { get; set; }
 
     [StringLength(500)]
     public string? PhyNotes { get; set; }
@@ -28,9 +28,9 @@ public partial class RequestClosed
 
     [ForeignKey("RequestId")]
     [InverseProperty("RequestCloseds")]
-    public virtual Request? Request { get; set; }
+    public virtual Request Request { get; set; } = null!;
 
     [ForeignKey("RequestStatusLogId")]
     [InverseProperty("RequestCloseds")]
-    public virtual RequestStatusLog? RequestStatusLog { get; set; }
+    public virtual RequestStatusLog RequestStatusLog { get; set; } = null!;
 }
