@@ -7,32 +7,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.ModelView
 {
-    public class AddBusinessRequest
+    public class AddFamilyFriendValidation
     {
         [StringLength(100)]
         [Required(ErrorMessage = "this field is required")]
-        public string BFirstName { get; set; } = null!;
+        public string FFirstName { get; set; } = null!;
 
         [StringLength(100)]
         [Required(ErrorMessage = "this field is required")]
-        public string? BLastName { get; set; }
+        public string? FLastName { get; set; }
 
         [StringLength(20)]
         [RegularExpression(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$", ErrorMessage = "please enter valid mobile number")]
         [Required(ErrorMessage = "this field is required")]
-        public string? BMobile { get; set; }
+        public string? FMobile { get; set; }
 
         [StringLength(50)]
         [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "please enter valid Email")]
         [Required(ErrorMessage = "this field is required")]
-        public string BEmail { get; set; } = null!;
+        public string FEmail { get; set; } = null!;
 
         [StringLength(100)]
         [Required(ErrorMessage = "this field is required")]
-        public string? BusinessName { get; set; }
-
-        [StringLength(100)]
-        public string? Case { get; set; }
+        public string? Relation { get; set; }
 
         [StringLength(100)]
         [Required(ErrorMessage = "this field is required")]
@@ -80,6 +77,5 @@ namespace HalloDoc.ModelView
 
         [StringLength(128)]
         public string? roomsuite { get; set; }
-
     }
 }

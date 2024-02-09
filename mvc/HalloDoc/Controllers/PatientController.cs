@@ -48,6 +48,11 @@ namespace HalloDoc.Controllers
         {
             return View();
         }
+
+        public IActionResult PatientDashBoard()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult PatientLogin(PatientLoginValidation user)
         {
@@ -79,7 +84,7 @@ namespace HalloDoc.Controllers
 
                 _dbContext.AspNetUsers.Add(user1);
                 await _dbContext.SaveChangesAsync();
-                user1 = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+               
 
                 User user2 = new()
                 {
@@ -99,7 +104,7 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.Users.Add(user2);
                 await _dbContext.SaveChangesAsync();
-                user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+                
 
                
 
@@ -120,11 +125,27 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.Requests.Add(user3);
                 await _dbContext.SaveChangesAsync();
-                user3 = _dbContext.Requests.FirstOrDefault(a => a.Email == user.Email);
+                
+
+            RequestClient user4 = new()
+            {
+                RequestId = user3.RequestId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode
+
+
+            };
+            _dbContext.RequestClients.Add(user4);
+            await _dbContext.SaveChangesAsync();
 
 
 
-                return RedirectToAction("Index", "AspNetUsers");
+            return RedirectToAction("Index", "AspNetUsers");
             
             
 
@@ -138,10 +159,10 @@ namespace HalloDoc.Controllers
             {
                 AspNetUser user1 = new()
                 {
-                    UserName = user.FirstName,
+                    UserName = user.CFirstName,
                     PasswordHash = "abc@123",
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
+                    Email = user.CEmail,
+                    PhoneNumber = user.CMobile,
                     Ip = "192.168.0.2",
                     CreatedDate = DateTime.Now
 
@@ -150,7 +171,6 @@ namespace HalloDoc.Controllers
 
                 _dbContext.AspNetUsers.Add(user1);
                 await _dbContext.SaveChangesAsync();
-                user1 = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
 
                 User user2 = new()
                 {
@@ -170,7 +190,7 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.Users.Add(user2);
                 await _dbContext.SaveChangesAsync();
-                user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+                
 
 
 
@@ -178,10 +198,10 @@ namespace HalloDoc.Controllers
                 {
                     RequestTypeId = 3,
                     UserId = user2.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
+                    FirstName = user.CFirstName,
+                    LastName = user.CLastName,
+                    Email = user.CEmail,
+                    PhoneNumber = user.CMobile,
                     CreatedDate = DateTime.Now,
                     Symptoms = user.symptoms,
                     Roomsuite = user.roomsuite,
@@ -191,41 +211,269 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.Requests.Add(user3);
                 await _dbContext.SaveChangesAsync();
-                user3 = _dbContext.Requests.FirstOrDefault(a => a.Email == user.CEmail);
+               
 
-                Concierge user4 = new()
+
+                RequestClient user4 = new()
                 {
-                    ConciergeName = user.CFirstName + " " + user.CLastName,
+                    RequestId = user3.RequestId,
+                    FirstName = user.FirstName,
+                    LastName= user.LastName,
+                    PhoneNumber= user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode
+
+
+                };
+                _dbContext.RequestClients.Add(user4);
+                await _dbContext.SaveChangesAsync();
+                
+
+
+
+
+                Concierge user5 = new()
+                {
+                    ConciergeName = user.CFirstName,
                     Street = user.Street,
                     City = user.City,
                     State = user.State,
                     ZipCode = user.ZipCode,
                     CreatedDate = DateTime.Now
-                    
+
 
                 };
-                _dbContext.Concierges.Add(user4);
+                _dbContext.Concierges.Add(user5);
                 await _dbContext.SaveChangesAsync();
+                
 
-
-                RequestConcierge user5 = new()
+                RequestConcierge user6 = new()
                 {
 
                     RequestId = user3.RequestId,
-                    ConciergeId = user4.ConciergeId
-                    
+                    ConciergeId = user5.ConciergeId
+
 
                 };
-                _dbContext.RequestConcierges.Add(user5);
+                _dbContext.RequestConcierges.Add(user6);
                 await _dbContext.SaveChangesAsync();
-               
-
                 return RedirectToAction("Index", "AspNetUsers");
 
 
 
             }
                 else
+            {
+                return View(null);
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFamilyFriendRequest(AddFamilyFriendValidation user)
+        {
+
+            if (ModelState.IsValid)
+            {
+                AspNetUser user1 = new()
+                {
+                    UserName = user.FFirstName,
+                    PasswordHash = "abc@123",
+                    Email = user.FEmail,
+                    PhoneNumber = user.FMobile,
+                    Ip = "192.168.0.2",
+                    CreatedDate = DateTime.Now
+
+
+                };
+
+                _dbContext.AspNetUsers.Add(user1);
+                await _dbContext.SaveChangesAsync();
+
+                User user2 = new()
+                {
+                    AspNetUserId = user1.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Mobile = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode,
+                    CreatedBy = user1.Id,
+                    CreatedDate = DateTime.Now
+
+
+                };
+                _dbContext.Users.Add(user2);
+                await _dbContext.SaveChangesAsync();
+
+
+
+
+                Request user3 = new()
+                {
+                    RequestTypeId = 2,
+                    UserId = user2.UserId,
+                    FirstName = user.FFirstName,
+                    LastName = user.FLastName,
+                    Email = user.FEmail,
+                    PhoneNumber = user.FMobile,
+                    CreatedDate = DateTime.Now,
+                    Symptoms = user.symptoms,
+                    Roomsuite = user.roomsuite,
+                    Status = 1
+
+
+                };
+                _dbContext.Requests.Add(user3);
+                await _dbContext.SaveChangesAsync();
+
+
+
+                RequestClient user4 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode
+
+
+                };
+                _dbContext.RequestClients.Add(user4);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "AspNetUsers");
+
+            }
+            else
+            {
+                return View(null);
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBusinessRequest(AddBusinessRequest user)
+        {
+
+            if (ModelState.IsValid)
+            {
+                AspNetUser user1 = new()
+                {
+                    UserName = user.BFirstName,
+                    PasswordHash = "abc@123",
+                    Email = user.BEmail,
+                    PhoneNumber = user.BMobile,
+                    Ip = "192.168.0.2",
+                    CreatedDate = DateTime.Now
+
+
+                };
+
+                _dbContext.AspNetUsers.Add(user1);
+                await _dbContext.SaveChangesAsync();
+
+                User user2 = new()
+                {
+                    AspNetUserId = user1.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Mobile = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode,
+                    CreatedBy = user1.Id,
+                    CreatedDate = DateTime.Now
+
+
+                };
+                _dbContext.Users.Add(user2);
+                await _dbContext.SaveChangesAsync();
+
+
+
+
+                Request user3 = new()
+                {
+                    RequestTypeId = 4,
+                    UserId = user2.UserId,
+                    FirstName = user.BFirstName,
+                    LastName = user.BLastName,
+                    Email = user.BEmail,
+                    PhoneNumber = user.BMobile,
+                    CreatedDate = DateTime.Now,
+                    Symptoms = user.symptoms,
+                    Roomsuite = user.roomsuite,
+                    Status = 1
+
+
+                };
+                _dbContext.Requests.Add(user3);
+                await _dbContext.SaveChangesAsync();
+
+
+
+                RequestClient user4 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode
+
+
+                };
+                _dbContext.RequestClients.Add(user4);
+                await _dbContext.SaveChangesAsync();
+
+
+
+
+
+                Business user5 = new()
+                {
+                    Name = user.FirstName,
+                    Address1 = user.Street,
+                    Address2 = user.Street,
+                    City = user.City,
+                    ZipCode = user.ZipCode,
+                    PhoneNumber = user.BMobile,
+                    CreatedDate = DateTime.Now
+
+
+                };
+                _dbContext.Businesses.Add(user5);
+                await _dbContext.SaveChangesAsync();
+
+
+                RequestBusiness user6 = new()
+                {
+
+                    RequestId = user3.RequestId,
+                    BusinessId = user5.BusinessId
+
+
+                };
+                _dbContext.RequestBusinesses.Add(user6);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "AspNetUsers");
+
+
+
+            }
+            else
             {
                 return View(null);
             }

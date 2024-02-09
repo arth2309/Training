@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model HalloDoc.ModelView.AddFamilyFriendValidation
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,28 +51,33 @@
             <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> &lt; Back</a>
         </div>
         <div class="mainct shadow">
-            <form action="">
+            <form asp-controller="Patient" asp-action="CreateFamilyFriendRequest">
                 <p class="h4 ">family/friend information</p>
                 <div class="row ">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder=" Your first name">
+                        <input type="text" class="form-control" placeholder=" Your first name" asp-for="FFirstName">
+                        <span asp-validation-for="FFirstName" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder=" Your last name">
+                        <input type="text" class="form-control" placeholder=" Your last name" asp-for="FLastName">
+                        <span asp-validation-for="FLastName" class="text-danger"></span>
                     </div>
 
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="phone">
+                        <input type="text" class="form-control" placeholder="phone" asp-for="FMobile">
+                        <span asp-validation-for="FMobile" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="email" class="form-control" placeholder="Your email">
+                        <input type="email" class="form-control" placeholder="Your email" asp-for="FEmail">
+                        <span asp-validation-for="FEmail" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="Relation with patient">
+                        <input type="text" class="form-control" placeholder="Relation with patient" asp-for="Relation">
+                        <span asp-validation-for="Relation" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt "></div>
                 </div>
@@ -78,7 +85,7 @@
                 <div class="row ">
                     <div class="col">
                         <div class="form-group">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter brief details of symptons(optional)"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter brief details of symptons(optional)" asp-for="symptoms"></textarea>
 
                         </div>
                     </div>
@@ -86,10 +93,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="first name">
+                        <input type="text" class="form-control" placeholder="first name" asp-for="FirstName">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="last name">
+                        <input type="text" class="form-control" placeholder="last name" asp-for="LastName"> 
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
@@ -102,34 +111,40 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 wt  form-floating">
-                        <input type="tel" class="form-control" id="patientMobileNumber">
+                        <input type="tel" class="form-control" id="patientMobileNumber" asp-for="Mobile">
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
                 </div>
                 <p class="h4 vt">Patient Location</p>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control " placeholder="Street">
+                        <input type="text" class="form-control " placeholder="Street" asp-for="Street">
+                        <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="city">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="state">
-                    </div>
-                    <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="zip code">
+                        <input type="text" class="form-control" placeholder="city" asp-for="City"> 
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="Room#/Suite(optional)">
+                        <input type="text" class="form-control" placeholder="state" asp-for="State">
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12 col-lg-6 wt ">
+                        <input type="text" class="form-control" placeholder="zip code" asp-for="ZipCode">
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 wt ">
+                        <input type="text" class="form-control" placeholder="Room#/Suite(optional)" asp-for="roomsuite">
                     </div>
                     <div class="col-md-12 col-lg-6 wt ">
                     </div>
@@ -141,7 +156,7 @@
                 </div>
                 <div class="mbt wt ">
                     <div class="bt">
-                        <button type="button" class="btn btn-info">Submit</button>
+                        <button type="submit" class="btn btn-info">Submit</button>
                         <button type="button" class="btn btn-outline-info">Cancel</button>
                     </div>
                 </div>

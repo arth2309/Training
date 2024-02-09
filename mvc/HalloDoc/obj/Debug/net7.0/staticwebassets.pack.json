@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\PatientDashBoard.css",
+      "PackagePath": "staticwebassets\\css\\patient\\PatientDashBoard.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\Submit_request.css",
       "PackagePath": "staticwebassets\\css\\patient\\Submit_request.css"
     },
