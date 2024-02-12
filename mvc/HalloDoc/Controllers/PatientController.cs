@@ -3,6 +3,7 @@ using HalloDoc.DataModels;
 using HalloDoc.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Controllers
 {
@@ -49,9 +50,13 @@ namespace HalloDoc.Controllers
             return View();
         }
 
-        public IActionResult PatientDashBoard()
+       
+        public async Task<IActionResult> PatientDashBoard()
         {
-            return View();
+           
+
+            var applicationDbContext = _dbContext.Requests.Where(r=>r.UserId==1);
+            return View(await applicationDbContext.ToListAsync());
         }
         [HttpPost]
         public IActionResult PatientLogin(PatientLoginValidation user)
@@ -59,7 +64,8 @@ namespace HalloDoc.Controllers
             var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
             if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
             {
-                return RedirectToAction("SubmitRequest");
+                
+                return RedirectToAction("PatientDashBoard");
             }
             else
             {
@@ -70,6 +76,8 @@ namespace HalloDoc.Controllers
         public async Task<IActionResult> CreatePatientRequest(AddPatientRequest user)
         {
            
+               if(ModelState.IsValid)
+            {
                 AspNetUser user1 = new()
                 {
                     UserName = user.FirstName,
@@ -84,7 +92,7 @@ namespace HalloDoc.Controllers
 
                 _dbContext.AspNetUsers.Add(user1);
                 await _dbContext.SaveChangesAsync();
-               
+
 
                 User user2 = new()
                 {
@@ -104,9 +112,9 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.Users.Add(user2);
                 await _dbContext.SaveChangesAsync();
-                
 
-               
+
+
 
                 Request user3 = new()
                 {
@@ -117,35 +125,38 @@ namespace HalloDoc.Controllers
                     Email = user.Email,
                     PhoneNumber = user.Mobile,
                     CreatedDate = DateTime.Now,
-                    Symptoms = user.symptoms,
-                    Roomsuite=user.roomsuite,
-                    Status=1
-                    
+
+                    Status = 1
+
 
                 };
                 _dbContext.Requests.Add(user3);
                 await _dbContext.SaveChangesAsync();
-                
 
-            RequestClient user4 = new()
+
+                RequestClient user4 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode
+
+
+                };
+                _dbContext.RequestClients.Add(user4);
+                await _dbContext.SaveChangesAsync();
+
+
+                return RedirectToAction("Index", "AspNetUsers");
+            }
+               else
             {
-                RequestId = user3.RequestId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.Mobile,
-                Street = user.Street,
-                City = user.City,
-                State = user.State,
-                ZipCode = user.ZipCode
-
-
-            };
-            _dbContext.RequestClients.Add(user4);
-            await _dbContext.SaveChangesAsync();
-
-
-
-            return RedirectToAction("Index", "AspNetUsers");
+                return View(null);
+            }
             
             
 
@@ -203,8 +214,7 @@ namespace HalloDoc.Controllers
                     Email = user.CEmail,
                     PhoneNumber = user.CMobile,
                     CreatedDate = DateTime.Now,
-                    Symptoms = user.symptoms,
-                    Roomsuite = user.roomsuite,
+                   
                     Status = 1
 
 
@@ -323,8 +333,7 @@ namespace HalloDoc.Controllers
                     Email = user.FEmail,
                     PhoneNumber = user.FMobile,
                     CreatedDate = DateTime.Now,
-                    Symptoms = user.symptoms,
-                    Roomsuite = user.roomsuite,
+                    
                     Status = 1
 
 
@@ -411,8 +420,7 @@ namespace HalloDoc.Controllers
                     Email = user.BEmail,
                     PhoneNumber = user.BMobile,
                     CreatedDate = DateTime.Now,
-                    Symptoms = user.symptoms,
-                    Roomsuite = user.roomsuite,
+                   
                     Status = 1
 
 

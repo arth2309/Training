@@ -59,7 +59,7 @@ namespace HalloDoc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RequestId,RequestTypeId,UserId,FirstName,LastName,PhoneNumber,Email,Status,PhysicianId,ConfirmationNumber,CreatedDate,IsDeleted,ModifiedDate,DeclinedBy,IsUrgentEmailSent,LastWellnessDate,IsMobile,CallType,CompletedByPhysician,LastReservationDate,AcceptedDate,RelationName,CaseNumber,Ip,CaseTag,CaseTagPhysician,PatientAccountId,CreatedUserId,Symptoms,Roomsuite")] Request request)
+        public async Task<IActionResult> Create([Bind("RequestId,RequestTypeId,UserId,FirstName,LastName,PhoneNumber,Email,Status,PhysicianId,ConfirmationNumber,CreatedDate,IsDeleted,ModifiedDate,DeclinedBy,IsUrgentEmailSent,LastWellnessDate,IsMobile,CallType,CompletedByPhysician,LastReservationDate,AcceptedDate,RelationName,CaseNumber,Ip,CaseTag,CaseTagPhysician,PatientAccountId,CreatedUserId")] Request request)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace HalloDoc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RequestId,RequestTypeId,UserId,FirstName,LastName,PhoneNumber,Email,Status,PhysicianId,ConfirmationNumber,CreatedDate,IsDeleted,ModifiedDate,DeclinedBy,IsUrgentEmailSent,LastWellnessDate,IsMobile,CallType,CompletedByPhysician,LastReservationDate,AcceptedDate,RelationName,CaseNumber,Ip,CaseTag,CaseTagPhysician,PatientAccountId,CreatedUserId,Symptoms,Roomsuite")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("RequestId,RequestTypeId,UserId,FirstName,LastName,PhoneNumber,Email,Status,PhysicianId,ConfirmationNumber,CreatedDate,IsDeleted,ModifiedDate,DeclinedBy,IsUrgentEmailSent,LastWellnessDate,IsMobile,CallType,CompletedByPhysician,LastReservationDate,AcceptedDate,RelationName,CaseNumber,Ip,CaseTag,CaseTagPhysician,PatientAccountId,CreatedUserId")] Request request)
         {
             if (id != request.RequestId)
             {

@@ -74,3 +74,50 @@ header
     margin-left: auto;
     margin-right: 1%;
 }
+
+.irequest
+{
+    margin-left: auto;
+    margin-right: 1%;
+}
+
+@media only screen and (max-width:576px)
+{
+    .table
+    {
+        display: none;
+    }
+    .Logout
+    {
+        display: none;
+    }
+    .intro
+    {
+        display: none;
+    }
+    .request
+    {
+        display: none; 
+    }
+}
+
+@media only screen and (min-width:576px)
+{
+    .mobilect
+    {
+        display: none;
+    }
+    .ilogout
+    {
+        display: none;
+    }
+    .irequest
+    {
+        display: none; 
+    }
+    .imenu
+    {
+        display: none; 
+    }
+   
+}

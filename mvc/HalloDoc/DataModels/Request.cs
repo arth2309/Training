@@ -89,14 +89,6 @@ public partial class Request
 
     public int? CreatedUserId { get; set; }
 
-    [Column("symptoms")]
-    [StringLength(512)]
-    public string? Symptoms { get; set; }
-
-    [Column("roomsuite")]
-    [StringLength(128)]
-    public string? Roomsuite { get; set; }
-
     [ForeignKey("PhysicianId")]
     [InverseProperty("Requests")]
     public virtual Physician? Physician { get; set; }
