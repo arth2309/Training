@@ -51,8 +51,8 @@
             <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> &lt; Back</a>
         </div>
         <div class="mainct shadow">
-            <form asp-controller="Patient" asp-action="CreateFamilyFriendRequest">
-                <p class="h4 ">family/friend information</p>
+            <form asp-controller="Patient" asp-action="CreateFamilyFriendRequest" enctype="multipart/form-data">
+                <p class="h4 ">Family/friend information</p>
                 <div class="row ">
                     <div class="col-md-12 col-lg-6 wt ">
                         <input type="text" class="form-control" placeholder=" Your first name" asp-for="FFirstName">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt ">
-                        <input type="text" class="form-control" placeholder="phone" asp-for="FMobile">
+                        <input type="tel" class="form-control" id="patientMobileNumber1" asp-for="FMobile">
                         <span asp-validation-for="FMobile" class="text-danger"></span>
                     </div>
                     <div class="col-md-12 col-lg-6 wt ">
@@ -151,7 +151,7 @@
                 </div>
                 <p class="h4 vt">(optional) add photo or documents</p>
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02">
+                    <input type="file" class="form-control" id="inputGroupFile02" asp-for="File">
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
                 </div>
                 <div class="mbt wt ">
@@ -171,6 +171,14 @@
     <script>
         const phoneInputField = document.getElementById("patientMobileNumber");
         const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
+
+    <script>
+        const phoneInputField1 = document.getElementById("patientMobileNumber1");
+        const phoneInput1 = window.intlTelInput(phoneInputField1, {
             utilsScript:
                 "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });

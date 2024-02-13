@@ -55,7 +55,7 @@
             <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> &lt; Back</a>
         </div>
         <div class="mainct shadow">
-            <form asp-controller="Patient" asp-action="CreatePatientRequest">
+            <form asp-controller="Patient" asp-action="CreatePatientRequest" enctype="multipart/form-data">
                 <p class="h4">Patient information</p>
                 <div class="row ">
                     <div class="col">
@@ -133,7 +133,7 @@
                 </div>
                 <p class="h4 vt">(optional) add photo or documents</p>
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02">
+                    <input type="file" class="form-control" id="inputGroupFile02" asp-for="File">
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
                 </div>
                 <div class="mbt wt">

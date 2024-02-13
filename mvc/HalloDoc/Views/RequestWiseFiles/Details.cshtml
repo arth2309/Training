@@ -1,0 +1,90 @@
+﻿@model HalloDoc.DataModels.RequestWiseFile
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RequestWiseFile</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DocType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DocType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsFrontSide)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsFrontSide)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsCompensation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsCompensation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ip)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ip)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsFinalize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsFinalize)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsPatientRecords)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsPatientRecords)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Admin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Admin.AdminId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Physician)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Physician.PhysicianId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Request)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Request.RequestId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.RequestWiseFileId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

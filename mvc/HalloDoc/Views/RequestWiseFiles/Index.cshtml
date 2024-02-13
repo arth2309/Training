@@ -1,0 +1,101 @@
+﻿@model IEnumerable<HalloDoc.DataModels.RequestWiseFile>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFrontSide)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompensation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFinalize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPatientRecords)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Admin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Physician)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFrontSide)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompensation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFinalize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPatientRecords)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Admin.AdminId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Physician.PhysicianId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Request.RequestId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RequestWiseFileId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RequestWiseFileId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RequestWiseFileId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

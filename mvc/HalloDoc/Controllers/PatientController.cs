@@ -4,6 +4,8 @@ using HalloDoc.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HalloDoc.Controllers
 {
@@ -53,10 +55,13 @@ namespace HalloDoc.Controllers
        
         public async Task<IActionResult> PatientDashBoard()
         {
-           
-
-            var applicationDbContext = _dbContext.Requests.Where(r=>r.UserId==1);
-            return View(await applicationDbContext.ToListAsync());
+            return View();
+            //var applicationDbContext = _dbContext.Requests;
+            //return View(await applicationDbContext.ToListAsync());
+        }
+        public IActionResult PatientDashBoardDoc()
+        {
+            return View();
         }
         [HttpPost]
         public IActionResult PatientLogin(PatientLoginValidation user)
@@ -64,8 +69,29 @@ namespace HalloDoc.Controllers
             var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
             if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
             {
-                
-                return RedirectToAction("PatientDashBoard");
+                User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == userFromDb.Id);
+                var request = _dbContext.Requests.ToList();
+                var request1 = request.Where(r => r.UserId == users.UserId);
+                var requestview = request1.Select(p=> new ShowDetails
+                {
+                    RequestId = p.RequestId,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    CreatedDate = p.CreatedDate,
+                    Status = p.Status             
+                }
+                );
+
+                if(requestview!=null)
+                {
+                    return View("PatientDashboard", requestview.ToList());
+                }
+                else
+                {
+                    return View("PatientDashboard");
+                }
+
+
             }
             else
             {
@@ -150,8 +176,30 @@ namespace HalloDoc.Controllers
                 _dbContext.RequestClients.Add(user4);
                 await _dbContext.SaveChangesAsync();
 
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                FileInfo fileInfo = new FileInfo(user.File.FileName);
+                string fileName = user.File.FileName + fileInfo.Extension;
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    user.File.CopyTo(stream);
+                }
+
+                RequestWiseFile user5 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FileName = fileNameWithPath,
+                    CreatedDate = DateTime.Now
+                };
+
+                _dbContext.RequestWiseFiles.Add(user5);
+                await _dbContext.SaveChangesAsync();
+
 
                 return RedirectToAction("Index", "AspNetUsers");
+
             }
                else
             {
@@ -358,6 +406,28 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.RequestClients.Add(user4);
                 await _dbContext.SaveChangesAsync();
+
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                FileInfo fileInfo = new FileInfo(user.File.FileName);
+                string fileName = user.File.FileName + fileInfo.Extension;
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    user.File.CopyTo(stream);
+                }
+
+                RequestWiseFile user5 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FileName = fileNameWithPath,
+                    CreatedDate = DateTime.Now
+                };
+
+                _dbContext.RequestWiseFiles.Add(user5);
+                await _dbContext.SaveChangesAsync();
+
                 return RedirectToAction("Index", "AspNetUsers");
 
             }
@@ -490,4 +560,5 @@ namespace HalloDoc.Controllers
 
     }
 }
+
 

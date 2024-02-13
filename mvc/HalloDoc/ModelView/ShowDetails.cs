@@ -9,18 +9,18 @@ namespace HalloDoc.ModelView
 {
     public class ShowDetails
     {
-        public int AspNetUserId { get; set; }
-        public int UserId { get; set; }
+        public int RequestId { get; set; }
 
-        [StringLength(256, MinimumLength = 8, ErrorMessage = "please enter atleast 8 characters")]
-        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "please enter number and special symbol")]
-        [Required(ErrorMessage = "please enter password")]
-        public string? PasswordHash { get; set; }
+        [StringLength(100)]
+        public string? FirstName { get; set; }
 
-        [StringLength(256)]
-        [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "please enter valid Email")]
-        [Required(ErrorMessage = "please enter email")]
-        public string? Email { get; set; }
+        [StringLength(100)]
+        public string? LastName { get; set; }
+
+        public short Status { get; set; }
+
+        [Column(TypeName = "timestamp without time zone")]
+        public DateTime CreatedDate { get; set; }
 
     }
 }

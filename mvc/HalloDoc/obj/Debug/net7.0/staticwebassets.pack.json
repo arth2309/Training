@@ -5,12 +5,24 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Fig56. Patient site 1.png.png",
+      "PackagePath": "staticwebassets\\Files\\Fig56. Patient site 1.png.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-01-19 160841.png.png",
+      "PackagePath": "staticwebassets\\Files\\Screenshot 2024-01-19 160841.png.png"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\PatientDashBoard.css",
       "PackagePath": "staticwebassets\\css\\patient\\PatientDashBoard.css"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\PatientDashBoardDoc.css",
+      "PackagePath": "staticwebassets\\css\\patient\\PatientDashBoardDoc.css"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\Submit_request.css",

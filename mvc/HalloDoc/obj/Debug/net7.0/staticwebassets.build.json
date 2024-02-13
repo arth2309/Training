@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ncz852Kin0x4zc9Hhq1HJnzgd9xD8g+irIQ8NBdZaCM=",
+  "Hash": "Ef/5Q4Tf2OWxOOBtW52FP8blsQUHTypmdw83MlXy/aY=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -153,6 +153,23 @@
       "OriginalItemSpec": "wwwroot\\css\\patient\\PatientDashBoard.css"
     },
     {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\PatientDashBoardDoc.css",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "css/patient/PatientDashBoardDoc.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\patient\\PatientDashBoardDoc.css"
+    },
+    {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\Submit_request.css",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -202,6 +219,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Fig56. Patient site 1.png.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/Fig56. Patient site 1.png.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\Fig56. Patient site 1.png.png"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-01-19 160841.png.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/Screenshot 2024-01-19 160841.png.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\Screenshot 2024-01-19 160841.png.png"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\images\\11116016_415.jpg",

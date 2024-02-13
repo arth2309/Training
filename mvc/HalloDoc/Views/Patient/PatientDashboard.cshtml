@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HalloDoc.DataModels.Request>
+﻿@model List<HalloDoc.ModelView.ShowDetails>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +54,13 @@
         </div>
         <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
         <div class="right">
-            <div class="intro"><p>Welcome:</p></div>
-            <div class="s intro"><span><b>test1</b></span></div>
+            <div class="intro"><p></p></div>
+            <div class="s intro">
+                Welcome
+                <span><b>
+                       @Model[0].FirstName
+                       @Model[0].LastName
+            </b></span></div>
             <div class="ilogout">
                 <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
             </div>
@@ -91,11 +96,11 @@
             <thead class="table-light">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.CreatedDate)
+                       Created Date
                     </th>
                     
                     <th>
-                        @Html.DisplayNameFor(model => model.Status)
+                       status
                     </th>
                     
 
