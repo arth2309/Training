@@ -53,45 +53,71 @@ namespace HalloDoc.Controllers
         }
 
        
-        public async Task<IActionResult> PatientDashBoard()
+        
+        public IActionResult PatientDashBoard(int id)
+        {
+            User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId ==id);
+            Request req = _dbContext.Requests.FirstOrDefault(a => a.UserId == users.UserId);
+            var request = _dbContext.Requests.ToList();
+            var request1 = request.Where(r => r.UserId == users.UserId);
+            var list = _dbContext.RequestWiseFiles.ToList();
+            var doc = list.Count(a => a.RequestId == req.RequestId);
+
+            var requestview = request1.Select(p => new ShowDetails
+            {
+                RequestId = p.RequestId,
+                FirstName = p.FirstName,
+                LastName = p.LastName,
+                CreatedDate = p.CreatedDate,
+                Status = p.Status,
+                count = doc
+
+            }
+            );
+
+            return View("PatientDashBoard",requestview.ToList());
+        }
+        public IActionResult PatientDashBoardDoc(int id)
+        {
+            List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
+            
+            List<ShowDocuments> showDocuments = new List<ShowDocuments>();
+            for(int i=0;i<requestWiseFiles.Count;i++) 
+            {
+                String uploader;
+                Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
+                uploader = request.FirstName + request.LastName;
+                //RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
+                RequestWiseFile requestWiseFile = requestWiseFiles[i];
+                ShowDocuments showDocuments1 = new()
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    FileName = Path.GetFileName(requestWiseFile.FileName),
+                    uploader = uploader,
+                    UploadDate = requestWiseFile.CreatedDate
+
+                };
+                showDocuments.Add( showDocuments1 );
+
+            }
+
+            return View(showDocuments);
+        }
+
+        public IActionResult UserProfile()
         {
             return View();
-            //var applicationDbContext = _dbContext.Requests;
-            //return View(await applicationDbContext.ToListAsync());
         }
-        public IActionResult PatientDashBoardDoc()
-        {
-            return View();
-        }
+
         [HttpPost]
         public IActionResult PatientLogin(PatientLoginValidation user)
         {
             var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
             if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
             {
-                User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == userFromDb.Id);
-                var request = _dbContext.Requests.ToList();
-                var request1 = request.Where(r => r.UserId == users.UserId);
-                var requestview = request1.Select(p=> new ShowDetails
-                {
-                    RequestId = p.RequestId,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    CreatedDate = p.CreatedDate,
-                    Status = p.Status             
-                }
-                );
 
-                if(requestview!=null)
-                {
-                    return View("PatientDashboard", requestview.ToList());
-                }
-                else
-                {
-                    return View("PatientDashboard");
-                }
-
-
+                return RedirectToAction("PatientDashBoard", "Patient", new{ id = userFromDb.Id});
             }
             else
             {
@@ -175,27 +201,30 @@ namespace HalloDoc.Controllers
                 };
                 _dbContext.RequestClients.Add(user4);
                 await _dbContext.SaveChangesAsync();
-
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                FileInfo fileInfo = new FileInfo(user.File.FileName);
-                string fileName = user.File.FileName + fileInfo.Extension;
-
-                string fileNameWithPath = Path.Combine(path, fileName);
-
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                if(user.File!=null)
                 {
-                    user.File.CopyTo(stream);
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    FileInfo fileInfo = new FileInfo(user.File.FileName);
+                    string fileName = user.File.FileName + fileInfo.Extension;
+
+                    string fileNameWithPath = Path.Combine(path, fileName);
+
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        user.File.CopyTo(stream);
+                    }
+
+                    RequestWiseFile user5 = new()
+                    {
+                        RequestId = user3.RequestId,
+                        FileName = fileNameWithPath,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    _dbContext.RequestWiseFiles.Add(user5);
+                    await _dbContext.SaveChangesAsync();
                 }
-
-                RequestWiseFile user5 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FileName = fileNameWithPath,
-                    CreatedDate = DateTime.Now
-                };
-
-                _dbContext.RequestWiseFiles.Add(user5);
-                await _dbContext.SaveChangesAsync();
+                
 
 
                 return RedirectToAction("Index", "AspNetUsers");

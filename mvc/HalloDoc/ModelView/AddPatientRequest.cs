@@ -53,7 +53,7 @@ namespace HalloDoc.ModelView
         public string? roomsuite { get; set; }
 
         
-        public IFormFile File { get; set; }
+        public IFormFile? File { get; set; }
 
 
 

@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/css/patient/create_request.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/patient/create_request.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
@@ -132,8 +132,12 @@
                     </div>
                 </div>
                 <p class="h4 vt">(optional) add photo or documents</p>
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02" asp-for="File">
+                <div class="input-group mb-3 mt-1">
+                    <input type="file" class="form-control" id="file-picker" asp-for="File">
+                    <button class="btn btn-info">
+                        <i class="bi bi-cloud-arrow-up"></i>
+                        Upload
+                    </button>
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
                 </div>
                 <div class="mbt wt">

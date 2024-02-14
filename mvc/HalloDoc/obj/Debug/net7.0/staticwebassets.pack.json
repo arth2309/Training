@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\Files\\Screenshot 2024-01-19 160841.png.png"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Session 2 (1).txt.txt",
+      "PackagePath": "staticwebassets\\Files\\Session 2 (1).txt.txt"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
@@ -27,6 +31,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\Submit_request.css",
       "PackagePath": "staticwebassets\\css\\patient\\Submit_request.css"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\UserProfile.css",
+      "PackagePath": "staticwebassets\\css\\patient\\UserProfile.css"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\create_request.css",

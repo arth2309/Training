@@ -163,6 +163,16 @@ header
     z-index: 14;
 }
 
+input[type=file]::-webkit-file-upload-button 
+{
+    display: none;
+}
+
+.input-group-text 
+{
+    display: none;
+}
+
     
 
 

@@ -50,18 +50,36 @@ header
 
 .mainct
 {
+    background-color: white;
     width: 60%;
     margin-left: 20%;
-    margin-top: 12px;
-}
-
-.sp
-{
     padding-left: 12px;
     padding-right: 12px;
+    border-radius: 12px;
+    margin-top: 12px;
+    padding-top:12px;
+    padding-bottom:12px;
 }
 
+.wt
+{
+    padding-top: 12px;
+}
 
+.vt
+{
+    padding-top: 15px;
+}
+
+.bt
+{
+    margin-left: auto;
+}
+
+.iti {
+    width: 100%;
+    z-index: 14;
+}
 
 @media only screen and (max-width:576px)
 {
@@ -74,24 +92,13 @@ header
     {
         display: none;
     }
-    .table-responsive
-    {
-        display: none;
-    }
+   
     .he
     {
         margin-left: 5%;
         width: 90%;
     }
-    .mainct
-    {
-        margin-left: 5%;
-        width: 90%;
-    }
-
-    .down {
-        display: none;
-    }
+    
    
 }
 
@@ -107,14 +114,6 @@ header
     {
         display: none; 
     }
-    .mobilemct
-    {
-        display: none; 
-    }
-
-    .idown 
-    {
-        display: none;
-    }
+   
    
 }

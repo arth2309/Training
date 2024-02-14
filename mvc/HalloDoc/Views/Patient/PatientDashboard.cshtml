@@ -34,7 +34,7 @@
                 </div>
                 <div class="modal-body">
                     <div style="display: flex; justify-content: center;">
-                        <button type="button" class="btn btn-info">me</button>
+                        <button asp-controller="patient" asp-action="CreatePatientRequest" type="button" class="btn btn-info">me</button>
                         <button type="button" class="btn btn-outline-info">Someone else</button>
                     </div>
                     <br>
@@ -62,10 +62,10 @@
                        @Model[0].LastName
             </b></span></div>
             <div class="ilogout">
-                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+                <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientLogin"><button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button></a>
             </div>
             <div class="Logout">
-                <button type="button" class="btn btn-outline-info">Logout</button>
+                <button  type="button" class="btn btn-outline-info">Logout</button>
             </div>
             <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
         </div>
@@ -102,6 +102,10 @@
                     <th>
                        status
                     </th>
+
+                    <th>
+                        document
+                    </th>
                     
 
                 </tr>
@@ -116,7 +120,16 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
-                        
+                        <td>
+                            @if(@item.count == 0)
+                            {
+                                
+                            }
+                            else
+                            {
+                                <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientDashboardDoc" asp-route-id="@item.RequestId"> <button type="button" class="btn btn-outline-info">@item.count Document</button></a>
+                            }
+                        </td>
                         
                     </tr>
                 }
