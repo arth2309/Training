@@ -81,6 +81,17 @@ header
     z-index: 14;
 }
 
+ .iti.form-control
+ {
+        height: 58px;
+  }
+
+.form-floating > label {
+    left: 12px;
+    top: 12px;
+    background-color: transparent;
+}
+
 @media only screen and (max-width:576px)
 {
     

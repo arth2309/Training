@@ -1,4 +1,7 @@
-﻿using HalloDoc.DataContext;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Net;
+using HalloDoc.DataContext;
 using HalloDoc.DataModels;
 using HalloDoc.ModelView;
 using Microsoft.AspNetCore.Mvc;
@@ -45,24 +48,30 @@ namespace HalloDoc.Controllers
         }
         public IActionResult CreateConciergeRequest()
         {
+            
             return View();
+            
         }
         public IActionResult CreateBusinessRequest()
         {
+            
             return View();
         }
 
-       
         
-        public IActionResult PatientDashBoard(int id)
+         
+        
+        
+        public IActionResult PatientDashBoard()
         {
-            User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId ==id);
+            int id = Int32.Parse(Request.Cookies["id"]);
+            User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == id);
             Request req = _dbContext.Requests.FirstOrDefault(a => a.UserId == users.UserId);
             var request = _dbContext.Requests.ToList();
             var request1 = request.Where(r => r.UserId == users.UserId);
             var list = _dbContext.RequestWiseFiles.ToList();
             var doc = list.Count(a => a.RequestId == req.RequestId);
-
+            
             var requestview = request1.Select(p => new ShowDetails
             {
                 RequestId = p.RequestId,
@@ -73,9 +82,19 @@ namespace HalloDoc.Controllers
                 count = doc
 
             }
+            
             );
 
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Secure = true;
+            cookieOptions.Expires = DateTime.Now.AddMinutes(30);
+            Response.Cookies.Append("UserId", users.UserId.ToString(), cookieOptions);
+
+
+
+
             return View("PatientDashBoard",requestview.ToList());
+            
         }
         public IActionResult PatientDashBoardDoc(int id)
         {
@@ -107,7 +126,47 @@ namespace HalloDoc.Controllers
 
         public IActionResult UserProfile()
         {
-            return View();
+            int id = Int32.Parse(Request.Cookies["UserId"]);
+            
+            
+            User user = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
+            ShowProfile showProfile = new()
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Mobile = user.Mobile,
+                Street = user.Street,   
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode
+            };
+
+            
+
+            
+
+            return View(showProfile);
+        }
+        [HttpPost]
+        public IActionResult UserProfile(ShowProfile up)
+        {
+            User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == up.UserId);
+            user2.FirstName = up.FirstName;
+            
+            user2.LastName = up.LastName;
+            
+            user2.Email = up.Email;
+
+            user2.Mobile = up.Mobile;
+            user2.Street = up.Street;
+            user2.City = up.City;
+            user2.State = up.State;
+            user2.ZipCode = up.ZipCode;
+            _dbContext.Users.Update(user2);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index","Users");
         }
 
         [HttpPost]
@@ -116,8 +175,11 @@ namespace HalloDoc.Controllers
             var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
             if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
             {
-
-                return RedirectToAction("PatientDashBoard", "Patient", new{ id = userFromDb.Id});
+                CookieOptions options = new CookieOptions();
+                options.Secure = true;
+                options.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Append("Id", userFromDb.Id.ToString(), options);
+                return RedirectToAction("PatientDashBoard", "Patient");
             }
             else
             {
@@ -247,10 +309,10 @@ namespace HalloDoc.Controllers
             {
                 AspNetUser user1 = new()
                 {
-                    UserName = user.CFirstName,
+                    UserName = user.FirstName,
                     PasswordHash = "abc@123",
-                    Email = user.CEmail,
-                    PhoneNumber = user.CMobile,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
                     Ip = "192.168.0.2",
                     CreatedDate = DateTime.Now
 

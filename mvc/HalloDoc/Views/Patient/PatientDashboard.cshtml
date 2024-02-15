@@ -71,12 +71,12 @@
         </div>
     </header>
 
-    <ul class="nav nav-underline shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
+    <ul class="nav nav-tabs shadow"  style="padding-left: 2%;background-color: white;">
         <li class="nav-item">
-            <a class="nav-link " style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
+            <a class="nav-link" href="#dashboard" style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Profile</b></a>
+            <a class="nav-link" asp-controller="Patient" asp-action="UserProfile" style="color: rgb(0, 0, 0);"><b>Profile</b></a>
         </li>
 
     </ul>
@@ -92,7 +92,7 @@
             </div>
             </div>
         
-        <table class="table ">
+        <table class="table" >
             <thead class="table-light">
                 <tr>
                     <th>

@@ -1,13 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@model HalloDoc.ModelView.ShowProfile
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <link href="~/css/patient/userprofile.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script>
@@ -21,7 +24,7 @@
             }
         }
     </script>
-
+    
 
     <title>Document</title>
 </head>
@@ -40,18 +43,18 @@
                 <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
             </div>
             <div class="Logout">
-                <button type="button" class="btn btn-outline-info">Logout</button>
+                <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientLogin"><button type="button" class="btn btn-outline-info">Logout</button></a>
             </div>
             <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
         </div>
     </header>
 
-    <ul class="nav nav-underline shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
+    <ul class="nav nav-tabs shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
         <li class="nav-item">
-            <a class="nav-link " style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
+            <a class="nav-link" asp-controller="Patient" asp-action="PatientDashBoard" style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Profile</b></a>
+            <a class="nav-link" asp-controller="Patient" asp-action="UserProfile" style="color: rgb(0, 0, 0);"><b>Profile</b></a>
         </li>
 
     </ul>
@@ -64,74 +67,82 @@
         </div>
     </div>
     <div class="mainct shadow">
-        <form action="">
+        <form asp-controller="Patient" asp-action="UserProfile">
             <p class="h4 ">General information</p>
 
             <div class="row ">
-                <div class="col-md-12 col-lg-6 wt ">
-                    <input type="text" class="form-control" placeholder="first name">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="first name" asp-for="FirstName">
+                    <label for="floatingInput">First </label>
+
                 </div>
-                <div class="col-md-12 col-lg-6 wt">
-                    <input type="text" class="form-control" placeholder="last name">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="last name" asp-for="LastName">
+                    <label for="floatingInput">Last Name</label>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-6 wt">
-                    <input type="date" class="form-control">
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input disabled type="date" class="form-control" id="floatingInput">
+                    <label for="floatingInput">Date of Birth</label>
                 </div>
-                <div class="col-md-12 col-lg-6 wt"></div>
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3"></div>
             </div>
             <p class="h4 vt">Contact information</p>
             <div class="row">
-                <div class="col-md-12 col-lg-2 wt">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Type</option>
-                        <option value="1">Mobile</option>
+                <div class="col-md-12 col-lg-2 wt form-floating mb-3">
+                    <select class="form-select" id="floatingInput" aria-label="Default select example">
+                        <option selected>Mobile</option>
                         <option value="2">Phone</option>
                         <option value="3">Landline</option>
                     </select>
+                    <label for="floatingInput">Type</label>
                 </div>
-                <div class="col-md-12 col-lg-4 wt">
-                    <input type="tel" class="form-control" id="patientMobileNumber">
+                <div class="col-md-12 col-lg-4 wt form-floating mb-3">
+                    <input disabled type="tel" class="form-control" style="height:58px" id="patientMobileNumber" asp-for="Mobile">
                 </div>
-                <div class="col-md-12 col-lg-6 wt">
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail1"
-                               aria-describedby="emailHelp" placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">
-                            We'll never share your email with
-                            anyone else.
-                        </small>
-                    </div>
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                  
+                        <input disabled type="email" class="form-control" id="floatingInput"
+                               aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+                    <label for="floatingInput">Email</label>
+                    
                 </div>
 
             </div>
             <p class="h4 vt">Location information</p>
             <div class="row">
-                <div class="col-md-12 col-lg-6 wt">
-                    <input type="text" class="form-control " placeholder="Street">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
+                    <label for="floatingInput">Street</label>
                 </div>
-                <div class="col-md-12 col-lg-6 wt">
-                    <input type="text" class="form-control" placeholder="city">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="city" asp-for="City">
+                    <label for="floatingInput">City</label>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-6 wt">
-                    <input type="text" class="form-control" placeholder="state">
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input disabled type="text" class="form-control" placeholder="state" id="floatingInput" asp-for="State">
+                    <label for="floatingInput">State</label>
                 </div>
-                <div class="col-md-12 col-lg-4 wt">
-                    <input type="text" class="form-control" placeholder="zip code">
+                <div class="col-md-12 col-lg-4 wt form-floating mb-3">
+                    <input disabled type="text" class="form-control" placeholder="zip code" id="floatingInput" asp-for="ZipCode">
+                    <label for="floatingInput">ZipCode</label>
 
                 </div>
-                <div class="col-md-12 col-lg-2 wt">
+                <div class="col-md-12 col-lg-2 wt form-floating mb-3">
                     <button type="button" class="btn btn-outline-info"><i class="bi bi-geo-alt"></i> Map</button>
                 </div>
             </div>
-
+            <input disabled type="text" class="form-control d-none" id="floatingInput" placeholder="last name" asp-for="UserId">
             <div class="d-flex wt">
                 <div class="bt">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary" id="enableButton">
                         Edit
+                    </button>
+                    <button type="submit" class="btn btn-primary" >
+                        Submit
                     </button>
 
                 </div>
@@ -144,6 +155,13 @@
         const phoneInput = window.intlTelInput(phoneInputField, {
             utilsScript:
                 "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        document.getElementById("enableButton").addEventListener("click", function () {
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].removeAttribute("disabled");
+            }
         });
     </script>
 
