@@ -70,7 +70,16 @@ namespace HalloDoc.ModelView
         [Required(ErrorMessage = "this field is required")]
         public string? Mobile { get; set; }
 
-       
+        [StringLength(256, MinimumLength = 8, ErrorMessage = "please enter atleast 8 characters")]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "please enter number and special symbol")]
+        public string? PasswordHash { get; set; }
+
+
+        [StringLength(256, MinimumLength = 8, ErrorMessage = "please enter atleast 8 characters")]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "please enter number and special symbol")]
+        public string? PasswordHashC { get; set; }
+
+
 
         [StringLength(512)]
         public string? symptoms { get; set; }

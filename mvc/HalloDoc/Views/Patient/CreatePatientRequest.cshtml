@@ -10,6 +10,8 @@
     <link href="~/css/patient/create_request.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/js/email.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -86,9 +88,9 @@
                 <p class="h4 vt">Patient Contact information</p>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt form-floating">
-                        
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+
+                        <input type="email" class="form-control email1" id="exampleInputEmail1"
+                               aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email" onfocusout="checkemail()">
                         <label for="floatingInput">Email</label>
                             <span asp-validation-for="Email" class="text-danger"></span>
                            
@@ -100,6 +102,18 @@
                             <input type="tel" class="form-control" id="patientMobileNumber" style="height:58px" asp-for="Mobile">
                             <span asp-validation-for="Mobile" class="text-danger"></span>
                             </div>
+                        
+                    </div>
+                </div>
+                <div class="row" style="display:none" id="input-password">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="password" class="form-control" placeholder="first name" id="floatingInput" asp-for="PasswordHash">
+                        <label for="floatingInput">Password</label>
+                        
+                    </div>
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="password" class="form-control " placeholder="first name" id="floatingInput" asp-for="PasswordHashC" >
+                        <label for="floatingInput">Confirm Password</label>
                         
                     </div>
                 </div>

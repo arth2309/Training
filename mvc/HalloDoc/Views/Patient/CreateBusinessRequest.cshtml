@@ -8,6 +8,8 @@
     <link href="~/css/patient/create_request.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/js/email.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
@@ -52,101 +54,127 @@
             <form asp-controller="Patient" asp-action="CreateBusinessRequest">
                 <p class="h4 ">Business information</p>
                 <div class="row ">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder=" Your first name" asp-for="BFirstName">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder=" First name" asp-for="BFirstName">
+                        <label for="floatingInput">First Name</label>
                         <span asp-validation-for="BFirstName" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder=" Your last name" asp-for="BLastName">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Last name" asp-for="BLastName">
+                        <label for="floatingInput">Last Name</label>
                         <span asp-validation-for="BLastName" class="text-danger"></span>
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="tel" class="form-control" id="patientMobileNumber" asp-for="BMobile">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="tel" class="form-control" style="height:58px" id="patientMobileNumber" asp-for="BMobile">
                         <span asp-validation-for="BMobile" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="email" class="form-control" placeholder="Your email" asp-for="BEmail">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="BEmail">
+                        <label for="floatingInput">Email</label>
                         <span asp-validation-for="BEmail" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="Business/property name" asp-for="BusinessName">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Business/property name" asp-for="BusinessName">
+                        <label for="floatingInput">Business/Property Name</label>
                         <span asp-validation-for="BusinessName" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="Case(optional)" asp-for="Case">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Case(optional)" asp-for="Case">
+                        <label for="floatingInput">Case(optional)</label>
                     </div>
                 </div>
                 <p class="h4 vt">Patient information</p>
                 <div class="row ">
                     <div class="col">
                         <div class="form-group">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter brief details of symptons(optional)" asp-for="symptoms"></textarea>
+                            <textarea class="form-control" id="floatingInput" id="exampleFormControlTextarea1" rows="3" placeholder="Enter brief details of symptons(optional)" asp-for="symptoms"></textarea>
 
                         </div>
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="first name" asp-for="FirstName">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="first name" asp-for="FirstName">
+                        <label for="floatingInput">First Name</label>
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="last name" asp-for="LastName" >
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="last name" asp-for="LastName" >
+                        <label for="floatingInput">Last Name</label>
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="date" class="form-control">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="date" class="form-control" id="floatingInput">
+                        <label for="floatingInput">Date of Birth</label>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt"></div>
+                    <div class="col-md-12 col-lg-6 wt form-floating"></div>
                 </div>
                 <p class="h4 vt">Patient Contact information</p>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                       
+                            <input type="email" class="form-control email1" id="floatingInput"  aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email" onfocusout="checkemail()">
+                        <label for="floatingInput">Email</label>
                             <span asp-validation-for="Email" class="text-danger"></span>
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
+                            
+                        
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="tel" class="form-control" id="patientMobileNumber1" asp-for="Mobile">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="tel" class="form-control" style="height:58px" id="patientMobileNumber1" asp-for="Mobile">
                         <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row" style="display:none" id="input-password">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="password" class="form-control" placeholder="first name" id="floatingInput" asp-for="PasswordHash">
+                        <label for="floatingInput">Password</label>
+
+                    </div>
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="password" class="form-control " placeholder="first name" id="floatingInput" asp-for="PasswordHashC">
+                        <label for="floatingInput">Confirm Password</label>
+
                     </div>
                 </div>
                 <p class="h4 vt">Patient Location</p>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control " placeholder="Street" asp-for="Street">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
+                        <label for="floatingInput">Street</label>
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="city" asp-for="City">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="city" asp-for="City">
+                        <label for="floatingInput">City</label>
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="state" asp-for="State">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="state" asp-for="State">
+                        <label for="floatingInput">State</label>
                         <span asp-validation-for="State" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="zip code" asp-for="ZipCode">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="zip code" asp-for="ZipCode">
+                        <label for="floatingInput">ZipCode</label>
                         <span asp-validation-for="ZipCode" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6 wt">
-                        <input type="text" class="form-control" placeholder="Room#/Suite(optional)" asp-for="roomsuite">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Room#/Suite(optional)" asp-for="roomsuite">
+                        <label for="floatingInput">Room#/Suite(optional)</label>
                     </div>
-                    <div class="col-md-12 col-lg-6 wt">
+                    <div class="col-md-12 col-lg-6 wt form-floating">
                     </div>
                 </div>
                 <div class="mbt wt">

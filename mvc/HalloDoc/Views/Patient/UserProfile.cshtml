@@ -18,11 +18,37 @@
             if (document.getElementById('hide').classList.contains('d-none')) {
                 document.getElementById('hide').classList.remove('d-none');
 
+
             }
             else {
                 document.getElementById('hide').classList.add('d-none');
             }
         }
+        function toggle1() {
+            if (document.getElementById('hide1').classList.contains('d-none')) {
+                document.getElementById('hide1').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('hide1').classList.add('d-none');
+            }
+            if (document.getElementById('hide2').classList.contains('d-none')) {
+                document.getElementById('hide2').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('hide2').classList.add('d-none');
+            }
+            if (document.getElementById('enableButton').classList.contains('d-none')) {
+                document.getElementById('enableButton').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('enableButton').classList.add('d-none');
+            }
+        }
+       
+                
     </script>
     
 
@@ -72,18 +98,18 @@
 
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="first name" asp-for="FirstName">
+                    <input disabled type="text" class="form-control dis"  id="floatingInput" placeholder="first name" asp-for="FirstName">
                     <label for="floatingInput">First </label>
 
                 </div>
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="last name" asp-for="LastName">
+                    <input disabled type="text" class="form-control dis"  id="floatingInput" placeholder="last name" asp-for="LastName">
                     <label for="floatingInput">Last Name</label>
                 </div>
             </div>
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input disabled type="date" class="form-control" id="floatingInput">
+                    <input disabled type="date" class="form-control dis"  id="floatingInput">
                     <label for="floatingInput">Date of Birth</label>
                 </div>
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3"></div>
@@ -99,11 +125,11 @@
                     <label for="floatingInput">Type</label>
                 </div>
                 <div class="col-md-12 col-lg-4 wt form-floating mb-3">
-                    <input disabled type="tel" class="form-control" style="height:58px" id="patientMobileNumber" asp-for="Mobile">
+                    <input disabled type="tel" class="form-control dis"  style="height:58px" id="patientMobileNumber" asp-for="Mobile">
                 </div>
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
                   
-                        <input disabled type="email" class="form-control" id="floatingInput"
+                        <input disabled type="email" class="form-control"  id="floatingInput"
                                aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
                     <label for="floatingInput">Email</label>
                     
@@ -113,22 +139,22 @@
             <p class="h4 vt">Location information</p>
             <div class="row">
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
+                    <input disabled type="text" class="form-control dis"  id="floatingInput" placeholder="Street" asp-for="Street">
                     <label for="floatingInput">Street</label>
                 </div>
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input disabled type="text" class="form-control" id="floatingInput" placeholder="city" asp-for="City">
+                    <input disabled type="text" class="form-control dis"  id="floatingInput" placeholder="city" asp-for="City">
                     <label for="floatingInput">City</label>
                 </div>
             </div>
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input disabled type="text" class="form-control" placeholder="state" id="floatingInput" asp-for="State">
+                    <input disabled type="text" class="form-control dis"  placeholder="state" id="floatingInput" asp-for="State">
                     <label for="floatingInput">State</label>
                 </div>
                 <div class="col-md-12 col-lg-4 wt form-floating mb-3">
-                    <input disabled type="text" class="form-control" placeholder="zip code" id="floatingInput" asp-for="ZipCode">
-                    <label for="floatingInput">ZipCode</label>
+                    <input disabled type="text" class="form-control dis"  placeholder="zip code" id="floatingInput" asp-for="ZipCode">
+                    <label for="floatingInput">ZipCode</label >
 
                 </div>
                 <div class="col-md-12 col-lg-2 wt form-floating mb-3">
@@ -138,13 +164,15 @@
             <input disabled type="text" class="form-control d-none" id="floatingInput" placeholder="last name" asp-for="UserId">
             <div class="d-flex wt">
                 <div class="bt">
-                    <button type="button" class="btn btn-primary" id="enableButton">
+                    <button type="button" onclick="toggle1()" class="btn btn-primary" id="enableButton" >
                         Edit
                     </button>
-                    <button type="submit" class="btn btn-primary" >
+                    <button type="submit" id="hide1" class="btn btn-primary d-none" >
                         Submit
                     </button>
-
+                    <button type="button" id="hide2" onclick="toggle1()"  class="btn btn-outline-info d-none">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </form>
@@ -158,11 +186,19 @@
         });
 
         document.getElementById("enableButton").addEventListener("click", function () {
-            var inputs = document.getElementsByTagName("input");
+            var inputs = document.getElementsByClassName("dis");
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].removeAttribute("disabled");
             }
         });
+
+        document.getElementById("hide2").addEventListener("click", function () {
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].setAttribute("disabled","true");
+            }
+        });
+        
     </script>
 
 </body>

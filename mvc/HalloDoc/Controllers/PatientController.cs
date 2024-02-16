@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net;
+using System.Runtime.Intrinsics.X86;
 using HalloDoc.DataContext;
 using HalloDoc.DataModels;
 using HalloDoc.ModelView;
@@ -58,46 +59,77 @@ namespace HalloDoc.Controllers
             return View();
         }
 
-        
-         
-        
-        
+        [HttpGet]
+        public IActionResult CheckEmailExists(string email)
+        {
+            bool emailId = _dbContext.AspNetUsers.ToList().Exists(a => a.Email == email);
+            return Json(emailId);
+        }
+
+
+
+
+
         public IActionResult PatientDashBoard()
         {
             int id = Int32.Parse(Request.Cookies["id"]);
-            User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == id);
-            Request req = _dbContext.Requests.FirstOrDefault(a => a.UserId == users.UserId);
-            var request = _dbContext.Requests.ToList();
-            var request1 = request.Where(r => r.UserId == users.UserId);
-            var list = _dbContext.RequestWiseFiles.ToList();
-            var doc = list.Count(a => a.RequestId == req.RequestId);
-            
-            var requestview = request1.Select(p => new ShowDetails
-            {
-                RequestId = p.RequestId,
-                FirstName = p.FirstName,
-                LastName = p.LastName,
-                CreatedDate = p.CreatedDate,
-                Status = p.Status,
-                count = doc
+            //User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == id);
+            //Request req = _dbContext.Requests.FirstOrDefault(a => a.UserId == users.UserId);
+            //var request = _dbContext.Requests.ToList();
+            //var request1 = request.Where(r => r.UserId == users.UserId);
+            //var list = _dbContext.RequestWiseFiles.ToList();
+            //var doc = list.Count(a => a.RequestId == req.RequestId);
 
+            //var requestview = request1.Select(p => new ShowDetails
+            //{
+            //    RequestId = p.RequestId,
+            //    FirstName = p.FirstName,
+            //    LastName = p.LastName,
+            //    CreatedDate = p.CreatedDate,
+            //    Status = p.Status,
+            //    count = doc
+
+            //}
+
+            //);
+            User user2 = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
+            List<Request> userrequest = _dbContext.Requests.Where(a => a.UserId == user2.UserId).ToList();
+            List<ShowDetails> dashboard = new List<ShowDetails>();
+            for (int i = 0; i < userrequest.Count; i++)
+            {
+                List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == userrequest[i].RequestId).ToList();
+                ShowDetails dashboard1 = new()
+                {
+                    RequestId = userrequest[i].RequestId,
+                    FirstName = userrequest[i].FirstName,
+                    LastName = userrequest[i].LastName,
+                    Status = userrequest[i].Status,
+                    CreatedDate = userrequest[i].CreatedDate,
+                    count = requestWiseFiles.Count,
+                };
+                dashboard.Add(dashboard1);
             }
-            
-            );
+
 
             CookieOptions cookieOptions = new CookieOptions();
             cookieOptions.Secure = true;
             cookieOptions.Expires = DateTime.Now.AddMinutes(30);
-            Response.Cookies.Append("UserId", users.UserId.ToString(), cookieOptions);
+            Response.Cookies.Append("UserId", user2.UserId.ToString(), cookieOptions);
+
+            //CookieOptions cookieOptions1 = new CookieOptions();
+            //cookieOptions1.Secure = true;
+            //cookieOptions1.Expires = DateTime.Now.AddMinutes(30);
+            //Response.Cookies.Append("RequestId",req.RequestId.ToString(), cookieOptions1);
 
 
 
 
-            return View("PatientDashBoard",requestview.ToList());
-            
+            return View("PatientDashboard", dashboard);
+
         }
         public IActionResult PatientDashBoardDoc(int id)
         {
+           //int id = Int32.Parse(Request.Cookies["MyCookie"]);
             List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
             
             List<ShowDocuments> showDocuments = new List<ShowDocuments>();
@@ -149,9 +181,11 @@ namespace HalloDoc.Controllers
 
             return View(showProfile);
         }
+
         [HttpPost]
         public IActionResult UserProfile(ShowProfile up)
         {
+
             User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == up.UserId);
             user2.FirstName = up.FirstName;
             
@@ -167,6 +201,33 @@ namespace HalloDoc.Controllers
             _dbContext.Users.Update(user2);
             _dbContext.SaveChanges();
             return RedirectToAction("Index","Users");
+        }
+
+        public IActionResult SubmitMe()
+        {
+            int id = Int32.Parse(Request.Cookies["UserId"]);
+
+
+            User user = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
+            SubmitMe showProfile = new()
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Mobile = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode
+            };
+
+            return View(showProfile);
+        }
+
+        public IActionResult SubmitSomeOne()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -192,40 +253,47 @@ namespace HalloDoc.Controllers
            
                if(ModelState.IsValid)
             {
-                AspNetUser user1 = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+                if (aspNetUser == null)
                 {
-                    UserName = user.FirstName,
-                    PasswordHash = "abc@123",
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    Ip = "192.168.0.2",
-                    CreatedDate = DateTime.Now
+                    aspNetUser = new()
+                    {
 
+                        UserName = user.FirstName,
+                        PasswordHash = user.PasswordHash,
+                        Email = user.Email,
+                        PhoneNumber = user.Mobile,
+                        Ip = "192.168.0.2",
+                        CreatedDate = DateTime.Now
+                    };
 
-                };
+                    _dbContext.AspNetUsers.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                }
 
-                _dbContext.AspNetUsers.Add(user1);
-                await _dbContext.SaveChangesAsync();
-
-
-                User user2 = new()
+                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+                if (user2 == null)
                 {
-                    AspNetUserId = user1.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Mobile = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode,
-                    CreatedBy = user1.Id,
-                    CreatedDate = DateTime.Now
+                    user2 = new()
+                    {
+                        AspNetUserId = aspNetUser.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Mobile = user.Mobile,
+                        Street = user.Street,
+                        City = user.City,
+                        State = user.State,
+                        ZipCode = user.ZipCode,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now
 
 
-                };
-                _dbContext.Users.Add(user2);
-                await _dbContext.SaveChangesAsync();
+                    };
+                    _dbContext.Users.Add(user2);
+                    await _dbContext.SaveChangesAsync();
+                }
+
 
 
 
@@ -307,40 +375,47 @@ namespace HalloDoc.Controllers
             
                 if(ModelState.IsValid)
             {
-                AspNetUser user1 = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+                if (aspNetUser == null)
                 {
-                    UserName = user.FirstName,
-                    PasswordHash = "abc@123",
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    Ip = "192.168.0.2",
-                    CreatedDate = DateTime.Now
+                    aspNetUser = new()
+                    {
 
+                        UserName = user.FirstName,
+                        PasswordHash = user.PasswordHash,
+                        Email = user.Email,
+                        PhoneNumber = user.Mobile,
+                        Ip = "192.168.0.2",
+                        CreatedDate = DateTime.Now
+                    };
 
-                };
+                    _dbContext.AspNetUsers.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                }
 
-                _dbContext.AspNetUsers.Add(user1);
-                await _dbContext.SaveChangesAsync();
-
-                User user2 = new()
+                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+                if (user2 == null)
                 {
-                    AspNetUserId = user1.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Mobile = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode,
-                    CreatedBy = user1.Id,
-                    CreatedDate = DateTime.Now
+                    user2 = new()
+                    {
+                        AspNetUserId = aspNetUser.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Mobile = user.Mobile,
+                        Street = user.Street,
+                        City = user.City,
+                        State = user.State,
+                        ZipCode = user.ZipCode,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now
 
 
-                };
-                _dbContext.Users.Add(user2);
-                await _dbContext.SaveChangesAsync();
-                
+                    };
+                    _dbContext.Users.Add(user2);
+                    await _dbContext.SaveChangesAsync();
+                }
+
 
 
 
@@ -426,39 +501,47 @@ namespace HalloDoc.Controllers
 
             if (ModelState.IsValid)
             {
-                AspNetUser user1 = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+                if (aspNetUser == null)
                 {
-                    UserName = user.FFirstName,
-                    PasswordHash = "abc@123",
-                    Email = user.FEmail,
-                    PhoneNumber = user.FMobile,
-                    Ip = "192.168.0.2",
-                    CreatedDate = DateTime.Now
+                    aspNetUser = new()
+                    {
 
+                        UserName = user.FirstName,
+                        PasswordHash = user.PasswordHash,
+                        Email = user.Email,
+                        PhoneNumber = user.Mobile,
+                        Ip = "192.168.0.2",
+                        CreatedDate = DateTime.Now
+                    };
 
-                };
+                    _dbContext.AspNetUsers.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                }
 
-                _dbContext.AspNetUsers.Add(user1);
-                await _dbContext.SaveChangesAsync();
-
-                User user2 = new()
+                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+                if (user2 == null)
                 {
-                    AspNetUserId = user1.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Mobile = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode,
-                    CreatedBy = user1.Id,
-                    CreatedDate = DateTime.Now
+                    user2 = new()
+                    {
+                        AspNetUserId = aspNetUser.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Mobile = user.Mobile,
+                        Street = user.Street,
+                        City = user.City,
+                        State = user.State,
+                        ZipCode = user.ZipCode,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now
 
 
-                };
-                _dbContext.Users.Add(user2);
-                await _dbContext.SaveChangesAsync();
+                    };
+                    _dbContext.Users.Add(user2);
+                    await _dbContext.SaveChangesAsync();
+                }
+
 
 
 
@@ -528,6 +611,167 @@ namespace HalloDoc.Controllers
             }
 
         }
+        [HttpPost]
+        public async Task<IActionResult> SubmitMe(SubmitMe user)
+        {
+            int id = Int32.Parse(Request.Cookies["UserId"]);
+            if (ModelState.IsValid)
+            {
+                
+
+                Request user3 = new()
+                {
+                    RequestTypeId = 1,
+                    UserId = id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
+                    CreatedDate = DateTime.Now,
+
+                    Status = 1
+
+
+                };
+                _dbContext.Requests.Add(user3);
+                await _dbContext.SaveChangesAsync();
+
+
+                RequestClient user4 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode
+
+
+                };
+                _dbContext.RequestClients.Add(user4);
+                await _dbContext.SaveChangesAsync();
+                if (user.File != null)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    FileInfo fileInfo = new FileInfo(user.File.FileName);
+                    string fileName = user.File.FileName + fileInfo.Extension;
+
+                    string fileNameWithPath = Path.Combine(path, fileName);
+
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        user.File.CopyTo(stream);
+                    }
+
+                    RequestWiseFile user5 = new()
+                    {
+                        RequestId = user3.RequestId,
+                        FileName = fileNameWithPath,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    _dbContext.RequestWiseFiles.Add(user5);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+
+
+                return RedirectToAction("Index", "AspNetUsers");
+
+            }
+            else
+            {
+                return View(null);
+            }
+
+
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitSomeOne(SubmitMe user)
+        {
+            int id = Int32.Parse(Request.Cookies["UserId"]);
+            if (ModelState.IsValid)
+            {
+
+
+                Request user3 = new()
+                {
+                    RequestTypeId = 1,
+                    UserId = id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
+                    CreatedDate = DateTime.Now,
+
+                    Status = 1
+
+
+                };
+                _dbContext.Requests.Add(user3);
+                await _dbContext.SaveChangesAsync();
+
+
+                RequestClient user4 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode
+
+
+                };
+                _dbContext.RequestClients.Add(user4);
+                await _dbContext.SaveChangesAsync();
+                if (user.File != null)
+                {
+                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                    FileInfo fileInfo = new FileInfo(user.File.FileName);
+                    string fileName = user.File.FileName + fileInfo.Extension;
+
+                    string fileNameWithPath = Path.Combine(path, fileName);
+
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        user.File.CopyTo(stream);
+                    }
+
+                    RequestWiseFile user5 = new()
+                    {
+                        RequestId = user3.RequestId,
+                        FileName = fileNameWithPath,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    _dbContext.RequestWiseFiles.Add(user5);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+
+
+                return RedirectToAction("Index", "AspNetUsers");
+
+            }
+            else
+            {
+                return View(null);
+            }
+
+
+
+
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> CreateBusinessRequest(AddBusinessRequest user)
@@ -535,39 +779,47 @@ namespace HalloDoc.Controllers
 
             if (ModelState.IsValid)
             {
-                AspNetUser user1 = new()
+                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a=>a.Email==user.Email);
+               if(aspNetUser==null)
                 {
-                    UserName = user.BFirstName,
-                    PasswordHash = "abc@123",
-                    Email = user.BEmail,
-                    PhoneNumber = user.BMobile,
-                    Ip = "192.168.0.2",
-                    CreatedDate = DateTime.Now
+                    aspNetUser = new()
+                    {
 
+                        UserName = user.BFirstName,
+                        PasswordHash = user.PasswordHash,
+                        Email = user.BEmail,
+                        PhoneNumber = user.BMobile,
+                        Ip = "192.168.0.2",
+                        CreatedDate = DateTime.Now
+                    };
 
-                };
+                    _dbContext.AspNetUsers.Add(aspNetUser);
+                    await _dbContext.SaveChangesAsync();
+                }
 
-                _dbContext.AspNetUsers.Add(user1);
-                await _dbContext.SaveChangesAsync();
-
-                User user2 = new()
+                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
+                if (user2 == null)
                 {
-                    AspNetUserId = user1.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Mobile = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode,
-                    CreatedBy = user1.Id,
-                    CreatedDate = DateTime.Now
+                     user2 = new()
+                    {
+                        AspNetUserId = aspNetUser.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Mobile = user.Mobile,
+                        Street = user.Street,
+                        City = user.City,
+                        State = user.State,
+                        ZipCode = user.ZipCode,
+                        CreatedBy = aspNetUser.Id,
+                        CreatedDate = DateTime.Now
 
 
-                };
-                _dbContext.Users.Add(user2);
-                await _dbContext.SaveChangesAsync();
+                    };
+                    _dbContext.Users.Add(user2);
+                    await _dbContext.SaveChangesAsync();
+                }
+                
 
 
 

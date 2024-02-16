@@ -1,4 +1,4 @@
-header
+﻿header
 {
     background-color: white;
     display: flex;
@@ -66,9 +66,9 @@ header
     padding-top: 12px;
 }
 
-.vt
+.mbt
 {
-    padding-top: 15px;
+    display: flex;
 }
 
 .bt
@@ -76,61 +76,12 @@ header
     margin-left: auto;
 }
 
-.iti {
-    width: 100%;
-    z-index: 14;
-}
-
- .iti.form-control
- {
-        height: 58px;
-  }
-
-.form-floating > label {
-    left: 12px;
-    top: 12px;
-    background-color: transparent;
-}
-
-@media only screen and (max-width:576px)
+.input-group-text 
 {
-    
-    .Logout
-    {
-        display: none;
-    }
-    .intro
-    {
-        display: none;
-    }
-   
-    .he
-    {
-        margin-left: 5%;
-        width: 90%;
-    }
-
-    .mainct
-    {
-        margin-left:5%;
-        width: 90%;
-    }
-    
-   
+    display: none;
 }
 
-@media only screen and (min-width:576px)
+input[type=file]::-webkit-file-upload-button 
 {
-    
-    .ilogout
-    {
-        display: none;
-    }
-   
-    .imenu
-    {
-        display: none; 
-    }
-   
-   
+    display: none;
 }

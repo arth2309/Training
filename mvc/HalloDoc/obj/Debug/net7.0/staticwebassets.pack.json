@@ -9,12 +9,28 @@
       "PackagePath": "staticwebassets\\Files\\Fig56. Patient site 1.png.png"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees-14Feb24.pdf.pdf",
+      "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees-14Feb24.pdf.pdf"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees_12Feb24.pdf.pdf",
+      "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees_12Feb24.pdf.pdf"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-01-19 160841.png.png",
       "PackagePath": "staticwebassets\\Files\\Screenshot 2024-01-19 160841.png.png"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Session 2 (1).txt.txt",
       "PackagePath": "staticwebassets\\Files\\Session 2 (1).txt.txt"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (1).png.png",
+      "PackagePath": "staticwebassets\\Files\\__ _Files_Fig56. Patient site 1.png (1).png.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (6).png.png",
+      "PackagePath": "staticwebassets\\Files\\__ _Files_Fig56. Patient site 1.png (6).png.png"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",
@@ -27,6 +43,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\PatientDashBoardDoc.css",
       "PackagePath": "staticwebassets\\css\\patient\\PatientDashBoardDoc.css"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\SubmitMe.css",
+      "PackagePath": "staticwebassets\\css\\patient\\SubmitMe.css"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\patient\\Submit_request.css",
@@ -91,6 +111,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\images\\icons8-moon-symbol-25.png",
       "PackagePath": "staticwebassets\\images\\icons8-moon-symbol-25.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\Email.js",
+      "PackagePath": "staticwebassets\\js\\Email.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\international-telephone-input.js",
