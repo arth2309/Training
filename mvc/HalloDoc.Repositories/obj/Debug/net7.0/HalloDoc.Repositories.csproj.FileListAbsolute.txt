@@ -1,0 +1,14 @@
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.csproj.AssemblyReference.cache
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.AssemblyInfoInputs.cache
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.AssemblyInfo.cs
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.csproj.CoreCompileInputs.cache
+D:\Projects\assig\mvc\HalloDoc.Repositories\bin\Debug\net7.0\HalloDoc.Repositories.deps.json
+D:\Projects\assig\mvc\HalloDoc.Repositories\bin\Debug\net7.0\HalloDoc.Repositories.dll
+D:\Projects\assig\mvc\HalloDoc.Repositories\bin\Debug\net7.0\HalloDoc.Repositories.pdb
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.dll
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\refint\HalloDoc.Repositories.dll
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.pdb
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\ref\HalloDoc.Repositories.dll
+D:\Projects\assig\mvc\HalloDoc.Repositories\bin\Debug\net7.0\HalloDoc.Repositories.runtimeconfig.json
+D:\Projects\assig\mvc\HalloDoc.Repositories\obj\Debug\net7.0\HalloDoc.Repositories.genruntimeconfig.cache

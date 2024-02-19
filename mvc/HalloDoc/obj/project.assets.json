@@ -3888,6 +3888,33 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "HalloDoc.Repositories/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11"
+        },
+        "compile": {
+          "bin/placeholder/HalloDoc.Repositories.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HalloDoc.Repositories.dll": {}
+        }
+      },
+      "HallodocServices/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "HalloDoc.Repositories": "1.0.0",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11"
+        },
+        "compile": {
+          "bin/placeholder/HallodocServices.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HallodocServices.dll": {}
+        }
       }
     }
   },
@@ -11276,10 +11303,21 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "HalloDoc.Repositories/1.0.0": {
+      "type": "project",
+      "path": "../HalloDoc.Repositories/HalloDoc.Repositories.csproj",
+      "msbuildProject": "../HalloDoc.Repositories/HalloDoc.Repositories.csproj"
+    },
+    "HallodocServices/1.0.0": {
+      "type": "project",
+      "path": "../Hallodoc.Services/HallodocServices.csproj",
+      "msbuildProject": "../Hallodoc.Services/HallodocServices.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "HallodocServices >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.15",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.15",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.15",
@@ -11314,7 +11352,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Projects\\assig\\mvc\\Hallodoc.Services\\HallodocServices.csproj": {
+              "projectPath": "D:\\Projects\\assig\\mvc\\Hallodoc.Services\\HallodocServices.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -24,4 +24,8 @@
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hallodoc.Services\HallodocServices.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,10 +1,17 @@
 using HalloDoc.DataContext;
+using HalloDoc.Repositories.Interfaces;
+using HalloDoc.Repositories.Implementation;
+using HallodocServices.Interfaces;
+using HallodocServices.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<HalloDoc.DataContext.ApplicationDbContext>();
+builder.Services.AddScoped<IPatientLoginRepo, PatientLoginRepo>();
+builder.Services.AddDbContext<HalloDoc.Repositories.DataContext.ApplicationDbContext>();
+builder.Services.AddScoped<IPatientLoginServices, PatientLoginServices>();
 
 
 

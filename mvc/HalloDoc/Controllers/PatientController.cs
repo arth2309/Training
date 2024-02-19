@@ -10,18 +10,26 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using HalloDoc.Repositories.ModelView;
+using HallodocServices.Interfaces;
+
 
 namespace HalloDoc.Controllers
 {
     public class PatientController : Controller
     {
-
+        private readonly IPatientLoginServices _loginServices;
+        
         private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices)
         {
             _dbContext = dbContext;
+            _loginServices = loginServices;
         }
+
+      
+
         public IActionResult Index()
         {
             return View();
@@ -175,23 +183,21 @@ namespace HalloDoc.Controllers
                 ZipCode = user.ZipCode
             };
 
-            
 
-            
 
-            return View(showProfile);
+
+            return View("UserProfile", showProfile);
         }
 
         [HttpPost]
-        public IActionResult UserProfile(ShowProfile up)
+        public async Task <IActionResult> UserProfile(ShowProfile up)
         {
-
+            
             User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == up.UserId);
             user2.FirstName = up.FirstName;
             
             user2.LastName = up.LastName;
             
-            user2.Email = up.Email;
 
             user2.Mobile = up.Mobile;
             user2.Street = up.Street;
@@ -199,7 +205,7 @@ namespace HalloDoc.Controllers
             user2.State = up.State;
             user2.ZipCode = up.ZipCode;
             _dbContext.Users.Update(user2);
-            _dbContext.SaveChanges();
+           await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index","Users");
         }
 
@@ -230,23 +236,49 @@ namespace HalloDoc.Controllers
             return View();
         }
 
+        //[HttpPost]
+        //public IActionResult PatientLogin(PatientLoginValidation user)
+        //{
+        //    var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
+        //    if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
+        //    {
+        //        CookieOptions options = new CookieOptions();
+        //        options.Secure = true;
+        //        options.Expires = DateTime.Now.AddDays(1);
+        //        Response.Cookies.Append("Id", userFromDb.Id.ToString(), options);
+        //        return RedirectToAction("PatientDashBoard", "Patient");
+        //    }
+        //    else
+        //    {
+        //        return View(null);
+        //    }
+        //}
+
         [HttpPost]
-        public IActionResult PatientLogin(PatientLoginValidation user)
+         public IActionResult PatientLogin(PatientLogin patientLogin)
         {
-            var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
-            if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
+            if(!ModelState.IsValid)
+            {
+                return View(patientLogin);
+            }
+            int id = _loginServices.ValidateUser(patientLogin);
+
+           if(id == 0)
+            {
+                return View(patientLogin);
+            }
+            else
             {
                 CookieOptions options = new CookieOptions();
                 options.Secure = true;
                 options.Expires = DateTime.Now.AddDays(1);
-                Response.Cookies.Append("Id", userFromDb.Id.ToString(), options);
+                Response.Cookies.Append("Id", id.ToString(), options);
                 return RedirectToAction("PatientDashBoard", "Patient");
             }
-            else
-            {
-                return View(null);
-            }
+
         }
+
+
         [HttpPost]
         public async Task<IActionResult> CreatePatientRequest(AddPatientRequest user)
         {

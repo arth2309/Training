@@ -1,0 +1,15 @@
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.csproj.AssemblyReference.cache
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.AssemblyInfoInputs.cache
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.AssemblyInfo.cs
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.csproj.CoreCompileInputs.cache
+D:\Projects\assig\mvc\Hallodoc.Services\bin\Debug\net7.0\Hallodoc.Services.deps.json
+D:\Projects\assig\mvc\Hallodoc.Services\bin\Debug\net7.0\Hallodoc.Services.dll
+D:\Projects\assig\mvc\Hallodoc.Services\bin\Debug\net7.0\Hallodoc.Services.pdb
+D:\Projects\assig\mvc\Hallodoc.Services\bin\Debug\net7.0\HalloDoc.Repositories.dll
+D:\Projects\assig\mvc\Hallodoc.Services\bin\Debug\net7.0\HalloDoc.Repositories.pdb
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.csproj.CopyComplete
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.dll
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\refint\Hallodoc.Services.dll
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\Hallodoc.Services.pdb
+D:\Projects\assig\mvc\Hallodoc.Services\obj\Debug\net7.0\ref\Hallodoc.Services.dll

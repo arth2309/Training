@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/AdminDashBoard.css">
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script>
+      function toggle()
+{
+    if(document.getElementById('hide').classList.contains('d-none'))
+    {
+        document.getElementById('hide').classList.remove('d-none');
+        
+    }
+    else{
+        document.getElementById('hide').classList.add('d-none');
+    }
+    }
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <header class="shadow">
+        <div class="imenu">
+          <button type="button" class="btn btn-outline-info" onclick="toggle()"><i class="bi bi-list"></i></button>
+        </div>
+          <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+          <div class="right">
+              <div class="intro"><p>Welcome:</p></div>
+              <div class="s intro"><span><b>test1</b></span></div>
+              <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+              </div>
+              <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>  
+          <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
+          </div>
+      </header>
+      
+      <ul class="nav nav-tabs shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
+          <li class="nav-item">
+            <a class="nav-link " style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Provider Location</b></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>My Profile</b></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Providers</b></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Partners</b></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Access</b></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Records</b></a>
+          </li>
+         
+        </ul>
+
+        <div class="row container-fluid" style="margin:0px; padding:0px;">
+            
+                <button class="bt col-4 col-lg-2 ns">
+                    <div>
+                        <div class="d-flex">
+                            <div>New</div>
+                        </div>
+                        <div>1452</div>
+                    </div>
+
+                </button>
+            
+           
+                <button class="bt col-4 col-lg-2 ps"><div>
+                    <div class="d-flex">
+                        <div>PENDING</div>
+                    </div>
+                    <div >266</div>
+                </div></button>
+            
+           
+                <button  class="bt  col-4 col-lg-2 as">
+                  <div>
+                    <div class="d-flex">
+                        <div>ACTIVE</div>
+                    </div>
+                    <div>26</div>
+                </div>
+
+                </button>
+            
+                <button  class="bt  col-4 col-lg-2 cs">
+                  <div>
+                    <div class="d-flex">
+                        <div>CONCLUDE</div>
+                    </div>
+                    <div>1078</div>
+                </div>
+
+                </button>
+          
+                <button  class="bt col-4 col-lg-2 tcs">
+                  <div>
+                    <div class="d-flex">
+                        <div>TP CLOSE</div>
+                    </div>
+                    <div>519</div>
+                </div>
+
+                </button>
+           
+                <button  class="bt col-4 col-lg-2 ups">
+                  <div>
+                    <div class="d-flex">
+                        <div>UNPAID</div>
+                    </div>
+                    <div>16</div>
+                </div>
+
+                </button>
+           
+        </div>
+    
+</body>
+</html>

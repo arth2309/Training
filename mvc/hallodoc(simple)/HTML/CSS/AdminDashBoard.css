@@ -1,0 +1,142 @@
+header
+{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    height:90px;
+    border: 1px solid #d1dcde94;
+    
+}
+
+
+.theme
+{
+    
+    border: 3px solid #00B9E1;
+    border-radius: 1px;
+    opacity: 1;
+    align-items: center;
+    text-align: center;
+    height: 35px;
+    width:45px;
+    margin-right:1%;
+   
+}
+
+.right
+{
+    display: flex;
+    margin-left: auto;
+    margin-right: 1%;
+    margin-top: 6px;
+    
+}
+
+#back 
+{
+    color: rgb(0, 185, 225);
+    border-radius: 5px;
+    opacity: 1;
+    border: 1px solid #00B9E1;
+    height: 30px;
+    width: 72px;
+    text-align:center;
+
+}
+
+.s
+{
+    margin-right: 10px;
+}
+
+.ahref{
+    text-decoration: none;
+    color: rgb(41, 41, 41);
+    --bs-nav-link-color: rgb(31, 165, 165);
+    --bs-nav-link-hover-color: rgb(31, 165, 165);
+    --bs-nav-link-disabled-color: rgb(41, 41, 41);
+}
+
+.bt
+{
+   
+    border-radius: 5px;
+}
+
+.ns{
+    background-color: #e9eaef;
+    color: #283f87;
+    border: 1px solid #283f87;
+    text-align: left;
+}
+
+.ps{
+    background-color: #e5f2f8;
+    color: #71b4cb;
+    border: 1px solid #71b4cb;
+    text-align: left;
+}
+
+.as{
+    background-color: #e9f0e8;
+    color: #558755;
+    border: 1px solid #558755;
+    text-align: left;
+}
+
+.cs{
+    background-color: #f7e6ee;
+    color: #944f75;
+    border: 1px solid #944f75;
+    text-align: left;
+}
+
+.tcs{
+    background-color: #e5eef5;
+    color: #618fb7;
+    border: 1px solid #618fb7;
+    text-align: left;
+}
+
+.ups{
+    background-color: #efeef4;
+    color: #967ac0;
+    border: 1px solid #967ac0;
+    text-align: left;
+}
+
+
+@media only screen and (max-width:576px)
+{
+    
+    .Logout
+    {
+        display: none;
+    }
+    .intro
+    {
+        display: none;
+    }
+    .request
+    {
+        display: none; 
+    }
+}
+
+@media only screen and (min-width:576px)
+{
+    
+    .ilogout
+    {
+        display: none;
+    }
+    
+    .imenu
+    {
+        display: none; 
+    }
+   
+}
+
