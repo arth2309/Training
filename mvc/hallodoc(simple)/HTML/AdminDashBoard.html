@@ -1,32 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="CSS/AdminDashBoard.css">
     <script src="JS/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script>
-      function toggle()
-{
-    if(document.getElementById('hide').classList.contains('d-none'))
-    {
-        document.getElementById('hide').classList.remove('d-none');
-        
-    }
-    else{
-        document.getElementById('hide').classList.add('d-none');
-    }
-    }
+      function toggleTheme() {
+        var elements = document.querySelectorAll('html');
+        elements.forEach(function(element) {
+          var currentTheme = element.getAttribute('data-bs-theme');
+          if (currentTheme === 'dark') {
+            element.setAttribute('data-bs-theme', 'light');
+          } else {
+            element.setAttribute('data-bs-theme', 'dark');
+          }
+        });
+      }
     </script>
+    
+     
     <title>Document</title>
 </head>
 <body>
-    <header class="shadow">
-        <div class="imenu">
-          <button type="button" class="btn btn-outline-info" onclick="toggle()"><i class="bi bi-list"></i></button>
+    <header >
+        <div class="d-flex d-lg-flex">
+          <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
         </div>
           <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
           <div class="right">
@@ -38,102 +40,255 @@
               <div class="Logout">
                 <button type="button" class="btn btn-outline-info">Logout</button>
             </div>  
-          <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
+          <div class="theme" onclick="toggleTheme()"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
           </div>
       </header>
       
-      <ul class="nav nav-tabs shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
-          <li class="nav-item">
-            <a class="nav-link " style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Provider Location</b></a>
-          </li>
+      
+      <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
+        <li class="nav-item">
+          <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>My Profile</b></a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Providers</b></a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Partners</b></a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Access</b></a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link" style="color: rgb(0, 0, 0);"><b>Records</b></a>
-          </li>
-         
-        </ul>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
+        </li>
+       
+      </ul>
+        </div>
+      </div>
+      
+      <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+        <li class="nav-item">
+          <a class="nav-link "><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"><b>Provider Location</b></a>
+        </li>
 
+        <li class="nav-item">
+          <a class="nav-link"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Records</b></a>
+        </li>
+       
+      </ul>
+      
+
+       <div class="mainct">
         <div class="row container-fluid" style="margin:0px; padding:0px;">
             
-                <button class="bt col-4 col-lg-2 ns">
-                    <div>
-                        <div class="d-flex">
-                            <div>New</div>
-                        </div>
-                        <div>1452</div>
-                    </div>
+          <button class="bt col-4 col-lg-2  ns">
+              <div>
+                  <div class="d-flex">
+                      <div>New</div>
+                  </div>
+                  <div>1452</div>
+              </div>
 
-                </button>
-            
-           
-                <button class="bt col-4 col-lg-2 ps"><div>
-                    <div class="d-flex">
-                        <div>PENDING</div>
-                    </div>
-                    <div >266</div>
-                </div></button>
-            
-           
-                <button  class="bt  col-4 col-lg-2 as">
-                  <div>
-                    <div class="d-flex">
-                        <div>ACTIVE</div>
-                    </div>
-                    <div>26</div>
-                </div>
+          </button>
+      
+     
+          <button class="bt col-4 col-lg-2 ps"><div>
+              <div class="d-flex">
+                  <div>PENDING</div>
+              </div>
+              <div >266</div>
+          </div></button>
+      
+     
+          <button  class="bt  col-4 col-lg-2 as">
+            <div>
+              <div class="d-flex">
+                  <div>ACTIVE</div>
+              </div>
+              <div>26</div>
+          </div>
 
-                </button>
-            
-                <button  class="bt  col-4 col-lg-2 cs">
-                  <div>
-                    <div class="d-flex">
-                        <div>CONCLUDE</div>
-                    </div>
-                    <div>1078</div>
-                </div>
+          </button>
+      
+          <button  class="bt  col-4 col-lg-2 cs">
+            <div>
+              <div class="d-flex">
+                  <div>CONCLUDE</div>
+              </div>
+              <div>1078</div>
+          </div>
 
-                </button>
-          
-                <button  class="bt col-4 col-lg-2 tcs">
-                  <div>
-                    <div class="d-flex">
-                        <div>TP CLOSE</div>
-                    </div>
-                    <div>519</div>
-                </div>
-
-                </button>
-           
-                <button  class="bt col-4 col-lg-2 ups">
-                  <div>
-                    <div class="d-flex">
-                        <div>UNPAID</div>
-                    </div>
-                    <div>16</div>
-                </div>
-
-                </button>
-           
-        </div>
+          </button>
     
+          <button  class="bt col-4 col-lg-2 tcs">
+            <div>
+              <div class="d-flex">
+                  <div>To CLOSE</div>
+              </div>
+              <div>519</div>
+          </div>
+
+          </button>
+     
+          <button  class="bt col-4 col-lg-2 ups">
+            <div>
+              <div class="d-flex">
+                  <div>UNPAID</div>
+              </div>
+              <div>16</div>
+          </div>
+
+          </button>
+     
+  </div>
+  <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
+    <div class="d-flex">
+      <h5>Patients</h5>(New)
+    </div>
+    <div class="d-flex" style="margin-left: auto;">
+      <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-link"></i></button>
+      <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-link"></i>Send Link</button>
+      <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-pencil"></i></button>
+      <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-pencil"></i>Create Requests</button>
+      <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-arrow-90deg-right"></i></button>
+      <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-arrow-90deg-right"></i>Export</button>
+      <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-arrow-up-right-square"></i></button>
+      <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-arrow-up-right-square"></i>Export All</button>
+      <button type="button" class="btn btn-primary d-flex d-lg-none "><i class="bi bi-person"></i></button>
+      <button type="button" class="btn btn-primary d-none d-lg-flex "><i class="bi bi-person"></i>Request DTV Support</button>
+      
+    </div>
+  </div>
+  <div class="d-flex" style="justify-content: space-between;">
+    <div class="d-flex">
+      <input class="form-control" type="search" placeholder="Search Patients" aria-label="Search">
+      <select class="form-select form-select" aria-label="Small select example">
+        <option selected>Search Regions</option>
+        <option value="1">MaryLand</option>
+        <option value="2">District Of Columbia</option>
+        <option value="3">New York</option>
+        <option value="4">Virginia</option>
+      </select>
+    </div>
+  
+    <div class="d-flex ">
+      <button type="button" class="btn btn-outline-dark d-none d-lg-flex">All</button>
+      <div><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="green" class="bi bi-dot" viewBox="0 0 7 16">
+        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+      </svg>
+      Patient
+    </div>
+    <div><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="yellow" class="bi bi-dot" viewBox="0 0 7 16">
+      <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+    </svg>
+    Family/Freind
+  </div>
+  <div><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="red" class="bi bi-dot" viewBox="0 0 7 16">
+    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+  </svg>
+  Business
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="blue" class="bi bi-dot" viewBox="0 0 7 16">
+  <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+</svg>
+Concierge
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="purple" class="bi bi-dot" viewBox="0 0 7 16">
+<path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+</svg>
+VIP
+</div>
+    </div>
+    </div>
+    <div class="d-flex" style="margin-left: auto;">
+      
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col"></th>
+          <th scope="col">Date of Birth</th>
+          <th scope="col">Requestor</th>
+          <th scope="col">Requested Date</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Address</th>
+          <th scope="col">Notes</th>
+          <th scope="col">Chat with</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-success">
+        <tr>
+          
+          <td>test,test</td>
+          <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
+          <td>jun 16,2023(0)</td>
+          <td>Patient test,test</td>
+          <td>Nov 20,2023 335h 1m 01m</td>
+          <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
+          <td>Room Location : 101</td>
+          <td>-</td>
+          <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Action
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Assign Case</a></li>
+                <li><a class="dropdown-item" href="#">Cancel Case</a></li>
+                <li><a class="dropdown-item" href="#">View Case</a></li>
+                <li><a class="dropdown-item" href="#">View Notes</a></li>
+                <li><a class="dropdown-item" href="#">Block Patient</a></li>
+              </ul>
+            </div></td>
+
+
+        </tr>
+        
+      </tbody>
+    </table>
+  
+  </div>
+       </div>
 </body>
 </html>

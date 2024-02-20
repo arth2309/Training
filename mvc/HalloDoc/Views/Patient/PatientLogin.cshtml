@@ -1,4 +1,7 @@
 ﻿@model HalloDoc.Repositories.ModelView.PatientLogin
+@{
+    bool isInValidUser = TempData["invalid-user"] == null ? false : (bool)TempData["invalid-user"];
+}
 <html>
 <head>
     <meta charset="UTF-8">
@@ -50,6 +53,12 @@
                        
 
                     </div>
+                    @if (isInValidUser)
+                    {
+                        <div class="alert alert-danger">
+                            Invalid username or password!
+                        </div>
+                    }
                     
 					<div> <button type="submit"  class="loginbtn form-control "><a href="" style="text-decoration: none; color: white; background:transparent"><b>Login</b></a></button></div>
                 </form>

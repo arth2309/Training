@@ -1,6 +1,6 @@
 header
 {
-    background-color: white;
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,10 +59,16 @@ header
     --bs-nav-link-disabled-color: rgb(41, 41, 41);
 }
 
+.mainct
+{
+    width: 90%;
+    margin-left: 5%;
+}
 .bt
 {
    
     border-radius: 5px;
+    
 }
 
 .ns{
@@ -107,6 +113,17 @@ header
     text-align: left;
 }
 
+.table-success
+{
+    --bs-table-color: white;
+    --bs-table-bg: rgb(41, 167, 41);
+}
+
+.bt1
+{
+    margin-right: 4px;
+}
+
 
 @media only screen and (max-width:576px)
 {
@@ -138,5 +155,21 @@ header
         display: none; 
     }
    
+}
+
+@media only screen and (max-width:992px)
+{
+    .use
+    {
+        margin-left: auto;
+    }
+}
+
+@media only screen and (max-width:992px)
+{
+    .use
+    {
+        margin-right: auto;
+    }
 }
 

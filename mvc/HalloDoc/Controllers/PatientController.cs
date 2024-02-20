@@ -264,7 +264,9 @@ namespace HalloDoc.Controllers
             int id = _loginServices.ValidateUser(patientLogin);
 
            if(id == 0)
+
             {
+                TempData["invalid-user"] = true;
                 return View(patientLogin);
             }
             else

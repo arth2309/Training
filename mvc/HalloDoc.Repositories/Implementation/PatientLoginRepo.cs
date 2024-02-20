@@ -20,7 +20,7 @@ public class PatientLoginRepo : IPatientLoginRepo
 
    public int ValidateUser(string email, string password)
     {
-        int id = _dbcontext.AspNetUsers.FirstOrDefault(user => user.Email == email && user.PasswordHash == password).Id;
-        return id;
+        AspNetUser userfromdb = _dbcontext.AspNetUsers.FirstOrDefault(user => user.Email == email && user.PasswordHash == password);
+        return userfromdb?.Id??0;
     }
 }

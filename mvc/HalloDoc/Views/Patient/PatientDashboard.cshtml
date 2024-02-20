@@ -211,7 +211,79 @@
                     </h2>
                     <div id="collapse-@Html.DisplayFor(modelItem => item.RequestId)" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            CurrentStatus: @Html.DisplayFor(modelItem => item.Status)
+                            @if (item.Status == 1)
+                            {
+                                @Html.Raw("Unassigned")
+                            }
+                            @if (item.Status == 2)
+                            {
+                                @Html.Raw("Accepted")
+                            }
+                            @if (item.Status == 3)
+                            {
+                                @Html.Raw("Cancelled")
+                            }
+                            @if (item.Status == 4)
+                            {
+                                @Html.Raw("Reserving")
+                            }
+                            @if (item.Status == 5)
+                            {
+                                @Html.Raw("MDonRoute")
+                            }
+                            @if (item.Status == 6)
+                            {
+                                @Html.Raw("MDOnSite")
+                            }
+                            @if (item.Status == 7)
+                            {
+                                @Html.Raw("FollowUp")
+                            }
+                            @if (item.Status == 8)
+                            {
+                                @Html.Raw("Closed")
+                            }
+                            @if (item.Status == 9)
+                            {
+                                @Html.Raw("Locked")
+                            }
+                            @if (item.Status == 10)
+                            {
+                                @Html.Raw("Declined")
+                            }
+                            @if (item.Status == 11)
+                            {
+                                @Html.Raw("Consult")
+                            }
+                            @if (item.Status == 12)
+                            {
+                                @Html.Raw("Clear")
+                            }
+                            @if (item.Status == 13)
+                            {
+                                @Html.Raw("CancelledByProvider")
+                            }
+                            @if (item.Status == 14)
+                            {
+                                @Html.Raw("CCUploadedByClient")
+                            }
+                            @if (item.Status == 15)
+                            {
+                                @Html.Raw("CCApprovedByAdmin")
+                            }
+                            <div>
+                               
+                                @if (@item.count == 0)
+                                {
+
+                                }
+                                else
+                                {
+
+                                    <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientDashboardDoc" asp-route-id="@item.RequestId"> <button type="button" class="btn btn-outline-info">@item.count Document</button></a>
+                                }
+                                </div>
+                           
                            </div>
                     </div>
                 </div>
