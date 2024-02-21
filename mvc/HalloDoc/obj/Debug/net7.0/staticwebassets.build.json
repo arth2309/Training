@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "G6can2qHBTX6SepoPWEnvdkuslviYZz6gPJ/RulZPaE=",
+  "Hash": "LEpqW/t9x0+OuzjJLPn2SJcAc2dFQ6yDvT5BAlVzLy8=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\Projects\\assig\\mvc\\HalloDoc\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\HalloDoc.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\AdminDashBoard.css",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "css/AdminSite/AdminDashBoard.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\AdminSite\\AdminDashBoard.css"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",

@@ -64,6 +64,7 @@ header
     width: 90%;
     margin-left: 5%;
 }
+
 .bt
 {
    
@@ -115,8 +116,9 @@ header
 
 .table-success
 {
-    --bs-table-color: white;
+    
     --bs-table-bg: rgb(41, 167, 41);
+    --bs-table-color: white;
 }
 
 .bt1
@@ -124,6 +126,30 @@ header
     margin-right: 4px;
 }
 
+.input-with-icon {
+    position: relative;
+  }
+  
+.input-with-icon input {
+    padding-left: 2.5rem; 
+  }
+
+.input-with-icon.icon {
+    position: absolute;
+    left: 0.5rem; 
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+.pd
+{
+    padding-left: 2.4px;
+}
+
+.b1
+{
+    padding-top: 12px;
+}
 
 @media only screen and (max-width:576px)
 {
@@ -157,19 +183,20 @@ header
    
 }
 
-@media only screen and (max-width:992px)
+
+@media only screen and (min-width:992px)
 {
-    .use
+    .t
     {
-        margin-left: auto;
+        justify-content: end;
     }
 }
 
 @media only screen and (max-width:992px)
 {
-    .use
+    .bt
     {
-        margin-right: auto;
+        border-radius: 0px;
     }
 }
 

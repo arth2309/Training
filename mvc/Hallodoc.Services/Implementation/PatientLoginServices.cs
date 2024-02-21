@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.Interfaces;
 using HallodocServices.Interfaces;
-using HalloDoc.Repositories.ModelView;
+using HallodocServices.ModelView;
 
 namespace HallodocServices.Implementation;
 

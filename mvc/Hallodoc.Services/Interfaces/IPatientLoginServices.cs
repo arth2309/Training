@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HalloDoc.Repositories.ModelView;
+using HallodocServices.ModelView;
 
 
 namespace HallodocServices.Interfaces

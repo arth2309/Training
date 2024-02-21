@@ -19,7 +19,7 @@ namespace HalloDoc.ModelView
         public string? LastName { get; set; }
 
         [StringLength(50)]
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
 
 
 

@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\AdminSite\" />
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 

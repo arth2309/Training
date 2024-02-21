@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using HalloDoc.Repositories.ModelView;
+using HallodocServices.ModelView;
 using HallodocServices.Interfaces;
 
 
@@ -19,13 +19,16 @@ namespace HalloDoc.Controllers
     public class PatientController : Controller
     {
         private readonly IPatientLoginServices _loginServices;
+
+        private readonly IPatientDashBoardServices _dashBoardServices;
         
         private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices)
         {
             _dbContext = dbContext;
             _loginServices = loginServices;
+            _dashBoardServices = dashBoardServices;
         }
 
       
@@ -81,6 +84,17 @@ namespace HalloDoc.Controllers
         public IActionResult PatientDashBoard()
         {
             int id = Int32.Parse(Request.Cookies["id"]);
+            int uid = _dashBoardServices.GetId(id);
+            List<PatientDashBoard> patientDashreq = _dashBoardServices.patientDashBoards(id);
+
+
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Secure = true;
+            cookieOptions.Expires = DateTime.Now.AddMinutes(30);
+            Response.Cookies.Append("UserId", uid.ToString().ToString(), cookieOptions);
+
+            return View("PatientDashboard", patientDashreq);
+
             //User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == id);
             //Request req = _dbContext.Requests.FirstOrDefault(a => a.UserId == users.UserId);
             //var request = _dbContext.Requests.ToList();
@@ -100,29 +114,25 @@ namespace HalloDoc.Controllers
             //}
 
             //);
-            User user2 = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
-            List<Request> userrequest = _dbContext.Requests.Where(a => a.UserId == user2.UserId).ToList();
-            List<ShowDetails> dashboard = new List<ShowDetails>();
-            for (int i = 0; i < userrequest.Count; i++)
-            {
-                List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == userrequest[i].RequestId).ToList();
-                ShowDetails dashboard1 = new()
-                {
-                    RequestId = userrequest[i].RequestId,
-                    FirstName = userrequest[i].FirstName,
-                    LastName = userrequest[i].LastName,
-                    Status = userrequest[i].Status,
-                    CreatedDate = userrequest[i].CreatedDate,
-                    count = requestWiseFiles.Count,
-                };
-                dashboard.Add(dashboard1);
-            }
+            //User user2 = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
+            //List<Request> userrequest = _dbContext.Requests.Where(a => a.UserId == user2.UserId).ToList();
+            //List<ShowDetails> dashboard = new List<ShowDetails>();
+            //for (int i = 0; i < userrequest.Count; i++)
+            //{
+            //    List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == userrequest[i].RequestId).ToList();
+            //    ShowDetails dashboard1 = new()
+            //    {
+            //        RequestId = userrequest[i].RequestId,
+            //        FirstName = userrequest[i].FirstName,
+            //        LastName = userrequest[i].LastName,
+            //        Status = userrequest[i].Status,
+            //        CreatedDate = userrequest[i].CreatedDate,
+            //        count = requestWiseFiles.Count,
+            //    };
+            //    dashboard.Add(dashboard1);
+            //}
 
 
-            CookieOptions cookieOptions = new CookieOptions();
-            cookieOptions.Secure = true;
-            cookieOptions.Expires = DateTime.Now.AddMinutes(30);
-            Response.Cookies.Append("UserId", user2.UserId.ToString(), cookieOptions);
 
             //CookieOptions cookieOptions1 = new CookieOptions();
             //cookieOptions1.Secure = true;
@@ -132,7 +142,7 @@ namespace HalloDoc.Controllers
 
 
 
-            return View("PatientDashboard", dashboard);
+          
 
         }
         public IActionResult PatientDashBoardDoc(int id)
@@ -184,21 +194,20 @@ namespace HalloDoc.Controllers
             };
 
 
-
-
             return View("UserProfile", showProfile);
         }
 
         [HttpPost]
         public async Task <IActionResult> UserProfile(ShowProfile up)
         {
-            
-            User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == up.UserId);
+
+            int id = Int32.Parse(Request.Cookies["UserId"]);
+            User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
             user2.FirstName = up.FirstName;
             
             user2.LastName = up.LastName;
-            
 
+            user2.Email = up.Email;
             user2.Mobile = up.Mobile;
             user2.Street = up.Street;
             user2.City = up.City;

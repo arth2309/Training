@@ -12,6 +12,10 @@ builder.Services.AddDbContext<HalloDoc.DataContext.ApplicationDbContext>();
 builder.Services.AddScoped<IPatientLoginRepo, PatientLoginRepo>();
 builder.Services.AddDbContext<HalloDoc.Repositories.DataContext.ApplicationDbContext>();
 builder.Services.AddScoped<IPatientLoginServices, PatientLoginServices>();
+builder.Services.AddScoped<IPatientDashBoardServices, PatientDashBoardServices>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IRequestRepo, RequestRepo>();
+builder.Services.AddScoped<IRequestFileRepo, RequestFileRepo>();
 
 
 
