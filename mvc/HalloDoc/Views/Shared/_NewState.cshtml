@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model List<HallodocServices.ModelView.NewState>
+
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         function toggleTheme() {
             var elements = document.querySelectorAll('html');
@@ -118,16 +121,19 @@
                     </tr>
                 </thead>
                 <tbody class="table-success">
-                    <tr>
 
-                        <td>test,test</td>
+                    @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
                         <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                        <td>jun 16,2023(0)</td>
-                        <td>Patient test,test</td>
-                        <td>Nov 20,2023 335h 1m 01m</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
-                        <td>Room Location : 101</td>
-                        <td>-</td>
+                        <td></td>
+                        <td>@Html.DisplayFor(modelItem => item.RFirstName),@Html.DisplayFor(modelItem => item.RFirstName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>@Html.DisplayFor(modelItem => item.Mobile)</button></td>
+                        <td>@Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City),@Html.DisplayFor(modelItem => item.State)</td>
+                        <td></td>
+
                         <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
                         <td>
                             <div class="btn-group">
@@ -143,70 +149,24 @@
                                 </ul>
                             </div>
                         </td>
-
-
                     </tr>
-                    <tr>
-
-                        <td>test,test</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                        <td>jun 16,2023(0)</td>
-                        <td>Patient test,test</td>
-                        <td>Nov 20,2023 335h 1m 01m</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
-                        <td>Room Location : 101</td>
-                        <td>-</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                    <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                    <li><a class="dropdown-item" href="#">View Case</a></li>
-                                    <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                    <li><a class="dropdown-item" href="#">Block Patient</a></li>
-                                </ul>
-                            </div>
-                        </td>
-
-
-                    </tr>
-                    <tr>
-
-                        <td>test,test</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                        <td>jun 16,2023(0)</td>
-                        <td>Patient test,test</td>
-                        <td>Nov 20,2023 335h 1m 01m</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
-                        <td>Room Location : 101</td>
-                        <td>-</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Action
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                    <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                    <li><a class="dropdown-item" href="#">View Case</a></li>
-                                    <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                    <li><a class="dropdown-item" href="#">Block Patient</a></li>
-                                </ul>
-                            </div>
-                        </td>
-
-
-                    </tr>
+                    
+                }
+                
+                    
+                   
 
                 </tbody>
             </table>
 
+            @for(int i =1;i<=@Model[0].TotalPages;i++)
+            {
+            <a asp-controller="AdminSite" asp-action="AdminDashBoard" asp-route-page="@i">page @i</a>
+             }
+        
+       
+       
         </div>
-   
+    
 </body>
 </html>

@@ -28,5 +28,17 @@ namespace HalloDoc.Repositories.Implementation
             List<Request> requests = _dbcontext.Requests.Where(a=>a.UserId == uid).ToList();
             return requests;
         } 
+        
+        public List<Request> GetNewStateName(int page, int pageSize)
+        {
+            List<Request> requests = _dbcontext.Requests.Where(a=>a.Status == 1).ToList();
+            return requests.Skip((page-1)*pageSize) .Take(pageSize).ToList();
+        }
+
+        public int GetCount()
+        {
+            return _dbcontext.Requests.Where(a=>a.Status == 1).ToList().Count();
+        }
+
     }
 }

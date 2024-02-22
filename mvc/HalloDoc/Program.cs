@@ -16,6 +16,8 @@ builder.Services.AddScoped<IPatientDashBoardServices, PatientDashBoardServices>(
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IRequestRepo, RequestRepo>();
 builder.Services.AddScoped<IRequestFileRepo, RequestFileRepo>();
+builder.Services.AddScoped<IAdminDashBoardServices, AdminDashBoardServices>();
+builder.Services.AddScoped<IRequestClientRepo, RequestClientRepo>();
 
 
 

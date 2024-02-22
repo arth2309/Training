@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model HallodocServices.ModelView.AdminDashBoard
+
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         function toggleTheme() {
             var elements = document.querySelectorAll('html');
@@ -20,16 +23,35 @@
             });
         }
 
-        function toggle(temp) 
-        {
+       
 
-            document.getElementById('cs').
-            if (temp==1 && document.getElementById('newstate').classList.contains('d-none')) {
-                document.getElementById('newstate').classList.remove('d-none');
+    </script>
+
+    <script>
+        function toggle(temp) {
+            $(".cs").css("display", "none");
+            switch (temp) {
+
+                case 1: document.getElementById("newstate").style.display = "block";
+                    break;
+                case 2: document.getElementById("pendingstate").style.display = "block";
+                    break;
+                case 3: document.getElementById("concludestate").style.display = "block";
+                    break;
+                case 4: document.getElementById("activestate").style.display = "block";
+                    break;
+                case 5: document.getElementById("toclosestate").style.display = "block";
+                    break;
+                case 6: document.getElementById("unpaidstate").style.display = "block";
+                    break;
+                default: document.getElementById("newstate").style.display = "block";
+                    break;
 
             }
-        }
 
+
+
+        }
     </script>
 
 
@@ -139,7 +161,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt w-100 ps">
+                <button class="bt w-100 ps" onclick="toggle(2)">
                     <div>
                         <div class="d-flex">
                             <div>PENDING</div>
@@ -150,7 +172,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt w-100 as">
+                <button class="bt w-100 as" onclick="toggle(4)">
                     <div>
                         <div class="d-flex">
                             <div>ACTIVE</div>
@@ -161,7 +183,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt  w-100  cs">
+                <button class="bt  w-100  cos" onclick="toggle(3)">
                     <div>
                         <div class="d-flex">
                             <div>CONCLUDE</div>
@@ -173,7 +195,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt w-100  tcs">
+                <button class="bt w-100  tcs" onclick="toggle(5)">
                     <div>
                         <div class="d-flex">
                             <div>To CLOSE</div>
@@ -185,7 +207,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt w-100 ups">
+                <button class="bt w-100 ups" onclick="toggle(6)">
                     <div>
                         <div class="d-flex">
                             <div>UNPAID</div>
@@ -197,196 +219,29 @@
             </div>
 
         </div>
-        <div class="d-none" id="newstate">
-        @Html.Partial("~/Views/Shared/_NewState.cshtml");
+        <div class="cs" id="newstate" >
+        @Html.Partial("~/Views/Shared/_NewState.cshtml",Model.AdminNewState);
         </div>
-        <div class="d-none" id="pendingtate">
+        <div class="cs" id="pendingstate" style="display:none">
             @Html.Partial("~/Views/Shared/_PendingState.cshtml");
         </div>
-        <div class="state d-none">
-            <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
-                <div class="d-flex">
-                    <h5>Patients</h5>(New)
-                </div>
-                <div class="d-flex" style="margin-left: auto;">
-                    <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-link"></i></button>
-                    <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-link"></i>Send Link</button>
-                    <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-pencil"></i></button>
-                    <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-pencil"></i>Create Requests</button>
-                    <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-arrow-90deg-right"></i></button>
-                    <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-arrow-90deg-right"></i>Export</button>
-                    <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-arrow-up-right-square"></i></button>
-                    <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-arrow-up-right-square"></i>Export All</button>
-                    <button type="button" class="btn btn-primary d-flex d-lg-none "><i class="bi bi-person"></i></button>
-                    <button type="button" class="btn btn-primary d-none d-lg-flex "><i class="bi bi-person"></i>Request DTV Support</button>
-
-                </div>
-            </div>
-            <div class="d-flex row" style="justify-content: space-between;">
-                <div class="d-flex col-12 col-lg-3">
-                    <div class="input-group mb-3 input-with-icon">
-                        <span class="icon input-group-text">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="Search" class="form-control" style="padding-left:5px;" placeholder="Search Patients">
-                    </div>
-                </div>
-                <div class="col-12 col-lg-3">
-                    <select class="form-select form-select" aria-label="Small select example">
-                        <option selected>Search Regions</option>
-                        <option value="1">MaryLand</option>
-                        <option value="2">District Of Columbia</option>
-                        <option value="3">New York</option>
-                        <option value="4">Virginia</option>
-                    </select>
-                </div>
-
-
-                <div class="d-flex col-8 col-lg-6 t">
-                    <div class="pd">
-                        <button type="button" class="btn btn-outline-dark d-none d-lg-flex">All</button>
-                    </div>
-                    <div class="pd">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                            <circle cx="6" cy="6" r="6" />
-                        </svg>
-                        Patient
-                    </div>
-                    <div class="pd">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="yellow" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                            <circle cx="6" cy="6" r="6" />
-                        </svg>
-                        Family/Freind
-                    </div>
-                    <div class="pd">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="red" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                            <circle cx="6" cy="6" r="6" />
-                        </svg>
-                        Business
-                    </div>
-                    <div class="pd">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="blue" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                            <circle cx="6" cy="6" r="6" />
-                        </svg>
-                        Concierge
-                    </div>
-                    <div class="pd">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="purple" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                            <circle cx="6" cy="6" r="6" />
-                        </svg>
-                        VIP
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col"></th>
-                            <th scope="col">Date of Birth</th>
-                            <th scope="col">Requestor</th>
-                            <th scope="col">Requested Date</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Notes</th>
-                            <th scope="col">Chat with</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-success">
-                        <tr>
-
-                            <td>test,test</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                            <td>jun 16,2023(0)</td>
-                            <td>Patient test,test</td>
-                            <td>Nov 20,2023 335h 1m 01m</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
-                            <td>Room Location : 101</td>
-                            <td>-</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                        <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                        <li><a class="dropdown-item" href="#">View Case</a></li>
-                                        <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                        <li><a class="dropdown-item" href="#">Block Patient</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-
-                        </tr>
-                        <tr>
-
-                            <td>test,test</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                            <td>jun 16,2023(0)</td>
-                            <td>Patient test,test</td>
-                            <td>Nov 20,2023 335h 1m 01m</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
-                            <td>Room Location : 101</td>
-                            <td>-</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                        <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                        <li><a class="dropdown-item" href="#">View Case</a></li>
-                                        <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                        <li><a class="dropdown-item" href="#">Block Patient</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-
-                        </tr>
-                        <tr>
-
-                            <td>test,test</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                            <td>jun 16,2023(0)</td>
-                            <td>Patient test,test</td>
-                            <td>Nov 20,2023 335h 1m 01m</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>123-456-7890</button></td>
-                            <td>Room Location : 101</td>
-                            <td>-</td>
-                            <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                        <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                        <li><a class="dropdown-item" href="#">View Case</a></li>
-                                        <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                        <li><a class="dropdown-item" href="#">Block Patient</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-
-
-                        </tr>
-
-                    </tbody>
-                </table>
-
-            </div>
+        <div class="cs" id="concludestate" style="display:none">
+            @Html.Partial("~/Views/Shared/_ConcludeState.cshtml");
+        </div>
+        <div class="cs" id="activestate" style="display:none">
+            @Html.Partial("~/Views/Shared/_ActiveState.cshtml");
+        </div>
+        <div class="cs" id="toclosestate" style="display:none">
+            @Html.Partial("~/Views/Shared/_ToCloseState.cshtml");
+        </div>
+        <div class="cs" id="unpaidstate" style="display:none">
+            @Html.Partial("~/Views/Shared/_UnPaidState.cshtml");
         </div>
 
+       
+
+
     </div>
+   
 </body>
 </html>

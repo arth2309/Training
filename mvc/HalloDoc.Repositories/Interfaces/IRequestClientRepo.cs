@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace HalloDoc.Repositories.Interfaces
 {
-    public interface IRequestRepo
+    public interface IRequestClientRepo
     {
-        int GetUid(int id);
-        List<Request> GetAllRequests(int uid);
-        List<Request> GetNewStateName(int page, int pageSize);
-
-        int GetCount();
-
-
+        RequestClient GetNewStateData(int id);
     }
 }
