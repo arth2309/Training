@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.Interfaces;
 using HalloDoc.Repositories.DataModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {
@@ -17,10 +18,14 @@ namespace HalloDoc.Repositories.Implementation
             _dbcontext = dbcontext;
         }
 
-        public RequestClient GetNewStateData(int id)
+        public List<RequestClient> GetNewStateData(int status)
         {
-              RequestClient requestClients = _dbcontext.RequestClients.FirstOrDefault(a=>a.RequestId == id);
-               return requestClients;
+              return  _dbcontext.RequestClients.Include(a=>a.Request).Where(a=>a.Request.Status == status).ToList();
+              
+        }
+        public int GetCount()
+        {
+            return _dbcontext.RequestClients.Include(a=>a.Request).Where(a => a.Request.Status == 1).ToList().Count();
         }
 
 

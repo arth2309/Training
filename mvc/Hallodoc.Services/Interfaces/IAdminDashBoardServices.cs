@@ -9,6 +9,8 @@ namespace HallodocServices.Interfaces
 {
     public interface IAdminDashBoardServices
     {
-        AdminDashBoard newStates(int page,int pageSize);
+        List<NewState> getStates(int status);
+        AdminDashBoard newStates(int status);
+       
     }
 }

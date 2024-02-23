@@ -10,6 +10,15 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+    <style>
+        #tableID_wrapper
+        {
+            width:100%;
+           
+        }
+    </style>
+ 
     <script>
         function toggleTheme() {
             var elements = document.querySelectorAll('html');
@@ -23,9 +32,12 @@
             });
         }
 
-       
+        $(document).ready(function () {
+            $('#tableID').DataTable();
+        });
 
     </script>
+    <script src="~/js/checkstatus.js"></script>
 
     <script>
         function toggle(temp) {
@@ -33,18 +45,25 @@
             switch (temp) {
 
                 case 1: document.getElementById("newstate").style.display = "block";
+                         GetStatus(temp);
                     break;
                 case 2: document.getElementById("pendingstate").style.display = "block";
+                    GetStatus(temp);
                     break;
-                case 3: document.getElementById("concludestate").style.display = "block";
+                case 3: document.getElementById("activestate1").style.display = "block";
+                    GetStatus(temp);
                     break;
-                case 4: document.getElementById("activestate").style.display = "block";
+                case 4: document.getElementById("concludestate").style.display = "block";
+                    GetStatus(temp);
                     break;
                 case 5: document.getElementById("toclosestate").style.display = "block";
+                    GetStatus(temp);
                     break;
                 case 6: document.getElementById("unpaidstate").style.display = "block";
+                    GetStatus(temp);
                     break;
                 default: document.getElementById("newstate").style.display = "block";
+                    GetStatus(temp);
                     break;
 
             }
@@ -154,7 +173,7 @@
                         <div class="d-flex">
                             <div>New</div>
                         </div>
-                        <div>1452</div>
+                        <div>@Model.NewCount</div>
                     </div>
 
                 </button>
@@ -166,29 +185,29 @@
                         <div class="d-flex">
                             <div>PENDING</div>
                         </div>
-                        <div>266</div>
+                        <div>@Model.PendingCount</div>
                     </div>
                 </button>
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt w-100 as" onclick="toggle(4)">
+                <button class="bt w-100 as" onclick="toggle(3)">
                     <div>
                         <div class="d-flex">
                             <div>ACTIVE</div>
                         </div>
-                        <div>26</div>
+                        <div>@Model.ActiveCount</div>
                     </div>
                 </button>
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt  w-100  cos" onclick="toggle(3)">
+                <button class="bt  w-100  cos" onclick="toggle(4)">
                     <div>
                         <div class="d-flex">
                             <div>CONCLUDE</div>
                         </div>
-                        <div>1078</div>
+                        <div>@Model.ConcludeCount</div>
                     </div>
 
                 </button>
@@ -198,9 +217,9 @@
                 <button class="bt w-100  tcs" onclick="toggle(5)">
                     <div>
                         <div class="d-flex">
-                            <div>To CLOSE</div>
+                            <div>TO CLOSE</div>
                         </div>
-                        <div>519</div>
+                        <div>@Model.ToCloseCount</div>
                     </div>
 
                 </button>
@@ -212,7 +231,7 @@
                         <div class="d-flex">
                             <div>UNPAID</div>
                         </div>
-                        <div>16</div>
+                        <div>@Model.UnPaidCount</div>
                     </div>
 
                 </button>
@@ -223,25 +242,32 @@
         @Html.Partial("~/Views/Shared/_NewState.cshtml",Model.AdminNewState);
         </div>
         <div class="cs" id="pendingstate" style="display:none">
-            @Html.Partial("~/Views/Shared/_PendingState.cshtml");
+            @Html.Partial("~/Views/Shared/_PendingState.cshtml",Model.AdminNewState);
         </div>
         <div class="cs" id="concludestate" style="display:none">
-            @Html.Partial("~/Views/Shared/_ConcludeState.cshtml");
+            @Html.Partial("~/Views/Shared/_ConcludeState.cshtml",Model.AdminNewState);
         </div>
-        <div class="cs" id="activestate" style="display:none">
-            @Html.Partial("~/Views/Shared/_ActiveState.cshtml");
+        <div class="cs" id="activestate1" style="display:none">
+            @Html.Partial("~/Views/Shared/_ActiveState.cshtml",Model.AdminNewState);
         </div>
         <div class="cs" id="toclosestate" style="display:none">
-            @Html.Partial("~/Views/Shared/_ToCloseState.cshtml");
+            @Html.Partial("~/Views/Shared/_ToCloseState.cshtml",Model.AdminNewState);
         </div>
         <div class="cs" id="unpaidstate" style="display:none">
-            @Html.Partial("~/Views/Shared/_UnPaidState.cshtml");
+            @Html.Partial("~/Views/Shared/_UnPaidState.cshtml",Model.AdminNewState);
         </div>
 
        
 
 
     </div>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tableID').DataTable();
+        });
+
+    </script>
    
 </body>
 </html>

@@ -29,16 +29,16 @@ namespace HalloDoc.Repositories.Implementation
             return requests;
         } 
         
-        public List<Request> GetNewStateName(int page, int pageSize)
-        {
-            List<Request> requests = _dbcontext.Requests.Where(a=>a.Status == 1).ToList();
-            return requests.Skip((page-1)*pageSize) .Take(pageSize).ToList();
-        }
+        //public List<Request> GetNewStateName(int page, int pageSize, int status)
+        //{
+        //    List<Request> requests = _dbcontext.Requests.Where(a=>a.Status == status).ToList();
+        //    return requests.Skip((page-1)*pageSize) .Take(pageSize).ToList();
+        //}
 
-        public int GetCount()
-        {
-            return _dbcontext.Requests.Where(a=>a.Status == 1).ToList().Count();
-        }
+        //public int GetCount()
+        //{
+        //    return _dbcontext.Requests.Where(a=>a.Status == 1).ToList().Count();
+        //}
 
     }
 }

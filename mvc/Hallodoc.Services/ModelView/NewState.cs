@@ -42,8 +42,8 @@ namespace HallodocServices.ModelView
 
         [StringLength(100)]
         public string? State { get; set; }
-        public int? TotalCount { get; set; }
-        public int? TotalPages { get; set; }
+        public int? id { get; set; }
+        public string? Email { get; set; }
         public int? PageNumber { get; set; }
         public int? PageSize { get; set; }
     }

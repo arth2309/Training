@@ -11,9 +11,9 @@ namespace HalloDoc.Repositories.Interfaces
     {
         int GetUid(int id);
         List<Request> GetAllRequests(int uid);
-        List<Request> GetNewStateName(int page, int pageSize);
+        //List<Request> GetNewStateName(int page, int pageSize, int status);
 
-        int GetCount();
+        //int GetCount();
 
 
     }
