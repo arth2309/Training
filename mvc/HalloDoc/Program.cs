@@ -18,6 +18,7 @@ builder.Services.AddScoped<IRequestRepo, RequestRepo>();
 builder.Services.AddScoped<IRequestFileRepo, RequestFileRepo>();
 builder.Services.AddScoped<IAdminDashBoardServices, AdminDashBoardServices>();
 builder.Services.AddScoped<IRequestClientRepo, RequestClientRepo>();
+builder.Services.AddScoped<IViewCaseServices, ViewCaseServices>();
 
 
 

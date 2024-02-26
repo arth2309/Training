@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="d-flex row" style="justify-content: space-between;">
-    <div class="d-flex col-12 col-lg-3" id="tableID_filter">
+    <div class="d-flex col-12 col-lg-3" >
                 <div class="input-group mb-3 input-with-icon">
                     <span class="icon input-group-text">
                         <i class="bi bi-search"></i>
@@ -117,7 +117,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Assign Case</a></li>
                                     <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                    <li><a class="dropdown-item" href="#">View Case</a></li>
+                                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id>View Case</a></li>
                                     <li><a class="dropdown-item" href="#">View Notes</a></li>
                                     <li><a class="dropdown-item" href="#">Block Patient</a></li>
                                 </ul>

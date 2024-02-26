@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/ViewCase.css">
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header >
+        <div class="d-flex d-lg-flex">
+          <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+          <div class="img1"><img src="images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+          <div class="right">
+              <div class="intro"><p>Welcome:</p></div>
+              <div class="s intro"><span><b>test1</b></span></div>
+              <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+              </div>
+              <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>  
+          <div class="theme"><img src="images/icons8-moon-symbol-25.png" alt="theme"></div>
+          </div>
+      </header>
+      
+      
+      <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
+        <li class="nav-item">
+          <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
+        </li>
+       
+      </ul>
+        </div>
+      </div>
+      
+      <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+        <li class="nav-item">
+          <a class="nav-link "><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"><b>Provider Location</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><b>Records</b></a>
+        </li>
+       
+      </ul>
+      <div class="he">
+        <div class="he1 h4">
+            <p>View Reservation<button type="button" class="btn btn-success rounded-pill" style="background-color: rgb(49, 212, 44);">Patients</button></p>
+        </div>
+        <div class="he2"><button type="button" class="btn btn-outline-info">&lt Back</button>
+        </div>
+    </div>
+    <div class="mainct shadow">
+      <form action="">
+          <p class="h4 ">Patient information</p>
+
+           <div class="mt-2">
+               <div>Confirmation Number</div>
+               <div style="color: rgb(23, 208, 214); font-size: large;"><strong>MD092723TETE0002</strong></div>
+           </div>
+
+          <div class="form-floating mt-2">
+            <textarea class="form-control"  placeholder="Leave a comment here" id="floatingTextarea2" style="height: 120px; top: -9px; left:-9px;" asp-for="symptoms"></textarea>
+            <label for="floatingTextarea2" style="top:-9px;left:-9px">Patient Notes</label>
+        </div>
+        <hr style="border-top: dotted 1px;">
+          <div class="row ">
+              <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                  <input  type="text" class="form-control"  id="floatingInput" placeholder="first name" asp-for="FirstName">
+                  <label for="floatingInput">First Name </label>
+
+              </div>
+              <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                  <input  type="text" class="form-control dis"  id="floatingInput" placeholder="last name" asp-for="LastName">
+                  <label for="floatingInput">Last Name</label>
+              </div>
+          </div>
+          <div class="row ">
+              <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                  <input  type="date" class="form-control"  id="floatingInput">
+                  <label for="floatingInput">Date of Birth</label>
+              </div>
+              <div class=" col-12 col-md-10 col-lg-5 wt form-floating mb-3">
+                <input  type="tel" class="form-control dis"  style="height:58px" id="patientMobileNumber" asp-for="Mobile">
+            </div>
+            <div class="col-3 col-md-2 col-lg-1 wt form-floating mb-3"><button type="button" class="btn btn-outline-info"  style="height:54px; width:100%;"><i class="bi bi-telephone"></i> </button> </div>
+          </div>
+          <div class="row">
+              
+            <div class="col-12 col-md-10 col-lg-6 wt form-floating mb-3">
+              
+                    <input  type="email" class="form-control"  id="floatingInput"
+                           aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+                <input  type="email" class="form-control d-none" id="floatingInput"
+                       aria-describedby="emailHelp" placeholder="Enter email" asp-for="Email">
+                <label for="floatingInput">Email</label>
+                
+            </div>
+            <div class="col-3 col-md-2 col-lg-2 wt form-floating mb-3">
+              <button  type="button" class="btn btn-outline-info" style="height:54px; width: 100%;">Edit</button>
+            </div>
+
+        </div>
+         
+          
+          <p class="h4 vt">Location information</p>
+          
+          <div class="row ">
+              <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                  <input  type="text" class="form-control dis"  placeholder="Region" id="floatingInput" asp-for="State">
+                  <label for="floatingInput">Region</label>
+              </div>
+              <div class="col-12 col-md-10 col-lg-5 wt form-floating mb-3">
+                  <input  type="text" class="form-control dis"  placeholder="Business/Address" id="floatingInput" asp-for="ZipCode">
+                  <label for="floatingInput">Business/Address</label >
+
+              </div>
+              <div class="col-3 col-md-2 col-lg-1 wt form-floating mb-3">
+                  <button type="button" class="btn btn-outline-info" style="height: 54px; width:100%"><i class="bi bi-geo-alt"></i></button>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+              <input  type="text" class="form-control dis"  placeholder="Room #" id="floatingInput" asp-for="State">
+              <label for="floatingInput">Room #</label>
+          </div>
+          </div>
+         
+          <div class="d-flex wt">
+              <div class="bt">
+                  <div><button type="button" class="btn btn-info">View Notes</button></div>
+                  <div style="margin-left: 4px;"><button type="button" class="btn btn-danger">Cancel</button></div>
+              </div>
+          </div>
+      </form>
+
+  </div>
+    <script>
+        const phoneInputField = document.getElementById("patientMobileNumber");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
+</body>
+</html>

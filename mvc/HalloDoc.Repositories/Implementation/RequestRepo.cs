@@ -27,18 +27,19 @@ namespace HalloDoc.Repositories.Implementation
         {
             List<Request> requests = _dbcontext.Requests.Where(a=>a.UserId == uid).ToList();
             return requests;
-        } 
-        
-        //public List<Request> GetNewStateName(int page, int pageSize, int status)
-        //{
-        //    List<Request> requests = _dbcontext.Requests.Where(a=>a.Status == status).ToList();
-        //    return requests.Skip((page-1)*pageSize) .Take(pageSize).ToList();
-        //}
+        }
+        public Request GetRequest(int id)
+        {
+            Request request = _dbcontext.Requests.FirstOrDefault(a => a.RequestId == id);
+            return request;
+        }
 
-        //public int GetCount()
-        //{
-        //    return _dbcontext.Requests.Where(a=>a.Status == 1).ToList().Count();
-        //}
+        public async Task<Request> UpdateTable(Request request)
+        {
+            _dbcontext.Requests.Update(request);
+            await _dbcontext.SaveChangesAsync();
+            return request;
+        }
 
     }
 }

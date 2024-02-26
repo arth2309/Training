@@ -27,7 +27,18 @@ namespace HalloDoc.Repositories.Implementation
         {
             return _dbcontext.RequestClients.Include(a=>a.Request).Where(a => a.Request.Status == 1).ToList().Count();
         }
+        public RequestClient GetViewCaseData(int id)
+        {
+            RequestClient requestClient = _dbcontext.RequestClients.Include(a=>a.Request).FirstOrDefault(a=>a.RequestClientId == id);
+            return requestClient;
+        }
 
+        public async Task <RequestClient> UpdateTable(RequestClient requestClient)
+        {
+            _dbcontext.RequestClients.Update(requestClient);
+            await _dbcontext.SaveChangesAsync();
+            return requestClient;
+        }
 
     }
 }

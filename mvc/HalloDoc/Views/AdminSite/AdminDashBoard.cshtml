@@ -31,7 +31,6 @@
                 }
             });
         }
-
         $(document).ready(function () {
             $('#tableID').DataTable();
         });
@@ -42,6 +41,8 @@
     <script>
         function toggle(temp) {
             $(".cs").css("display", "none");
+           
+           
             switch (temp) {
 
                 case 1: document.getElementById("newstate").style.display = "block";
@@ -72,7 +73,8 @@
 
         }
     </script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    
 
     <title>Document</title>
 </head>
@@ -261,13 +263,9 @@
 
 
     </div>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#tableID').DataTable();
-        });
-
-    </script>
+   <script>
+        
+   </script>
    
 </body>
 </html>

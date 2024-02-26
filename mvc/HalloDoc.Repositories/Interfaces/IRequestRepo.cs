@@ -11,9 +11,8 @@ namespace HalloDoc.Repositories.Interfaces
     {
         int GetUid(int id);
         List<Request> GetAllRequests(int uid);
-        //List<Request> GetNewStateName(int page, int pageSize, int status);
-
-        //int GetCount();
+        Task<Request> UpdateTable(Request request);
+        Request GetRequest(int id);
 
 
     }
