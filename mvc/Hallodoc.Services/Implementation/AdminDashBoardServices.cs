@@ -112,6 +112,7 @@ namespace HallodocServices.Implementation
                     newState.Mobile = requestClients[i].PhoneNumber;
                     newState.id = requestClients[i].RequestClientId;
                     newState.Email = requestClients[i].Email;
+                    newState.RequestId = requestClients[i].RequestId;
                     
                 };
                 newStates.Add(newState);

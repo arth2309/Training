@@ -19,6 +19,9 @@ builder.Services.AddScoped<IRequestFileRepo, RequestFileRepo>();
 builder.Services.AddScoped<IAdminDashBoardServices, AdminDashBoardServices>();
 builder.Services.AddScoped<IRequestClientRepo, RequestClientRepo>();
 builder.Services.AddScoped<IViewCaseServices, ViewCaseServices>();
+builder.Services.AddScoped<IViewNoteServices, ViewNoteServices>();
+builder.Services.AddScoped<IRequestNoteRepo, RequestNoteRepo>();
+builder.Services.AddScoped<IForgotPasswordServices, ForgotPasswordServices>();
 
 
 

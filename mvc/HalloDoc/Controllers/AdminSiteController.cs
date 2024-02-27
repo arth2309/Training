@@ -20,11 +20,14 @@ namespace HalloDoc.Controllers
     {
         private readonly IAdminDashBoardServices _dashBoardServices;
         private readonly IViewCaseServices _viewCaseServices;
+        private readonly IViewNoteServices _viewNoteServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
+            _viewNoteServices = viewNoteServices;
+
         }
 
         public IActionResult AdminDashBoard(int status)
@@ -93,7 +96,20 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
+        public IActionResult ViewNotes(int reqid)
+        {
+            
+            AdminViewNote adminViewNote = _viewNoteServices.GetViewNote(reqid);
+            return View(adminViewNote ?? null);
+        }
 
+        [HttpPost]
+        
+        public async Task<IActionResult> ViewNotes(AdminViewNote adminViewNote)
+        {
+            AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
+            return View(adminViewNote1);
+        }
 
 
     }

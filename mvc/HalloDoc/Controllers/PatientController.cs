@@ -21,14 +21,16 @@ namespace HalloDoc.Controllers
         private readonly IPatientLoginServices _loginServices;
 
         private readonly IPatientDashBoardServices _dashBoardServices;
+        private readonly IForgotPasswordServices _forgotPasswordServices;
         
         private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices)
         {
             _dbContext = dbContext;
             _loginServices = loginServices;
             _dashBoardServices = dashBoardServices;
+            _forgotPasswordServices = forgotPasswordServices;
         }
 
       
@@ -48,6 +50,13 @@ namespace HalloDoc.Controllers
         }
         public IActionResult PatientForgotPassword()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public  IActionResult PatientForgotPassword(ForgotPassword forgotPassword)
+        {
+            _forgotPasswordServices.SendEmail(forgotPassword.Email);
             return View();
         }
         public IActionResult CreatePatientRequest()

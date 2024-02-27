@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets\\css\\AdminSite\\ViewCase.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\ViewNotes.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\ViewNotes.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },
