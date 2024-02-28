@@ -22,6 +22,8 @@ builder.Services.AddScoped<IViewCaseServices, ViewCaseServices>();
 builder.Services.AddScoped<IViewNoteServices, ViewNoteServices>();
 builder.Services.AddScoped<IRequestNoteRepo, RequestNoteRepo>();
 builder.Services.AddScoped<IForgotPasswordServices, ForgotPasswordServices>();
+builder.Services.AddScoped<ICancelCaseServices, CancelCaseServices>();
+builder.Services.AddScoped<IRequestStatusLogRepo, RequestStatusLogRepo>();
 
 
 

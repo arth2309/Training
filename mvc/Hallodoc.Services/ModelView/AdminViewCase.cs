@@ -11,6 +11,8 @@ namespace HallodocServices.ModelView
 {
     public class AdminViewCase
     {
+        public AdminCancelCase? cancelCases { get; set; }
+
         [StringLength(100)]
         public string? FirstName { get; set; }
 

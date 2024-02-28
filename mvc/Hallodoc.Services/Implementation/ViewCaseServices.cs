@@ -24,9 +24,13 @@ namespace HallodocServices.Implementation
         public AdminViewCase GetAdminViewCaseData(int id)
         {
             var r1 = _repo.GetViewCaseData(id);
+            AdminCancelCase adminCancelCase = new AdminCancelCase();
+            adminCancelCase.requestId = r1.RequestId;
 
             AdminViewCase adminViewCase = new AdminViewCase();
+
             {
+               
                 adminViewCase.id = id;
                 adminViewCase.FirstName = r1.FirstName;
                 adminViewCase.LastName = r1.LastName;
@@ -38,6 +42,8 @@ namespace HallodocServices.Implementation
                 adminViewCase.id = r1.RequestClientId;
                 adminViewCase.status = r1.Request.Status;
                 adminViewCase.rid = r1.RequestId;
+                adminViewCase.cancelCases = adminCancelCase;
+                
             }
 
             return adminViewCase;

@@ -97,6 +97,8 @@ namespace HallodocServices.Implementation
             List<NewState> newStates = new List<NewState>();
             for (int i = 0; i < requestClients.Count; i++)
             {
+                AdminCancelCase adminCancelCase = new AdminCancelCase();
+                adminCancelCase.requestId = requestClients[i].RequestId;
 
                 NewState newState = new();
                 {
@@ -113,6 +115,7 @@ namespace HallodocServices.Implementation
                     newState.id = requestClients[i].RequestClientId;
                     newState.Email = requestClients[i].Email;
                     newState.RequestId = requestClients[i].RequestId;
+                    newState.cancelCases = adminCancelCase;
                     
                 };
                 newStates.Add(newState);

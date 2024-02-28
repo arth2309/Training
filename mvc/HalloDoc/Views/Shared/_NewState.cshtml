@@ -1,4 +1,5 @@
 ﻿@model List<HallodocServices.ModelView.NewState>
+ 
 
 
 
@@ -108,20 +109,27 @@
                             </div>
                             <div class="modal-body">
                                 Patient : @Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)
+                               @* <form asp-controller="AdminSite" asp-action="CancelCase" asp-route-rid="@item.RequestId" method="post">
                                 <select class="form-select form-select-lg mb-3 mt-2" aria-label="Large select example">
                                     <option selected>Reason For Cancellation</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option value="1">Inappropriate Services</option>
+                                    <option value="2">Unable to Pay</option>
+                                    
                                 </select>
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <textarea  class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" ></textarea>
                                     <label for="floatingTextarea2">Provide Additional Notes</label>
                                 </div>
+                    
                                 <div class="d-flex mt-2" style="justify-content:end">
-                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Confirm</button>
+                                      <input type="hidden" asp-for="@item.FirstName">
+                                      <input type ="hidden" asp-for="@item.RequestId">
+                                      
+                                    <button type="submit" class="btn btn-info" data-bs-dismiss="modal">Confirm</button>
                                     <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
                                 </div>
+                                </form>*@
+                                @Html.Partial("~/Views/Shared/_CancelPopup.cshtml",@item.cancelCases)
                             </div>
                         </div>
                     </div>
@@ -152,10 +160,11 @@
                                     <option value="3">Three</option>
                                 </select>
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" asp-for="@item.Notes"></textarea>
                                     <label for="floatingTextarea2">Description</label>
                                 </div>
                                 <div class="d-flex mt-2" style="justify-content:end">
+                                   
                                     <button type="button" class="btn btn-info" data-bs-dismiss="modal">Submit</button>
                                     <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
                                 </div>

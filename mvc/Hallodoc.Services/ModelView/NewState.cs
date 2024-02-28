@@ -14,7 +14,7 @@ namespace HallodocServices.ModelView
        
 
         [StringLength(100)]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [StringLength(100)]
         public string? LastName { get; set; }
@@ -28,7 +28,7 @@ namespace HallodocServices.ModelView
         public short? Status { get; set; }
 
         [Column(TypeName = "timestamp without time zone")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
 
         [StringLength(20)]
@@ -46,7 +46,11 @@ namespace HallodocServices.ModelView
         public string? Email { get; set; }
         public int? PageNumber { get; set; }
         public int? PageSize { get; set; }
-        public int? RequestId { get; set;}
-        
+        public int RequestId { get; set;}
+        public string? Notes { get; set; }
+        public string? CaseTag { get; set; }
+        public AdminCancelCase? cancelCases { get; set; }
+
+
     }
 }

@@ -42,6 +42,41 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#0dcaf0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Patient :@Model.FirstName,@Model.LastName
+                    @* <form asp-controller="AdminSite" asp-action="CancelCase" asp-route-rid="@item.RequestId" method="post">
+                    <select class="form-select form-select-lg mb-3 mt-2" aria-label="Large select example">
+                    <option selected>Reason For Cancellation</option>
+                    <option value="1">Inappropriate Services</option>
+                    <option value="2">Unable to Pay</option>
+
+                    </select>
+                    <div class="form-floating">
+                    <textarea  class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" ></textarea>
+                    <label for="floatingTextarea2">Provide Additional Notes</label>
+                    </div>
+
+                    <div class="d-flex mt-2" style="justify-content:end">
+                    <input type="hidden" asp-for="@item.FirstName">
+                    <input type ="hidden" asp-for="@item.RequestId">
+
+                    <button type="submit" class="btn btn-info" data-bs-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    </form>*@
+                    @Html.Partial("~/Views/Shared/_CancelPopup.cshtml",Model.cancelCases)
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="d-flex d-lg-flex">
             <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
@@ -224,7 +259,7 @@
             <div class="d-flex wt">
                 <div class="bt">
                     <div><button type="button" class="btn btn-info">View Notes</button></div>
-                    <a asp-controller="AdminSite" asp-action="ChangeState" asp-route-rid =@Model.rid ><div style="margin-left: 4px;"><button type="button" class="btn btn-danger">Cancel</button></div></a>
+                    <div style="margin-left: 4px;"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancel</button></div>
                 </div>
             </div>
         </form>

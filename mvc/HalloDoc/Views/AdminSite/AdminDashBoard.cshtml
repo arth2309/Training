@@ -34,6 +34,9 @@
         $(document).ready(function () {
             $('#tableID').DataTable();
         });
+        $(document).ready(function () {
+            $('#tableID1').DataTable();
+        });
 
 
     </script>
@@ -245,7 +248,7 @@
             </div>
 
         </div>
-        <div class="cs" id="newstate" >
+        <div class="cs" id="newstate"  >
         @Html.Partial("~/Views/Shared/_NewState.cshtml",Model.AdminNewState);
         </div>
         <div class="cs" id="pendingstate" style="display:none">
