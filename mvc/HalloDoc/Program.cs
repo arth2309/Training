@@ -24,6 +24,9 @@ builder.Services.AddScoped<IRequestNoteRepo, RequestNoteRepo>();
 builder.Services.AddScoped<IForgotPasswordServices, ForgotPasswordServices>();
 builder.Services.AddScoped<ICancelCaseServices, CancelCaseServices>();
 builder.Services.AddScoped<IRequestStatusLogRepo, RequestStatusLogRepo>();
+builder.Services.AddScoped<IRegionRepo, RegionRepo>();
+builder.Services.AddScoped<IAssignCaseServices, AssignCaseServices>();
+builder.Services.AddScoped<IPhysicianRepo, PhysicianRepo>();
 
 
 

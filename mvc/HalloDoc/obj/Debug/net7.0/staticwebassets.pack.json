@@ -137,6 +137,10 @@
       "PackagePath": "staticwebassets\\js\\Email.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\RegionWisePhysician.js",
+      "PackagePath": "staticwebassets\\js\\RegionWisePhysician.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\checkstatus.js",
       "PackagePath": "staticwebassets\\js\\checkstatus.js"
     },

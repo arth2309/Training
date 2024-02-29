@@ -7,6 +7,7 @@ using HallodocServices.Interfaces;
 using HalloDoc.Repositories.Interfaces;
 using HallodocServices.ModelView;
 using HalloDoc.Repositories.DataModels;
+using HalloDoc.Repositories.Implementation;
 
 namespace HallodocServices.Implementation
 {
@@ -14,12 +15,15 @@ namespace HallodocServices.Implementation
     {
         private readonly IRequestRepo _iRequestRepo;
         private readonly IRequestClientRepo _iRequestClientRepo;
+        private readonly IRegionRepo _regionRepo;
+        private readonly IPhysicianRepo _PhysicianRepo;
 
-        public AdminDashBoardServices(IRequestRepo requestRepo, IRequestClientRepo iRequestClientRepo)
+        public AdminDashBoardServices(IRequestRepo requestRepo, IRequestClientRepo iRequestClientRepo, IRegionRepo regionRepo, IPhysicianRepo PhysicianRepo)
         {
             _iRequestRepo = requestRepo;
             _iRequestClientRepo = iRequestClientRepo;
-
+            _regionRepo = regionRepo;
+            _PhysicianRepo = PhysicianRepo;
         }
 
         public AdminDashBoard newStates(int status)
@@ -95,13 +99,30 @@ namespace HallodocServices.Implementation
             }
 
             List<NewState> newStates = new List<NewState>();
+            //var region = _regionRepo.GetRegions();
+            //List<AdminAssignCase> adminAssignCases = new List<AdminAssignCase>();
+
+            //for (int i = 0; i < region.Count; i++)
+            //{
+            //    AdminAssignCase adminAssignCase = new AdminAssignCase();
+            //    adminAssignCase.RegionId = region[i].RegionId;
+            //    adminAssignCase.RegionName = region[i].Name;
+            //    adminAssignCases.Add(adminAssignCase);
+            //}
             for (int i = 0; i < requestClients.Count; i++)
             {
                 AdminCancelCase adminCancelCase = new AdminCancelCase();
                 adminCancelCase.requestId = requestClients[i].RequestId;
 
+                AdminAssignCase assignCase = new AdminAssignCase();
+                assignCase.RequestId = requestClients[i].RequestId;
+                assignCase.regions = _regionRepo.GetRegions();
+                assignCase.physician = _PhysicianRepo.GetPhysiciansData();
+                
+
                 NewState newState = new();
                 {
+
                     newState.RFirstName = requestClients[i].Request.FirstName;
                     newState.RLastName = requestClients[i].Request.LastName;
                     newState.FirstName = requestClients[i].FirstName;
@@ -116,6 +137,8 @@ namespace HallodocServices.Implementation
                     newState.Email = requestClients[i].Email;
                     newState.RequestId = requestClients[i].RequestId;
                     newState.cancelCases = adminCancelCase;
+                    newState.assignCases = assignCase;
+                   
                     
                 };
                 newStates.Add(newState);

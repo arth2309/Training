@@ -50,6 +50,7 @@ namespace HallodocServices.ModelView
         public string? Notes { get; set; }
         public string? CaseTag { get; set; }
         public AdminCancelCase? cancelCases { get; set; }
+        public AdminAssignCase assignCases { get; set; }
 
 
     }

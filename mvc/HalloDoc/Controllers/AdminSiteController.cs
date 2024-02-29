@@ -22,13 +22,15 @@ namespace HalloDoc.Controllers
         private readonly IViewCaseServices _viewCaseServices;
         private readonly IViewNoteServices _viewNoteServices;
         private readonly ICancelCaseServices _cancelCaseServices;
+        private readonly IAssignCaseServices _assignCaseServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
             _viewNoteServices = viewNoteServices;
             _cancelCaseServices = cancelCaseServices;
+            _assignCaseServices = assignCaseServices;
         }
 
         public IActionResult AdminDashBoard(int status)
@@ -116,6 +118,14 @@ namespace HalloDoc.Controllers
         public async Task<IActionResult> CancelCase(AdminCancelCase modal)
         {
             AdminCancelCase newState1 = _cancelCaseServices.CancelData(modal.requestId, modal);
+            return RedirectToAction("AdminDashBoard");
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> AssignCase(AdminAssignCase adminAssignCase) 
+        {
+
+           AdminAssignCase adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
             return RedirectToAction("AdminDashBoard");
         }
 
