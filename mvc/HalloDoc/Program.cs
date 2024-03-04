@@ -27,6 +27,8 @@ builder.Services.AddScoped<IRequestStatusLogRepo, RequestStatusLogRepo>();
 builder.Services.AddScoped<IRegionRepo, RegionRepo>();
 builder.Services.AddScoped<IAssignCaseServices, AssignCaseServices>();
 builder.Services.AddScoped<IPhysicianRepo, PhysicianRepo>();
+builder.Services.AddScoped<IBlockCaseServices, BlockCaseServices>();
+builder.Services.AddScoped<IBlockedRequestRepo, BlockedRequestRepo>();
 
 
 

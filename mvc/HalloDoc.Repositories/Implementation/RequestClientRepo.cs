@@ -23,9 +23,9 @@ namespace HalloDoc.Repositories.Implementation
               return  _dbcontext.RequestClients.Include(a=>a.Request).Where(a=>a.Request.Status == status).ToList();
               
         }
-        public int GetCount()
+        public int GetCount(int status)
         {
-            return _dbcontext.RequestClients.Include(a=>a.Request).Where(a => a.Request.Status == 1).ToList().Count();
+            return _dbcontext.RequestClients.Include(a=>a.Request).Where(a => a.Request.Status == status).ToList().Count();
         }
         public RequestClient GetViewCaseData(int id)
         {

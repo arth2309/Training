@@ -45,12 +45,14 @@ namespace HallodocServices.ModelView
         public int? id { get; set; }
         public string? Email { get; set; }
         public int? PageNumber { get; set; }
-        public int? PageSize { get; set; }
+        public int? TotalPages { get; set; }
+        public int Count { get; set; }
         public int RequestId { get; set;}
         public string? Notes { get; set; }
         public string? CaseTag { get; set; }
         public AdminCancelCase? cancelCases { get; set; }
-        public AdminAssignCase assignCases { get; set; }
+        public AdminAssignCase? assignCases { get; set; }
+        public  AdminBlockCase? blockCases { get; set; }
 
 
     }

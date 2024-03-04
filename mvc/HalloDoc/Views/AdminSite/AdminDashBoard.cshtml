@@ -18,6 +18,31 @@
            
         }
     </style>
+    <style>
+        #tableID1_wrapper {
+            width: 100%;
+        }
+    </style>
+    <style>
+        #tableID2_wrapper {
+            width: 100%;
+        }
+    </style>
+    <style>
+        #tableID3_wrapper {
+            width: 100%;
+        }
+    </style>
+    <style>
+        #tableID4_wrapper {
+            width: 100%;
+        }
+    </style>
+    <style>
+        #tableID5_wrapper {
+            width: 100%;
+        }
+    </style>
  
     <script>
         function toggleTheme() {
@@ -32,12 +57,18 @@
             });
         }
         $(document).ready(function () {
-            $('#tableID').DataTable();
-        });
-        $(document).ready(function () {
-            $('#tableID1').DataTable();
+            $('#tableID').DataTable({
+                searching: false,
+    });
+            $('#customSearch').on('keyup', function () {
+                var searchTerm = $(this).val().toLowerCase();
+                console.log(searchTerm)
+                $('#tableID').DataTable().search(searchTerm).draw();
+            });
         });
 
+       
+       
 
     </script>
     <script src="~/js/checkstatus.js"></script>
@@ -51,7 +82,7 @@
 
                 case 1: document.getElementById("newstate").style.display = "block";
                          GetStatus(temp);
-                    break;
+                        break;
                 case 2: document.getElementById("pendingstate").style.display = "block";
                     GetStatus(temp);
                     break;

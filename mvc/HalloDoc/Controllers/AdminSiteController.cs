@@ -23,14 +23,16 @@ namespace HalloDoc.Controllers
         private readonly IViewNoteServices _viewNoteServices;
         private readonly ICancelCaseServices _cancelCaseServices;
         private readonly IAssignCaseServices _assignCaseServices;
+        private readonly IBlockCaseServices _blockCaseServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
             _viewNoteServices = viewNoteServices;
             _cancelCaseServices = cancelCaseServices;
             _assignCaseServices = assignCaseServices;
+            _blockCaseServices = blockCaseServices;
         }
 
         public IActionResult AdminDashBoard(int status)
@@ -129,5 +131,16 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
+        [HttpPost]
+        public async Task <IActionResult> BlockCase(AdminBlockCase adminBlockCase)
+        {
+            AdminBlockCase adminBlockCase1 = _blockCaseServices.AdminBlockCase(adminBlockCase);
+            return RedirectToAction("AdminDashBoard");
+        }
+
+        public IActionResult ViewUploads()
+        {
+            return View();
+        }
     }
 }

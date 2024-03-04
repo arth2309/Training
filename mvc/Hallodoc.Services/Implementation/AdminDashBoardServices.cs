@@ -50,19 +50,17 @@ namespace HallodocServices.Implementation
 
         public List<NewState> getStates(int status)
         {
-           
-
-
-
-            
             List<RequestClient> requestClients = new List<RequestClient>();
+            
             if (status == 1)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(1);
+                
             }
             else if (status == 2)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(2);
+               
             }
             else if (status == 3)
             {
@@ -70,13 +68,12 @@ namespace HallodocServices.Implementation
                 requestClients = _iRequestClientRepo.GetNewStateData(4);
                 requestClients.AddRange(_iRequestClientRepo.GetNewStateData(5));
 
-
-
             }
 
             else if (status == 4)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(6);
+           
 
             }
 
@@ -85,30 +82,26 @@ namespace HallodocServices.Implementation
                 requestClients = _iRequestClientRepo.GetNewStateData(3);
                 requestClients.AddRange(_iRequestClientRepo.GetNewStateData(7));
                 requestClients.AddRange(_iRequestClientRepo.GetNewStateData(8));
+                
+               
 
             }
            
             else if (status == 6)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(9);
+               
+                
 
             }
             else
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(1);
+                
             }
 
             List<NewState> newStates = new List<NewState>();
-            //var region = _regionRepo.GetRegions();
-            //List<AdminAssignCase> adminAssignCases = new List<AdminAssignCase>();
-
-            //for (int i = 0; i < region.Count; i++)
-            //{
-            //    AdminAssignCase adminAssignCase = new AdminAssignCase();
-            //    adminAssignCase.RegionId = region[i].RegionId;
-            //    adminAssignCase.RegionName = region[i].Name;
-            //    adminAssignCases.Add(adminAssignCase);
-            //}
+           
             for (int i = 0; i < requestClients.Count; i++)
             {
                 AdminCancelCase adminCancelCase = new AdminCancelCase();
@@ -118,6 +111,11 @@ namespace HallodocServices.Implementation
                 assignCase.RequestId = requestClients[i].RequestId;
                 assignCase.regions = _regionRepo.GetRegions();
                 assignCase.physician = _PhysicianRepo.GetPhysiciansData();
+
+                AdminBlockCase blockCase = new AdminBlockCase();
+                blockCase.requestId = requestClients[i].RequestId;  
+                blockCase.Email = requestClients[i].Email;
+                blockCase.Mobile = requestClients[i].PhoneNumber;
                 
 
                 NewState newState = new();
@@ -138,6 +136,8 @@ namespace HallodocServices.Implementation
                     newState.RequestId = requestClients[i].RequestId;
                     newState.cancelCases = adminCancelCase;
                     newState.assignCases = assignCase;
+                    newState.blockCases = blockCase;
+                    
                    
                     
                 };
