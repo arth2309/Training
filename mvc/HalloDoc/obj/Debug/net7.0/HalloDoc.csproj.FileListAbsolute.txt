@@ -288,3 +288,4 @@ D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\HalloDoc.Repositories.dll
 D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\HalloDoc.Repositories.pdb
 D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\HallodocServices.dll
 D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\HallodocServices.pdb
+D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

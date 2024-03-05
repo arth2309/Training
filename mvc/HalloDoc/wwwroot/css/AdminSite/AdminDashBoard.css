@@ -72,6 +72,8 @@ header
     
 }
 
+
+
 .ns{
     background-color: #e9eaef;
     color: #283f87;
@@ -117,6 +119,29 @@ header
 .table-success {
     color:white;
     --bs-table-bg: rgb(41, 167, 41);
+}
+
+.table-warning {
+    color: white;
+    --bs-table-bg: #ed9124;
+}
+.table-primary {
+    color: white;
+    --bs-table-bg: #3a3ae7;
+}
+.table-danger {
+    color: white;
+    --bs-table-bg: #c12121;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #0d6efd;
+    position: absolute;
+    margin-left: 6%;
 }
 
 .bt1

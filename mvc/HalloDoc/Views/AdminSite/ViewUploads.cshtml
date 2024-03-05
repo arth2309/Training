@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model List<HallodocServices.ModelView.AdminViewUpoads>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -110,7 +112,7 @@
     <div class="ct shadow bg-white">
         <div class="sp">patient name</div>
         <div class="d-flex sp">
-            <div class="h4" style="color: #0dcaf0;"><strong>BhoomiPrajapati</strong> </div>
+            <div class="h4" style="color: #0dcaf0;"><strong>@Model[0].Patientname</strong> </div>
             <div>(MD05Te123456)</div>
 
         </div>
@@ -150,53 +152,41 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type="checkbox" class="form-check-input">
 
-                        </td>
-                        <td><i class="bi bi-file-earmark-pdf"></i> Doc.pdf</td>
+                @if (@Model[0].count > 0)
+                {
+                    <tbody>
 
-                        <td>Aug1,2023</td>
-                        <td>
-                            <div class="d-flex">
-                                <div><button type="button" class="btn btn-outline-info"><i class="bi bi-cloud-arrow-down"></i></button></div>
-                                <div><button type="button" class="btn btn-outline-info"><i class="bi bi-trash"></i></button></div>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="form-check-input">
+
+                                </td>
+                                <td><i class="bi bi-file-earmark-pdf"></i> @Html.DisplayFor(modelitem => item.filename)</td>
+
+                                <td>@Html.DisplayFor(modelitem => item.CreatedDate)</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <div><a style="text-decoration:none" href="~/Files/@item.filename" download=" ~ /Files/@item.filename"> <button type="button" class="btn btn-outline-info"><i class="bi bi-cloud-arrow-down"></i></button>
+
+                            </a>
+
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="form-check-input" type="checkbox">
+                                        <div><button type="button" class="btn btn-outline-info"><i class="bi bi-trash"></i></button></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
 
-                        </td>
-                        <td><i class="bi bi-file-earmark-pdf"></i> Doc1.pdf</td>
 
-                        <td>Aug2,2023</td>
-                        <td>
-                            <div class="d-flex">
-                                <div><button type="button" class="btn btn-outline-info"><i class="bi bi-cloud-arrow-down"></i></button></div>
-                                <div><button type="button" class="btn btn-outline-info"><i class="bi bi-trash"></i></button></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="form-check-input" type="checkbox">
+                    </tbody>
+                }
 
-                        </td>
-                        <td><i class="bi bi-file-earmark-pdf"></i> Doc2.pdf</td>
 
-                        <td>Aug4,2023</td>
-                        <td>
-                            <div class="d-flex">
-                                <div><button type="button" class="btn btn-outline-info"><i class="bi bi-cloud-arrow-down"></i></button></div>
-                                <div><button type="button" class="btn btn-outline-info"><i class="bi bi-trash"></i></button></div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+
             </table>
         </div>
         

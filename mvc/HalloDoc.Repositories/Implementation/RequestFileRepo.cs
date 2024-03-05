@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {

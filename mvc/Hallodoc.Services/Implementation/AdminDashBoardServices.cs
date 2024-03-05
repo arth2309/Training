@@ -137,6 +137,7 @@ namespace HallodocServices.Implementation
                     newState.cancelCases = adminCancelCase;
                     newState.assignCases = assignCase;
                     newState.blockCases = blockCase;
+                    newState.RequestTypeId = requestClients[i].Request.RequestTypeId;
                     
                    
                     

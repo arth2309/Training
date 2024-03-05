@@ -115,11 +115,12 @@
                                 Action
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                <li><a class="dropdown-item" href="#">Cancel Case</a></li>
                                 <li><a class="dropdown-item" href="#">View Case</a></li>
+                                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewUploads" asp-route-reqID="@item.RequestId">View Uploads</a></li>
                                 <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                <li><a class="dropdown-item" href="#">Block Patient</a></li>
+                                <li><a class="dropdown-item" href="#">Transfer</a></li>
+                                <li><a class="dropdown-item" href="#">Clear Case</a></li>
+                                <li><a class="dropdown-item" href="#">Send Agreement</a></li>
                             </ul>
                         </div>
                     </td>

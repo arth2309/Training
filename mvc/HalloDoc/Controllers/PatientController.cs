@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using HallodocServices.ModelView;
 using HallodocServices.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 
 namespace HalloDoc.Controllers
@@ -22,15 +23,17 @@ namespace HalloDoc.Controllers
 
         private readonly IPatientDashBoardServices _dashBoardServices;
         private readonly IForgotPasswordServices _forgotPasswordServices;
+        private readonly IJwtServices _jwtServices;
         
         private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices)
         {
             _dbContext = dbContext;
             _loginServices = loginServices;
             _dashBoardServices = dashBoardServices;
             _forgotPasswordServices = forgotPasswordServices;
+            _jwtServices = jwtServices;
         }
 
       
@@ -93,6 +96,7 @@ namespace HalloDoc.Controllers
         public IActionResult PatientDashBoard()
         {
             int id = Int32.Parse(Request.Cookies["id"]);
+            string token = Request.Cookies["token"];
             int uid = _dashBoardServices.GetId(id);
             List<PatientDashBoard> patientDashreq = _dashBoardServices.patientDashBoards(id);
 
@@ -104,49 +108,7 @@ namespace HalloDoc.Controllers
 
             return View("PatientDashboard", patientDashreq);
 
-            //User users = _dbContext.Users.FirstOrDefault(b => b.AspNetUserId == id);
-            //Request req = _dbContext.Requests.FirstOrDefault(a => a.UserId == users.UserId);
-            //var request = _dbContext.Requests.ToList();
-            //var request1 = request.Where(r => r.UserId == users.UserId);
-            //var list = _dbContext.RequestWiseFiles.ToList();
-            //var doc = list.Count(a => a.RequestId == req.RequestId);
-
-            //var requestview = request1.Select(p => new ShowDetails
-            //{
-            //    RequestId = p.RequestId,
-            //    FirstName = p.FirstName,
-            //    LastName = p.LastName,
-            //    CreatedDate = p.CreatedDate,
-            //    Status = p.Status,
-            //    count = doc
-
-            //}
-
-            //);
-            //User user2 = _dbContext.Users.FirstOrDefault(a => a.AspNetUserId == id);
-            //List<Request> userrequest = _dbContext.Requests.Where(a => a.UserId == user2.UserId).ToList();
-            //List<ShowDetails> dashboard = new List<ShowDetails>();
-            //for (int i = 0; i < userrequest.Count; i++)
-            //{
-            //    List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == userrequest[i].RequestId).ToList();
-            //    ShowDetails dashboard1 = new()
-            //    {
-            //        RequestId = userrequest[i].RequestId,
-            //        FirstName = userrequest[i].FirstName,
-            //        LastName = userrequest[i].LastName,
-            //        Status = userrequest[i].Status,
-            //        CreatedDate = userrequest[i].CreatedDate,
-            //        count = requestWiseFiles.Count,
-            //    };
-            //    dashboard.Add(dashboard1);
-            //}
-
-
-
-            //CookieOptions cookieOptions1 = new CookieOptions();
-            //cookieOptions1.Secure = true;
-            //cookieOptions1.Expires = DateTime.Now.AddMinutes(30);
-            //Response.Cookies.Append("RequestId",req.RequestId.ToString(), cookieOptions1);
+            
 
 
 
@@ -254,23 +216,7 @@ namespace HalloDoc.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult PatientLogin(PatientLoginValidation user)
-        //{
-        //    var userFromDb = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
-        //    if (userFromDb != null && userFromDb.PasswordHash == user.PasswordHash)
-        //    {
-        //        CookieOptions options = new CookieOptions();
-        //        options.Secure = true;
-        //        options.Expires = DateTime.Now.AddDays(1);
-        //        Response.Cookies.Append("Id", userFromDb.Id.ToString(), options);
-        //        return RedirectToAction("PatientDashBoard", "Patient");
-        //    }
-        //    else
-        //    {
-        //        return View(null);
-        //    }
-        //}
+       
 
         [HttpPost]
          public IActionResult PatientLogin(PatientLogin patientLogin)
@@ -280,6 +226,7 @@ namespace HalloDoc.Controllers
                 return View(patientLogin);
             }
             int id = _loginServices.ValidateUser(patientLogin);
+            string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
 
            if(id == 0)
 
@@ -293,8 +240,16 @@ namespace HalloDoc.Controllers
                 options.Secure = true;
                 options.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Append("Id", id.ToString(), options);
+
+                CookieOptions token1 = new CookieOptions();
+                token1.Secure = true;
+                token1.Expires = DateTime.Now.AddMinutes(30);
+                Response.Cookies.Append("token", token, token1);
+
                 return RedirectToAction("PatientDashBoard", "Patient");
             }
+
+           
 
         }
 

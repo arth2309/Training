@@ -24,8 +24,9 @@ namespace HalloDoc.Controllers
         private readonly ICancelCaseServices _cancelCaseServices;
         private readonly IAssignCaseServices _assignCaseServices;
         private readonly IBlockCaseServices _blockCaseServices;
+        private readonly IViewUploadsServices _viewUploadsServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -33,6 +34,7 @@ namespace HalloDoc.Controllers
             _cancelCaseServices = cancelCaseServices;
             _assignCaseServices = assignCaseServices;
             _blockCaseServices = blockCaseServices;
+            _viewUploadsServices = viewUploadsServices;
         }
 
         public IActionResult AdminDashBoard(int status)
@@ -138,9 +140,11 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
-        public IActionResult ViewUploads()
+        public IActionResult ViewUploads(int reqID)
+
         {
-            return View();
+            List<AdminViewUpoads> adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
+            return View(adminViewUpoads);
         }
     }
 }

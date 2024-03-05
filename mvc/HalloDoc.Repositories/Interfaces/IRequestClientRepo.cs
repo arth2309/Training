@@ -9,6 +9,8 @@ namespace HalloDoc.Repositories.Interfaces
 {
     public interface IRequestClientRepo
     {
+
+        RequestClient requestClient1(int reqid);
         List<RequestClient> GetNewStateData(int status);
         int GetCount(int status);
         RequestClient GetViewCaseData(int id);

@@ -17,7 +17,11 @@ namespace HalloDoc.Repositories.Implementation
         {
             _dbcontext = dbcontext;
         }
-
+        public RequestClient requestClient1(int reqid)
+        {
+            RequestClient requestClient = _dbcontext.RequestClients.FirstOrDefault(a=>a.RequestId == reqid);
+            return requestClient ?? null;
+        }
         public List<RequestClient> GetNewStateData(int status)
         {
               return  _dbcontext.RequestClients.Include(a=>a.Request).Where(a=>a.Request.Status == status).ToList();
