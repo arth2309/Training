@@ -11,15 +11,15 @@
    
 }
 
-header{
-    display: flex;
-    background-color: #fafafa;
-    width: 50vw;
-}
 
 .login_page
 {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    padding-top: 12px;
 }
 
 .policy
@@ -39,14 +39,19 @@ header{
 }
 
 
-.loginbtn
+#eyeicon
 {
-    margin-top: 30px;
-    color: #00B9E1;
-    align-items: center;
-    
+    position: absolute;
+    top: 16px;
+    right: 25px;
 }
 
+#per
+{
+    position: absolute;
+    top: 16px;
+    right: 25px;
+}
 .u1
 {
     border: 1px solid #ADADAD;

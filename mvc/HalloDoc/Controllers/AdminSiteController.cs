@@ -13,6 +13,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using HallodocServices.ModelView;
 using HallodocServices.Interfaces;
 using Azure;
+using HallodocServices.Implementation;
 
 namespace HalloDoc.Controllers
 {
@@ -25,8 +26,10 @@ namespace HalloDoc.Controllers
         private readonly IAssignCaseServices _assignCaseServices;
         private readonly IBlockCaseServices _blockCaseServices;
         private readonly IViewUploadsServices _viewUploadsServices;
+        private readonly IJwtServices _jwtServices;
+        private readonly IPatientLoginServices _loginServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -35,8 +38,44 @@ namespace HalloDoc.Controllers
             _assignCaseServices = assignCaseServices;
             _blockCaseServices = blockCaseServices;
             _viewUploadsServices = viewUploadsServices;
+            _jwtServices = jwtServices;
+            _loginServices = loginServices;
         }
 
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AdminLogin(PatientLogin patientLogin)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(patientLogin);
+            }
+            int id = _loginServices.ValidateUser(patientLogin);
+           
+
+            if (id == 0)
+
+            {
+                TempData["invalid-user"] = true;
+                return View(patientLogin);
+            }
+            else
+            {
+                string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
+                Response.Cookies.Append("token", token);
+
+                return RedirectToAction("AdminDashBoard");
+            }
+
+
+
+        }
+
+        [Auth.CustomAuthorize("Admin")]
         public IActionResult AdminDashBoard(int status)
         {
             AdminDashBoard adminDashBoard = _dashBoardServices.newStates(status);
@@ -82,6 +121,8 @@ namespace HalloDoc.Controllers
 
 
         }
+
+        [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewCase(int rcid)
         {
            AdminViewCase adminViewCase = _viewCaseServices.GetAdminViewCaseData(rcid);
@@ -96,13 +137,14 @@ namespace HalloDoc.Controllers
             return View(adminViewCase1);
         }
 
-       
+        [Auth.CustomAuthorize("Admin")]
         public IActionResult ChangeState(int rid)
         {
             AdminViewCase adminViewCase1 = _viewCaseServices.CancelViewData(rid);
             return RedirectToAction("AdminDashBoard");
         }
 
+        [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int reqid)
         {
             
@@ -140,11 +182,23 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
+        [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewUploads(int reqID)
 
         {
             List<AdminViewUpoads> adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
             return View(adminViewUpoads);
+        }
+
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("token");
+            return RedirectToAction("AdminLogin");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            return View();
         }
     }
 }

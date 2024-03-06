@@ -9,7 +9,7 @@ using HalloDoc.Repositories.Interfaces;
 
 namespace HalloDoc.Repositories.Implementation
 {
-    public class AspNetUserRepo
+    public class AspNetUserRepo : IAspNetUserRepo
     {
         private readonly ApplicationDbContext _context;
 
@@ -18,6 +18,27 @@ namespace HalloDoc.Repositories.Implementation
             _context = context;
         }
 
-        
+        public string role (string email)
+        {
+            int id = _context.AspNetUsers.FirstOrDefault(a => a.Email == email).Id;
+            int Roleid = _context.AspNetUserRoles.FirstOrDefault(a => a.UserId == id).RoleId;
+
+            if(Roleid == 1) 
+            {
+                return "Admin";
+            }
+            else if(Roleid == 2) 
+            {
+                return "Provider";
+            }
+            else if (Roleid == 3)
+            {
+                return "Patient";
+            }
+            else
+            {
+                return "others";
+            }
+        }
     }
 }

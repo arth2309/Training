@@ -23,5 +23,15 @@ namespace HalloDoc.Repositories.Implementation
             List <RequestWiseFile> requestWiseFiles = _dbcontext.RequestWiseFiles.Where(a=>a.RequestId == rid).ToList();
             return requestWiseFiles;
         }
+
+        public async Task<bool>  DeleteFile(int id) 
+        { 
+            RequestWiseFile requestWiseFile = _dbcontext.RequestWiseFiles.FirstOrDefault(a=>a.RequestWiseFileId == id);
+            requestWiseFile.IsDeleted = new System.Collections.BitArray(1,true);
+            _dbcontext.RequestWiseFiles.Update(requestWiseFile);
+            await _dbcontext.SaveChangesAsync();
+            return true;
+
+        }
     }
 }

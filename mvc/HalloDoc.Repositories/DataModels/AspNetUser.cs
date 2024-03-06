@@ -74,8 +74,4 @@ public partial class AspNetUser
 
     [InverseProperty("ModifiedByNavigation")]
     public virtual ICollection<User> UserModifiedByNavigations { get; set; } = new List<User>();
-
-    [ForeignKey("UserId")]
-    [InverseProperty("Users")]
-    public virtual ICollection<AspNetRole> Roles { get; set; } = new List<AspNetRole>();
 }

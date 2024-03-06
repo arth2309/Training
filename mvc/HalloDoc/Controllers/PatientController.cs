@@ -13,6 +13,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using HallodocServices.ModelView;
 using HallodocServices.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Azure;
 
 
 namespace HalloDoc.Controllers
@@ -40,11 +41,15 @@ namespace HalloDoc.Controllers
 
         public IActionResult Index()
         {
+            Response.Cookies.Delete("Id");
+            Response.Cookies.Delete("UserId");
+            Response.Cookies.Delete("token");
             return View();
         }
 
         public IActionResult PatientLogin()
         {
+            
             return View();
         }
         public IActionResult SubmitRequest()
@@ -92,9 +97,13 @@ namespace HalloDoc.Controllers
 
 
 
-
+        [Auth.CustomAuthorize("Patient")]
         public IActionResult PatientDashBoard()
         {
+            if(Request.Cookies["id"] == null)
+              {
+                return RedirectToAction("PatientLogin");
+              }
             int id = Int32.Parse(Request.Cookies["id"]);
             string token = Request.Cookies["token"];
             int uid = _dashBoardServices.GetId(id);
@@ -116,6 +125,8 @@ namespace HalloDoc.Controllers
           
 
         }
+
+        [Auth.CustomAuthorize("Patient")]
         public IActionResult PatientDashBoardDoc(int id)
         {
            //int id = Int32.Parse(Request.Cookies["MyCookie"]);
@@ -145,8 +156,15 @@ namespace HalloDoc.Controllers
             return View(showDocuments);
         }
 
+        [Auth.CustomAuthorize("Patient")]
         public IActionResult UserProfile()
         {
+
+            if(Request.Cookies["UserId"] == null)
+            {
+                return RedirectToAction("PatientLogin");
+            }
+
             int id = Int32.Parse(Request.Cookies["UserId"]);
             
             
@@ -189,6 +207,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Index","Users");
         }
 
+        [Auth.CustomAuthorize("Patient")]
         public IActionResult SubmitMe()
         {
             int id = Int32.Parse(Request.Cookies["UserId"]);
@@ -211,12 +230,27 @@ namespace HalloDoc.Controllers
             return View(showProfile);
         }
 
+        [Auth.CustomAuthorize("Patient")]
         public IActionResult SubmitSomeOne()
         {
             return View();
         }
 
+        public IActionResult AccessDenied() 
+        {
+            Response.Cookies.Delete("Id");
+            Response.Cookies.Delete("UserId");
+            Response.Cookies.Delete("token");
+            return View();
+        }
        
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("Id");
+            Response.Cookies.Delete("UserId");
+            Response.Cookies.Delete("token");
+            return RedirectToAction("PatientLogin");
+        }
 
         [HttpPost]
          public IActionResult PatientLogin(PatientLogin patientLogin)
@@ -241,10 +275,7 @@ namespace HalloDoc.Controllers
                 options.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Append("Id", id.ToString(), options);
 
-                CookieOptions token1 = new CookieOptions();
-                token1.Secure = true;
-                token1.Expires = DateTime.Now.AddMinutes(30);
-                Response.Cookies.Append("token", token, token1);
+                Response.Cookies.Append("token", token);
 
                 return RedirectToAction("PatientDashBoard", "Patient");
             }

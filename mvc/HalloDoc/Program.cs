@@ -31,6 +31,7 @@ builder.Services.AddScoped<IBlockCaseServices, BlockCaseServices>();
 builder.Services.AddScoped<IBlockedRequestRepo, BlockedRequestRepo>();
 builder.Services.AddScoped<IViewUploadsServices, ViewUploadsServices>();
 builder.Services.AddScoped<IJwtServices, JwtServices>();
+builder.Services.AddScoped<IAspNetUserRepo, AspNetUserRepo>();
 
 
 

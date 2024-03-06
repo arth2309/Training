@@ -1,4 +1,5 @@
-﻿using HallodocServices.Interfaces;
+﻿using HalloDoc.Repositories.Interfaces;
+using HallodocServices.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,16 +15,22 @@ namespace HallodocServices.Implementation
     public class JwtServices : IJwtServices
     {
         private readonly IConfiguration configuration;
-        public JwtServices(IConfiguration configuration)
+        private readonly IAspNetUserRepo _userRepo;
+        public JwtServices(IConfiguration configuration,IAspNetUserRepo userRepo)
         {
             this.configuration = configuration;
+            _userRepo = userRepo;
         }
 
         public string GenerateJWTAuthetication(string email)
         {
+            string role = _userRepo.role(email);
+
             var claims = new List<Claim>
-            {
+            {    
+
                 new Claim(JwtHeaderParameterNames.Jku, email),
+                new Claim(ClaimTypes.Role,role),
                 new Claim(JwtHeaderParameterNames.Kid, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, email)
             };
@@ -47,5 +54,43 @@ namespace HallodocServices.Implementation
 
 
         }
-    }
+
+        public bool ValidateToken(string token,out JwtSecurityToken jwtSecurityToken)
+        {
+            jwtSecurityToken = null;
+
+            if (token == null)
+                return false;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]);
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+
+                }, out SecurityToken validatedToken);
+
+                // Corrected access to the validatedToken
+                
+
+                jwtSecurityToken = (JwtSecurityToken)validatedToken;
+
+                if (jwtSecurityToken != null)
+                    return true;
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        }
 }

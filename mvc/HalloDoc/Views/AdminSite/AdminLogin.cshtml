@@ -1,0 +1,89 @@
+﻿
+@model HallodocServices.ModelView.PatientLogin
+
+@{
+    bool isInValidUser = TempData["invalid-user"] == null ? false : (bool)TempData["invalid-user"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/adminlogin.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                <div class="img1 d-none d-sm-none d-md-none d-lg-flex">
+                    <img src="~/images/11116016_415.jpg" alt="doc image"
+                         style="width: 50vw; height: 100vh;">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 ">
+                <div class="login_page">
+
+                    <div class="d-flex w-100"><div class="theme" style="margin-left: auto;"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div></div>
+
+                    <div class="hallodocimage">
+                        <img src="~/images/Fig56. Patient site 1.png" alt="hallodoc"
+                             style="max-width: 100%; align-items:center;">
+                    </div>
+                    <div class="text">
+                        <h1>Login to your Account</h1>
+
+                    </div>
+                    <form asp-controller="AdminSite" asp-action="AdminLogin" style="width:60%">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" style="background: transparent;" placeholder="Email" asp-for="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <label for="floatingInput">Email</label>
+                            <i class="bi bi-person-circle" id="per"></i>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" style="background: transparent;" placeholder="Password" asp-for="PasswordHash">
+                            <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                            <label for="floatingPassword">Password</label>
+                            <i class="bi bi-eye" id="eyeicon"></i>
+
+                        </div>
+
+                        @if (isInValidUser)
+                        {
+                            <div class="alert alert-danger">
+                                Invalid username or password!
+                            </div>
+                        }
+
+                        <button type="submit" class="btn btn-info form-control">Log in</button>
+                    </form>
+
+                    <div class="fplink">
+                        <a href="patient_forgot_password.html" style="text-align:center;text-decoration: none;">
+                            <p>Forget Password?</p>
+                        </a>
+                    </div>
+                    <div class="policy">
+                        <p><a>Terms of conditions </a>|<a> privacy policy</a></p>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
