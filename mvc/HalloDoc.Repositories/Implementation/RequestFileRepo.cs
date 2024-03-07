@@ -20,11 +20,11 @@ namespace HalloDoc.Repositories.Implementation
 
         public List<RequestWiseFile> GetAllFiles(int rid)
         {
-            List <RequestWiseFile> requestWiseFiles = _dbcontext.RequestWiseFiles.Where(a=>a.RequestId == rid).ToList();
+            List <RequestWiseFile> requestWiseFiles = _dbcontext.RequestWiseFiles.Where(a=>a.RequestId == rid && a.IsDeleted != new System.Collections.BitArray(1,true)).ToList();
             return requestWiseFiles;
         }
 
-        public async Task<bool>  DeleteFile(int id) 
+        public async Task<bool> DeleteFile(int id) 
         { 
             RequestWiseFile requestWiseFile = _dbcontext.RequestWiseFiles.FirstOrDefault(a=>a.RequestWiseFileId == id);
             requestWiseFile.IsDeleted = new System.Collections.BitArray(1,true);
@@ -32,6 +32,19 @@ namespace HalloDoc.Repositories.Implementation
             await _dbcontext.SaveChangesAsync();
             return true;
 
+        }
+
+        public int GetreqId(int id) 
+        {
+            int reqId = _dbcontext.RequestWiseFiles.FirstOrDefault(a => a.RequestWiseFileId == id).RequestId;
+            return reqId;
+        }
+
+        public async Task<bool> AddData(RequestWiseFile requestWiseFile)
+        {
+            _dbcontext.RequestWiseFiles.Add(requestWiseFile);
+            await _dbcontext.SaveChangesAsync();
+            return true;
         }
     }
 }

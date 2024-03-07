@@ -9,6 +9,9 @@ namespace HallodocServices.Interfaces
 {
     public interface IViewUploadsServices
     {
-        List<AdminViewUpoads> GetUpoads(int rid);
+        AdminViewUpoads GetUpoads(int rid);
+        Task<bool> DeleteFileService(int id);
+        int GetReqIdService(int id);
+        Task<bool> AddFileData(AdminViewUpoads adminViewUpoads);
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using HalloDoc.Repositories.DataModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,12 +16,16 @@ namespace HallodocServices.ModelView
 
         public int requestId { get; set; }
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Column(TypeName = "timestamp without time zone")]
         public DateTime? CreatedDate { get; set; }
         public string? Patientname { get; set; }
 
         public int? count { get; set; }
+
+        public List<RequestWiseFile> WiseFiles { get; set; }
+
+        public IFormFile formFile { get; set; }
     }
 }

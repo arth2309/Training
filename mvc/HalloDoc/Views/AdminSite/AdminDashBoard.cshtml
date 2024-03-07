@@ -76,37 +76,44 @@
     <script>
         function toggle(temp) {
             $(".cs").css("display", "none");
-            $(".bt").removeClass("shadow bg-primary bg-success bg-danger bg-info bg-warning text-white");
+            $(".bt").removeClass("shadow bg-primary bg-success bg-danger bg-info indigo text-white");
             
            
            
             switch (temp) {
 
                 case 1: document.getElementById("newstate").style.display = "block";
+                    $(".ad").css("display", "block");
                     $(".ns").addClass("shadow bg-primary text-white");
                          GetStatus(temp);
                         break;
                 case 2: document.getElementById("pendingstate").style.display = "block";
+                    $(".ad1").css("display", "block");
                     $(".ps").addClass("shadow bg-info text-white");
                     GetStatus(temp);
                     break;
                 case 3: document.getElementById("activestate1").style.display = "block";
+                    $(".ad2").css("display", "block");
                     $(".as").addClass("shadow bg-success text-white");
                     GetStatus(temp);
                     break;
                 case 4: document.getElementById("concludestate").style.display = "block";
+                    $(".ad3").css("display", "block");
                     $(".cos").addClass("shadow bg-danger text-white");
                     GetStatus(temp);
                     break;
                 case 5: document.getElementById("toclosestate").style.display = "block";
-                    $(".tcs").addClass("shadow bg-warning text-white");
+                    $(".ad4").css("display", "block");
+                    $(".tcs").addClass("shadow bg-info text-white");
                     GetStatus(temp);
                     break;
                 case 6: document.getElementById("unpaidstate").style.display = "block";
-                    $(".ups").addClass("shadow");
+                    $(".ad5").css("display", "block");
+                    $(".ups").addClass("shadow indigo text-white");
                     GetStatus(temp);
                     break;
                 default: document.getElementById("newstate").style.display = "block";
+                    $(".ad").css("display", "block");
                     $(".ns").addClass("shadow");
                     GetStatus(temp);
                     break;
@@ -221,71 +228,87 @@
                 <button class="bt btn w-100 shadow ns bg-primary text-white" onclick="toggle(1)">
                     <div>
                         <div class="d-flex">
-                            <div>New</div>
+                            <div><strong><i class="bi bi-plus-circle-dotted"></i> New</strong></div>
                         </div>
-                        <div>@Model.NewCount</div>
+                        <div><strong>@Model.NewCount</strong></div>
                     </div>
                 </button>
-                <div class="arrow-down shodow "></div>
-
+                <div class="d-flex w-100" style="justify-content:center">
+                    <div class="arrow-down  cs ad" style="border-top: 12px solid #0d6efd;"></div>
+                    </div>
             </div>
            
             <div class="col-4 col-lg-2 b1">
                 <button class="bt btn w-100 ps" onclick="toggle(2)">
                     <div>
                         <div class="d-flex">
-                            <div>PENDING</div>
+                            <div><strong><i class="bi bi-hourglass-split"></i> PENDING</strong></div>
                         </div>
-                        <div>@Model.PendingCount</div>
+                        <div><strong>@Model.PendingCount</strong></div>
                     </div>
                 </button>
+                <div class="d-flex w-100" style="justify-content:center"> <div class="arrow-down cs ad1" style="border-top: 12px solid #0dcaf0;display:none"></div></div>
             </div>
 
             <div class="col-4 col-lg-2 b1">
                 <button class="bt btn w-100 as" onclick="toggle(3)">
                     <div>
                         <div class="d-flex">
-                            <div>ACTIVE</div>
+                            <div><strong><i class="bi bi-check2-circle"></i> ACTIVE</strong></div>
                         </div>
-                        <div>@Model.ActiveCount</div>
+                        <div><strong>@Model.ActiveCount</strong></div>
                     </div>
                 </button>
+                <div class="d-flex w-100" style="justify-content:center">
+                    <div class="arrow-down  cs ad2" style="border-top: 12px solid #198754;display:none"></div>
+                    </div>
             </div>
 
             <div class="col-4 col-lg-2 b1">
                 <button class="bt btn  w-100  cos" onclick="toggle(4)">
                     <div>
                         <div class="d-flex">
-                            <div>CONCLUDE</div>
+                            <div><strong><i class="bi bi-clock-history"></i> CONCLUDE</strong></div>
                         </div>
-                        <div>@Model.ConcludeCount</div>
+                        <div><strong>@Model.ConcludeCount</strong></div>
                     </div>
 
                 </button>
+                <div class="d-flex w-100" style="justify-content:center">
+                    <div class="d-flex w-100" style="justify-content:center">
+                        <div class="arrow-down cs ad3" style="border-top: 12px solid #dc3545;display:none"></div>
+                        </div>
+                    </div>
             </div>
 
             <div class="col-4 col-lg-2 b1">
                 <button class="bt btn w-100  tcs" onclick="toggle(5)">
                     <div>
                         <div class="d-flex">
-                            <div>TO CLOSE</div>
+                            <div><strong><i class="bi bi-alarm"></i> TO CLOSE</strong></div>
                         </div>
-                        <div>@Model.ToCloseCount</div>
+                        <div><strong>@Model.ToCloseCount</strong></div>
                     </div>
 
                 </button>
+                <div class="d-flex w-100" style="justify-content:center">
+                    <div class="arrow-down cs ad4" style="border-top: 12px solid #0dcaf0;display:none"></div>
+                    </div>
             </div>
 
             <div class="col-4 col-lg-2 b1">
                 <button class="bt btn w-100 ups" onclick="toggle(6)">
                     <div>
                         <div class="d-flex">
-                            <div>UNPAID</div>
+                            <div><strong><i class="bi bi-coin"></i> UNPAID </strong></div>
                         </div>
-                        <div>@Model.UnPaidCount</div>
+                        <div><strong>@Model.UnPaidCount </strong></div>
                     </div>
 
                 </button>
+                <div class="d-flex w-100" style="justify-content:center">
+                    <div class="arrow-down  cs ad5" style="border-top: 12px solid  #6610f2;display:none"></div>
+                    </div>
             </div>
 
         </div>

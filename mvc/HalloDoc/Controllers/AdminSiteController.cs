@@ -28,8 +28,9 @@ namespace HalloDoc.Controllers
         private readonly IViewUploadsServices _viewUploadsServices;
         private readonly IJwtServices _jwtServices;
         private readonly IPatientLoginServices _loginServices;
+        private readonly ISendOrderServices _sendOrderServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices,ISendOrderServices sendOrderServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -40,6 +41,7 @@ namespace HalloDoc.Controllers
             _viewUploadsServices = viewUploadsServices;
             _jwtServices = jwtServices;
             _loginServices = loginServices;
+            _sendOrderServices = sendOrderServices;
         }
 
         public IActionResult AdminLogin()
@@ -186,7 +188,7 @@ namespace HalloDoc.Controllers
         public IActionResult ViewUploads(int reqID)
 
         {
-            List<AdminViewUpoads> adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
+            AdminViewUpoads adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
             return View(adminViewUpoads);
         }
 
@@ -196,9 +198,36 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminLogin");
         }
 
-        public IActionResult Delete(int id)
+        [HttpGet]
+        public async Task<JsonResult> Delete(int id)
         {
-            return View();
+            int reqId = _viewUploadsServices.GetReqIdService(id);
+            _viewUploadsServices.DeleteFileService(id);
+            return Json(new {redirect = Url.Action("ViewUploads",new {reqID = reqId})});
         }
+
+        [HttpPost]
+
+        public async Task<IActionResult> ViewUploads(AdminViewUpoads adminViewUpoads)
+        {
+            _viewUploadsServices.AddFileData(adminViewUpoads);
+            return RedirectToAction("ViewUploads",new {reqID = adminViewUpoads.requestId});
+        }
+
+
+        public IActionResult SendOrder(int id = 0)
+        {
+            AdminSendOrder adminSendOrder = _sendOrderServices.GetList(0);
+            return View(adminSendOrder);
+        }
+
+        [HttpGet]
+
+        public IActionResult GetVendor(int id)
+        {
+ 
+            return RedirectToAction("SendOrder", new {id = id});
+        }
+
     }
 }

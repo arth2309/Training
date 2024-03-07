@@ -1,0 +1,230 @@
+﻿@model HallodocServices.ModelView.AdminSendOrder
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/viewcase.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/getvendorbyprofession.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script>
+        function toggle() {
+            if (document.getElementById('hide1').classList.contains('d-none')) {
+                document.getElementById('hide1').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('hide1').classList.add('d-none');
+            }
+            if (document.getElementById('disableButton').classList.contains('d-none')) {
+                document.getElementById('disableButton').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('disableButton').classList.add('d-none');
+            }
+            if (document.getElementById('enableButton').classList.contains('d-none')) {
+                document.getElementById('enableButton').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('enableButton').classList.add('d-none');
+            }
+        }
+    </script>
+
+    <title>Document</title>
+</head>
+<body>
+  
+    <header>
+        <div class="d-flex d-lg-flex">
+            <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+        <div class="right">
+            <div class="intro"><p>Welcome:</p></div>
+            <div class="s intro"><span><b>test1</b></span></div>
+            <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>
+            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </div>
+    </header>
+
+
+    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
+                <li class="nav-item">
+                    <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+        <li class="nav-item">
+            <a class="nav-link "><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"><b>Provider Location</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Records</b></a>
+        </li>
+
+    </ul>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Send Orders</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info">&lt Back</button>
+        </div>
+    </div>
+    <div class="mainct shadow">
+        <form>
+        
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt mb-3" >
+                    <select onchange="GetVendor(1)" class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                        <option selected value="0">Select Profession</option>
+                        @for(int i = 0; i<Model.professionalTypeList.Count();i++)
+                        {
+                            
+                            <option value="@Model.professionalTypeList[i].HealthProfessionalId">@Model.professionalTypeList[i].ProfessionName</option>
+                            
+                        }
+                    </select>
+
+                </div>
+                <div class="col-md-12 col-lg-6 wt mb-3" >
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                        <option selected value="0">Business</option>
+                        @for (int i = 0; i < Model.professionalList.Count(); i++)
+                        {
+                            
+                            <option value="@Model.professionalList[i].VendorId">@Model.professionalList[i].VendorName</option>
+
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input  type="tel" class="form-control iget" style="height:58px" id="patientMobileNumber">
+                </div>
+                <div class="col-12 col-md-12 col-lg-6 wt form-floating mb-3">
+
+                    <input  type="email" class="form-control iget" id="floatingInput"
+                           aria-describedby="emailHelp" placeholder="Enter email">
+                     <label for="floatingInput">Email</label>
+
+                </div>
+            </div>
+
+            <div class="row">
+                
+                <div class="col-12 col-lg-6 wt form-floating mb-3">
+                    <input type="text" class="form-control dis" placeholder="Fax Number" id="floatingInput">
+                    <label for="floatingInput">Fax Number</label>
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" ></textarea>
+                <label for="floatingTextarea2" style="top:-9px;left:-9px">Prescription or OrderDetails</label>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt mb-3 " >
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                        <option selected>No of refill</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                </div>
+            <div class="d-flex wt">
+                <div class="bt">
+                    <div><button type="button" class="btn btn-info">Submit</button></div>
+                    <div style="margin-left: 4px;"><button type="button" class="btn btn-outline-info">Cancel</button></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        const phoneInputField = document.getElementById("patientMobileNumber");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
+    <script>
+        document.getElementById("enableButton").addEventListener("click", function () {
+            var inputs = document.getElementsByClassName("iget");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].removeAttribute("disabled");
+            }
+        });
+       
+    </script>
+</body>
+</html>

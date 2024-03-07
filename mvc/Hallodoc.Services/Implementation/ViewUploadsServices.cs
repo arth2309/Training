@@ -7,6 +7,7 @@ using HallodocServices.Interfaces;
 using HalloDoc.Repositories.Interfaces;
 using HallodocServices.ModelView;
 using HalloDoc.Repositories.DataModels;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HallodocServices.Implementation
 {
@@ -21,47 +22,67 @@ namespace HallodocServices.Implementation
             _clientRepo = clientRepo;
         }
 
-        public List<AdminViewUpoads> GetUpoads(int rid) 
+        public AdminViewUpoads GetUpoads(int rid) 
         {
-            List<AdminViewUpoads> adminViewUpoads = new List<AdminViewUpoads>();    
+            AdminViewUpoads adminViewUpoads = new AdminViewUpoads();    
             var requestfile = _fileRepo.GetAllFiles(rid);
             RequestClient requestClient = _clientRepo.requestClient1(rid);
 
-            var count = 0;
+            List<RequestWiseFile> requestWiseFile = new List<RequestWiseFile>();
+
+
+            adminViewUpoads.requestId = rid;
+            adminViewUpoads.Patientname = requestClient.FirstName + " " + requestClient.LastName;
+            adminViewUpoads.count = requestfile.Count();
 
             if (requestfile.Count > 0)
             {
-               count = requestfile.Count;
+               
                 for (int i = 0; i < requestfile.Count; i++)
                 {
-
-                    AdminViewUpoads adminViewUpoads1 = new AdminViewUpoads();
-                    adminViewUpoads1.filename = Path.GetFileName(requestfile[i].FileName.Trim());
-                    adminViewUpoads1.Id = requestfile[i].RequestWiseFileId;
-                    adminViewUpoads1.requestId = requestfile[i].RequestId;
-                    adminViewUpoads1.CreatedDate = requestfile[i].CreatedDate;
-                    adminViewUpoads1.Patientname = requestClient.FirstName + " " + requestClient.LastName;
-                    adminViewUpoads1.count = count;
-
-
-                    adminViewUpoads.Add(adminViewUpoads1);
+                    RequestWiseFile requestWise = new RequestWiseFile();
+                    requestWise.RequestWiseFileId = requestfile[i].RequestWiseFileId;
+                    requestWise.CreatedDate = requestfile[i].CreatedDate;
+                    requestWise.FileName = Path.GetFileName(requestfile[i].FileName);
+                    requestWiseFile.Add(requestWise);
                 }
-                return adminViewUpoads;
+                adminViewUpoads.WiseFiles = requestWiseFile;
             }
 
-            else
+                return adminViewUpoads;
+        }
+
+        public async Task<bool> DeleteFileService(int id)
+        {
+            _fileRepo.DeleteFile(id);
+            return true;
+        }
+
+        public int GetReqIdService(int id) 
+        {
+          int reqid =  _fileRepo.GetreqId(id);
+            return reqid;
+        }
+
+        public async Task<bool> AddFileData(AdminViewUpoads adminViewUpoads)
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+            FileInfo fileInfo = new FileInfo(adminViewUpoads.formFile.FileName);
+            string fileName = adminViewUpoads.formFile.FileName;
+
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
             {
-                
-                AdminViewUpoads adminViewUpoads1 = new AdminViewUpoads();
-                adminViewUpoads1.requestId = rid;
-                adminViewUpoads1.Patientname = requestClient.FirstName + " " + requestClient.LastName;
-                adminViewUpoads1.count = 0;
-                adminViewUpoads.Add(adminViewUpoads1);
-              
-
-                return adminViewUpoads;
-
+                adminViewUpoads.formFile.CopyTo(stream);
             }
+            
+            RequestWiseFile requestWise = new RequestWiseFile();
+            requestWise.RequestId = adminViewUpoads.requestId;
+            requestWise.FileName = fileName;
+            requestWise.CreatedDate = DateTime.Now;
+            _fileRepo.AddData(requestWise);
+            return true;
         }
     }
 }

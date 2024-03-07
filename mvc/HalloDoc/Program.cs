@@ -32,6 +32,9 @@ builder.Services.AddScoped<IBlockedRequestRepo, BlockedRequestRepo>();
 builder.Services.AddScoped<IViewUploadsServices, ViewUploadsServices>();
 builder.Services.AddScoped<IJwtServices, JwtServices>();
 builder.Services.AddScoped<IAspNetUserRepo, AspNetUserRepo>();
+builder.Services.AddScoped<ISendOrderServices, SendOrderServices>();
+builder.Services.AddScoped<IProfessionRepo, ProfessionRepo>();
+builder.Services.AddScoped<IVendorRepo, VendorRepo>();
 
 
 
