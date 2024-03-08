@@ -98,6 +98,22 @@
 
             @foreach (var item in Model)
             {
+                <!-- Modal -->
+                <div class="modal fade" id="TransferCase-@Html.DisplayFor(modelitem=>item.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color:#0dcaf0">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color:white">Assign Request</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                To assign this request search and select another physician
+                                @Html.Partial("~/Views/Shared/_TransferCasePopup.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
@@ -118,7 +134,7 @@
                                 <li><a class="dropdown-item" href="#">View Case</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewUploads" asp-route-reqID="@item.RequestId">View Uploads</a></li>
                                 <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                <li><a class="dropdown-item" href="#">Transfer</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransferCase-@Html.DisplayFor(modelitem=>item.id)">Transfer</a></li>
                                 <li><a class="dropdown-item" href="#">Clear Case</a></li>
                                 <li><a class="dropdown-item" href="#">Send Agreement</a></li>
                             </ul>

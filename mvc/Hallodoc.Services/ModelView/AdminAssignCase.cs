@@ -20,5 +20,7 @@ namespace HallodocServices.ModelView
         public List<Physician> physician { get; set; }
         public int? PhysicianId { get; set; }
         public string? Description { get; set; }
+
+        public int? PhyscianID { get; set; }
     }
 }

@@ -14,32 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <script>
-        function toggle() {
-            if (document.getElementById('hide1').classList.contains('d-none')) {
-                document.getElementById('hide1').classList.remove('d-none');
-
-            }
-            else {
-                document.getElementById('hide1').classList.add('d-none');
-            }
-            if (document.getElementById('disableButton').classList.contains('d-none')) {
-                document.getElementById('disableButton').classList.remove('d-none');
-
-            }
-            else {
-                document.getElementById('disableButton').classList.add('d-none');
-            }
-            if (document.getElementById('enableButton').classList.contains('d-none')) {
-                document.getElementById('enableButton').classList.remove('d-none');
-
-            }
-            else {
-                document.getElementById('enableButton').classList.add('d-none');
-            }
-        }
-    </script>
-
+   
     <title>Document</title>
 </head>
 <body>
@@ -139,92 +114,89 @@
         </div>
     </div>
     <div class="mainct shadow">
-        <form>
+        <form asp-controller="AdminSite" asp-action="SendOrder">
         
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt mb-3" >
-                    <select onchange="GetVendor(1)" class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                    <select asp-for="ProfessionTypeId" onchange="loadBusinessList(this.value)" id="professionList" class="form-select form-select-lg mb-3"  aria-label="Large select example" style="height:58px">
                         <option selected value="0">Select Profession</option>
-                        @for(int i = 0; i<Model.professionalTypeList.Count();i++)
-                        {
-                            
-                            <option value="@Model.professionalTypeList[i].HealthProfessionalId">@Model.professionalTypeList[i].ProfessionName</option>
-                            
-                        }
+                        
                     </select>
 
                 </div>
                 <div class="col-md-12 col-lg-6 wt mb-3" >
-                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                    <select asp-for= "VendorId" onchange="loadBusinessData(this.value)" id="businessList" class="form-select form-select-lg mb-3" aria-label="Large select example"  style="height:58px">
                         <option selected value="0">Business</option>
-                        @for (int i = 0; i < Model.professionalList.Count(); i++)
-                        {
-                            
-                            <option value="@Model.professionalList[i].VendorId">@Model.professionalList[i].VendorName</option>
-
-                        }
+                        
                     </select>
                 </div>
             </div>
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
-                    <input  type="tel" class="form-control iget" style="height:58px" id="patientMobileNumber">
+                    <input asp-for="PhoneNumber" type="tel" class="form-control iget BusinessContact" id="vendorMobileNumber"  style="height:58px">
                 </div>
                 <div class="col-12 col-md-12 col-lg-6 wt form-floating mb-3">
 
-                    <input  type="email" class="form-control iget" id="floatingInput"
+                    <input asp-for="Email" type="email" class="form-control iget" id="email"
                            aria-describedby="emailHelp" placeholder="Enter email">
-                     <label for="floatingInput">Email</label>
+                     <label for="email">Email</label>
 
                 </div>
             </div>
 
             <div class="row">
                 
+                <input type="hidden" value="@ViewBag.reqID" asp-for="RequestId" />
                 <div class="col-12 col-lg-6 wt form-floating mb-3">
-                    <input type="text" class="form-control dis" placeholder="Fax Number" id="floatingInput">
-                    <label for="floatingInput">Fax Number</label>
+                    <input asp-for="FaxNumber" type="text" class="form-control dis" placeholder="Fax Number" id="faxnumber">
+                    <label for="faxnumber">Fax Number</label>
                 </div>
             </div>
 
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" ></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" asp-for="Prescription"></textarea>
                 <label for="floatingTextarea2" style="top:-9px;left:-9px">Prescription or OrderDetails</label>
             </div>
 
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt mb-3 " >
-                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
-                        <option selected>No of refill</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px" asp-for="Refill">
+                        <option selected value="0">No of refill</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
                     </select>
                 </div>
                 </div>
             <div class="d-flex wt">
                 <div class="bt">
-                    <div><button type="button" class="btn btn-info">Submit</button></div>
+                    <div><button type="Submit" class="btn btn-info">Submit</button></div>
                     <div style="margin-left: 4px;"><button type="button" class="btn btn-outline-info">Cancel</button></div>
                 </div>
             </div>
         </form>
     </div>
     <script>
-        const phoneInputField = document.getElementById("patientMobileNumber");
-        const phoneInput = window.intlTelInput(phoneInputField, {
-            utilsScript:
-                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
-    </script>
-    <script>
-        document.getElementById("enableButton").addEventListener("click", function () {
-            var inputs = document.getElementsByClassName("iget");
-            for (var i = 0; i < inputs.length; i++) {
-                inputs[i].removeAttribute("disabled");
-            }
-        });
-       
-    </script>
+        //const phoneInputField = document.getElementById("patientMobileNumber");
+        //const phoneInput = window.intlTelInput(phoneInputField, {
+        //    utilsScript:
+        //        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        //});
+
+    //    function GetData(int id) {
+    //        console.log(id);
+    //        if (id != 0) {
+    //            $('.BusinessContact').attr("asp-for", Model.professionalList[id].BusinessContact);
+    //        }
+    //    }
+
+    //</script>
+    
 </body>
 </html>

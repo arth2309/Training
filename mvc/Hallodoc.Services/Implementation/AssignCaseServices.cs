@@ -16,12 +16,14 @@ namespace HallodocServices.Implementation
         private readonly IRegionRepo _regionRepo;
         private readonly IRequestRepo _requestRepo;
         private readonly IRequestStatusLogRepo _requestStatusLogRepo;
-        
-        public AssignCaseServices(IRegionRepo regionRepo,IRequestRepo requestRepo,IRequestStatusLogRepo requestStatusLogRepo)
+        private readonly IPhysicianRepo _physicianRepo;
+         
+        public AssignCaseServices(IRegionRepo regionRepo,IRequestRepo requestRepo,IRequestStatusLogRepo requestStatusLogRepo,IPhysicianRepo physicianRepo)
         {
             _regionRepo = regionRepo;
             _requestRepo = requestRepo;
             _requestStatusLogRepo = requestStatusLogRepo;
+            _physicianRepo = physicianRepo;
         }
         
         public AdminAssignCase AdminAssignCase(AdminAssignCase adminAssignCase)
@@ -43,7 +45,19 @@ namespace HallodocServices.Implementation
 
 
         }
+
+        public List<Region> GetRegions() 
+        {
+
+           List<Region> regions = _regionRepo.GetRegions();
+            return regions;
+        }
        
+        public List<Physician> GetPhysciansByRegions(int regionid)
+        {
+            List<Physician> physicians = _physicianRepo.GetPhysiciansData(regionid);
+            return physicians;
+        }
         
     }
 }

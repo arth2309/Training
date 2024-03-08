@@ -35,6 +35,7 @@ builder.Services.AddScoped<IAspNetUserRepo, AspNetUserRepo>();
 builder.Services.AddScoped<ISendOrderServices, SendOrderServices>();
 builder.Services.AddScoped<IProfessionRepo, ProfessionRepo>();
 builder.Services.AddScoped<IVendorRepo, VendorRepo>();
+builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 
 
 

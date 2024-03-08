@@ -115,7 +115,7 @@
                                 Action
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Assign Case</a></li>
+                                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SendOrder" asp-route-reqID="@item.RequestId">Orders</a></li>
                                 <li><a class="dropdown-item" href="#">Cancel Case</a></li>
                                 <li><a class="dropdown-item" href="#">View Case</a></li>
                                 <li><a class="dropdown-item" href="#">View Notes</a></li>

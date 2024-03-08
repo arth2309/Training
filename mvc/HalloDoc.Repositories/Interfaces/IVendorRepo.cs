@@ -9,6 +9,8 @@ namespace HalloDoc.Repositories.Interfaces
 {
     public interface IVendorRepo
     {
-        List<HealthProfessional> GetVendorData(int ProfessionId);
+        List<HealthProfessional> GetVendorList(int ProfessionId);
+
+        HealthProfessional GetVendor(int vendorId);
     }
 }

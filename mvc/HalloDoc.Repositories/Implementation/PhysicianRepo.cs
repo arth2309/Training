@@ -17,10 +17,10 @@ namespace HalloDoc.Repositories.Implementation
             _DbContext = DbContext;
         }
 
-        public List<Physician> GetPhysiciansData()
+        public List<Physician> GetPhysiciansData(int regionId)
         {
-            var physiciianList = _DbContext.Physicians.ToList();
-            return physiciianList;
+            return  _DbContext.Physicians.Where(a=>a.RegionId == regionId).ToList();
+
         }
     }
 }

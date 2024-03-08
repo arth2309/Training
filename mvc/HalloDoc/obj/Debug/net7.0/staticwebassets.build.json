@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ISGKcpREl8MHpsEyL+9fOlxN/gYv4WsNPTf394UyYmI=",
+  "Hash": "LmBi1900Air8m6p0AHoCL1ZBA3fyMJCaGWTgYi0rqzE=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -712,6 +712,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Email.js"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\getPhysiciansByRegion.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/getPhysiciansByRegion.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\getPhysiciansByRegion.js"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\GetVendorByProfession.js",

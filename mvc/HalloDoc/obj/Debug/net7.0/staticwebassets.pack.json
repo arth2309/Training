@@ -169,6 +169,10 @@
       "PackagePath": "staticwebassets\\js\\checkstatus.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\getPhysiciansByRegion.js",
+      "PackagePath": "staticwebassets\\js\\getPhysiciansByRegion.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\international-telephone-input.js",
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
     },

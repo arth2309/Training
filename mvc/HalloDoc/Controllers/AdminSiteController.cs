@@ -14,6 +14,7 @@ using HallodocServices.ModelView;
 using HallodocServices.Interfaces;
 using Azure;
 using HallodocServices.Implementation;
+using System.Text.Json;
 
 namespace HalloDoc.Controllers
 {
@@ -215,19 +216,46 @@ namespace HalloDoc.Controllers
         }
 
 
-        public IActionResult SendOrder(int id = 0)
+        public IActionResult SendOrder(int reqID)
+
         {
-            AdminSendOrder adminSendOrder = _sendOrderServices.GetList(0);
-            return View(adminSendOrder);
+            ViewBag.reqID = reqID;
+            return View();
         }
 
-        [HttpGet]
-
-        public IActionResult GetVendor(int id)
+        [Route("admin/profession")]
+        public JsonResult GetProfessions()
         {
- 
-            return RedirectToAction("SendOrder", new {id = id});
+            return Json(JsonSerializer.Serialize(_sendOrderServices.GetProfessionalTypes()));
         }
 
+        [Route("admin/business")]
+        public JsonResult GetBusinessListByProfessionId(int professionTypeId)
+        {
+            return Json(JsonSerializer.Serialize(_sendOrderServices.GetHealthProfessionalByType(professionTypeId)));
+        }
+
+        [Route("admin/business-data")]
+        public JsonResult GetBusinessData(int vendorId)
+        {
+            return Json(JsonSerializer.Serialize(_sendOrderServices.GetProfessionalById(vendorId)));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendOrder(AdminSendOrder adminSendOrder)
+        {
+            _sendOrderServices.AddDataServices(adminSendOrder);
+            return RedirectToAction("AdminDashBoard");
+        }
+
+        public JsonResult GetRegions() 
+        {
+            return Json(JsonSerializer.Serialize(_assignCaseServices.GetRegions()));
+        }
+
+        public JsonResult GetPhysiciansByRegion(int regionId) 
+        {
+            return Json(JsonSerializer.Serialize(_assignCaseServices.GetPhysciansByRegions(regionId)));
+        }
     }
 }

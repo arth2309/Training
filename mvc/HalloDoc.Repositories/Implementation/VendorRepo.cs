@@ -19,13 +19,14 @@ namespace HalloDoc.Repositories.Implementation
             _DbContext = context;
         }
 
-        public List<HealthProfessional> GetVendorData(int ProfessionId)
+        public HealthProfessional GetVendor(int vendorId)
         {
-            if(ProfessionId == 0)
-            {
-                return _DbContext.HealthProfessionals.ToList();
-            }
-            return _DbContext.HealthProfessionals.Where(a=>a.Profession ==  ProfessionId).ToList();
+            return _DbContext.HealthProfessionals.Find(vendorId);
+        }
+
+        public List<HealthProfessional> GetVendorList(int ProfessionId)
+        {
+            return _DbContext.HealthProfessionals.Where(a => a.Profession == ProfessionId).ToList();
         }
     }
 }

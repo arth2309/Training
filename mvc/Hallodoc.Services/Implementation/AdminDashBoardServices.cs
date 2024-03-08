@@ -110,7 +110,7 @@ namespace HallodocServices.Implementation
                 AdminAssignCase assignCase = new AdminAssignCase();
                 assignCase.RequestId = requestClients[i].RequestId;
                 assignCase.regions = _regionRepo.GetRegions();
-                assignCase.physician = _PhysicianRepo.GetPhysiciansData();
+               
 
                 AdminBlockCase blockCase = new AdminBlockCase();
                 blockCase.requestId = requestClients[i].RequestId;  

@@ -9,11 +9,20 @@ namespace HallodocServices.ModelView
 {
     public class AdminSendOrder
     {
-        public List<HealthProfessional>? professionalList { get; set; }
+        public int ProfessionTypeId { get; set; }
 
-        public List<HealthProfessionalType>? professionalTypeList { get; set; }
+        public int VendorId { get; set; }
+
+        public int RequestId { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Email { get; set; } 
+
+        public string FaxNumber { get; set; }
 
         public string? Prescription { get; set; }
-        public int? refill {get; set; }
+
+        public int? Refill {get; set; }
     }
 }
