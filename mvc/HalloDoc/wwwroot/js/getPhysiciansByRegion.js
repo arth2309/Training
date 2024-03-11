@@ -1,7 +1,4 @@
-﻿window.onload = () => {
-    loadRegion();
-}
-
+﻿
 
 function loadRegion() {
     $.ajax({
@@ -10,7 +7,10 @@ function loadRegion() {
         success: function (res) {
             var listofregion = JSON.parse(res);
             console.log(listofregion);
-            var regionList = document.getElementsByClassName("regionList");
+            var regionList = document.getElementById("regionList");
+            while (regionList.options.length > 0) {
+                regionList.remove(0);
+            }
    
             regionList.appendChild(new Option("Select Region", "0"));
             listofregion.forEach(function(region) {
@@ -24,33 +24,112 @@ function loadRegion() {
     });
 }
 
-function loadBusinessList(professionTypeId) {
+function loadPhysiciansByRegion(RegionId) {
     $.ajax({
-        url: '/admin/business',
+        url: '/AdminSite/GetPhysiciansByRegion',
         type: 'GET',
         data: {
-            professionTypeId: professionTypeId
+            RegionId  : RegionId
         },
         success: function (res) {
-            var listOfBusiness = JSON.parse(res);
-            var businessList = document.getElementById("businessList");
-            while (businessList.options.length > 0) {
-                businessList.remove(0);
+            var listOfPhysicians = JSON.parse(res);
+            console.log(listOfPhysicians);
+            var physicianList = document.getElementById("PhysicianList");
+            while (physicianList.options.length > 0) {
+                physicianList.remove(0);
             }
-            businessList.appendChild(new Option("Select Business", "0"));
-            listOfBusiness.forEach(function (business) {
-                businessList.appendChild(new Option(business.VendorName, business.VendorId));
+            physicianList.appendChild(new Option("Select Physician", "0"));
+            listOfPhysicians.forEach(function (physician) {
+                physicianList.appendChild(new Option(physician.FirstName, physician.PhysicianId));
             });
-            var contact = document.getElementById("vendorMobileNumber");
-            var email = document.getElementById("email");
-            var faxNumber = document.getElementById("faxnumber");
-
-            contact.value = "";
-            email.value = "";
-            faxNumber.value = "";
         },
         error: function (err) {
             console.error(err);
         }
     });
 }
+
+function getRequestID(Requestid)
+{
+    loadRegion();
+    var requestid = document.getElementById("requestid");
+    requestid.value = Requestid;
+}
+
+function loadRegion1() {
+    $.ajax({
+        url: '/AdminSite/GetRegions',
+        type: 'GET',
+        success: function (res) {
+            var listofregion = JSON.parse(res);
+            console.log(listofregion);
+            var regionList = document.getElementById("regionList1");
+            while (regionList.options.length > 0) {
+                regionList.remove(0);
+            }
+
+            regionList.appendChild(new Option("Select Region", "0"));
+            listofregion.forEach(function (region) {
+                regionList.appendChild(new Option(region.Name, region.RegionId));
+            });
+            console.log(regionList)
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
+function loadPhysiciansByRegion1(RegionId) {
+    $.ajax({
+        url: '/AdminSite/GetPhysiciansByRegion',
+        type: 'GET',
+        data: {
+            RegionId: RegionId
+        },
+        success: function (res) {
+            var listOfPhysicians = JSON.parse(res);
+            console.log(listOfPhysicians);
+            var physicianList = document.getElementById("PhysicianList1");
+            while (physicianList.options.length > 0) {
+                physicianList.remove(0);
+            }
+            physicianList.appendChild(new Option("Select Physician", "0"));
+            listOfPhysicians.forEach(function (physician) {
+                physicianList.appendChild(new Option(physician.FirstName, physician.PhysicianId));
+            });
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
+function getRequestID1(Requestid) {
+    loadRegion1();
+    var requestid = document.getElementById("requestid1");
+    requestid.value = Requestid;
+}
+
+
+function getRequestIdForClearCase(Requestid) {
+    var requestid = document.getElementById("reqforclearcase");
+    requestid.value = Requestid;
+}
+function clearCase(RequestId)
+{
+    $.ajax({
+        url: '/AdminSite/ClearCase',
+        type: 'Get',
+
+        data: {
+            RequestId: RequestId
+        },
+        success: function (res) {
+            window.location.href = res.redirect;
+        }
+
+
+    });
+}
+

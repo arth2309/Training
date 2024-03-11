@@ -11,7 +11,7 @@ namespace HallodocServices.Interfaces
 {
     public interface IAssignCaseServices
     {
-        AdminAssignCase AdminAssignCase(AdminAssignCase adminAssignCase);
+        Task<AdminAssignCase> AdminAssignCase(AdminAssignCase adminAssignCase);
         List<Region> GetRegions();
         List<Physician> GetPhysciansByRegions(int regionid);
     }

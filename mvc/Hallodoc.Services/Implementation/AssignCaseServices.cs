@@ -26,7 +26,7 @@ namespace HallodocServices.Implementation
             _physicianRepo = physicianRepo;
         }
         
-        public AdminAssignCase AdminAssignCase(AdminAssignCase adminAssignCase)
+        public async Task <AdminAssignCase> AdminAssignCase(AdminAssignCase adminAssignCase)
         {
             Request request = _requestRepo.GetRequest(adminAssignCase.RequestId);
             request.Status = 2;

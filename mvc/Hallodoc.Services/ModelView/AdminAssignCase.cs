@@ -15,12 +15,14 @@ namespace HallodocServices.ModelView
         public string RegionName { get; set; }
         public int RegionId { get; set; }
 
-        public List<Region> regions { get; set; }
+  
+
+        public List<Region>? regions { get; set; }
         public int RequestId { get; set; }
-        public List<Physician> physician { get; set; }
+        public List<Physician>? physician { get; set; }
         public int? PhysicianId { get; set; }
         public string? Description { get; set; }
 
-        public int? PhyscianID { get; set; }
+      
     }
 }

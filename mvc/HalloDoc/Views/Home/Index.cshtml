@@ -1,0 +1,98 @@
+﻿@{
+    var currentPage = 3;
+    var totolPage = 5;
+    var hasNext = currentPage < totolPage;
+    var hasPrevious = currentPage > 1;
+}
+<html>
+<head>
+    <title>Pagination</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+           
+           
+            @if (totolPage > 1)
+            {
+                
+                if(totolPage<=3)
+                {
+                    <li class="page-item @(hasPrevious?"":"disabled")"><button class="page-link">Previous</button></li>
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        <li class="page-item @(currentPage == i?"active":"")"><button class="page-link">@i</button></li>
+                    }
+                    <li class="page-item @(hasNext?"":"disabled")"><a class="page-link">Next</a></li>
+                }
+
+                if (totolPage > 3 && currentPage <= 3)
+                {
+                    <li class="page-item @(hasPrevious?"":"disabled")"><button class="page-link">Previous</button></li>
+
+                    for(int i = 1;i<=3;i++)
+                    {
+                        <li class="page-item @(currentPage == i?"active":"")"><button class="page-link">@i</button></li>
+                    }
+                    <li class="page-item"><button class="page-link">......</button></li>
+
+                    
+                    
+                       <li class="page-item @(currentPage == totolPage?"active":"")"><button class="page-link">@totolPage</button></li>
+
+                    <li class="page-item @(hasNext?"":"disabled")"><a class="page-link">Next</a></li>
+                 }
+
+                if (totolPage > 3 && currentPage > 3 && currentPage<totolPage-2)
+                {
+                    <li class="page-item @(hasPrevious?"":"disabled")"><button class="page-link">Previous</button></li>
+
+                    <li class="page-item @(currentPage == 1?"active":"")"><button class="page-link">1</button></li>
+
+                    <li class="page-item"><button class="page-link">......</button></li>
+
+                    for (int i = currentPage - 1; i <= currentPage + 1; i++)
+                    {
+                        <li class="page-item @(currentPage == i?"active":"")"><button class="page-link">@i</button></li>
+                    }
+                    <li class="page-item"><button class="page-link">......</button></li>
+
+                    <li class="page-item @(currentPage == totolPage?"active":"")"><button class="page-link">@totolPage</button></li>
+
+                    <li class="page-item @(hasNext?"":"disabled")"><a class="page-link">Next</a></li>
+                }
+
+                if (totolPage >= 5 && currentPage >= totolPage-2)
+                {
+                    <li class="page-item @(hasPrevious?"":"disabled")"><button class="page-link">Previous</button></li>
+
+                    <li class="page-item @(currentPage == 1?"active":"")"><button class="page-link">1</button></li>
+
+                    <li class="page-item"><button class="page-link">......</button></li>
+
+                    for (int i = totolPage - 2; i <= totolPage; i++)
+                    {
+                        <li class="page-item @(currentPage == i?"active":"")"><button class="page-link">@i</button></li>
+                    }
+
+                    <li class="page-item @(hasNext?"":"disabled")"><a class="page-link">Next</a></li>
+                }
+
+            }
+
+            
+
+            
+            
+            
+
+
+            
+        </ul>
+    </nav>
+</body>
+</html>

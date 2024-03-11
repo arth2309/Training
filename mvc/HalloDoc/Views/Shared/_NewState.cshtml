@@ -2,8 +2,6 @@
  
 
 
-
-    
         <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
             <div class="d-flex">
                 <h5>Patients</h5>(New)
@@ -100,6 +98,8 @@
                 </thead>
                 <tbody>
 
+            @Html.Partial("~/Views/Shared/_AssignCasePopup.cshtml",Model[0].assignCases)
+
                     @foreach (var item in Model)
                 {
                 <!-- Modal -->
@@ -118,20 +118,9 @@
                     </div>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="AssignCase-@Html.DisplayFor(modelitem=>item.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color:#0dcaf0">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel"style="color:white">Assign Request</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                To assign this request search and select another physician
-                                @Html.Partial("~/Views/Shared/_AssignCasePopup.cshtml",@item.assignCases)
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+                               
+                   
 
                 <!-- Modal -->
                 <div class="modal fade" id="BlockCase-@Html.DisplayFor(modelitem=>item.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -188,7 +177,7 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">
-                                <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#AssignCase-@Html.DisplayFor(modelitem=>item.id)">Assign Case</a></li>
+                                <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#AssignCase" onclick="getRequestID(@item.RequestId)">Assign Case</a></li>
                                 <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#exampleModal-@Html.DisplayFor(modelitem=>item.id)">Cancel Case</a></li>
                                     <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id>View Case</a></li>
                                     <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId">View Notes</a></li>

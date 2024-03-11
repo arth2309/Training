@@ -2,7 +2,7 @@
 
 
 
-
+@Html.Partial("~/Views/Shared/_TransferCasePopup.cshtml",Model[1].assignCases)
 <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
     <div class="d-flex">
         <h5>Patients</h5>(Pending)
@@ -20,6 +20,7 @@
         <button type="button" class="btn btn-primary d-none d-lg-flex "><i class="bi bi-person"></i>Request DTV Support</button>
 
     </div>
+    
 </div>
 <div class="d-flex row" style="justify-content: space-between;">
     <div class="d-flex col-12 col-lg-3">
@@ -96,23 +97,12 @@
         </thead>
         <tbody class="table-success">
 
+            
+          
+
             @foreach (var item in Model)
             {
-                <!-- Modal -->
-                <div class="modal fade" id="TransferCase-@Html.DisplayFor(modelitem=>item.id)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color:#0dcaf0">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel" style="color:white">Assign Request</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                To assign this request search and select another physician
-                                @Html.Partial("~/Views/Shared/_TransferCasePopup.cshtml")
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
 
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
@@ -134,8 +124,8 @@
                                 <li><a class="dropdown-item" href="#">View Case</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewUploads" asp-route-reqID="@item.RequestId">View Uploads</a></li>
                                 <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransferCase-@Html.DisplayFor(modelitem=>item.id)">Transfer</a></li>
-                                <li><a class="dropdown-item" href="#">Clear Case</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransferCase" onclick="getRequestID1(@item.RequestId)">Transfer</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ClearCase" onclick="getRequestIdForClearCase(@item.RequestId)">Clear Case</a></li>
                                 <li><a class="dropdown-item" href="#">Send Agreement</a></li>
                             </ul>
                         </div>
@@ -165,7 +155,7 @@
         {
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <div class="accordion-header h2">
                     <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@Html.DisplayFor(modelItem => item.id)" aria-expanded="false" aria-controls="collapseOne" style="display:block">
                         <div class="row mt-2" style="width:100%">
                             <div class="col-6">
@@ -173,7 +163,7 @@
                             </div>
                             <div class="col-6 d-flex" style="justify-content:end">
                                 Patient <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="8" r="8" />
+                                    <circle cx="8" cy="8" r="8" /> </svg>
                             </div>
                         </div>
                         <div class="row  mt-2" style="width:100%">
@@ -190,7 +180,7 @@
                             </div>
                         </div>
                     </div>
-                </h2>
+                </div>
                 <div id="collapse-@Html.DisplayFor(modelItem => item.id)" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="row mt-2">

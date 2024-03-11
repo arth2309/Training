@@ -15,6 +15,7 @@ using HallodocServices.Interfaces;
 using Azure;
 using HallodocServices.Implementation;
 using System.Text.Json;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 
 namespace HalloDoc.Controllers
 {
@@ -30,8 +31,9 @@ namespace HalloDoc.Controllers
         private readonly IJwtServices _jwtServices;
         private readonly IPatientLoginServices _loginServices;
         private readonly ISendOrderServices _sendOrderServices;
+        private readonly IClearCaseServices _clearCaseServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices,ISendOrderServices sendOrderServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices,ISendOrderServices sendOrderServices,IClearCaseServices clearCaseServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -43,6 +45,7 @@ namespace HalloDoc.Controllers
             _jwtServices = jwtServices;
             _loginServices = loginServices;
             _sendOrderServices = sendOrderServices;
+            _clearCaseServices = clearCaseServices;
         }
 
         public IActionResult AdminLogin()
@@ -170,11 +173,20 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
+       
         [HttpPost]
         public async Task <IActionResult> AssignCase(AdminAssignCase adminAssignCase) 
         {
 
-           AdminAssignCase adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
+           Task<AdminAssignCase> adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
+            return RedirectToAction("AdminDashBoard");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TransferCase(AdminAssignCase adminAssignCase)
+        {
+
+            Task<AdminAssignCase> adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
             return RedirectToAction("AdminDashBoard");
         }
 
@@ -223,6 +235,12 @@ namespace HalloDoc.Controllers
             return View();
         }
 
+        public async Task<JsonResult> ClearCase(int RequestId)
+        {
+            _clearCaseServices.ClearCase(RequestId);
+            return Json(new { redirect = Url.Action("AdminDashBoard") });
+        }
+
         [Route("admin/profession")]
         public JsonResult GetProfessions()
         {
@@ -253,9 +271,9 @@ namespace HalloDoc.Controllers
             return Json(JsonSerializer.Serialize(_assignCaseServices.GetRegions()));
         }
 
-        public JsonResult GetPhysiciansByRegion(int regionId) 
+        public JsonResult GetPhysiciansByRegion(int RegionId) 
         {
-            return Json(JsonSerializer.Serialize(_assignCaseServices.GetPhysciansByRegions(regionId)));
+            return Json(JsonSerializer.Serialize(_assignCaseServices.GetPhysciansByRegions(RegionId)));
         }
     }
 }
