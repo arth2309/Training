@@ -11,5 +11,6 @@ namespace HallodocServices.Interfaces
     {
         string GenerateJWTAuthetication(string email);
         bool ValidateToken(string token, out JwtSecurityToken jwtSecurityToken);
+        string GenerateJWTTokenForSendAgreement(int requestId);
     }
 }

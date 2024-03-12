@@ -116,6 +116,9 @@ namespace HallodocServices.Implementation
                 blockCase.requestId = requestClients[i].RequestId;  
                 blockCase.Email = requestClients[i].Email;
                 blockCase.Mobile = requestClients[i].PhoneNumber;
+
+                SendAgreement sendAgreement = new SendAgreement();
+                sendAgreement.Requestid = requestClients[i].RequestId;
                 
 
                 NewState newState = new();
@@ -138,6 +141,7 @@ namespace HallodocServices.Implementation
                     newState.assignCases = assignCase;
                     newState.blockCases = blockCase;
                     newState.RequestTypeId = requestClients[i].Request.RequestTypeId;
+                    newState.sendAgreement = sendAgreement;
                     
                    
                     

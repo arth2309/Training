@@ -54,6 +54,8 @@ namespace HallodocServices.ModelView
         public AdminCancelCase? cancelCases { get; set; }
         public AdminAssignCase? assignCases { get; set; }
         public  AdminBlockCase? blockCases { get; set; }
+        
+        public SendAgreement? sendAgreement { get; set; }
 
 
     }

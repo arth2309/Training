@@ -32,8 +32,9 @@ namespace HalloDoc.Controllers
         private readonly IPatientLoginServices _loginServices;
         private readonly ISendOrderServices _sendOrderServices;
         private readonly IClearCaseServices _clearCaseServices;
+        private readonly ISendAgreementServices _sendAgreementServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices,ISendOrderServices sendOrderServices,IClearCaseServices clearCaseServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices,ISendOrderServices sendOrderServices,IClearCaseServices clearCaseServices,ISendAgreementServices sendAgreementServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -46,6 +47,7 @@ namespace HalloDoc.Controllers
             _loginServices = loginServices;
             _sendOrderServices = sendOrderServices;
             _clearCaseServices = clearCaseServices;
+            _sendAgreementServices = sendAgreementServices;
         }
 
         public IActionResult AdminLogin()
@@ -274,6 +276,34 @@ namespace HalloDoc.Controllers
         public JsonResult GetPhysiciansByRegion(int RegionId) 
         {
             return Json(JsonSerializer.Serialize(_assignCaseServices.GetPhysciansByRegions(RegionId)));
+        }
+
+        [HttpPost]
+        
+        public IActionResult SendAgreement(SendAgreement sendAgreement)
+        {
+            string token = _jwtServices.GenerateJWTTokenForSendAgreement(sendAgreement.Requestid);
+            _sendAgreementServices.SendEmail(sendAgreement, token);
+            return RedirectToAction("AdminDashBoard");
+        }
+
+
+        public JsonResult LoadAgreementData(int Requestid)
+        {
+            return Json(JsonSerializer.Serialize(_sendAgreementServices.LoadSendAgreementData(Requestid)));
+        }
+
+        public async Task<IActionResult> ViewAgreement(string token)
+        {
+            int id = await _sendAgreementServices.CheckViewAgreement(token);
+            ViewBag.idForViewAgreement = id;
+
+            if(id == 0)
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
+
+            return View();
         }
     }
 }

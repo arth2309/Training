@@ -1,4 +1,5 @@
-﻿using HalloDoc.Repositories.Interfaces;
+﻿using HalloDoc.Repositories.DataModels;
+using HalloDoc.Repositories.Interfaces;
 using HallodocServices.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -91,6 +92,34 @@ namespace HallodocServices.Implementation
                 return false;
             }
         }
+        public string GenerateJWTTokenForSendAgreement(int requestId)
+        {
+
+
+            var claims = new List<Claim>
+            {
+                new Claim("RequestId", requestId.ToString()),
+            };
+
+
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.UtcNow.AddMinutes(20);
+
+
+            var token = new JwtSecurityToken(
+                configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
+                claims,
+                expires: expires,
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
 
         }
+
+    }
 }

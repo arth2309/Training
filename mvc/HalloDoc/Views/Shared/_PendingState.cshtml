@@ -3,6 +3,7 @@
 
 
 @Html.Partial("~/Views/Shared/_TransferCasePopup.cshtml",Model[1].assignCases)
+@Html.Partial("~/Views/Shared/_SendAgreement.cshtml",Model[0].sendAgreement)
 <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
     <div class="d-flex">
         <h5>Patients</h5>(Pending)
@@ -102,7 +103,7 @@
 
             @foreach (var item in Model)
             {
-               
+                
 
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
@@ -126,7 +127,7 @@
                                 <li><a class="dropdown-item" href="#">View Notes</a></li>
                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#TransferCase" onclick="getRequestID1(@item.RequestId)">Transfer</a></li>
                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ClearCase" onclick="getRequestIdForClearCase(@item.RequestId)">Clear Case</a></li>
-                                <li><a class="dropdown-item" href="#">Send Agreement</a></li>
+                                <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#sendagreement" onclick="loadSendAgreeMentData(@item.RequestId)">Send Agreement</a></li>
                             </ul>
                         </div>
                     </td>

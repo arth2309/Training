@@ -151,34 +151,9 @@
         </div>
     </div>
 
-    <script>
+    
 
-        window.onload = () => {
-            loadRegion();
-        }
-
-
-        function loadRegion() {
-            $.ajax({
-                url: '/AdminSite/GetRegions',
-                type: 'GET',
-                success: function (res) {
-                    var listofregion = JSON.parse(res);
-                    console.log(listofregion);
-                    var regionList = document.getElementById("regionListsss");
-                    regionList.appendChild(new Option("Select Region", "0"));
-                    listofregion.forEach(function (region) {
-                        regionList.appendChild(new Option(region.Name, region.RegionId));
-                    });
-                    console.log(regionList)
-                },
-                error: function (err) {
-                    console.error(err);
-                }
-            });
-        }
-
-        </script>
+   
    
 
 

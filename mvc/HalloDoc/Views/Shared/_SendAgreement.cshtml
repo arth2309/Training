@@ -1,0 +1,70 @@
+﻿@model HallodocServices.ModelView.SendAgreement
+
+
+<div class="modal fade" id="sendagreement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color:#08bcec">
+                <h1 class="modal-title fs-5 " id="exampleModalLabel">Send Agreement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+                <div class="agreement" id="patientagreement">
+                    <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                <circle cx="8" cy="8" r="8" />
+                            </svg>  Patient
+                    </p>
+         
+                </div>
+                <div class="agreement" id="businessagreement">
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>  Business
+                    </p>
+
+                </div>
+                <div class="agreement" id="conciergeagreement">
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>  Concierge
+                    </p>
+
+                </div>
+                <div class="agreement" id="familyagreement">
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="yellow" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="8" />
+                        </svg>  family/friend
+                    </p>
+
+                </div>
+                <form asp-controller="AdminSite" asp-action="SendAgreement">
+                <div class="mb-1" style="font-size:small">To Send Agreement please make sure you are updating the correct contact Information below for the responsible party </div>
+                <div class="form-floating mb-3">
+                    <input type="tel" class="form-control" id="phoneNumberForAgreement" placeholder="Phone Number" asp-for="Mobile">
+                    <label for="phoneNumberForAgreement">Phone Number</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="emailForAgreement" placeholder="Email" asp-for="Email">
+                    <label for="emailForAgreement">Email</label>
+                </div>
+
+
+                 <input type="hidden" id="requestTypeIdForAgreement" />
+                 <input type="hidden" id="requestIdForAgreement" asp-for="Requestid" />
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal" style="margin-left:2px">Cancel</button>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

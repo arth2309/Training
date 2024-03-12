@@ -37,6 +37,7 @@ builder.Services.AddScoped<IProfessionRepo, ProfessionRepo>();
 builder.Services.AddScoped<IVendorRepo, VendorRepo>();
 builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 builder.Services.AddScoped<IClearCaseServices, ClearCaseServices>();
+builder.Services.AddScoped<ISendAgreementServices,SendAgreementServices>();
 
 
 
