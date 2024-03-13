@@ -21,12 +21,19 @@ namespace HalloDoc.Repositories.Implementation
         public RequestNote GetNoteData(int rid) 
         { 
             var note = _dbcontext.RequestNotes.FirstOrDefault(a=>a.RequestId == rid);
-            return note == null ? null : note;
+            return note;
         }
 
         public async Task<RequestNote> UpdateTable(RequestNote requestNote)
         {
             _dbcontext.RequestNotes.Update(requestNote);
+            await _dbcontext.SaveChangesAsync();
+            return requestNote;
+        }
+
+        public async Task<RequestNote> AddTable(RequestNote requestNote)
+        {
+            _dbcontext.RequestNotes.Add(requestNote);
             await _dbcontext.SaveChangesAsync();
             return requestNote;
         }

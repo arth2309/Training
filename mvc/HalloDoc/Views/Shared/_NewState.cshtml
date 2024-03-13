@@ -1,4 +1,4 @@
-﻿@model List<HallodocServices.ModelView.NewState>
+﻿@model PaginatedList<HallodocServices.ModelView.NewState>
  
 
 
@@ -295,6 +295,57 @@
         
     </div>
    </div>
+
+<ul class="pagination">
+    @if (Model.HasPrevious)
+    {
+        <li class="page-item " onclick="GetStatus(1,@(Model.CurrentPage-1))"><button class="page-link">Previous</button></li>
+    }
+    else
+    {
+        <li class="page-item disabled"><button class="page-link">Previous</button></li>
+    }
+    @if (Model.TotalPages < 6)
+    {
+        for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(Model.CurrentPage==i?"active":"")" onclick="GetStatus(1,@i)"><button class="page-link">@i</button></li>
+        }
+    }
+    else
+    {
+        <li class="page-item @(Model.CurrentPage > 2 ? "" :"d-none")" onclick="GetStatus(1,1)"><button class="page-link">1</button></li>
+        <li class="page-item disabled @(Model.CurrentPage > 3 ? "": "d-none")"><button class="page-link">...</button></li>
+        @if (Model.CurrentPage > 1 && Model.CurrentPage < Model.TotalPages)
+        {
+            <li class="page-item" onclick="GetStatus(1,@(Model.CurrentPage-1))"><button class="page-link">@(Model.CurrentPage - 1)</button></li>
+            <li class="page-item active" onclick="GetStatus(1,@(Model.CurrentPage))"><button class="page-link">@Model.CurrentPage</button></li>
+            <li class="page-item" onclick="GetStatus(1,@(Model.CurrentPage+1))"><button class="page-link">@(Model.CurrentPage + 1)</button></li>
+        }
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="page-item  active" onclick="GetStatus(1,1)"><button class="page-link">1</button></li>
+            <li class="page-item" onclick="GetStatus(1,2)"><button class="page-link">2</button></li>
+            <li class="page-item" onclick="GetStatus(1,3)"><button class="page-link">3</button></li>
+        }
+        @if (Model.CurrentPage == Model.TotalPages)
+        {
+            <li class="page-item" onclick="GetStatus(1,@(Model.TotalPages-2))"><button class="page-link">@(Model.TotalPages - 2)</button></li>
+            <li class="page-item" onclick="GetStatus(1,@(Model.TotalPages-1))"><button class="page-link">@(Model.TotalPages - 1)</button></li>
+            <li class="page-item active" onclick="GetStatus(1,@(Model.TotalPages))"><button class="page-link">@Model.TotalPages</button></li>
+        }
+        <li class="page-item disabled @(Model.CurrentPage < Model.TotalPages-2? "" : "d-none")"><button class="page-link">...</button></li>
+        <li class="page-item @(Model.CurrentPage<Model.TotalPages-1? "" :"d-none")" onclick="GetStatus(1,@(Model.TotalPages))"><button class="page-link">@Model.TotalPages</button></li>
+    }
+    @if (Model.HasNext)
+    {
+        <li class="page-item " onclick="GetStatus(1,@(Model.CurrentPage+1))"><button class="page-link">Next</button></li>
+    }
+    else
+    {
+        <li class="page-item disabled"><button class="page-link">Next</button></li>
+    }
+</ul>
 
    <script>
 

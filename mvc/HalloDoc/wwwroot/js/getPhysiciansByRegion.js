@@ -203,3 +203,52 @@ function loadSendAgreeMentData(requestid)
 
     });
 }
+
+function loadViewAgreementData(requestid)
+{
+    $.ajax({
+        url: '/AdminSite/LoadViewAgeement',
+        type: 'GET',
+        data: {
+        Requestid: requestid
+        },
+        success: function (res) {
+            var datalist = JSON.parse(res);
+            console.log(datalist);
+            var name = datalist.FirstName + " " + datalist.LastName + ",";
+            $('#getnameforcancelagreement').html(name);
+        }
+    });
+}
+
+
+function cancelViewAgreementData(requestid, description)
+{
+    $.ajax({
+        url: '/AdminSite/CancelViewAgeement',
+        type: 'GET',
+        data: {
+            Requestid: requestid,
+            Description: description
+        },
+
+        success: function (res) {
+            window.location.href = res.redirect;
+        }
+    });
+}
+
+
+function AcceptViewAgreementData(requestid) {
+    $.ajax({
+        url: '/AdminSite/AcceptViewAgreement',
+        type: 'GET',
+        data: {
+            Requestid: requestid
+        },
+
+        success: function (res) {
+            window.location.href = res.redirect;
+        }
+    });
+}

@@ -38,6 +38,7 @@ builder.Services.AddScoped<IVendorRepo, VendorRepo>();
 builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 builder.Services.AddScoped<IClearCaseServices, ClearCaseServices>();
 builder.Services.AddScoped<ISendAgreementServices,SendAgreementServices>();
+builder.Services.AddScoped<IPasswordHashServices, PasswordHashServices>();
 
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalloDoc.Repositories.DataModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace HallodocServices.ModelView
 
         [StringLength(500)]
         public string? AdminNotes { get; set; }
+
+        public List<RequestStatusLog>? TransferNotes { get; set; }
     }
 }

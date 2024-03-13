@@ -75,7 +75,7 @@ namespace HalloDoc.Controllers
             {
                 string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
                 Response.Cookies.Append("token", token);
-
+                TempData["success"] = "Successfully Login";
                 return RedirectToAction("AdminDashBoard");
             }
 
@@ -84,15 +84,16 @@ namespace HalloDoc.Controllers
         }
 
         [Auth.CustomAuthorize("Admin")]
-        public IActionResult AdminDashBoard(int status)
+        public IActionResult AdminDashBoard()
         {
-            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(status);
+            
+            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1, 1);
             return View(adminDashBoard);
         }
 
-        public IActionResult CheckStatus(int statusI)
+        public IActionResult CheckStatus(int statusI, int currentPage)
         {
-            List<NewState> newStates = _dashBoardServices.getStates(statusI);
+            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage);
           
             if(statusI == 1)
             {
@@ -155,9 +156,9 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int reqid)
         {
-            
+            ViewBag.ViewNotesReqid = reqid;
             AdminViewNote adminViewNote = _viewNoteServices.GetViewNote(reqid);
-            return View(adminViewNote ?? null);
+            return View(adminViewNote);
         }
 
         [HttpPost]
@@ -304,6 +305,23 @@ namespace HalloDoc.Controllers
             }
 
             return View();
+        }
+
+        public JsonResult LoadViewAgeement(int Requestid)
+        {
+            return Json(JsonSerializer.Serialize(_sendAgreementServices.LoadSendAgreementData(Requestid)));
+        }
+
+        public JsonResult CancelViewAgeement(int Requestid,string Description)
+        {
+            _sendAgreementServices.CancelViewAgreement(Requestid, Description);
+            return Json(new { redirect = Url.Action("PatientLogin","Patient") }); ;
+        }
+
+        public JsonResult AcceptViewAgreement(int Requestid)
+        {
+            _sendAgreementServices.AcceptViewAgreement(Requestid);
+            return Json(new { redirect = Url.Action("PatientLogin", "Patient") }); ;
         }
     }
 }

@@ -116,8 +116,16 @@
                   </svg></div>
                   <div>
                     <h5>Transfer Notes</h5>
-                    <p>Admin transferred to Dr.Agola on 27/09/2023 at 9:38:04 AM : test Assign</p>
-                  </div>
+                    @if(Model.TransferNotes != null )
+                        {
+                            <ul>
+                            @foreach(var item in Model.TransferNotes)
+                            {
+                                <li>@item.Notes</li>
+                            }
+                            </ul>
+                        }
+                    </div>
                </div>
             </div>
             <div class="col-12 col-md-6">
@@ -161,8 +169,8 @@
             <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 120px" asp-for="AdminNotes"></textarea>
                 <label for="floatingTextarea2">Admin Notes</label>
-                            <input type="text" class="form-control d-none" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" asp-for="PhysicianNotes">
-                            <input type="text" class="form-control d-none" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" asp-for="RequestId">
+                            <input type="text" class="form-control d-none" placeholder="Urname" aria-label="Username" aria-describedby="basic-addon1" asp-for="PhysicianNotes">
+                            <input type="text" value="@ViewBag.ViewNotesReqid" class="form-control d-none" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" asp-for="RequestId">
                             <input type="text" class="form-control d-none" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" asp-for="RequestNotesId">
                 <button type="submit" class="btn btn-info d-flex mt-2" style="margin-left: auto;">Save Changes</button>
               

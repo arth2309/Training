@@ -14,7 +14,7 @@ using HallodocServices.ModelView;
 using HallodocServices.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Azure;
-
+using HalloDoc.Repositories.Interfaces;
 
 namespace HalloDoc.Controllers
 {
@@ -25,16 +25,19 @@ namespace HalloDoc.Controllers
         private readonly IPatientDashBoardServices _dashBoardServices;
         private readonly IForgotPasswordServices _forgotPasswordServices;
         private readonly IJwtServices _jwtServices;
+        private readonly IPasswordHashServices _passwordHashServices;
+        
         
         private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices)
         {
             _dbContext = dbContext;
             _loginServices = loginServices;
             _dashBoardServices = dashBoardServices;
             _forgotPasswordServices = forgotPasswordServices;
             _jwtServices = jwtServices;
+            _passwordHashServices = passwordHashServices;
         }
 
       
@@ -298,7 +301,7 @@ namespace HalloDoc.Controllers
                     {
 
                         UserName = user.FirstName,
-                        PasswordHash = user.PasswordHash,
+                        PasswordHash = _passwordHashServices.PasswordHash(user.PasswordHash),
                         Email = user.Email,
                         PhoneNumber = user.Mobile,
                         Ip = "192.168.0.2",

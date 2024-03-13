@@ -1,4 +1,5 @@
-﻿using HallodocServices.ModelView;
+﻿using HalloDoc.Repositories.PagedList;
+using HallodocServices.ModelView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace HallodocServices.Interfaces
 {
     public interface IAdminDashBoardServices
     {
-        List<NewState> getStates(int status);
-        AdminDashBoard newStates(int status);
+        PaginatedList<NewState> getStates(int status,int currentPage);
+        AdminDashBoard newStates(int status,int currentPage);
        
     }
 }

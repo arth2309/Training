@@ -18,11 +18,13 @@ namespace HallodocServices.Implementation
     {
         private readonly IRequestRepo _requestRepo;
         private readonly IJwtServices _jwtServices;
+        private readonly IRequestStatusLogRepo _requestStatusLogRepo;
 
-        public SendAgreementServices(IRequestRepo requestRepo,IJwtServices jwtServices)
+        public SendAgreementServices(IRequestRepo requestRepo,IJwtServices jwtServices, IRequestStatusLogRepo requestStatusLogRepo)
         {
             _requestRepo = requestRepo;
             _jwtServices = jwtServices;
+            _requestStatusLogRepo = requestStatusLogRepo;
         }
 
         public Request LoadSendAgreementData(int requestid)
@@ -60,6 +62,28 @@ namespace HallodocServices.Implementation
                 return 0;
             }
         }
-     
+
+        public void CancelViewAgreement(int requestid,string description)
+        {
+            Request request = _requestRepo.GetRequest(requestid);
+            request.Status = 10;
+            _requestRepo.UpdateTable(request);
+
+            RequestStatusLog requestStatusLog = new RequestStatusLog();
+            requestStatusLog.Status = 10;
+            requestStatusLog.Notes = description;
+            requestStatusLog.RequestId = requestid;
+            _requestStatusLogRepo.AddData(requestStatusLog);
+            
+        }
+
+        public void AcceptViewAgreement(int requestid)
+        {
+            Request request = _requestRepo.GetRequest(requestid);
+            request.Status = 4;
+            _requestRepo.UpdateTable(request);
+
+        }
+
     }
 }

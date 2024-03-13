@@ -40,5 +40,12 @@ namespace HalloDoc.Repositories.Implementation
                 return "others";
             }
         }
+
+        public async Task<bool> AddData(AspNetUserRole userRole)
+        {
+            _context.AspNetUserRoles.Add(userRole);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -8,6 +8,7 @@ using HalloDoc.Repositories.Interfaces;
 using HallodocServices.ModelView;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Implementation;
+using HalloDoc.Repositories.PagedList;
 
 namespace HallodocServices.Implementation
 {
@@ -26,41 +27,38 @@ namespace HallodocServices.Implementation
             _PhysicianRepo = PhysicianRepo;
         }
 
-        public AdminDashBoard newStates(int status)
+        public AdminDashBoard newStates(int status, int currentPage)
         {
-            
-            List<NewState> newStates1 = getStates(status);
 
-          
+            PaginatedList<NewState> newStates1 = getStates(status, currentPage);
+
+
             AdminDashBoard adminDashBoard = new();
             {
-                adminDashBoard.AdminNewState = newStates1.ToList();
-                adminDashBoard.NewCount = getStates(1).Count();
-                adminDashBoard.PendingCount = getStates(2).Count();
-                adminDashBoard.ActiveCount = getStates(3).Count();
-               adminDashBoard.ConcludeCount = getStates(4).Count();
-               adminDashBoard.ToCloseCount = getStates(5).Count();
-                 adminDashBoard.UnPaidCount = getStates(6).Count();
+                adminDashBoard.AdminNewState = newStates1;
+                adminDashBoard.NewCount = _iRequestClientRepo.GetNewStateData(1).Count();
+                adminDashBoard.PendingCount = _iRequestClientRepo.GetNewStateData(2).Count();
+                adminDashBoard.ActiveCount = _iRequestClientRepo.GetNewStateData(4).Count() + _iRequestClientRepo.GetNewStateData(5).Count();
+                adminDashBoard.ConcludeCount = _iRequestClientRepo.GetNewStateData(6).Count();
+                adminDashBoard.ToCloseCount = _iRequestClientRepo.GetNewStateData(3).Count() + _iRequestClientRepo.GetNewStateData(7).Count() + _iRequestClientRepo.GetNewStateData(8).Count();
+                adminDashBoard.UnPaidCount = _iRequestClientRepo.GetNewStateData(9).Count();
             }
             return adminDashBoard;
-
         }
 
-
-
-        public List<NewState> getStates(int status)
+        public PaginatedList<NewState> getStates(int status, int currentPage)
         {
             List<RequestClient> requestClients = new List<RequestClient>();
-            
+
             if (status == 1)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(1);
-                
+
             }
             else if (status == 2)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(2);
-               
+
             }
             else if (status == 3)
             {
@@ -73,7 +71,7 @@ namespace HallodocServices.Implementation
             else if (status == 4)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(6);
-           
+
 
             }
 
@@ -82,26 +80,26 @@ namespace HallodocServices.Implementation
                 requestClients = _iRequestClientRepo.GetNewStateData(3);
                 requestClients.AddRange(_iRequestClientRepo.GetNewStateData(7));
                 requestClients.AddRange(_iRequestClientRepo.GetNewStateData(8));
-                
-               
+
+
 
             }
-           
+
             else if (status == 6)
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(9);
-               
-                
+
+
 
             }
             else
             {
                 requestClients = _iRequestClientRepo.GetNewStateData(1);
-                
+
             }
 
             List<NewState> newStates = new List<NewState>();
-           
+
             for (int i = 0; i < requestClients.Count; i++)
             {
                 AdminCancelCase adminCancelCase = new AdminCancelCase();
@@ -110,16 +108,16 @@ namespace HallodocServices.Implementation
                 AdminAssignCase assignCase = new AdminAssignCase();
                 assignCase.RequestId = requestClients[i].RequestId;
                 assignCase.regions = _regionRepo.GetRegions();
-               
+
 
                 AdminBlockCase blockCase = new AdminBlockCase();
-                blockCase.requestId = requestClients[i].RequestId;  
+                blockCase.requestId = requestClients[i].RequestId;
                 blockCase.Email = requestClients[i].Email;
                 blockCase.Mobile = requestClients[i].PhoneNumber;
 
                 SendAgreement sendAgreement = new SendAgreement();
                 sendAgreement.Requestid = requestClients[i].RequestId;
-                
+
 
                 NewState newState = new();
                 {
@@ -142,14 +140,14 @@ namespace HallodocServices.Implementation
                     newState.blockCases = blockCase;
                     newState.RequestTypeId = requestClients[i].Request.RequestTypeId;
                     newState.sendAgreement = sendAgreement;
-                    
-                   
-                    
+
+
+
                 };
                 newStates.Add(newState);
 
             }
-           return newStates;
+            return PaginatedList<NewState>.ToPagedList(newStates, currentPage, 5);
 
         }
 
@@ -157,5 +155,5 @@ namespace HallodocServices.Implementation
 
 
     }
-    
+
 }

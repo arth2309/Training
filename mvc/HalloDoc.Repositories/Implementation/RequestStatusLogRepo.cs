@@ -24,5 +24,11 @@ namespace HalloDoc.Repositories.Implementation
             return new RequestStatusLog();
         }
 
+        public List<RequestStatusLog> GetData(int Requestid) 
+        {
+            List<RequestStatusLog> requestStatusLog = _dbContext.RequestStatusLogs.Where(a=>a.RequestId == Requestid).ToList();
+            return requestStatusLog;
+        }
+
     }
 }

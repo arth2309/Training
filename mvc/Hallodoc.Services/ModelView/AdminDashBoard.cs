@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalloDoc.Repositories.PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace HallodocServices.ModelView
 {
     public class AdminDashBoard
     {
-        public List<NewState> AdminNewState { get; set; }
+        public PaginatedList<NewState> AdminNewState { get; set; }
 
         public int? NewCount { get; set; }
         public int? PendingCount { get; set; }

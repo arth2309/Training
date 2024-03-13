@@ -1,5 +1,7 @@
 ﻿@model HallodocServices.ModelView.AdminDashBoard
 
+
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
@@ -10,68 +12,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
     <script src="~/js/getphysiciansbyregion.js"></script>
-    <style>
-        #tableID_wrapper
-        {
-            width:100%;
-           
-        }
-    </style>
-    <style>
-        #tableID1_wrapper {
-            width: 100%;
-        }
-    </style>
-    <style>
-        #tableID2_wrapper {
-            width: 100%;
-        }
-    </style>
-    <style>
-        #tableID3_wrapper {
-            width: 100%;
-        }
-    </style>
-    <style>
-        #tableID4_wrapper {
-            width: 100%;
-        }
-    </style>
-    <style>
-        #tableID5_wrapper {
-            width: 100%;
-        }
-    </style>
- 
-    <script>
-        function toggleTheme() {
-            var elements = document.querySelectorAll('html');
-            elements.forEach(function (element) {
-                var currentTheme = element.getAttribute('data-bs-theme');
-                if (currentTheme === 'dark') {
-                    element.setAttribute('data-bs-theme', 'light');
-                } else {
-                    element.setAttribute('data-bs-theme', 'dark');
-                }
-            });
-        }
-        $(document).ready(function () {
-            $('#tableID').DataTable({
-                searching: false,
-    });
-            $('#customSearch').on('keyup', function () {
-                var searchTerm = $(this).val().toLowerCase();
-                console.log(searchTerm)
-                $('#tableID').DataTable().search(searchTerm).draw();
-            });
-        });
-
-        
-       
-
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="~/js/checkstatus.js"></script>
 
     <script>
@@ -86,37 +28,37 @@
                 case 1: document.getElementById("newstate").style.display = "block";
                     $(".ad").css("display", "block");
                     $(".ns").addClass("shadow bg-primary text-white");
-                         GetStatus(temp);
+                         GetStatus(temp,1);
                         break;
                 case 2: document.getElementById("pendingstate").style.display = "block";
                     $(".ad1").css("display", "block");
                     $(".ps").addClass("shadow bg-info text-white");
-                    GetStatus(temp);
+                    GetStatus(temp,1);
                     break;
                 case 3: document.getElementById("activestate1").style.display = "block";
                     $(".ad2").css("display", "block");
                     $(".as").addClass("shadow bg-success text-white");
-                    GetStatus(temp);
+                    GetStatus(temp,1);
                     break;
                 case 4: document.getElementById("concludestate").style.display = "block";
                     $(".ad3").css("display", "block");
                     $(".cos").addClass("shadow bg-danger text-white");
-                    GetStatus(temp);
+                    GetStatus(temp,1);
                     break;
                 case 5: document.getElementById("toclosestate").style.display = "block";
                     $(".ad4").css("display", "block");
                     $(".tcs").addClass("shadow bg-info text-white");
-                    GetStatus(temp);
+                    GetStatus(temp,1);
                     break;
                 case 6: document.getElementById("unpaidstate").style.display = "block";
                     $(".ad5").css("display", "block");
                     $(".ups").addClass("shadow indigo text-white");
-                    GetStatus(temp);
+                    GetStatus(temp,1);
                     break;
                 default: document.getElementById("newstate").style.display = "block";
                     $(".ad").css("display", "block");
                     $(".ns").addClass("shadow");
-                    GetStatus(temp);
+                    GetStatus(temp,1);
                     break;
 
             }
@@ -131,7 +73,15 @@
     <title>Document</title>
 </head>
 <body>
+    @if (TempData["success"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["success"]');
+        </script>
 
+    }
+   
     <div class="modal fade" id="ClearCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -246,6 +196,7 @@
 
 
     <div class="mainct">
+       
         <div class="row container-fluid" style="margin:0px; padding:0px;">
             <div class="col-4 col-lg-2 b1 ">
                 <button class="bt btn w-100 shadow ns bg-primary text-white" onclick="toggle(1)">
@@ -335,7 +286,7 @@
             </div>
 
         </div>
-        <div class="cs" id="newstate"  >
+        <div class="cs" id="newstate">
         @Html.Partial("~/Views/Shared/_NewState.cshtml",Model.AdminNewState);
         </div>
         <div class="cs" id="pendingstate" style="display:none">

@@ -11,5 +11,6 @@ namespace HalloDoc.Repositories.Interfaces
     {
         RequestNote GetNoteData(int rid);
         Task<RequestNote> UpdateTable(RequestNote requestNote);
+        Task<RequestNote> AddTable(RequestNote requestNote);
     }
 }

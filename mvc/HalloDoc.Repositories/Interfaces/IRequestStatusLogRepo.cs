@@ -10,5 +10,6 @@ namespace HalloDoc.Repositories.Interfaces
     public interface IRequestStatusLogRepo
     {
         Task<RequestStatusLog> AddData(RequestStatusLog requestStatusLog);
+        List<RequestStatusLog> GetData(int Requestid);
     }
 }

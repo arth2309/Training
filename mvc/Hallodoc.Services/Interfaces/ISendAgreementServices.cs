@@ -13,5 +13,7 @@ namespace HallodocServices.Interfaces
         Request LoadSendAgreementData(int requestid);
         void SendEmail(SendAgreement sendAgreement, string token);
         Task<int> CheckViewAgreement(string token);
+        void CancelViewAgreement(int requestid, string description);
+        void AcceptViewAgreement(int requestid);
     }
 }
