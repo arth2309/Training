@@ -19,7 +19,7 @@
     <script>
         function toggle(temp) {
             $(".cs").css("display", "none");
-            $(".bt").removeClass("shadow bg-primary bg-success bg-danger bg-info indigo text-white");
+            $(".bt").removeClass("shadow bg-primary bg-success bg-danger bg-info indigo text-white border-0");
             
            
            
@@ -27,37 +27,37 @@
 
                 case 1: document.getElementById("newstate").style.display = "block";
                     $(".ad").css("display", "block");
-                    $(".ns").addClass("shadow bg-primary text-white");
+                    $(".ns").addClass("shadow bg-primary text-white border-0");
                          GetStatus(temp,1);
                         break;
                 case 2: document.getElementById("pendingstate").style.display = "block";
                     $(".ad1").css("display", "block");
-                    $(".ps").addClass("shadow bg-info text-white");
+                    $(".ps").addClass("shadow bg-info text-white border-0");
                     GetStatus(temp,1);
                     break;
                 case 3: document.getElementById("activestate1").style.display = "block";
                     $(".ad2").css("display", "block");
-                    $(".as").addClass("shadow bg-success text-white");
+                    $(".as").addClass("shadow bg-success text-white border-0");
                     GetStatus(temp,1);
                     break;
                 case 4: document.getElementById("concludestate").style.display = "block";
                     $(".ad3").css("display", "block");
-                    $(".cos").addClass("shadow bg-danger text-white");
+                    $(".cos").addClass("shadow bg-danger text-white border-0");
                     GetStatus(temp,1);
                     break;
                 case 5: document.getElementById("toclosestate").style.display = "block";
                     $(".ad4").css("display", "block");
-                    $(".tcs").addClass("shadow bg-info text-white");
+                    $(".tcs").addClass("shadow bg-info text-white border-0");
                     GetStatus(temp,1);
                     break;
                 case 6: document.getElementById("unpaidstate").style.display = "block";
                     $(".ad5").css("display", "block");
-                    $(".ups").addClass("shadow indigo text-white");
+                    $(".ups").addClass("shadow indigo text-white border-0");
                     GetStatus(temp,1);
                     break;
                 default: document.getElementById("newstate").style.display = "block";
                     $(".ad").css("display", "block");
-                    $(".ns").addClass("shadow");
+                    $(".ns").addClass("shadow border-0");
                     GetStatus(temp,1);
                     break;
 
@@ -199,12 +199,12 @@
        
         <div class="row container-fluid" style="margin:0px; padding:0px;">
             <div class="col-4 col-lg-2 b1 ">
-                <button class="bt btn w-100 shadow ns bg-primary text-white" onclick="toggle(1)">
+                <button class="bt btn w-100 shadow ns bg-primary text-white border-0" onclick="toggle(1)">
                     <div>
                         <div class="d-flex">
-                            <div><strong><i class="bi bi-plus-circle-dotted"></i> New</strong></div>
+                            <div class="ismall"><strong><i class="bi1 bi bi-plus-circle-dotted"></i> New</strong></div>
                         </div>
-                        <div><strong>@Model.NewCount</strong></div>
+                        <div class="ismall"><strong>@Model.NewCount</strong></div>
                     </div>
                 </button>
                 <div class="d-flex w-100" style="justify-content:center">
@@ -216,9 +216,9 @@
                 <button class="bt btn w-100 ps" onclick="toggle(2)">
                     <div>
                         <div class="d-flex">
-                            <div><strong><i class="bi bi-hourglass-split"></i> PENDING</strong></div>
+                            <div class="ismall"><strong><i class="bi1 bi bi-hourglass-split"></i> PENDING</strong></div>
                         </div>
-                        <div><strong>@Model.PendingCount</strong></div>
+                        <div class="ismall"><strong>@Model.PendingCount</strong></div>
                     </div>
                 </button>
                 <div class="d-flex w-100" style="justify-content:center"> <div class="arrow-down cs ad1" style="border-top: 12px solid #0dcaf0;display:none"></div></div>
@@ -228,9 +228,9 @@
                 <button class="bt btn w-100 as" onclick="toggle(3)">
                     <div>
                         <div class="d-flex">
-                            <div><strong><i class="bi bi-check2-circle"></i> ACTIVE</strong></div>
+                            <div class="ismall"><strong><i class="bi1 bi bi-check2-circle"></i> ACTIVE</strong></div>
                         </div>
-                        <div><strong>@Model.ActiveCount</strong></div>
+                        <div class="ismall"><strong>@Model.ActiveCount</strong></div>
                     </div>
                 </button>
                 <div class="d-flex w-100" style="justify-content:center">
@@ -242,9 +242,9 @@
                 <button class="bt btn  w-100  cos" onclick="toggle(4)">
                     <div>
                         <div class="d-flex">
-                            <div><strong><i class="bi bi-clock-history"></i> CONCLUDE</strong></div>
+                            <div><strong class="ismall"><i class="bi1 bi bi-clock-history"></i> CONCLUDE</strong></div>
                         </div>
-                        <div><strong>@Model.ConcludeCount</strong></div>
+                        <div class="ismall"><strong>@Model.ConcludeCount</strong></div>
                     </div>
 
                 </button>
@@ -259,9 +259,9 @@
                 <button class="bt btn w-100  tcs" onclick="toggle(5)">
                     <div>
                         <div class="d-flex">
-                            <div><strong><i class="bi bi-alarm"></i> TO CLOSE</strong></div>
+                            <div class="ismall"><strong><i class="bi1 bi bi-alarm"></i> TO CLOSE</strong></div>
                         </div>
-                        <div><strong>@Model.ToCloseCount</strong></div>
+                        <div class="ismall"><strong>@Model.ToCloseCount</strong></div>
                     </div>
 
                 </button>
@@ -274,9 +274,9 @@
                 <button class="bt btn w-100 ups" onclick="toggle(6)">
                     <div>
                         <div class="d-flex">
-                            <div><strong><i class="bi bi-coin"></i> UNPAID </strong></div>
+                            <div class="ismall"><strong><i class="bi1 bi bi-coin"></i> UNPAID </strong></div>
                         </div>
-                        <div><strong>@Model.UnPaidCount </strong></div>
+                        <div class="ismall"><strong>@Model.UnPaidCount </strong></div>
                     </div>
 
                 </button>

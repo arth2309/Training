@@ -18,13 +18,15 @@ namespace HallodocServices.Implementation
         private readonly IRequestClientRepo _iRequestClientRepo;
         private readonly IRegionRepo _regionRepo;
         private readonly IPhysicianRepo _PhysicianRepo;
+        private readonly IRequestStatusLogRepo _requestStatusLogRepo;
 
-        public AdminDashBoardServices(IRequestRepo requestRepo, IRequestClientRepo iRequestClientRepo, IRegionRepo regionRepo, IPhysicianRepo PhysicianRepo)
+        public AdminDashBoardServices(IRequestRepo requestRepo, IRequestClientRepo iRequestClientRepo, IRegionRepo regionRepo, IPhysicianRepo PhysicianRepo, IRequestStatusLogRepo requestStatusLogRepo)
         {
             _iRequestRepo = requestRepo;
             _iRequestClientRepo = iRequestClientRepo;
             _regionRepo = regionRepo;
             _PhysicianRepo = PhysicianRepo;
+            _requestStatusLogRepo = requestStatusLogRepo;
         }
 
         public AdminDashBoard newStates(int status, int currentPage)
@@ -118,9 +120,31 @@ namespace HallodocServices.Implementation
                 SendAgreement sendAgreement = new SendAgreement();
                 sendAgreement.Requestid = requestClients[i].RequestId;
 
+                Region region = _regionRepo.GetRegion(requestClients[i].RegionId);
+                string regionName = region.Name;
+
 
                 NewState newState = new();
                 {
+                    if (requestClients[i].Request.PhysicianId != null)
+                    {
+                        Physician physician = _PhysicianRepo.GetPhysician(requestClients[i].Request.PhysicianId);
+                        newState.physicianName = "Dr" + physician.FirstName + " " + physician.LastName;
+                    }
+
+                    List<RequestStatusLog> requestStatusLogs = _requestStatusLogRepo.GetData(requestClients[i].RequestId);
+
+                    String notes;
+                    if (requestStatusLogs.Count() > 0)
+                    {
+                        int j = requestStatusLogs.Count() - 1;
+                         notes = requestStatusLogs[j].Notes;
+
+                    }
+                    else
+                    {
+                        notes = "-";
+                    }
 
                     newState.RFirstName = requestClients[i].Request.FirstName;
                     newState.RLastName = requestClients[i].Request.LastName;
@@ -140,8 +164,8 @@ namespace HallodocServices.Implementation
                     newState.blockCases = blockCase;
                     newState.RequestTypeId = requestClients[i].Request.RequestTypeId;
                     newState.sendAgreement = sendAgreement;
-
-
+                    newState.Notes = notes;
+                    newState.regionName = regionName;
 
                 };
                 newStates.Add(newState);

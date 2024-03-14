@@ -22,5 +22,10 @@ namespace HalloDoc.Repositories.Implementation
             return  _DbContext.Physicians.Where(a=>a.RegionId == regionId).ToList();
 
         }
+
+        public Physician GetPhysician(int? physicianid)
+        {
+            return _DbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianid);
+        }
     }
 }

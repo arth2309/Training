@@ -141,6 +141,18 @@ header
     border-right: 12px solid transparent;
 }
 
+.vwbtn {
+    z-index: 2;
+    margin-top: -30px;
+    margin-left: 60%;
+    font-size: 12px;
+    position: absolute;
+    right:54px;
+    
+}
+
+}
+
 .bt1
 {
     margin-right: 4px;
@@ -189,6 +201,15 @@ header
     .request
     {
         display: none; 
+    }
+    .ismall
+    {
+        font-size:x-small;
+    }
+
+    .bi1
+    {
+        display:none;
     }
 }
 

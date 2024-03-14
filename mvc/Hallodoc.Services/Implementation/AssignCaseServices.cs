@@ -40,7 +40,6 @@ namespace HallodocServices.Implementation
             requestStatusLog.RequestId = adminAssignCase.RequestId;
             requestStatusLog.Notes = adminAssignCase.Description;
             _requestStatusLogRepo.AddData(requestStatusLog);
-
             return adminAssignCase;
 
 

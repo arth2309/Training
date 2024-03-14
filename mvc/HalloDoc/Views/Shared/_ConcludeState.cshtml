@@ -85,29 +85,47 @@
                 <th scope="col">Name</th>
                 <th scope="col"></th>
                 <th scope="col">Date of Birth</th>
-                <th scope="col">Requestor</th>
-                <th scope="col">Requested Date</th>
+                <th scope="col">Physician Name</th>
+                <th scope="col">Date of Service</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Address</th>
-                <th scope="col">Notes</th>
                 <th scope="col">Chat with</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody class="table-success">
+        <tbody >
 
             @foreach (var item in Model)
             {
-                <tr>
+                string backcolor;
+                @if (@item.RequestTypeId == 1)
+                {
+                    backcolor = "table-success";
+                }
+                else if (item.RequestTypeId == 2)
+                {
+                    backcolor = "table-warning";
+                }
+                else if (item.RequestTypeId == 3)
+                {
+                    backcolor = "table-primary";
+                }
+                else if (item.RequestTypeId == 4)
+                {
+                    backcolor = "table-danger";
+                }
+                else
+                {
+                    backcolor = "table-success";
+                }
+                <tr class="@backcolor">
                     <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
                     <td></td>
-                    <td>@Html.DisplayFor(modelItem => item.RFirstName),@Html.DisplayFor(modelItem => item.RFirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.physicianName)</td>
                     <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>@Html.DisplayFor(modelItem => item.Mobile)</button></td>
                     <td>@Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City),@Html.DisplayFor(modelItem => item.State)</td>
-                    <td></td>
-
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
                     <td>
                         <div class="btn-group">
@@ -115,11 +133,12 @@
                                 Action
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                <li><a class="dropdown-item" href="#">Cancel Case</a></li>
-                                <li><a class="dropdown-item" href="#">View Case</a></li>
-                                <li><a class="dropdown-item" href="#">View Notes</a></li>
-                                <li><a class="dropdown-item" href="#">Block Patient</a></li>
+                                <li><a class="dropdown-item"  asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id ><i class="bi bi-card-list"></i> View Case</a></li>
+                                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewUploads" asp-route-reqID="@item.RequestId"><i class="bi bi-cloud-arrow-up"></i> View Uploads</a></li>
+                                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>
+                                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SendOrder" asp-route-reqID="@item.RequestId"><i class="bi bi-card-checklist"></i> Orders</a></li>
+                                <li><a class="dropdown-item"><i class="bi bi-card-checklist"></i> Doctors Note</a></li>
+                                <li><a class="dropdown-item"><i class="bi bi-card-checklist"></i> Encounter</a></li>
                             </ul>
                         </div>
                     </td>

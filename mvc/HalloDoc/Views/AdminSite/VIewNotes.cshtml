@@ -116,6 +116,8 @@
                   </svg></div>
                   <div>
                     <h5>Transfer Notes</h5>
+                    @if(Model != null)
+                    {
                     @if(Model.TransferNotes != null )
                         {
                             <ul>
@@ -125,6 +127,7 @@
                             }
                             </ul>
                         }
+                    }
                     </div>
                </div>
             </div>

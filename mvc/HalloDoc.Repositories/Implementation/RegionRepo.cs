@@ -21,6 +21,9 @@ namespace HalloDoc.Repositories.Implementation
             var region =  _Dbcontext.Regions.ToList();
             return region;
         }
-
+        public Region GetRegion(int? regionid)
+        {
+            return _Dbcontext.Regions.FirstOrDefault(a => a.RegionId == regionid);
+        }
     }
 }

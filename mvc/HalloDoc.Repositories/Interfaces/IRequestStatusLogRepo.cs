@@ -11,5 +11,6 @@ namespace HalloDoc.Repositories.Interfaces
     {
         Task<RequestStatusLog> AddData(RequestStatusLog requestStatusLog);
         List<RequestStatusLog> GetData(int Requestid);
+      
     }
 }

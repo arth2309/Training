@@ -39,7 +39,11 @@ namespace HallodocServices.Implementation
             }
             else
             {
-                return null;
+                List<RequestStatusLog> requestStatusLogs = _logRepo.GetData(id);
+                AdminViewNote adminViewNote = new AdminViewNote();
+                adminViewNote.RequestId = id;
+                adminViewNote.TransferNotes = requestStatusLogs;
+                return adminViewNote;
             }
         }
 

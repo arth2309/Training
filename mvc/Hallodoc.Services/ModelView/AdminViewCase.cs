@@ -35,5 +35,9 @@ namespace HallodocServices.ModelView
         public short? status { get; set; }
         public int rid { get; set; }
 
+        public int requesttypeid { get; set; }
+
+        public AdminAssignCase? assignCases { get; set; }
+
     }
 }

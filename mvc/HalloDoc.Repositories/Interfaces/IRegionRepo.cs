@@ -10,5 +10,6 @@ namespace HalloDoc.Repositories.Interfaces
     public interface IRegionRepo
     {
         List<Region> GetRegions();
+        Region GetRegion(int? regionid);
     }
 }

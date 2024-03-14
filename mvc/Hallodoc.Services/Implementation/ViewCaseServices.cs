@@ -43,6 +43,7 @@ namespace HallodocServices.Implementation
                 adminViewCase.status = r1.Request.Status;
                 adminViewCase.rid = r1.RequestId;
                 adminViewCase.cancelCases = adminCancelCase;
+                adminViewCase.requesttypeid = r1.Request.RequestTypeId;
                 
             }
 

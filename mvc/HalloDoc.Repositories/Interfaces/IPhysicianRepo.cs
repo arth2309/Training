@@ -10,5 +10,6 @@ namespace HalloDoc.Repositories.Interfaces
     public interface IPhysicianRepo
     {
         List<Physician> GetPhysiciansData(int regionId);
+        Physician GetPhysician(int? physicianid);
     }
 }

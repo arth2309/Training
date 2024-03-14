@@ -56,6 +56,9 @@ namespace HallodocServices.ModelView
         public  AdminBlockCase? blockCases { get; set; }
         public SendAgreement? sendAgreement { get; set; }
 
+        public string physicianName { get; set; }
+        public string regionName { get; set; }
 
+       
     }
 }

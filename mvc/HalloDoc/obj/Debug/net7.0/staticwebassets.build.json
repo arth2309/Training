@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "LmBi1900Air8m6p0AHoCL1ZBA3fyMJCaGWTgYi0rqzE=",
+  "Hash": "P+n2A89iDCpLJ/CFmnYxdY2/uAmJo9CzfP5mgZVoNjU=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -491,6 +491,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\SRS-23-24-Trainees-14Feb24.pdf.pdf"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees-21Feb24.pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/SRS-23-24-Trainees-21Feb24.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\SRS-23-24-Trainees-21Feb24.pdf"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Test Instructions.pdf",
