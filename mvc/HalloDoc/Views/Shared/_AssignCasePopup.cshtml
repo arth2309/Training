@@ -16,9 +16,12 @@
                         <select id="regionList" onchange="loadPhysiciansByRegion(this.value)" class="form-select" aria-label="Default select example" asp-for="RegionId">
                         </select>
                         <label for="regionList" style="top:0px; left:0px;">Narrow Search By Region</label>
+                      
+                            <span asp-validation-for="RegionId" class="text-danger"></span>
+                       
                     </div>
                     <select class="form-select form-select-lg mb-3 " id="PhysicianList" aria-label="Large select example" asp-for="PhysicianId">
-                        <option selected>Select Physician</option>
+                        <option value="">Select Physician</option>
                     </select>
                     
                     <input type="hidden" id="requestid" asp-for="RequestId"/>
@@ -30,7 +33,7 @@
 
                         <input type="hidden" />
 
-                        <button type="submit" class="btn btn-info" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit" class="btn btn-info">Submit</button>
                         <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>

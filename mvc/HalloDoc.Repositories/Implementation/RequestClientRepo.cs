@@ -43,6 +43,12 @@ namespace HalloDoc.Repositories.Implementation
             await _dbcontext.SaveChangesAsync();
             return requestClient;
         }
+        public async Task<bool> AddTable(RequestClient requestClient)
+        {
+            _dbcontext.RequestClients.Add(requestClient);
+            await _dbcontext.SaveChangesAsync();
+            return true;
+        }
 
     }
 }

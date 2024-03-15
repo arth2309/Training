@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive d-none d-lg-flex">
     <table class="table" id="tableID3">
         <thead class="table-light">
             <tr>
@@ -158,10 +158,143 @@
 
 
 </div>
-@* @for (int i = 1; i <= 3; i++)
-    {
-        <a asp-controller="AdminSite" asp-action="AdminDashBoard" asp-route-page="@i">page @i</a>
-    }*@
+
+<div class="d-flex d-lg-none">
+    <div class="accordion" id="accordionExample" style="width:100%">
+
+
+
+        @foreach (var item in Model)
+        {
+
+            string circlecolor, name;
+            @if (item.RequestTypeId == 1)
+            {
+                circlecolor = "green";
+                name = "patient";
+            }
+            else if (item.RequestTypeId == 2)
+            {
+                circlecolor = "yellow";
+                name = "Family/friend";
+            }
+            else if (item.RequestTypeId == 3)
+            {
+                circlecolor = "blue";
+                name = "Conceirge";
+            }
+            else
+            {
+                circlecolor = "red";
+                name = "Business";
+            }
+
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <div class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@Html.DisplayFor(modelItem => item.id)" aria-expanded="false" aria-controls="collapseOne" style="display:block">
+                        <div class="row mt-2" style="width:100%">
+                            <div class="col-6">
+                                @Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)
+                            </div>
+                            <div class="col-6 d-flex" style="justify-content:end">
+                                @name <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="@circlecolor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="8" r="8" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="row  mt-2" style="width:100%">
+                            <div class="col-6">
+                                @item.regionName
+                            </div>
+                            <div class="col-6 d-flex" style="justify-content:end">
+                                <button type="button" class="btn btn-outline-info rounded-pill">Map Location</button>
+                            </div>
+                        </div>
+                        <div class="row  mt-2 mb-3">
+                            <div class="col">
+                                wait time: @Html.DisplayFor(modelItem => item.CreatedDate)
+                            </div>
+                        </div>
+                    </div>
+                </h2>
+                <div id="collapse-@Html.DisplayFor(modelItem => item.id)" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="w-100">
+                            <a asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id>
+                                <button type="button" class="btn btn-light  vwbtn rounded-pill" style="color:#6610f2; border-color:#6610f2">
+                                    View Case
+                                </button>
+                            </a>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-calendar"></i></button> Date of Birth:
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-envelope"></i></button>Email: @Html.DisplayFor(modelItem => item.Email)
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-telephone"></i></button>Patient: @Html.DisplayFor(modelItem => item.Mobile)
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-calendar"></i></button> Date of Service:@Html.DisplayFor(modelItem => item.CreatedDate)
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-person"></i></button>Physician:@Html.DisplayFor(modelItem => item.physicianName)
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col-6">
+                                <a asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Notes</button> </a>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100 rounded-pill">Doctors Note</button>
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col-6">
+                                <a asp-controller="AdminSite" asp-action="ViewUploads" asp-route-reqID="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Uploads</button> </a>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-success w-100 rounded-pill">Encounter</button>
+                            </div>
+                        </div>
+                        <div class="row mt-2 mb-3">
+                            <div class="col-6">
+                                <a asp-controller="AdminSite" asp-action="SendOrder" asp-route-reqID="@item.RequestId"> <button type="button" class="btn btn-warning w-100 rounded-pill">Orders</button></a>
+                            </div>
+                            <div class="col-6">
+
+                                <button type="button" class="btn btn-success w-100 rounded-pill">Email</button>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mb-2">
+                            <div class="mx-1" style="padding-top:5px;">Chat with:</div> <button type="button" class="btn btn-outline-info mx-1"><i class="bi bi-person"></i> Patient</button><button type="button" class="btn btn-outline-info mx-1"><i class="bi bi-person"></i>  Provider</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+</div>
+
 <ul class="pagination">
     @if (Model.HasPrevious)
     {

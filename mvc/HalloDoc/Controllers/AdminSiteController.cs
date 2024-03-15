@@ -34,7 +34,7 @@ namespace HalloDoc.Controllers
         private readonly IClearCaseServices _clearCaseServices;
         private readonly ISendAgreementServices _sendAgreementServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices,IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices,IJwtServices jwtServices,IPatientLoginServices loginServices,ISendOrderServices sendOrderServices,IClearCaseServices clearCaseServices,ISendAgreementServices sendAgreementServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -63,7 +63,7 @@ namespace HalloDoc.Controllers
                 return View(patientLogin);
             }
             int id = _loginServices.ValidateUser(patientLogin);
-           
+
 
             if (id == 0)
 
@@ -86,7 +86,7 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Admin")]
         public IActionResult AdminDashBoard()
         {
-            
+
             AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1, 1);
             return View(adminDashBoard);
         }
@@ -94,13 +94,13 @@ namespace HalloDoc.Controllers
         public IActionResult CheckStatus(int statusI, int currentPage)
         {
             List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage);
-          
-            if(statusI == 1)
+
+            if (statusI == 1)
             {
                 return PartialView("_NewState", newStates);
             }
-            
-            else if(statusI == 2)
+
+            else if (statusI == 2)
             {
                 return PartialView("_PendingState", newStates);
             }
@@ -134,14 +134,14 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewCase(int rcid)
         {
-           AdminViewCase adminViewCase = _viewCaseServices.GetAdminViewCaseData(rcid);
+            AdminViewCase adminViewCase = _viewCaseServices.GetAdminViewCaseData(rcid);
             return View(adminViewCase);
         }
 
         [HttpPost]
         public async Task<IActionResult> ViewCase(AdminViewCase adminViewCase)
         {
-            
+
             AdminViewCase adminViewCase1 = _viewCaseServices.EditViewData(adminViewCase);
             return View(adminViewCase1);
         }
@@ -162,7 +162,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        
+
         public async Task<IActionResult> ViewNotes(AdminViewNote adminViewNote)
         {
             AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
@@ -176,13 +176,18 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
-       
-        [HttpPost]
-        public async Task <IActionResult> AssignCase(AdminAssignCase adminAssignCase) 
-        {
 
-           Task<AdminAssignCase> adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
-            return RedirectToAction("AdminDashBoard");
+        [HttpPost]
+        public async Task<IActionResult> AssignCase(AdminAssignCase adminAssignCase)
+        {
+            if (ModelState.IsValid)
+            {
+                Task<AdminAssignCase> adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
+              
+                return RedirectToAction("AdminDashBoard");
+            }
+
+           return View();
         }
 
         [HttpPost]
@@ -194,7 +199,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> BlockCase(AdminBlockCase adminBlockCase)
+        public async Task<IActionResult> BlockCase(AdminBlockCase adminBlockCase)
         {
             AdminBlockCase adminBlockCase1 = _blockCaseServices.AdminBlockCase(adminBlockCase);
             return RedirectToAction("AdminDashBoard");
@@ -219,7 +224,7 @@ namespace HalloDoc.Controllers
         {
             int reqId = _viewUploadsServices.GetReqIdService(id);
             _viewUploadsServices.DeleteFileService(id);
-            return Json(new {redirect = Url.Action("ViewUploads",new {reqID = reqId})});
+            return Json(new { redirect = Url.Action("ViewUploads", new { reqID = reqId }) });
         }
 
         [HttpPost]
@@ -227,7 +232,7 @@ namespace HalloDoc.Controllers
         public async Task<IActionResult> ViewUploads(AdminViewUpoads adminViewUpoads)
         {
             _viewUploadsServices.AddFileData(adminViewUpoads);
-            return RedirectToAction("ViewUploads",new {reqID = adminViewUpoads.requestId});
+            return RedirectToAction("ViewUploads", new { reqID = adminViewUpoads.requestId });
         }
 
 
@@ -269,18 +274,18 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
-        public JsonResult GetRegions() 
+        public JsonResult GetRegions()
         {
             return Json(JsonSerializer.Serialize(_assignCaseServices.GetRegions()));
         }
 
-        public JsonResult GetPhysiciansByRegion(int RegionId) 
+        public JsonResult GetPhysiciansByRegion(int RegionId)
         {
             return Json(JsonSerializer.Serialize(_assignCaseServices.GetPhysciansByRegions(RegionId)));
         }
 
         [HttpPost]
-        
+
         public IActionResult SendAgreement(SendAgreement sendAgreement)
         {
             string token = _jwtServices.GenerateJWTTokenForSendAgreement(sendAgreement.Requestid);
@@ -299,7 +304,7 @@ namespace HalloDoc.Controllers
             int id = await _sendAgreementServices.CheckViewAgreement(token);
             ViewBag.idForViewAgreement = id;
 
-            if(id == 0)
+            if (id == 0)
             {
                 return RedirectToAction("AccessDenied", "Patient");
             }
@@ -312,10 +317,10 @@ namespace HalloDoc.Controllers
             return Json(JsonSerializer.Serialize(_sendAgreementServices.LoadSendAgreementData(Requestid)));
         }
 
-        public JsonResult CancelViewAgeement(int Requestid,string Description)
+        public JsonResult CancelViewAgeement(int Requestid, string Description)
         {
             _sendAgreementServices.CancelViewAgreement(Requestid, Description);
-            return Json(new { redirect = Url.Action("PatientLogin","Patient") }); ;
+            return Json(new { redirect = Url.Action("PatientLogin", "Patient") }); ;
         }
 
         public JsonResult AcceptViewAgreement(int Requestid)

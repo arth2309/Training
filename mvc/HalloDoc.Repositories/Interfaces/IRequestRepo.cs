@@ -13,7 +13,7 @@ namespace HalloDoc.Repositories.Interfaces
         List<Request> GetAllRequests(int uid);
         Task<Request> UpdateTable(Request request);
         Request GetRequest(int id);
-
+        Task<bool> AddTable(Request request);
 
     }
 }

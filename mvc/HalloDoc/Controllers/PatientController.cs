@@ -26,11 +26,13 @@ namespace HalloDoc.Controllers
         private readonly IForgotPasswordServices _forgotPasswordServices;
         private readonly IJwtServices _jwtServices;
         private readonly IPasswordHashServices _passwordHashServices;
+        private readonly IPatientUserProfileServices _profileServices;
+        private readonly IPatientShowDocumentsServices _showDocumentsServices;
         
         
         private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices)
+        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices,IPatientUserProfileServices patientUserProfileServices,IPatientShowDocumentsServices patientShowDocumentsServices)
         {
             _dbContext = dbContext;
             _loginServices = loginServices;
@@ -38,6 +40,8 @@ namespace HalloDoc.Controllers
             _forgotPasswordServices = forgotPasswordServices;
             _jwtServices = jwtServices;
             _passwordHashServices = passwordHashServices;
+            _profileServices = patientUserProfileServices;
+            _showDocumentsServices = patientShowDocumentsServices;
         }
 
       
@@ -132,31 +136,33 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Patient")]
         public IActionResult PatientDashBoardDoc(int id)
         {
-           //int id = Int32.Parse(Request.Cookies["MyCookie"]);
-            List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
-            
-            List<ShowDocuments> showDocuments = new List<ShowDocuments>();
-            for(int i=0;i<requestWiseFiles.Count;i++) 
-            {
-                String uploader;
-                Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
-                uploader = request.FirstName + request.LastName;
-                //RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
-                RequestWiseFile requestWiseFile = requestWiseFiles[i];
-                ShowDocuments showDocuments1 = new()
-                {
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    FileName = Path.GetFileName(requestWiseFile.FileName),
-                    uploader = uploader,
-                    UploadDate = requestWiseFile.CreatedDate
+            //int id = Int32.Parse(Request.Cookies["MyCookie"]);
+            //List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
 
-                };
-                showDocuments.Add( showDocuments1 );
+            //List<ShowDocuments> showDocuments = new List<ShowDocuments>();
+            //for (int i = 0; i < requestWiseFiles.Count; i++)
+            //{
+            //    String uploader;
+            //    Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
+            //    uploader = request.FirstName + request.LastName;
+            //    //RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
+            //    RequestWiseFile requestWiseFile = requestWiseFiles[i];
+            //    ShowDocuments showDocuments1 = new()
+            //    {
+            //        FirstName = request.FirstName,
+            //        LastName = request.LastName,
+            //        FileName = Path.GetFileName(requestWiseFile.FileName),
+            //        uploader = uploader,
+            //        UploadDate = requestWiseFile.CreatedDate
 
-            }
+            //    };
+            //    showDocuments.Add(showDocuments1);
 
-            return View(showDocuments);
+            //}
+
+            List<PatientShowDocument> patientShowDocuments = _showDocumentsServices.showDocuments(id);
+
+            return View(patientShowDocuments);
         }
 
         [Auth.CustomAuthorize("Patient")]
@@ -171,42 +177,45 @@ namespace HalloDoc.Controllers
             int id = Int32.Parse(Request.Cookies["UserId"]);
             
             
-            User user = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
-            ShowProfile showProfile = new()
-            {
-                UserId = user.UserId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Mobile = user.Mobile,
-                Street = user.Street,   
-                City = user.City,
-                State = user.State,
-                ZipCode = user.ZipCode
-            };
+            //User user = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
+            //ShowProfile showProfile = new()
+            //{
+            //    UserId = user.UserId,
+            //    FirstName = user.FirstName,
+            //    LastName = user.LastName,
+            //    Email = user.Email,
+            //    Mobile = user.Mobile,
+            //    Street = user.Street,
+            //    City = user.City,
+            //    State = user.State,
+            //    ZipCode = user.ZipCode
+            //};
+
+            PatientUserProfile profile = _profileServices.GetUserProfile(id);
 
 
-            return View("UserProfile", showProfile);
+            return View("UserProfile", profile);
         }
 
         [HttpPost]
-        public async Task <IActionResult> UserProfile(ShowProfile up)
+        public async Task <IActionResult> UserProfile(PatientUserProfile up)
         {
 
-            int id = Int32.Parse(Request.Cookies["UserId"]);
-            User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
-            user2.FirstName = up.FirstName;
+          await  _profileServices.EditUserProfile(up);
+           // int id = Int32.Parse(Request.Cookies["UserId"]);
+           // User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
+           // user2.FirstName = up.FirstName;
             
-            user2.LastName = up.LastName;
+           // user2.LastName = up.LastName;
 
-            user2.Email = up.Email;
-            user2.Mobile = up.Mobile;
-            user2.Street = up.Street;
-            user2.City = up.City;
-            user2.State = up.State;
-            user2.ZipCode = up.ZipCode;
-            _dbContext.Users.Update(user2);
-           await _dbContext.SaveChangesAsync();
+           // user2.Email = up.Email;
+           // user2.Mobile = up.Mobile;
+           // user2.Street = up.Street;
+           // user2.City = up.City;
+           // user2.State = up.State;
+           // user2.ZipCode = up.ZipCode;
+           // _dbContext.Users.Update(user2);
+           //await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index","Users");
         }
 

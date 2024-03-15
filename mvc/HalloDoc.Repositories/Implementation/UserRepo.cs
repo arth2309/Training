@@ -20,5 +20,29 @@ namespace HalloDoc.Repositories.Implementation
             _dbcontext = dbcontext;
         }
 
+        public User GetUserData(int UserId)
+        {
+            return _dbcontext.Users.FirstOrDefault(a => a.UserId == UserId);
+        }
+
+        public async Task<User> UpdateTable(User user)
+        {
+            _dbcontext.Users.Update(user);
+            await _dbcontext.SaveChangesAsync();
+            return user;
+        }
+
+        public bool CheckUser(string Email)
+        {
+            User user = _dbcontext.Users.FirstOrDefault(u => u.Email == Email);
+             return user == null?true:false;
+        }
+
+        public async Task<bool> AddTable(User user)
+        {
+            _dbcontext.Users.Add(user);
+            await _dbcontext.SaveChangesAsync();
+            return true;
+        }
     }
 }

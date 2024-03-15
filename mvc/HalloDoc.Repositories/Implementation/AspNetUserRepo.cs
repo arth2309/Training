@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HalloDoc.Repositories.DataContext;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {
@@ -44,6 +45,18 @@ namespace HalloDoc.Repositories.Implementation
         public async Task<bool> AddData(AspNetUserRole userRole)
         {
             _context.AspNetUserRoles.Add(userRole);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public bool CheckAspNetUser(string Email)
+        {
+            AspNetUser aspNetUser = _context.AspNetUsers.FirstOrDefault(u => u.Email == Email);
+            return aspNetUser == null ? true : false;
+        }
+
+        public async Task<bool> AddTable(AspNetUser aspNetUser)
+        {
+            _context.AspNetUsers.Add(aspNetUser);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -15,5 +15,6 @@ namespace HalloDoc.Repositories.Interfaces
         int GetCount(int status);
         RequestClient GetViewCaseData(int id);
          Task<RequestClient> UpdateTable(RequestClient requestClient);
+        Task<bool> AddTable(RequestClient requestClient);
     }
 }

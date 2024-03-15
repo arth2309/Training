@@ -11,5 +11,7 @@ namespace HalloDoc.Repositories.Interfaces
     {
         string role(string email);
         Task<bool> AddData(AspNetUserRole userRole);
+        bool CheckAspNetUser(string Email);
+        Task<bool> AddTable(AspNetUser aspNetUser);
     }
 }

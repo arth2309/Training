@@ -13,14 +13,19 @@ namespace HallodocServices.ModelView
 
         [StringLength(100)]
         public string RegionName { get; set; }
+
+        [Required(ErrorMessage = "Please select an region.")]
         public int RegionId { get; set; }
 
-  
-
         public List<Region>? regions { get; set; }
+
         public int RequestId { get; set; }
+
         public List<Physician>? physician { get; set; }
-        public int? PhysicianId { get; set; }
+
+        [Required(ErrorMessage = "Please select an physician.")]
+        public int PhysicianId { get; set; }
+
         public string? Description { get; set; }
 
       

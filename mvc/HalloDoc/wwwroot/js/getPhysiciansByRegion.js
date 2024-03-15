@@ -12,7 +12,7 @@ function loadRegion() {
                 regionList.remove(0);
             }
    
-            regionList.appendChild(new Option("Select Region", "0"));
+            regionList.appendChild(new Option("Select Region",""));
             listofregion.forEach(function(region) {
                 regionList.appendChild(new Option(region.Name, region.RegionId));
             });

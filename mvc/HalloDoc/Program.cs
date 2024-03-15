@@ -39,6 +39,8 @@ builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 builder.Services.AddScoped<IClearCaseServices, ClearCaseServices>();
 builder.Services.AddScoped<ISendAgreementServices,SendAgreementServices>();
 builder.Services.AddScoped<IPasswordHashServices, PasswordHashServices>();
+builder.Services.AddScoped<IPatientUserProfileServices, PatientUserProfileServices>();
+builder.Services.AddScoped<IPatientShowDocumentsServices, PatientShowDocumentsServices>();
 
 
 
