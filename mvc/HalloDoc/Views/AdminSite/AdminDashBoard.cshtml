@@ -30,37 +30,46 @@
                 case 1: document.getElementById("newstate").style.display = "block";
                     $(".ad").css("display", "block");
                     $(".ns").addClass("shadow bg-primary text-white border-0");
-                         GetStatus(temp,1);
+                        cleartoggle();
+                        GetStatus(temp,1,0);
+                        
+
                         break;
                 case 2: document.getElementById("pendingstate").style.display = "block";
                     $(".ad1").css("display", "block");
                     $(".ps").addClass("shadow bg-info text-white border-0");
-                    GetStatus(temp,1);
+                    cleartoggle();
+                    GetStatus(temp,1,0);
                     break;
                 case 3: document.getElementById("activestate1").style.display = "block";
                     $(".ad2").css("display", "block");
                     $(".as").addClass("shadow bg-success text-white border-0");
-                    GetStatus(temp,1);
+                    cleartoggle();
+                    GetStatus(temp,1,0);
                     break;
                 case 4: document.getElementById("concludestate").style.display = "block";
                     $(".ad3").css("display", "block");
                     $(".cos").addClass("shadow bg-danger text-white border-0");
-                    GetStatus(temp,1);
+                    cleartoggle();
+                    GetStatus(temp,1,0);
                     break;
                 case 5: document.getElementById("toclosestate").style.display = "block";
                     $(".ad4").css("display", "block");
                     $(".tcs").addClass("shadow bg-info text-white border-0");
-                    GetStatus(temp,1);
+                    cleartoggle();
+                    GetStatus(temp,1,0);
                     break;
                 case 6: document.getElementById("unpaidstate").style.display = "block";
                     $(".ad5").css("display", "block");
                     $(".ups").addClass("shadow indigo text-white border-0");
-                    GetStatus(temp,1);
+                    cleartoggle();
+                    GetStatus(temp,1,0);
                     break;
                 default: document.getElementById("newstate").style.display = "block";
                     $(".ad").css("display", "block");
                     $(".ns").addClass("shadow border-0");
-                    GetStatus(temp,1);
+                    cleartoggle();
+                    GetStatus(temp,1,0);
                     break;
 
             }

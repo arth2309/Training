@@ -3,8 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Intrinsics.X86;
 using HalloDoc.DataContext;
-using HalloDoc.DataModels;
-using HalloDoc.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +26,14 @@ namespace HalloDoc.Controllers
         private readonly IPasswordHashServices _passwordHashServices;
         private readonly IPatientUserProfileServices _profileServices;
         private readonly IPatientShowDocumentsServices _showDocumentsServices;
+        private readonly IPatientSendRequestServices _sendRequestServices;
         
         
-        private readonly HalloDoc.DataContext.ApplicationDbContext _dbContext;
+       
 
-        public PatientController(HalloDoc.DataContext.ApplicationDbContext dbContext, IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices,IPatientUserProfileServices patientUserProfileServices,IPatientShowDocumentsServices patientShowDocumentsServices)
+        public PatientController(IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices,IPatientUserProfileServices patientUserProfileServices,IPatientShowDocumentsServices patientShowDocumentsServices,IPatientSendRequestServices sendRequestServices)
         {
-            _dbContext = dbContext;
+            
             _loginServices = loginServices;
             _dashBoardServices = dashBoardServices;
             _forgotPasswordServices = forgotPasswordServices;
@@ -42,6 +41,7 @@ namespace HalloDoc.Controllers
             _passwordHashServices = passwordHashServices;
             _profileServices = patientUserProfileServices;
             _showDocumentsServices = patientShowDocumentsServices;
+            _sendRequestServices = sendRequestServices;
         }
 
       
@@ -97,7 +97,7 @@ namespace HalloDoc.Controllers
         [HttpGet]
         public IActionResult CheckEmailExists(string email)
         {
-            bool emailId = _dbContext.AspNetUsers.ToList().Exists(a => a.Email == email);
+            bool emailId = _sendRequestServices.CheckEmail(email);
             return Json(emailId);
         }
 
@@ -124,42 +124,13 @@ namespace HalloDoc.Controllers
 
             return View("PatientDashboard", patientDashreq);
 
-            
-
-
-
-
-          
 
         }
 
         [Auth.CustomAuthorize("Patient")]
         public IActionResult PatientDashBoardDoc(int id)
         {
-            //int id = Int32.Parse(Request.Cookies["MyCookie"]);
-            //List<RequestWiseFile> requestWiseFiles = _dbContext.RequestWiseFiles.Where(a => a.RequestId == id).ToList();
-
-            //List<ShowDocuments> showDocuments = new List<ShowDocuments>();
-            //for (int i = 0; i < requestWiseFiles.Count; i++)
-            //{
-            //    String uploader;
-            //    Request request = _dbContext.Requests.FirstOrDefault(a => a.RequestId == id);
-            //    uploader = request.FirstName + request.LastName;
-            //    //RequestWiseFile requestWiseFile = _dbContext.RequestWiseFiles.FirstOrDefault(a => a.RequestId == request.RequestId);
-            //    RequestWiseFile requestWiseFile = requestWiseFiles[i];
-            //    ShowDocuments showDocuments1 = new()
-            //    {
-            //        FirstName = request.FirstName,
-            //        LastName = request.LastName,
-            //        FileName = Path.GetFileName(requestWiseFile.FileName),
-            //        uploader = uploader,
-            //        UploadDate = requestWiseFile.CreatedDate
-
-            //    };
-            //    showDocuments.Add(showDocuments1);
-
-            //}
-
+            
             List<PatientShowDocument> patientShowDocuments = _showDocumentsServices.showDocuments(id);
 
             return View(patientShowDocuments);
@@ -176,20 +147,6 @@ namespace HalloDoc.Controllers
 
             int id = Int32.Parse(Request.Cookies["UserId"]);
             
-            
-            //User user = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
-            //ShowProfile showProfile = new()
-            //{
-            //    UserId = user.UserId,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    Email = user.Email,
-            //    Mobile = user.Mobile,
-            //    Street = user.Street,
-            //    City = user.City,
-            //    State = user.State,
-            //    ZipCode = user.ZipCode
-            //};
 
             PatientUserProfile profile = _profileServices.GetUserProfile(id);
 
@@ -202,20 +159,6 @@ namespace HalloDoc.Controllers
         {
 
           await  _profileServices.EditUserProfile(up);
-           // int id = Int32.Parse(Request.Cookies["UserId"]);
-           // User user2 = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
-           // user2.FirstName = up.FirstName;
-            
-           // user2.LastName = up.LastName;
-
-           // user2.Email = up.Email;
-           // user2.Mobile = up.Mobile;
-           // user2.Street = up.Street;
-           // user2.City = up.City;
-           // user2.State = up.State;
-           // user2.ZipCode = up.ZipCode;
-           // _dbContext.Users.Update(user2);
-           //await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index","Users");
         }
 
@@ -223,22 +166,7 @@ namespace HalloDoc.Controllers
         public IActionResult SubmitMe()
         {
             int id = Int32.Parse(Request.Cookies["UserId"]);
-
-
-            User user = _dbContext.Users.FirstOrDefault(a => a.UserId == id);
-            SubmitMe showProfile = new()
-            {
-                UserId = user.UserId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Mobile = user.Mobile,
-                Street = user.Street,
-                City = user.City,
-                State = user.State,
-                ZipCode = user.ZipCode
-            };
-
+            PatientSubmitMe showProfile = _sendRequestServices.SubmitMeData(id);
             return View(showProfile);
         }
 
@@ -298,120 +226,19 @@ namespace HalloDoc.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreatePatientRequest(AddPatientRequest user)
+        public async Task<IActionResult> CreatePatientRequest(PatientSendRequests patientSendRequests)
         {
            
                if(ModelState.IsValid)
             {
-                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
-                if (aspNetUser == null)
-                {
-                    aspNetUser = new()
-                    {
 
-                        UserName = user.FirstName,
-                        PasswordHash = _passwordHashServices.PasswordHash(user.PasswordHash),
-                        Email = user.Email,
-                        PhoneNumber = user.Mobile,
-                        Ip = "192.168.0.2",
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.AspNetUsers.Add(aspNetUser);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
-                if (user2 == null)
-                {
-                    user2 = new()
-                    {
-                        AspNetUserId = aspNetUser.Id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Mobile = user.Mobile,
-                        Street = user.Street,
-                        City = user.City,
-                        State = user.State,
-                        ZipCode = user.ZipCode,
-                        CreatedBy = aspNetUser.Id,
-                        CreatedDate = DateTime.Now
-
-
-                    };
-                    _dbContext.Users.Add(user2);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-
-
-
-
-                Request user3 = new()
-                {
-                    RequestTypeId = 1,
-                    UserId = user2.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    CreatedDate = DateTime.Now,
-
-                    Status = 1
-
-
-                };
-                _dbContext.Requests.Add(user3);
-                await _dbContext.SaveChangesAsync();
-
-
-                RequestClient user4 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode
-
-
-                };
-                _dbContext.RequestClients.Add(user4);
-                await _dbContext.SaveChangesAsync();
-                if(user.File!=null)
-                {
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                    FileInfo fileInfo = new FileInfo(user.File.FileName);
-                    string fileName = user.File.FileName + fileInfo.Extension;
-
-                    string fileNameWithPath = Path.Combine(path, fileName);
-
-                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    {
-                        user.File.CopyTo(stream);
-                    }
-
-                    RequestWiseFile user5 = new()
-                    {
-                        RequestId = user3.RequestId,
-                        FileName = fileNameWithPath,
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.RequestWiseFiles.Add(user5);
-                    await _dbContext.SaveChangesAsync();
-                }
-                
-
-
+               await _sendRequestServices.SendPatientRequest(patientSendRequests);
                 return RedirectToAction("Index", "AspNetUsers");
 
             }
                else
             {
+                TempData["PModalShow"] = false;
                 return View(null);
             }
             
@@ -420,394 +247,49 @@ namespace HalloDoc.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateConciergeRequest(AddConciergeValidation user)
+        public async Task<IActionResult> CreateConciergeRequest(ConciergeSendRequests conciergeSendRequests)
         {
             
                 if(ModelState.IsValid)
             {
-                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
-                if (aspNetUser == null)
-                {
-                    aspNetUser = new()
-                    {
 
-                        UserName = user.FirstName,
-                        PasswordHash = user.PasswordHash,
-                        Email = user.Email,
-                        PhoneNumber = user.Mobile,
-                        Ip = "192.168.0.2",
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.AspNetUsers.Add(aspNetUser);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
-                if (user2 == null)
-                {
-                    user2 = new()
-                    {
-                        AspNetUserId = aspNetUser.Id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Mobile = user.Mobile,
-                        Street = user.Street,
-                        City = user.City,
-                        State = user.State,
-                        ZipCode = user.ZipCode,
-                        CreatedBy = aspNetUser.Id,
-                        CreatedDate = DateTime.Now
-
-
-                    };
-                    _dbContext.Users.Add(user2);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-
-
-
-                Request user3 = new()
-                {
-                    RequestTypeId = 3,
-                    UserId = user2.UserId,
-                    FirstName = user.CFirstName,
-                    LastName = user.CLastName,
-                    Email = user.CEmail,
-                    PhoneNumber = user.CMobile,
-                    CreatedDate = DateTime.Now,
-                   
-                    Status = 1
-
-
-                };
-                _dbContext.Requests.Add(user3);
-                await _dbContext.SaveChangesAsync();
-               
-
-
-                RequestClient user4 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FirstName = user.FirstName,
-                    LastName= user.LastName,
-                    PhoneNumber= user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode
-
-
-                };
-                _dbContext.RequestClients.Add(user4);
-                await _dbContext.SaveChangesAsync();
-                
-
-
-
-
-                Concierge user5 = new()
-                {
-                    ConciergeName = user.CFirstName,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode,
-                    CreatedDate = DateTime.Now
-
-
-                };
-                _dbContext.Concierges.Add(user5);
-                await _dbContext.SaveChangesAsync();
-                
-
-                RequestConcierge user6 = new()
-                {
-
-                    RequestId = user3.RequestId,
-                    ConciergeId = user5.ConciergeId
-
-
-                };
-                _dbContext.RequestConcierges.Add(user6);
-                await _dbContext.SaveChangesAsync();
+               await _sendRequestServices.SendConciergeRequest(conciergeSendRequests); 
                 return RedirectToAction("Index", "AspNetUsers");
-
-
-
             }
                 else
             {
+                TempData["CModalShow"] = false;
                 return View(null);
             }
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateFamilyFriendRequest(AddFamilyFriendValidation user)
+        public async Task<IActionResult> CreateFamilyFriendRequest(FamilyFriendSendRequests familyFriendSendRequests)
         {
 
             if (ModelState.IsValid)
             {
-                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a => a.Email == user.Email);
-                if (aspNetUser == null)
-                {
-                    aspNetUser = new()
-                    {
 
-                        UserName = user.FirstName,
-                        PasswordHash = user.PasswordHash,
-                        Email = user.Email,
-                        PhoneNumber = user.Mobile,
-                        Ip = "192.168.0.2",
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.AspNetUsers.Add(aspNetUser);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
-                if (user2 == null)
-                {
-                    user2 = new()
-                    {
-                        AspNetUserId = aspNetUser.Id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Mobile = user.Mobile,
-                        Street = user.Street,
-                        City = user.City,
-                        State = user.State,
-                        ZipCode = user.ZipCode,
-                        CreatedBy = aspNetUser.Id,
-                        CreatedDate = DateTime.Now
-
-
-                    };
-                    _dbContext.Users.Add(user2);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-
-
-
-
-                Request user3 = new()
-                {
-                    RequestTypeId = 2,
-                    UserId = user2.UserId,
-                    FirstName = user.FFirstName,
-                    LastName = user.FLastName,
-                    Email = user.FEmail,
-                    PhoneNumber = user.FMobile,
-                    CreatedDate = DateTime.Now,
-                    
-                    Status = 1
-
-
-                };
-                _dbContext.Requests.Add(user3);
-                await _dbContext.SaveChangesAsync();
-
-
-
-                RequestClient user4 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode
-
-
-                };
-                _dbContext.RequestClients.Add(user4);
-                await _dbContext.SaveChangesAsync();
-
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                FileInfo fileInfo = new FileInfo(user.File.FileName);
-                string fileName = user.File.FileName + fileInfo.Extension;
-
-                string fileNameWithPath = Path.Combine(path, fileName);
-
-                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                {
-                    user.File.CopyTo(stream);
-                }
-
-                RequestWiseFile user5 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FileName = fileNameWithPath,
-                    CreatedDate = DateTime.Now
-                };
-
-                _dbContext.RequestWiseFiles.Add(user5);
-                await _dbContext.SaveChangesAsync();
-
+               await  _sendRequestServices.SendFamilyFriendRequest(familyFriendSendRequests);
                 return RedirectToAction("Index", "AspNetUsers");
 
             }
             else
             {
+                TempData["FModalShow"] = false;
                 return View(null);
             }
 
         }
         [HttpPost]
-        public async Task<IActionResult> SubmitMe(SubmitMe user)
-        {
-            int id = Int32.Parse(Request.Cookies["UserId"]);
-            if (ModelState.IsValid)
-            {
-                
-
-                Request user3 = new()
-                {
-                    RequestTypeId = 1,
-                    UserId = id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    CreatedDate = DateTime.Now,
-
-                    Status = 1
-
-
-                };
-                _dbContext.Requests.Add(user3);
-                await _dbContext.SaveChangesAsync();
-
-
-                RequestClient user4 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode
-
-
-                };
-                _dbContext.RequestClients.Add(user4);
-                await _dbContext.SaveChangesAsync();
-                if (user.File != null)
-                {
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                    FileInfo fileInfo = new FileInfo(user.File.FileName);
-                    string fileName = user.File.FileName + fileInfo.Extension;
-
-                    string fileNameWithPath = Path.Combine(path, fileName);
-
-                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    {
-                        user.File.CopyTo(stream);
-                    }
-
-                    RequestWiseFile user5 = new()
-                    {
-                        RequestId = user3.RequestId,
-                        FileName = fileNameWithPath,
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.RequestWiseFiles.Add(user5);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-
-
-                return RedirectToAction("Index", "AspNetUsers");
-
-            }
-            else
-            {
-                return View(null);
-            }
-
-
-
-
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SubmitSomeOne(SubmitMe user)
+        public async Task<IActionResult> SubmitMe(PatientSubmitMe user)
         {
             int id = Int32.Parse(Request.Cookies["UserId"]);
             if (ModelState.IsValid)
             {
 
-
-                Request user3 = new()
-                {
-                    RequestTypeId = 1,
-                    UserId = id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    PhoneNumber = user.Mobile,
-                    CreatedDate = DateTime.Now,
-
-                    Status = 1
-
-
-                };
-                _dbContext.Requests.Add(user3);
-                await _dbContext.SaveChangesAsync();
-
-
-                RequestClient user4 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode
-
-
-                };
-                _dbContext.RequestClients.Add(user4);
-                await _dbContext.SaveChangesAsync();
-                if (user.File != null)
-                {
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-                    FileInfo fileInfo = new FileInfo(user.File.FileName);
-                    string fileName = user.File.FileName + fileInfo.Extension;
-
-                    string fileNameWithPath = Path.Combine(path, fileName);
-
-                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    {
-                        user.File.CopyTo(stream);
-                    }
-
-                    RequestWiseFile user5 = new()
-                    {
-                        RequestId = user3.RequestId,
-                        FileName = fileNameWithPath,
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.RequestWiseFiles.Add(user5);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-
-
+               await _sendRequestServices.SubmitMeRequest(user,id);
                 return RedirectToAction("Index", "AspNetUsers");
 
             }
@@ -816,136 +298,37 @@ namespace HalloDoc.Controllers
                 return View(null);
             }
 
-
-
-
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SubmitSomeOne(PatientSubmitMe user)
+        {
+            int id = Int32.Parse(Request.Cookies["UserId"]);
+            if (ModelState.IsValid)
+            {
 
+                await _sendRequestServices.SubmitMeRequest(user,id);
+                return RedirectToAction("Index", "AspNetUsers");
+            }
+            else
+            {
+                return View(null);
+            }
+        }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBusinessRequest(AddBusinessRequest user)
+        public async Task<IActionResult> CreateBusinessRequest(BusinessSendRequests businessSendRequests)
         {
 
             if (ModelState.IsValid)
             {
-                AspNetUser aspNetUser = _dbContext.AspNetUsers.FirstOrDefault(a=>a.Email==user.Email);
-               if(aspNetUser==null)
-                {
-                    aspNetUser = new()
-                    {
 
-                        UserName = user.BFirstName,
-                        PasswordHash = user.PasswordHash,
-                        Email = user.BEmail,
-                        PhoneNumber = user.BMobile,
-                        Ip = "192.168.0.2",
-                        CreatedDate = DateTime.Now
-                    };
-
-                    _dbContext.AspNetUsers.Add(aspNetUser);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-                User user2 = _dbContext.Users.FirstOrDefault(a => a.Email == user.Email);
-                if (user2 == null)
-                {
-                     user2 = new()
-                    {
-                        AspNetUserId = aspNetUser.Id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Mobile = user.Mobile,
-                        Street = user.Street,
-                        City = user.City,
-                        State = user.State,
-                        ZipCode = user.ZipCode,
-                        CreatedBy = aspNetUser.Id,
-                        CreatedDate = DateTime.Now
-
-
-                    };
-                    _dbContext.Users.Add(user2);
-                    await _dbContext.SaveChangesAsync();
-                }
-                
-
-
-
-
-                Request user3 = new()
-                {
-                    RequestTypeId = 4,
-                    UserId = user2.UserId,
-                    FirstName = user.BFirstName,
-                    LastName = user.BLastName,
-                    Email = user.BEmail,
-                    PhoneNumber = user.BMobile,
-                    CreatedDate = DateTime.Now,
-                   
-                    Status = 1
-
-
-                };
-                _dbContext.Requests.Add(user3);
-                await _dbContext.SaveChangesAsync();
-
-
-
-                RequestClient user4 = new()
-                {
-                    RequestId = user3.RequestId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.Mobile,
-                    Street = user.Street,
-                    City = user.City,
-                    State = user.State,
-                    ZipCode = user.ZipCode
-
-
-                };
-                _dbContext.RequestClients.Add(user4);
-                await _dbContext.SaveChangesAsync();
-
-
-
-
-
-                Business user5 = new()
-                {
-                    Name = user.FirstName,
-                    Address1 = user.Street,
-                    Address2 = user.Street,
-                    City = user.City,
-                    ZipCode = user.ZipCode,
-                    PhoneNumber = user.BMobile,
-                    CreatedDate = DateTime.Now
-
-
-                };
-                _dbContext.Businesses.Add(user5);
-                await _dbContext.SaveChangesAsync();
-
-
-                RequestBusiness user6 = new()
-                {
-
-                    RequestId = user3.RequestId,
-                    BusinessId = user5.BusinessId
-
-
-                };
-                _dbContext.RequestBusinesses.Add(user6);
-                await _dbContext.SaveChangesAsync();
+               await _sendRequestServices.SendBusinessRequest(businessSendRequests);
                 return RedirectToAction("Index", "AspNetUsers");
-
-
-
             }
             else
             {
+                TempData["BModalShow"] = false;
                 return View(null);
             }
 

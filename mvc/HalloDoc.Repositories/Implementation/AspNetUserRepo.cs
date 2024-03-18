@@ -60,5 +60,13 @@ namespace HalloDoc.Repositories.Implementation
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public int GetId(string email)
+        {
+            AspNetUser aspNetUser = _context.AspNetUsers.FirstOrDefault(a=>a.Email == email);
+            int id = aspNetUser != null ? aspNetUser.Id : 0;
+            return id;
+            
+        }
     }
 }

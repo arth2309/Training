@@ -41,6 +41,12 @@ builder.Services.AddScoped<ISendAgreementServices,SendAgreementServices>();
 builder.Services.AddScoped<IPasswordHashServices, PasswordHashServices>();
 builder.Services.AddScoped<IPatientUserProfileServices, PatientUserProfileServices>();
 builder.Services.AddScoped<IPatientShowDocumentsServices, PatientShowDocumentsServices>();
+builder.Services.AddScoped<IRequestBusinessRepo, RequestBusinessRepo>();
+builder.Services.AddScoped<IRequestConceirgeRepo, RequestConceirgeRepo>();
+builder.Services.AddScoped<IPatientSendRequestServices, PatientSendRequestServices>();
+
+
+
 
 
 

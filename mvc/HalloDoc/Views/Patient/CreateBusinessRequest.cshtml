@@ -1,4 +1,9 @@
-﻿@model HalloDoc.ModelView.AddBusinessRequest
+﻿@model HallodocServices.ModelView.BusinessSendRequests
+
+@{
+    bool showmodal = TempData["BModalShow"] == null ? true : false;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +17,19 @@
     <script src="~/js/email.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-    <script>
+    
+@if(showmodal)
+{
+        <script>
         $(document).ready(function () {
             $("#myModal").modal('show');
         });
-    </script>
+        </script>
+}
+    
     <title>Document</title>
 </head>
 <body data-bs-theme="light">

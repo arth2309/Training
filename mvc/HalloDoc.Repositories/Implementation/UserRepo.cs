@@ -44,5 +44,12 @@ namespace HalloDoc.Repositories.Implementation
             await _dbcontext.SaveChangesAsync();
             return true;
         }
+
+        public int GetUserId(string email)
+        {
+            User user = _dbcontext.Users.FirstOrDefault(u => u.Email == email);
+            int Userid = user != null ? user.UserId : 0;
+            return Userid;
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Net;
 using System.Runtime.Intrinsics.X86;
 using HalloDoc.DataContext;
 using HalloDoc.DataModels;
-using HalloDoc.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -87,13 +86,13 @@ namespace HalloDoc.Controllers
         public IActionResult AdminDashBoard()
         {
 
-            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1, 1);
+            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1,1,0,0);
             return View(adminDashBoard);
         }
 
-        public IActionResult CheckStatus(int statusI, int currentPage)
+        public IActionResult CheckStatus(int statusI, int currentPage,int typeid,int regionid)
         {
-            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage);
+            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage, typeid, regionid);
 
             if (statusI == 1)
             {

@@ -1,4 +1,4 @@
-﻿@model HalloDoc.ModelView.SubmitMe
+﻿@model HallodocServices.ModelView.PatientSubmitMe
 
 
 <!DOCTYPE html>
@@ -118,6 +118,8 @@
                     </div>
                 </div>
                
+                <input type="hidden" asp-for="UserId" />
+
                 <p class="h4 vt">Patient Location</p>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt form-floating">

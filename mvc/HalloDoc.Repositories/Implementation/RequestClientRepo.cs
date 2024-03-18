@@ -22,10 +22,22 @@ namespace HalloDoc.Repositories.Implementation
             RequestClient requestClient = _dbcontext.RequestClients.FirstOrDefault(a=>a.RequestId == reqid);
             return requestClient ?? null;
         }
-        public List<RequestClient> GetNewStateData(int status)
+        public List<RequestClient> GetNewStateData(int status,int typeid,int regionid)
         {
-              return  _dbcontext.RequestClients.Include(a=>a.Request).Where(a=>a.Request.Status == status).ToList();
-              
+            if (typeid == 0 && regionid == 0)
+            {
+                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status).ToList();
+            }
+            else if(regionid == 0)
+            {
+                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid).ToList();
+            }
+            else if(typeid == 0)
+            {
+                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid).ToList();
+            }
+            return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && a.RegionId == regionid).ToList();
+
         }
         public int GetCount(int status)
         {

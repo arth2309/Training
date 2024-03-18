@@ -1,5 +1,6 @@
 ﻿using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using HallodocServices.Interfaces;
 using HallodocServices.ModelView;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HallodocServices.Implementation
 {
-    public class PatientSendRequestServices
+    public class PatientSendRequestServices : IPatientSendRequestServices
     {
         private readonly IAspNetUserRepo _aspNetUserRepo;
         private readonly IUserRepo _userRepo;
@@ -30,6 +31,8 @@ namespace HallodocServices.Implementation
             _requestBusinessRepo = requestBusinessRepo;
             _requestConceirgeRepo = requestConceirgeRepo;
         }
+
+        
 
         public async Task<bool> SendPatientRequest(PatientSendRequests user)
         {
@@ -54,7 +57,7 @@ namespace HallodocServices.Implementation
             {
                 User user2 = new()
                 {
-                    AspNetUserId = 1,
+                    AspNetUserId = _aspNetUserRepo.GetId(user.Email),
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
@@ -63,7 +66,7 @@ namespace HallodocServices.Implementation
                     City = user.City,
                     State = user.State,
                     ZipCode = user.ZipCode,
-                    CreatedBy = 1,
+                    CreatedBy = _aspNetUserRepo.GetId(user.Email),
                     CreatedDate = DateTime.Now
 
 
@@ -78,7 +81,7 @@ namespace HallodocServices.Implementation
             Request user3 = new()
             {
                 RequestTypeId = 1,
-                UserId = 1,
+                UserId = _userRepo.GetUserId(user.Email),
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -101,7 +104,8 @@ namespace HallodocServices.Implementation
                 Street = user.Street,
                 City = user.City,
                 State = user.State,
-                ZipCode = user.ZipCode
+                ZipCode = user.ZipCode,
+                Email = user.Email,
 
 
             };
@@ -111,7 +115,7 @@ namespace HallodocServices.Implementation
             {
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
                 FileInfo fileInfo = new FileInfo(user.File.FileName);
-                string fileName = user.File.FileName + fileInfo.Extension;
+                string fileName = user.File.FileName;
 
                 string fileNameWithPath = Path.Combine(path, fileName);
 
@@ -129,6 +133,414 @@ namespace HallodocServices.Implementation
                await  _requestFileRepo.AddData(user5);
             }
             return true;
+        }
+        public async Task<bool> SendBusinessRequest(BusinessSendRequests user)
+        {
+            if (_aspNetUserRepo.CheckAspNetUser(user.Email))
+            {
+                AspNetUser aspNetUser = new()
+                {
+
+                    UserName = user.FirstName,
+                    PasswordHash = user.PasswordHash,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
+                    Ip = "192.168.0.2",
+                    CreatedDate = DateTime.Now
+                };
+
+                await _aspNetUserRepo.AddTable(aspNetUser);
+            }
+
+
+            if (_userRepo.CheckUser(user.Email))
+            {
+                User user2 = new()
+                {
+                    AspNetUserId = _aspNetUserRepo.GetId(user.Email),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Mobile = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode,
+                    CreatedBy = _aspNetUserRepo.GetId(user.Email),
+                    CreatedDate = DateTime.Now
+
+
+                };
+
+                await _userRepo.AddTable(user2);
+            }
+
+
+
+
+            Request user3 = new()
+            {
+                RequestTypeId = 3,
+                UserId = _userRepo.GetUserId(user.Email),
+                FirstName = user.BFirstName,
+                LastName = user.BLastName,
+                Email = user.BEmail,
+                PhoneNumber = user.BMobile,
+                CreatedDate = DateTime.Now,
+
+                Status = 1
+
+
+            };
+
+            await _requestRepo.AddTable(user3);
+
+
+
+            RequestClient user4 = new()
+            {
+                RequestId = user3.RequestId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                Email = user.Email,
+
+
+            };
+
+            await _requestClientRepo.AddTable(user4);
+
+
+
+
+
+            Business user5 = new()
+            {
+                Name = user.FirstName,
+                Address1 = user.Street,
+                Address2 = user.Street,
+                City = user.City,
+                ZipCode = user.ZipCode,
+                PhoneNumber = user.BMobile,
+                CreatedDate = DateTime.Now,
+
+
+            };
+
+            await _requestBusinessRepo.AddBusinessData(user5);
+
+
+            RequestBusiness user6 = new()
+            {
+
+                RequestId = user3.RequestId,
+                BusinessId = user5.BusinessId
+
+
+            };
+            await _requestBusinessRepo.AddRequestBusinessData(user6);
+
+            return true;
+        }
+
+        public async Task<bool> SendConciergeRequest(ConciergeSendRequests user)
+        {
+           
+            if (_aspNetUserRepo.CheckAspNetUser(user.Email))
+            {
+               AspNetUser aspNetUser = new()
+                {
+
+                    UserName = user.FirstName,
+                    PasswordHash = user.PasswordHash,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
+                    Ip = "192.168.0.2",
+                    CreatedDate = DateTime.Now
+                };
+
+                await _aspNetUserRepo.AddTable(aspNetUser);
+            }
+
+            
+            if (_userRepo.CheckUser(user.Email))
+            {
+                User user2 = new()
+                {
+                    AspNetUserId = _aspNetUserRepo.GetId(user.Email),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Mobile = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode,
+                    CreatedBy = _aspNetUserRepo.GetId(user.Email),
+                    CreatedDate = DateTime.Now
+
+
+                };
+                
+                await _userRepo.AddTable(user2);
+            }
+
+
+
+
+            Request user3 = new()
+            {
+                RequestTypeId = 3,
+                UserId = _userRepo.GetUserId(user.Email),
+                FirstName = user.CFirstName,
+                LastName = user.CLastName,
+                Email = user.CEmail,
+                PhoneNumber = user.CMobile,
+                CreatedDate = DateTime.Now,
+
+                Status = 1
+
+
+            };
+            
+            await _requestRepo.AddTable(user3);
+
+
+
+            RequestClient user4 = new()
+            {
+                RequestId = user3.RequestId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                Email = user.Email,
+
+
+            };
+            
+            await _requestClientRepo.AddTable(user4);
+
+
+
+
+
+            Concierge user5 = new()
+            {
+                ConciergeName = user.CFirstName,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                CreatedDate = DateTime.Now
+
+
+            };
+            
+            await _requestConceirgeRepo.AddConceirgeData(user5);
+
+
+            RequestConcierge user6 = new()
+            {
+
+                RequestId = user3.RequestId,
+                ConciergeId = user5.ConciergeId
+
+
+            };
+            await _requestConceirgeRepo.AddRequestConciergeData(user6);
+
+            return true;
+        }
+
+        public async Task<bool> SendFamilyFriendRequest(FamilyFriendSendRequests user)
+        {
+            if (_aspNetUserRepo.CheckAspNetUser(user.Email))
+            {
+                AspNetUser aspNetUser = new()
+                {
+
+                    UserName = user.FirstName,
+                    PasswordHash = user.PasswordHash,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
+                    Ip = "192.168.0.2",
+                    CreatedDate = DateTime.Now
+                };
+                await _aspNetUserRepo.AddTable(aspNetUser);
+            }
+
+
+            if (_userRepo.CheckUser(user.Email))
+            {
+                User user2 = new()
+                {
+                    AspNetUserId = _aspNetUserRepo.GetId(user.Email),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Mobile = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode,
+                    CreatedBy = _aspNetUserRepo.GetId(user.Email),
+                    CreatedDate = DateTime.Now
+
+
+                };
+                await _userRepo.AddTable(user2);
+            }
+
+
+
+
+
+            Request user3 = new()
+            {
+                RequestTypeId = 1,
+                UserId = _userRepo.GetUserId(user.Email),
+                FirstName = user.FFirstName,
+                LastName = user.FLastName,
+                Email = user.FEmail,
+                PhoneNumber = user.FMobile,
+                CreatedDate = DateTime.Now,
+                Status = 1
+
+
+            };
+
+            await _requestRepo.AddTable(user3);
+
+
+            RequestClient user4 = new()
+            {
+                RequestId = user3.RequestId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                Email = user.Email,
+
+
+            };
+
+            await _requestClientRepo.AddTable(user4);
+            if (user.File != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                FileInfo fileInfo = new FileInfo(user.File.FileName);
+                string fileName = user.File.FileName;
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    user.File.CopyTo(stream);
+                }
+
+                RequestWiseFile user5 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FileName = fileNameWithPath,
+                    CreatedDate = DateTime.Now
+                };
+                await _requestFileRepo.AddData(user5);
+            }
+            return true;
+        }
+
+        public PatientSubmitMe SubmitMeData(int userid)
+        {
+            User user = _userRepo.GetUserData(userid);
+            PatientSubmitMe showProfile = new()
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Mobile = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode
+            };
+            return showProfile;
+        }
+
+        public async Task<bool> SubmitMeRequest(PatientSubmitMe user, int Userid)
+        {
+            Request user3 = new()
+            {
+                RequestTypeId = 1,
+                UserId = Userid,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.Mobile,
+                CreatedDate = DateTime.Now,
+                Status = 1
+
+
+            };
+
+            await _requestRepo.AddTable(user3);
+
+
+            RequestClient user4 = new()
+            {
+                RequestId = user3.RequestId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                Email = user.Email,
+
+
+            };
+
+            await _requestClientRepo.AddTable(user4);
+            if (user.File != null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                FileInfo fileInfo = new FileInfo(user.File.FileName);
+                string fileName = user.File.FileName;
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    user.File.CopyTo(stream);
+                }
+
+                RequestWiseFile user5 = new()
+                {
+                    RequestId = user3.RequestId,
+                    FileName = fileNameWithPath,
+                    CreatedDate = DateTime.Now
+                };
+                await _requestFileRepo.AddData(user5);
+            }
+
+            return true;
+        }
+
+        public bool CheckEmail(string email)
+        {
+            return _aspNetUserRepo.CheckAspNetUser(email);
         }
     }
    

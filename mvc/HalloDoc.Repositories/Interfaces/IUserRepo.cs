@@ -13,5 +13,6 @@ namespace HalloDoc.Repositories.Interfaces
         Task<User> UpdateTable(User user);
         bool CheckUser(string Email);
         Task<bool> AddTable(User user);
+        int GetUserId(string email);
     }
 }
