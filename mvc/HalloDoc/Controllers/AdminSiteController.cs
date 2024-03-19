@@ -32,8 +32,9 @@ namespace HalloDoc.Controllers
         private readonly ISendOrderServices _sendOrderServices;
         private readonly IClearCaseServices _clearCaseServices;
         private readonly ISendAgreementServices _sendAgreementServices;
+        private readonly ICloseCaseServices _closeCaseServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -47,6 +48,7 @@ namespace HalloDoc.Controllers
             _sendOrderServices = sendOrderServices;
             _clearCaseServices = clearCaseServices;
             _sendAgreementServices = sendAgreementServices;
+            _closeCaseServices = closeCaseServices;
         }
 
         public IActionResult AdminLogin()
@@ -86,13 +88,14 @@ namespace HalloDoc.Controllers
         public IActionResult AdminDashBoard()
         {
 
-            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1,1,0,0);
+            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1,1,0,0,null);
             return View(adminDashBoard);
         }
 
-        public IActionResult CheckStatus(int statusI, int currentPage,int typeid,int regionid)
+        public IActionResult CheckStatus(int statusI, int currentPage,int typeid,int regionid,string name)
         {
-            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage, typeid, regionid);
+            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage,typeid,regionid,name);
+
 
             if (statusI == 1)
             {
@@ -140,9 +143,13 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCase(AdminViewCase adminViewCase)
         {
+            if(ModelState.IsValid)
+            {
+                AdminViewCase adminViewCase1 = _viewCaseServices.EditViewData(adminViewCase);
+                return View(adminViewCase1);
+            }
 
-            AdminViewCase adminViewCase1 = _viewCaseServices.EditViewData(adminViewCase);
-            return View(adminViewCase1);
+           return View(null);
         }
 
         [Auth.CustomAuthorize("Admin")]
@@ -164,8 +171,12 @@ namespace HalloDoc.Controllers
 
         public async Task<IActionResult> ViewNotes(AdminViewNote adminViewNote)
         {
-            AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
-            return View(adminViewNote1);
+            if (ModelState.IsValid)
+            {
+                AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
+                return View(adminViewNote1);
+            }
+            return View(null) ;
         }
 
         [HttpPost]
@@ -200,8 +211,14 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> BlockCase(AdminBlockCase adminBlockCase)
         {
-            AdminBlockCase adminBlockCase1 = _blockCaseServices.AdminBlockCase(adminBlockCase);
-            return RedirectToAction("AdminDashBoard");
+            if(ModelState.IsValid)
+            {
+                AdminBlockCase adminBlockCase1 = _blockCaseServices.AdminBlockCase(adminBlockCase);
+                return RedirectToAction("AdminDashBoard");
+            }
+
+            return View("AdminDashBoard", null);
+
         }
 
         [Auth.CustomAuthorize("Admin")]
@@ -327,5 +344,35 @@ namespace HalloDoc.Controllers
             _sendAgreementServices.AcceptViewAgreement(Requestid);
             return Json(new { redirect = Url.Action("PatientLogin", "Patient") }); ;
         }
+
+        public IActionResult CloseCase(int reqID)
+        {
+            AdminCloseCase adminClose = _closeCaseServices.GetCloseCaseData(reqID);
+            return View(adminClose);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CloseCase(AdminCloseCase adminClose)
+        {
+            if(ModelState.IsValid)
+            {
+            await _closeCaseServices.UpdateCloseData(adminClose);
+            return RedirectToAction("CloseCase", new { reqID = adminClose.reqid });
+            }
+
+            return View(null);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> CloseRequest(int reqID)
+        {
+            await _closeCaseServices.UpdateStatus(reqID);
+            return Json(new { redirect = Url.Action("AdminDashBoard") });
+        }
+
     }
 }
+
+
+
+

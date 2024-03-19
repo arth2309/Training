@@ -44,6 +44,7 @@ builder.Services.AddScoped<IPatientShowDocumentsServices, PatientShowDocumentsSe
 builder.Services.AddScoped<IRequestBusinessRepo, RequestBusinessRepo>();
 builder.Services.AddScoped<IRequestConceirgeRepo, RequestConceirgeRepo>();
 builder.Services.AddScoped<IPatientSendRequestServices, PatientSendRequestServices>();
+builder.Services.AddScoped<ICloseCaseServices, CloseCaseServices>();
 
 
 

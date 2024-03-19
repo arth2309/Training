@@ -1,13 +1,10 @@
 ﻿@model PaginatedList<HallodocServices.ModelView.NewState>
- 
+
+    
 
 
-@if (@Model != null)
-{
-    @Html.Partial("~/Views/Shared/_AssignCasePopup.cshtml",Model[0].assignCases)
-}
 
-        <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
+       @* <div class="d-flex" style="margin-top: 50px; margin-bottom: 25px;">
             <div class="d-flex">
                 <h5>Patients</h5>(New)
             </div>
@@ -31,7 +28,7 @@
                     <span class="icon input-group-text">
                         <i class="bi bi-search"></i>
                     </span>
-            <input type="text" class="form-control" style="padding-left:5px;" placeholder="Search Patients" id="customSearch" />
+            <input type="text" oninput="changestring(this.value)" class="form-control" style="padding-left:5px;" placeholder="Search Patients" id="customSearch" />
 
         </div>
             </div>
@@ -82,7 +79,7 @@
                     VIP
                 </div>
             </div>
-        </div>
+        </div>*@
 
         
 

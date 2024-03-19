@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vmyPXXyzkdsBRTTGGkYzHDQ6n4cDi8/q0fA6ELuYKM0=",
+  "Hash": "KdN8fTLk/Hs3f8fogcqO4YQSHgADDhvYLkvaazue1xw=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\AdminSite\\AdminLogin.css"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\CloseCase.css",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "css/AdminSite/CloseCase.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\AdminSite\\CloseCase.css"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\ViewCase.css",

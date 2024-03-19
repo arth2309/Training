@@ -9,6 +9,7 @@ namespace HallodocServices.ModelView
 {
     public class AdminBlockCase
     {
+        [Required]
         public string? blockNotes { get; set; }
         
         public int requestId { get; set; }

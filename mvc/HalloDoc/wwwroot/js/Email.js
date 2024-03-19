@@ -17,3 +17,23 @@
 
     });
 }
+
+function closestateButton(requestid) {
+    $.ajax({
+        url: '/AdminSite/CloseRequest',
+        type: 'GET',
+        contentType: 'application/json',
+        data: {
+            reqID: requestid
+        },
+
+        success: function (res) {
+            console.log(res);
+            window.location.href = res.redirect;
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+

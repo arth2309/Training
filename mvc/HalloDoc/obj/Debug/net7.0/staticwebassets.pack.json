@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets\\css\\AdminSite\\AdminLogin.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\CloseCase.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\CloseCase.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\ViewCase.css",
       "PackagePath": "staticwebassets\\css\\AdminSite\\ViewCase.css"
     },

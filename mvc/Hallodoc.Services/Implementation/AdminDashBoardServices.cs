@@ -29,59 +29,59 @@ namespace HallodocServices.Implementation
             _requestStatusLogRepo = requestStatusLogRepo;
         }
 
-        public AdminDashBoard newStates(int status, int currentPage,int typeid,int regionid)
+        public AdminDashBoard newStates(int status, int currentPage,int typeid,int regionid, string name)
         {
 
-            PaginatedList<NewState> newStates1 = getStates(status, currentPage,typeid,regionid);
+            PaginatedList<NewState> newStates1 = getStates(status, currentPage,typeid,regionid,name);
 
 
             AdminDashBoard adminDashBoard = new();
             {
                 adminDashBoard.AdminNewState = newStates1;
-                adminDashBoard.NewCount = _iRequestClientRepo.GetNewStateData(1,0,0).Count();
-                adminDashBoard.PendingCount = _iRequestClientRepo.GetNewStateData(2,0,0).Count();
-                adminDashBoard.ActiveCount = _iRequestClientRepo.GetNewStateData(4,0, 0).Count() + _iRequestClientRepo.GetNewStateData(5,0,0).Count();
-                adminDashBoard.ConcludeCount = _iRequestClientRepo.GetNewStateData(6, 0, 0).Count();
-                adminDashBoard.ToCloseCount = _iRequestClientRepo.GetNewStateData(3,0, 0).Count() + _iRequestClientRepo.GetNewStateData(7,0,0).Count() + _iRequestClientRepo.GetNewStateData(8, 0, 0).Count();
-                adminDashBoard.UnPaidCount = _iRequestClientRepo.GetNewStateData(9, 0, 0).Count();
+                adminDashBoard.NewCount = _iRequestClientRepo.GetNewStateData(1,0,0,null).Count();
+                adminDashBoard.PendingCount = _iRequestClientRepo.GetNewStateData(2,0,0,null).Count();
+                adminDashBoard.ActiveCount = _iRequestClientRepo.GetNewStateData(4,0, 0,null).Count() + _iRequestClientRepo.GetNewStateData(5,0,0,null).Count();
+                adminDashBoard.ConcludeCount = _iRequestClientRepo.GetNewStateData(6, 0, 0, null).Count();
+                adminDashBoard.ToCloseCount = _iRequestClientRepo.GetNewStateData(3,0, 0,null).Count() + _iRequestClientRepo.GetNewStateData(7,0,0,null).Count() + _iRequestClientRepo.GetNewStateData(8, 0, 0, null).Count();
+                adminDashBoard.UnPaidCount = _iRequestClientRepo.GetNewStateData(9, 0, 0, null).Count();
             }
             return adminDashBoard;
         }
 
-        public PaginatedList<NewState> getStates(int status, int currentPage,int typeid,int regionid)
+        public PaginatedList<NewState> getStates(int status, int currentPage,int typeid,int regionid,string name)
         {
             List<RequestClient> requestClients = new List<RequestClient>();
 
             if (status == 1)
             {
-                requestClients = _iRequestClientRepo.GetNewStateData(1,typeid, regionid);
+                requestClients = _iRequestClientRepo.GetNewStateData(1,typeid, regionid,name);
 
             }
             else if (status == 2)
             {
-                requestClients = _iRequestClientRepo.GetNewStateData(2,typeid, regionid);
+                requestClients = _iRequestClientRepo.GetNewStateData(2,typeid, regionid,name);
 
             }
             else if (status == 3)
             {
 
-                requestClients = _iRequestClientRepo.GetNewStateData(4,typeid, regionid);
-                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(5,typeid,regionid));
+                requestClients = _iRequestClientRepo.GetNewStateData(4,typeid, regionid,name);
+                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(5,typeid,regionid,name));
 
             }
 
             else if (status == 4)
             {
-                requestClients = _iRequestClientRepo.GetNewStateData(6,typeid, regionid);
+                requestClients = _iRequestClientRepo.GetNewStateData(6,typeid, regionid,name);
 
 
             }
 
             else if (status == 5)
             {
-                requestClients = _iRequestClientRepo.GetNewStateData(3,typeid,regionid);
-                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(7,typeid, regionid));
-                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(8,typeid,regionid));
+                requestClients = _iRequestClientRepo.GetNewStateData(3,typeid,regionid,name);
+                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(7,typeid, regionid,name));
+                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(8,typeid,regionid,name));
 
 
 
@@ -89,14 +89,14 @@ namespace HallodocServices.Implementation
 
             else if (status == 6)
             {
-                requestClients = _iRequestClientRepo.GetNewStateData(9, typeid, regionid);
+                requestClients = _iRequestClientRepo.GetNewStateData(9, typeid, regionid,name);
 
 
 
             }
             else
             {
-                requestClients = _iRequestClientRepo.GetNewStateData(1, typeid,regionid);
+                requestClients = _iRequestClientRepo.GetNewStateData(1, typeid,regionid,name);
 
             }
 

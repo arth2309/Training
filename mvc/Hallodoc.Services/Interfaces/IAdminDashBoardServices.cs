@@ -10,8 +10,8 @@ namespace HallodocServices.Interfaces
 {
     public interface IAdminDashBoardServices
     {
-        PaginatedList<NewState> getStates(int status,int currentPage, int typeid, int regionid);
-        AdminDashBoard newStates(int status,int currentPage, int typeid, int regionid);
+        PaginatedList<NewState> getStates(int status,int currentPage, int typeid, int regionid,string name);
+        AdminDashBoard newStates(int status,int currentPage, int typeid, int regionid, string name);
        
     }
 }

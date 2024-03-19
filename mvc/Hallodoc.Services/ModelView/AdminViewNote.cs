@@ -18,6 +18,7 @@ namespace HallodocServices.ModelView
         public string? PhysicianNotes { get; set; }
 
         [StringLength(500)]
+        [Required]
         public string? AdminNotes { get; set; }
 
         public List<RequestStatusLog>? TransferNotes { get; set; }
