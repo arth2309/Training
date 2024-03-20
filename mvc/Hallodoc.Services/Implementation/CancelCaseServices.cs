@@ -20,15 +20,15 @@ namespace HallodocServices.Implementation
             _requestRepo = requestRepo;
         }
 
-        public AdminCancelCase CancelData(int reqID,AdminCancelCase newState)
+        public AdminCancelCase CancelData(AdminCancelCase newState)
         {
-            Request request = _requestRepo.GetRequest(reqID);
+            Request request = _requestRepo.GetRequest(newState.requestId);
             request.Status = 3;
             request.CaseTag = newState.CaseTag;
             _requestRepo.UpdateTable(request);
 
             RequestStatusLog requestStatusLog = new();
-            requestStatusLog.RequestId = reqID;
+            requestStatusLog.RequestId = newState.requestId;
             requestStatusLog.Status = 3;
             requestStatusLog.Notes = newState.Notes;
             _statusLogRepo.AddData(requestStatusLog);

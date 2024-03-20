@@ -1,4 +1,4 @@
-﻿@model HallodocServices.ModelView.SendAgreement
+﻿
 
 
 <div class="modal fade" id="sendagreement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -44,23 +44,25 @@
 
                 </div>
                 <form asp-controller="AdminSite" asp-action="SendAgreement">
-                <div class="mb-1" style="font-size:small">To Send Agreement please make sure you are updating the correct contact Information below for the responsible party </div>
-                <div class="form-floating mb-3">
-                    <input type="tel" class="form-control" id="phoneNumberForAgreement" placeholder="Phone Number" asp-for="Mobile">
+                <div style="font-size:small">To Send Agreement please make sure you are updating the correct contact Information below for the responsible party </div>
+                <div class="form-floating mb-1">
+                        <input oninput="ValidateSendAgreement()" type="number" class="form-control" id="phoneNumberForAgreement" placeholder="Phone Number">
                     <label for="phoneNumberForAgreement">Phone Number</label>
+                        <span id="errorForNumberForAgreement" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="emailForAgreement" placeholder="Email" asp-for="Email">
+                        <input oninput="ValidateSendAgreement()" type="email" class="form-control" id="emailForAgreement" placeholder="Email">
                     <label for="emailForAgreement">Email</label>
+                    <span id="errorForEmailForAgreement" class="text-danger"></span>
                 </div>
 
 
-                 <input type="hidden" id="requestTypeIdForAgreement" />
-                 <input type="hidden" id="requestIdForAgreement" asp-for="Requestid" />
+                    <input type="hidden" id="requestTypeIdForAgreement" />
+                 <input type="hidden" id="requestIdForAgreement"  />
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-info text-white">Send</button>
-                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal" style="margin-left:2px">Cancel</button>
+                        <button type="button" class="btn btn-info text-white" onclick="SendAgreement()">Send</button>
+                        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal" style="margin-left:2px" onclick="removeValidationForAgreement()">Cancel</button>
 
                 </div>
                 </form>

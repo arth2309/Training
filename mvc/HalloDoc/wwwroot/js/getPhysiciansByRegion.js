@@ -52,7 +52,7 @@ function loadPhysiciansByRegion(RegionId) {
 function getRequestID(Requestid)
 {
     loadRegion();
-    var requestid = document.getElementById("requestid");
+    var requestid = document.getElementById("requestidforAssign");
     requestid.value = Requestid;
 }
 
@@ -68,7 +68,7 @@ function loadRegion1() {
                 regionList.remove(0);
             }
 
-            regionList.appendChild(new Option("Select Region", "0"));
+            regionList.appendChild(new Option("Select Region", ""));
             listofregion.forEach(function (region) {
                 regionList.appendChild(new Option(region.Name, region.RegionId));
             });
@@ -94,7 +94,7 @@ function loadPhysiciansByRegion1(RegionId) {
             while (physicianList.options.length > 0) {
                 physicianList.remove(0);
             }
-            physicianList.appendChild(new Option("Select Physician", "0"));
+            physicianList.appendChild(new Option("Select Physician", ""));
             listOfPhysicians.forEach(function (physician) {
                 physicianList.appendChild(new Option(physician.FirstName, physician.PhysicianId));
             });
@@ -107,8 +107,9 @@ function loadPhysiciansByRegion1(RegionId) {
 
 function getRequestID1(Requestid) {
     loadRegion1();
-    var requestid = document.getElementById("requestid1");
+    var requestid = document.getElementById("requestidfortransfer");
     requestid.value = Requestid;
+    console.log(requestid.value);
 }
 
 

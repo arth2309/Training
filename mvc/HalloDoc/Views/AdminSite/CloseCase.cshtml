@@ -41,15 +41,7 @@
             document.getElementById("enable2").classList.remove("d-none");
             document.getElementById("disable").classList.add("d-none");
         }
-        function disable() {
-            
-            var inputs = document.getElementsByClassName("dis");
-            for (var i = 0; i < inputs.length; i++) {
-                inputs[i].setAttribute("disabled", "true");
-            }
-
-
-        }
+       
 
     </script>
 </head>
@@ -252,10 +244,10 @@
             <input type="hidden" asp-for="reqid" id="requestid" />
         </div>
         <div class="d-flex justify-content-end mb-2">
-            <button class="btn btn-info mx-1 text-white" id="disable" onclick="enable()">Edit</button>
+            <button type="button" class="btn btn-info mx-1 text-white" id="disable" onclick="enable()">Edit</button>
             <button type = "submit" class="btn btn-primary mx-1 text-white d-none" id="enable1">Submit</button>
-            <button class="btn btn-danger mx-1 text-white d-none" id="enable2" onclick="disable()">Cancel</button>
-            <button class="btn btn-outline-info mx-1" onclick="closestateButton(requestid.value)">Close Case</button>
+            <button type="button" class="btn btn-danger mx-1 text-white d-none" id="enable2" onclick="window.location.reload()">Cancel</button>
+            <button class="btn btn-outline-info mx-1" onclick="closestateButton(requestid.value)" type="button">Close Case</button>
         </div>
         </form>
     </div>

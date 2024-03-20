@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets\\css\\AdminSite\\AdminLogin.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\AdminMyProfile.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\AdminMyProfile.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\CloseCase.css",
       "PackagePath": "staticwebassets\\css\\AdminSite\\CloseCase.css"
     },
@@ -169,6 +173,10 @@
       "PackagePath": "staticwebassets\\images\\icons8-moon-symbol-25.png"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\AdminProfile.js",
+      "PackagePath": "staticwebassets\\js\\AdminProfile.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\Delete.js",
       "PackagePath": "staticwebassets\\js\\Delete.js"
     },
@@ -199,6 +207,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\validationAndIntegration.js",
+      "PackagePath": "staticwebassets\\js\\validationAndIntegration.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\lib\\bootstrap\\LICENSE",

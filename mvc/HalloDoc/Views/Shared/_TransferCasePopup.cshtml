@@ -1,7 +1,7 @@
-﻿@model HallodocServices.ModelView.AdminAssignCase
+﻿@*@model HallodocServices.ModelView.AdminAssignCase*@
 
 
-<div class="modal fade" id="TransferCase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="TransferCase" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#0dcaf0">
@@ -10,34 +10,36 @@
             </div>
             <div class="modal-body">
                 To transfer this request, search and select another physician
-                <form asp-controller="AdminSite" asp-action="TransferCase">
+                @*<form asp-controller="AdminSite" asp-action="TransferCase">*@
 
                     <div class="mt-3 form-floating mb-3">
 
-                        <select id="regionList1" onchange="loadPhysiciansByRegion1(this.value)" class="form-select" aria-label="Default select example" asp-for="RegionId">
+                        <select id="regionList1" onchange="loadPhysiciansByRegion1(this.value)" class="form-select" aria-label="Default select example" @*asp-for="RegionId"*@>
                         </select>
                         <label for="regionList1">Narrow Search By Region</label>
-                        <span asp-validation-for="RegionId" class="text-danger"></span>
+                        <span @*asp-validation-for="RegionId"*@ id="errorRegionForTransfer" class="text-danger"></span>
 
                     </div>
-                    <select class="form-select form-select-lg mb-3 " id="PhysicianList1" aria-label="Large select example" asp-for="PhysicianId">
+                <select class="form-select form-select-lg mb-3 " onchange="validateFormInput()" id="PhysicianList1" aria-label="Large select example" @*asp-for="PhysicianId"*@>
                         <option value="">Select Physician</option>
                     </select>
+                <span @*asp-validation-for="RegionId"*@ id="errorPhysicianForTransfer" class="text-danger"></span>
 
-                    <input type="hidden" id="requestid1" asp-for="RequestId" />
+                   <input type="hidden" id="requestidfortransfer" @*asp-for="RequestId*@" />
                     <div class="form-floating">
-                        <textarea asp-for="Description" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                        <label for="floatingTextarea2">Transfer Notes</label>
+                    <textarea oninput="validateFormInput()" class="form-control" placeholder="Leave a comment here" id="notesForTransfer" style="height: 100px"></textarea>
+                    <label for="notesForTransfer">Transfer Notes</label>
+                    <span @*asp-validation-for="RegionId"*@ id="errorNotesForTransfer" class="text-danger"></span>
                     </div>
                     <div class="d-flex mt-2" style="justify-content:end">
 
-                       
 
-                        <button type="submit" class="btn btn-info">Submit</button>
-                        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+
+                    <button type="button" class="btn btn-info" onclick="transferRequest()">Submit</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal" onclick="removeValidation()">Cancel</button>
                     </div>
 
-                </form>
+                @*</form>*@
             </div>
         </div>
     </div>

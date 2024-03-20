@@ -9,6 +9,6 @@ namespace HallodocServices.Interfaces
 {
     public interface ICancelCaseServices
     {
-        AdminCancelCase CancelData(int reqID, AdminCancelCase newState);
+        AdminCancelCase CancelData(AdminCancelCase newState);
     }
 }

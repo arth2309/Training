@@ -36,13 +36,7 @@ namespace HallodocServices.Implementation
             requestStatusLog.Notes = adminBlockCase.blockNotes;
             _requestStatusLogRepo.AddData(requestStatusLog);
 
-            BlockRequest blockRequest = new BlockRequest();
-            blockRequest.RequestId = adminBlockCase.requestId.ToString();
-            blockRequest.Reason = adminBlockCase.blockNotes;
-            blockRequest.CreatedDate = DateTime.Now;
-            blockRequest.Email = adminBlockCase.Email;
-            blockRequest.PhoneNumber = adminBlockCase.Mobile;
-            _blockedRequestRepo.AddData(blockRequest);
+            
 
             return adminBlockCase;
             

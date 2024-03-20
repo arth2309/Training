@@ -1,11 +1,10 @@
 ﻿@model PaginatedList<HallodocServices.ModelView.NewState>
 
 
-   @* @if(Model != null)
-    {
-   @Html.Partial("~/Views/Shared/_TransferCasePopup.cshtml",Model[0].assignCases)
-   @Html.Partial("~/Views/Shared/_SendAgreement.cshtml",Model[0].sendAgreement)
-    }*@
+    
+
+@Html.Partial("~/Views/Shared/_TransferCasePopup.cshtml")
+@Html.Partial("~/Views/Shared/_SendAgreement.cshtml")
 
 
 <div class="table-responsive d-none d-lg-flex">

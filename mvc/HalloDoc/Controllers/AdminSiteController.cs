@@ -15,6 +15,7 @@ using Azure;
 using HallodocServices.Implementation;
 using System.Text.Json;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.Controllers
 {
@@ -33,8 +34,9 @@ namespace HalloDoc.Controllers
         private readonly IClearCaseServices _clearCaseServices;
         private readonly ISendAgreementServices _sendAgreementServices;
         private readonly ICloseCaseServices _closeCaseServices;
+        private readonly IAdminProfileServices _adminProfileServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -49,6 +51,7 @@ namespace HalloDoc.Controllers
             _clearCaseServices = clearCaseServices;
             _sendAgreementServices = sendAgreementServices;
             _closeCaseServices = closeCaseServices;
+            _adminProfileServices = adminProfileServices;
         }
 
         public IActionResult AdminLogin()
@@ -174,51 +177,47 @@ namespace HalloDoc.Controllers
             if (ModelState.IsValid)
             {
                 AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
-                return View(adminViewNote1);
+                return RedirectToAction("ViewNotes", new {reqid = adminViewNote.RequestId});
             }
             return View(null) ;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CancelCase(AdminCancelCase modal)
+        [HttpGet]
+        public async Task<IActionResult> CancelCase(string data)
         {
-            AdminCancelCase newState1 = _cancelCaseServices.CancelData(modal.requestId, modal);
-            return RedirectToAction("AdminDashBoard");
+            var reqData = JsonSerializer.Deserialize<AdminCancelCase>(data);
+            var result = _cancelCaseServices.CancelData(reqData);
+            return Json(new { result });
+           
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> AssignCase(AdminAssignCase adminAssignCase)
+        [HttpGet]
+        public async Task<IActionResult> AssignCase(string data)
         {
-            if (ModelState.IsValid)
-            {
-                Task<AdminAssignCase> adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
-              
-                return RedirectToAction("AdminDashBoard");
-            }
-
-           return View();
+            var reqData = JsonSerializer.Deserialize<AdminAssignCase>(data);
+            var result = _assignCaseServices.AdminAssignCase(reqData);
+            return Json(new { result });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> TransferCase(AdminAssignCase adminAssignCase)
+      
+
+        [HttpGet]
+        public async Task<IActionResult> TransferCase(string data)
         {
 
-            Task<AdminAssignCase> adminAssignCase1 = _assignCaseServices.AdminAssignCase(adminAssignCase);
-            return RedirectToAction("AdminDashBoard");
+            var reqData = JsonSerializer.Deserialize<AdminAssignCase>(data);
+            var result =  _assignCaseServices.AdminAssignCase(reqData);
+            return Json(new { result });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> BlockCase(AdminBlockCase adminBlockCase)
+        [HttpGet]
+        public async Task<IActionResult> BlockCase(string data)
         {
-            if(ModelState.IsValid)
-            {
-                AdminBlockCase adminBlockCase1 = _blockCaseServices.AdminBlockCase(adminBlockCase);
-                return RedirectToAction("AdminDashBoard");
-            }
 
-            return View("AdminDashBoard", null);
-
+            var reqData = JsonSerializer.Deserialize<AdminBlockCase>(data);
+            var result = _blockCaseServices.AdminBlockCase(reqData);
+            return Json(new { result });
         }
 
         [Auth.CustomAuthorize("Admin")]
@@ -300,17 +299,26 @@ namespace HalloDoc.Controllers
             return Json(JsonSerializer.Serialize(_assignCaseServices.GetPhysciansByRegions(RegionId)));
         }
 
-        [HttpPost]
+        [HttpGet]
 
-        public IActionResult SendAgreement(SendAgreement sendAgreement)
+        public IActionResult SendAgreement(string data)
         {
-            string token = _jwtServices.GenerateJWTTokenForSendAgreement(sendAgreement.Requestid);
-            _sendAgreementServices.SendEmail(sendAgreement, token);
-            return RedirectToAction("AdminDashBoard");
+
+            var reqData = JsonSerializer.Deserialize<SendAgreement>(data);
+            string token = _jwtServices.GenerateJWTTokenForSendAgreement(reqData.Requestid);
+             _sendAgreementServices.SendEmail(reqData, token);
+            return Json(new { token });
+
         }
 
 
         public JsonResult LoadAgreementData(int Requestid)
+        {
+            return Json(JsonSerializer.Serialize(_sendAgreementServices.LoadSendAgreementData(Requestid)));
+        }
+
+        [HttpGet]
+        public JsonResult LoadBlockCaseData(int Requestid)
         {
             return Json(JsonSerializer.Serialize(_sendAgreementServices.LoadSendAgreementData(Requestid)));
         }
@@ -367,8 +375,39 @@ namespace HalloDoc.Controllers
         public async Task<JsonResult> CloseRequest(int reqID)
         {
             await _closeCaseServices.UpdateStatus(reqID);
-            return Json(new { redirect = Url.Action("AdminDashBoard") });
+            return Json(new { redirect = Url.Action("AdminDashBoard","AdminSite") });
         }
+
+        public IActionResult AdminMyProfile(int adminid = 1)
+        {
+            AdminProfile adminProfile = _adminProfileServices.GetAdminData(2);
+            return View(adminProfile);
+           
+        }
+
+
+        [HttpGet]
+        public async Task<JsonResult> AdminResetPassword(string password, int adminid, int id = 3)
+        {
+            await _adminProfileServices.ResetPassword(id, password);
+            return Json(new { redirect = Url.Action("AdminProfile", new { adminid = adminid }) });
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> AdminInformation(int adminid, string firstname, string lastname, string email, string mobile, int id = 3)
+        {
+            await _adminProfileServices.UpdateInformation(id, adminid, firstname, lastname, email, mobile);
+            return Json(new { redirect = Url.Action("AdminMyProfile", new { adminid = adminid }) });
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> AdminBillingInformation(int adminid, string ad1, string ad2, string city, int state, string zip, string altphone, int id = 3)
+        {
+            await _adminProfileServices.UpDateBillingInformation(adminid, ad1, ad2, city, zip, altphone);
+            return Json(new { redirect = Url.Action("AdminMyProfile", new { adminid = adminid }) });
+        }
+
+
 
     }
 }

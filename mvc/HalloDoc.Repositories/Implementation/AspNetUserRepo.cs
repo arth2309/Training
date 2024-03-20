@@ -68,5 +68,18 @@ namespace HalloDoc.Repositories.Implementation
             return id;
             
         }
+
+        public AspNetUser GetData(int id)
+        {
+            return _context.AspNetUsers.FirstOrDefault(a => a.Id == id);
+        }
+
+        public async Task<bool> UpdateTable(AspNetUser aspNetUser)
+        {
+            _context.AspNetUsers.Update(aspNetUser);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }
