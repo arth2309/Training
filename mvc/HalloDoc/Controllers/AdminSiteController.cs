@@ -16,6 +16,8 @@ using HallodocServices.Implementation;
 using System.Text.Json;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using ClosedXML.Excel;
+using System.Data;
 
 namespace HalloDoc.Controllers
 {
@@ -35,8 +37,9 @@ namespace HalloDoc.Controllers
         private readonly ISendAgreementServices _sendAgreementServices;
         private readonly ICloseCaseServices _closeCaseServices;
         private readonly IAdminProfileServices _adminProfileServices;
+        private readonly IAdminProviderInfoServices _adminProviderInfoServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -52,6 +55,7 @@ namespace HalloDoc.Controllers
             _sendAgreementServices = sendAgreementServices;
             _closeCaseServices = closeCaseServices;
             _adminProfileServices = adminProfileServices;
+            _adminProviderInfoServices = adminProviderInfoServices;
         }
 
         public IActionResult AdminLogin()
@@ -148,8 +152,9 @@ namespace HalloDoc.Controllers
         {
             if(ModelState.IsValid)
             {
+                TempData["VUpdate"] = "Data Updated Successfully";
                 AdminViewCase adminViewCase1 = _viewCaseServices.EditViewData(adminViewCase);
-                return View(adminViewCase1);
+                return RedirectToAction("ViewCase", new {rcid = adminViewCase.id});
             }
 
            return View(null);
@@ -176,6 +181,7 @@ namespace HalloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
+                TempData["NUpdate"] = "Data Updated Successfully";
                 AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
                 return RedirectToAction("ViewNotes", new {reqid = adminViewNote.RequestId});
             }
@@ -239,6 +245,7 @@ namespace HalloDoc.Controllers
         {
             int reqId = _viewUploadsServices.GetReqIdService(id);
             _viewUploadsServices.DeleteFileService(id);
+            TempData["Delete"] = "File Deleted Successfully";
             return Json(new { redirect = Url.Action("ViewUploads", new { reqID = reqId }) });
         }
 
@@ -246,10 +253,23 @@ namespace HalloDoc.Controllers
 
         public async Task<IActionResult> ViewUploads(AdminViewUpoads adminViewUpoads)
         {
-            _viewUploadsServices.AddFileData(adminViewUpoads);
+            if (adminViewUpoads.formFile != null)
+            {
+                _viewUploadsServices.AddFileData(adminViewUpoads);
+                TempData["Upload"] = "File Uploaded Successfully";
+                return RedirectToAction("ViewUploads", new { reqID = adminViewUpoads.requestId });
+            }
+            TempData["UploadF"] = "File is Required";
             return RedirectToAction("ViewUploads", new { reqID = adminViewUpoads.requestId });
         }
 
+        
+
+        public IActionResult ViewUploadsSendMail(int reqID)
+        {
+            _viewUploadsServices.SendEmail(reqID);
+            return RedirectToAction("ViewUploads", new { reqID = reqID });
+        }
 
         public IActionResult SendOrder(int reqID)
 
@@ -286,6 +306,7 @@ namespace HalloDoc.Controllers
         public async Task<IActionResult> SendOrder(AdminSendOrder adminSendOrder)
         {
             _sendOrderServices.AddDataServices(adminSendOrder);
+            TempData["Order"] = "Placed Order Successfully";
             return RedirectToAction("AdminDashBoard");
         }
 
@@ -407,7 +428,46 @@ namespace HalloDoc.Controllers
             return Json(new { redirect = Url.Action("AdminMyProfile", new { adminid = adminid }) });
         }
 
+        public ActionResult WriteDataToExcel()
+        {
+            DataTable dt = _dashBoardServices.getData();
+            //Name of File  
+            string fileName = "Request.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
 
+        public IActionResult AdminProviderInformation()
+        {
+            AdminProviderInfo adminProviderInfo = _adminProviderInfoServices.GetProviderInfo();
+            return View(adminProviderInfo);
+        }
+
+
+        [HttpGet]
+        public JsonResult GetEmailForMessage(int id)
+        {
+            return Json(JsonSerializer.Serialize(_adminProviderInfoServices.GetPhysicianData(id)));
+            
+        }
+
+        [HttpGet]
+        public JsonResult SendEmailForMessage(string email,string description)
+
+        {
+            _adminProviderInfoServices.SendEmail(email, description);
+            return Json(new { redirect = Url.Action("AdminProviderInformation") });
+
+        }
 
     }
 }

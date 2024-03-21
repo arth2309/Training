@@ -1,11 +1,11 @@
 ﻿
 
-<div class="modal fade" id="CancelCase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="CancelCase" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#0dcaf0">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="removeValidationCancel()"></button>
             </div>
             <div class="modal-body">
                 <p id="CancelCasePatientName"></p>

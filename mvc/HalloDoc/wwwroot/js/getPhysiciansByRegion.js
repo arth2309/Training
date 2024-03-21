@@ -17,6 +17,16 @@ function loadRegion() {
                 regionList.appendChild(new Option(region.Name, region.RegionId));
             });
             console.log(regionList)
+
+            var physicianList = document.getElementById("PhysicianList");
+            while (physicianList.options.length > 0) {
+                physicianList.remove(0);
+            }
+            physicianList.appendChild(new Option("Select Physician", ""));
+
+            var description = document.getElementById("notesForAssign");
+            description.value = '';
+
         },
         error: function (err) {
             console.error(err);
@@ -38,7 +48,7 @@ function loadPhysiciansByRegion(RegionId) {
             while (physicianList.options.length > 0) {
                 physicianList.remove(0);
             }
-            physicianList.appendChild(new Option("Select Physician", "0"));
+            physicianList.appendChild(new Option("Select Physician", ""));
             listOfPhysicians.forEach(function (physician) {
                 physicianList.appendChild(new Option(physician.FirstName, physician.PhysicianId));
             });

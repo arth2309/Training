@@ -8,6 +8,8 @@ using HalloDoc.Repositories.Interfaces;
 using HallodocServices.ModelView;
 using HalloDoc.Repositories.DataModels;
 using System.Security.Cryptography.X509Certificates;
+using System.Net.Mail;
+using System.Net;
 
 namespace HallodocServices.Implementation
 {
@@ -66,6 +68,7 @@ namespace HallodocServices.Implementation
 
         public async Task<bool> AddFileData(AdminViewUpoads adminViewUpoads)
         {
+
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
             FileInfo fileInfo = new FileInfo(adminViewUpoads.formFile.FileName);
             string fileName = adminViewUpoads.formFile.FileName;
@@ -83,6 +86,30 @@ namespace HallodocServices.Implementation
             requestWise.CreatedDate = DateTime.Now;
             _fileRepo.AddData(requestWise);
             return true;
+        }
+
+        public void SendEmail(int requestid)
+        {
+            
+            MailMessage mm = new MailMessage("tatva.dotnet.arthgandhi@outlook.com", "arthgandhi7@gmail.com");
+            mm.Subject = "Agreement";
+            List<RequestWiseFile> requestWises = _fileRepo.GetAllFiles(requestid);
+            for(int i= 0;i<requestWises.Count;i++)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                path = Path.Combine(path, requestWises[i].FileName);
+                Attachment attachment = new Attachment(path);
+                mm.Attachments.Add(attachment);
+            }
+           
+            mm.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.office365.com";
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(userName: "tatva.dotnet.arthgandhi@outlook.com", password: "Liony@2002");
+            smtp.Port = 587;
+            smtp.Send(mm);
         }
     }
 }

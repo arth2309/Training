@@ -13,5 +13,7 @@ namespace HallodocServices.Interfaces
         Task<bool> DeleteFileService(int id);
         int GetReqIdService(int id);
         Task<bool> AddFileData(AdminViewUpoads adminViewUpoads);
+
+        void SendEmail(int requestid);
     }
 }

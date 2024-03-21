@@ -23,6 +23,13 @@ namespace HalloDoc.Repositories.Implementation
 
         }
 
+        public List<Physician> GetPhysiciansList()
+        {
+            return _DbContext.Physicians.ToList();
+
+        }
+
+
         public Physician GetPhysician(int? physicianid)
         {
             return _DbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianid);

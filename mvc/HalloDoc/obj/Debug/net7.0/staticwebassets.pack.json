@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees-21Feb24.pdf"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees-8March24.pdf",
+      "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees-8March24.pdf"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees_12Feb24.pdf.pdf",
       "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees_12Feb24.pdf.pdf"
     },
@@ -37,6 +41,10 @@
       "PackagePath": "staticwebassets\\Files\\Test Instructions.pdf.pdf"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Updated-Training-Plan-20March24.pdf",
+      "PackagePath": "staticwebassets\\Files\\Updated-Training-Plan-20March24.pdf"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (1).png.png",
       "PackagePath": "staticwebassets\\Files\\__ _Files_Fig56. Patient site 1.png (1).png.png"
     },
@@ -51,6 +59,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (9).png.png",
       "PackagePath": "staticwebassets\\Files\\__ _Files_Fig56. Patient site 1.png (9).png.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\~ _Files_Session 2 (1).txt(2).txt",
+      "PackagePath": "staticwebassets\\Files\\~ _Files_Session 2 (1).txt(2).txt"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\~ _Files_Test Instructions-2.pdf",
@@ -75,6 +87,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\AdminMyProfile.css",
       "PackagePath": "staticwebassets\\css\\AdminSite\\AdminMyProfile.css"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\AdminProviderInformation.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\AdminProviderInformation.css"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\CloseCase.css",
@@ -187,6 +203,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\GetVendorByProfession.js",
       "PackagePath": "staticwebassets\\js\\GetVendorByProfession.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\Providerinfo.js",
+      "PackagePath": "staticwebassets\\js\\Providerinfo.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\RegionWisePhysician.js",

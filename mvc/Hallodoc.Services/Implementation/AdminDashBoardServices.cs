@@ -9,6 +9,10 @@ using HallodocServices.ModelView;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Implementation;
 using HalloDoc.Repositories.PagedList;
+using System.Data;
+using ClosedXML.Excel;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace HallodocServices.Implementation
 {
@@ -175,9 +179,33 @@ namespace HallodocServices.Implementation
 
         }
 
+        public DataTable getData()
+        {
+            //Creating DataTable  
+            DataTable dt = new DataTable();
+            //Setiing Table Name  
+            dt.TableName = "RequestData";
+            //Add Columns  
 
+            dt.Columns.Add("Sr.", typeof(int));
+            dt.Columns.Add("First Name", typeof(string));
+            dt.Columns.Add("Last Name", typeof(string));
+            dt.Columns.Add("Phone Number", typeof(string));
+            dt.Columns.Add("Email", typeof(string));
+            dt.Columns.Add("status", typeof(int));
 
+            List<RequestClient> requestClients = _iRequestClientRepo.requestClient();
+            for(int i = 0;i<requestClients.Count;i++)
+            {
+                dt.Rows.Add(i + 1, requestClients[i].FirstName, requestClients[i].LastName, requestClients[i].PhoneNumber, requestClients[i].Email, requestClients[i].Request.Status);
+            }
+            dt.AcceptChanges();
+            return dt;
+        }
+
+       
+        }
 
     }
 
-}
+

@@ -1,0 +1,266 @@
+﻿@model HallodocServices.ModelView.AdminProviderInfo
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/adminproviderinformation.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <title>Document</title>
+    <script src="~/js/Providerinfo.js"></script>
+  
+</head>
+<body>
+
+
+    <div class="modal fade" id="ProviderMessage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Contact Your Provider</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1" style="font-size:small">Choose communication to send message</div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            SMS
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Email
+                        </label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+                    <label class="form-check-label" for="flexRadioDefault3">
+                        Both
+                    </label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="Message" style="height: 100px"></textarea>
+                    <label for="Message">Message</label>
+                </div>
+                    <input type="hidden" class=""  id="emailForContact" />
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-info text-white mx-1" onclick="SendEmail(emailForContact.value,Message.value)">Send</button>
+                        <button type="button" class="btn btn-outline-info mx-1" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="d-flex d-lg-flex">
+            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+        <div class="right">
+            <div class="intro"><p>Welcome:</p></div>
+            <div class="s intro"><span><b>test1</b></span></div>
+            <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>
+            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </div>
+    </header>
+
+
+    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
+                <li class="nav-item">
+                    <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
+        <li class="nav-item">
+            <a class="nav-link "><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"><b>Provider Location</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link"><b>Records</b></a>
+        </li>
+
+    </ul>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Notes</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+    <div class="ct">
+    <div class="d-flex justify-content-between w-100 mb-3">
+        <div>
+                <select class="form-select" aria-label="Default select example">
+                    <option value="0">All</option>
+                    <option value="1">MaryLand</option>
+                    <option value="2">District of Columbia</option>
+                    <option value="3">New York</option>
+                    <option value="3">Virginia</option>
+                </select>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary">Create Provider Account</button>
+        </div>
+
+    </div>
+   <div class="table-responsive">
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">
+                        stopped Notification
+                    </th>
+                    <th scope="col">Provider Name</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">On Call Status</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">
+                        <div class="d-flex justify-content-center">
+                        Actions
+                            </div>
+                        </th>
+
+
+                </tr>
+            </thead>
+
+            @if (Model.physicians.Count > 0)
+            {
+                <tbody>
+
+
+                    @foreach (var item in Model.physicians)
+                    {
+                            string role;
+                            if(item.RoleId == 1)
+                            {
+                                role = "Physician";
+                            }
+                            else if(item.RoleId == 2)
+                            {
+                                role = "Tester";
+                            }
+                            else
+                            {
+                                role = "MyNameis";
+                            }
+
+                            string status;
+                            if(item.Status == 1)
+                            {
+                                status = "pending";
+                            }
+                            else if(item.Status == 2)
+                            {
+                                status = "Active";
+                            }
+                            else
+                            {
+                                status = "close";
+                            }
+
+                        <tr>
+                            <td>
+                                <div class="d-flex" style="padding-left:20%;">
+                                <input type="checkbox" class="form-check-input">
+                                  </div>
+
+                            </td>
+                            <td> @Html.DisplayFor(modelitem => item.FirstName), @Html.DisplayFor(modelitem => item.LastName)</td>
+
+                            <td>@role</td>
+                            <td> Unavailable</td>
+                            <td>@status</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-outline-info mx-1" data-bs-toggle="modal" data-bs-target="#ProviderMessage" onclick="getEmail(@item.PhysicianId)">Contact</button>
+                                    <button type="button" class="btn btn-outline-info mx-1">Edit</button>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    }
+
+
+                </tbody>
+            }
+
+
+
+        </table>
+    </div>
+    </div>
+
+   
+
+</body>
+</html>

@@ -32,6 +32,7 @@ function removeValidation()
     $("#errorRegionForTransfer").text("");
     $("#errorPhysicianForTransfer").text("");
     $("#errorNotesForTransfer").text("");
+
 }
 
 function validateFormInput() {

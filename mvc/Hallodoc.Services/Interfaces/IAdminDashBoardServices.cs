@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace HallodocServices.Interfaces
 {
@@ -12,6 +13,8 @@ namespace HallodocServices.Interfaces
     {
         PaginatedList<NewState> getStates(int status,int currentPage, int typeid, int regionid,string name);
         AdminDashBoard newStates(int status,int currentPage, int typeid, int regionid, string name);
-       
+        DataTable getData();
+
+
     }
 }

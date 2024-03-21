@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color:#0dcaf0">
                 <h1 class="modal-title fs-5" id="exampleModalLabel" style="color:white">Transfer Request</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="removeValidation()"></button>
             </div>
             <div class="modal-body">
                 To transfer this request, search and select another physician
@@ -14,7 +14,7 @@
 
                     <div class="mt-3 form-floating mb-3">
 
-                        <select id="regionList1" onchange="loadPhysiciansByRegion1(this.value)" class="form-select" aria-label="Default select example" @*asp-for="RegionId"*@>
+                    <select id="regionList1" onchange="loadPhysiciansByRegion1(this.value)" onfocusout="validateFormInput()" class="form-select" aria-label="Default select example" @*asp-for="RegionId"*@>
                         </select>
                         <label for="regionList1">Narrow Search By Region</label>
                         <span @*asp-validation-for="RegionId"*@ id="errorRegionForTransfer" class="text-danger"></span>

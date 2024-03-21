@@ -22,6 +22,8 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/getphysiciansbyregion.js"></script>
+    <script src="~/js/validationAndIntegration.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script>
         function toggle() {
             if (document.getElementById('hide1').classList.contains('d-none')) {
@@ -51,6 +53,15 @@
     <title>Document</title>
 </head>
 <body>
+
+    @if (TempData["VUpdate"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["VUpdate"]');
+        </script>
+
+    }
 
     @if (Model.requesttypeid == 1)
     {
@@ -82,7 +93,7 @@
         heading = "View Reservation";
     }
 
-    @Html.Partial("~/Views/Shared/_AssignCasePopup.cshtml",Model.assignCases)
+    @Html.Partial("~/Views/Shared/_AssignCasePopup.cshtml")
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -120,7 +131,7 @@
 
     <header>
         <div class="d-flex d-lg-flex">
-            <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
         </div>
         <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
         <div class="right">
@@ -218,7 +229,7 @@
     <div class="mainct shadow">
         <form asp-controller="AdminSite" asp-action="ViewCase">
             <p class="h4 ">Patient information</p>
-
+            <input type="hidden" asp-for="requesttypeid" />
             <div class="mt-2">
                 <div>Confirmation Number</div>
                 <div style="color: rgb(23, 208, 214); font-size: large;"><strong>MD092723TETE0002</strong></div>
@@ -270,7 +281,7 @@
                     <button type="submit" id="hide1" name="submitbutton" value="method1" onclick="toggle()" class="btn btn-primary d-none h-100">
                         Submit
                     </button>
-                    <button type="button" id="disableButton" onclick="toggle()" class="btn btn-outline-info d-none h-100">
+                    <button type="button" id="disableButton" onclick="window.location.reload()" class="btn btn-outline-info d-none h-100">
                         Cancel
                         </button>
                     
@@ -313,6 +324,10 @@
                     <div class="mx-1"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cancel</button></div>
                 </div>
             </div>
+            <input type="hidden" asp-for="id" />
+            <input type="hidden" asp-for="Street" />
+            <input type="hidden" asp-for="City" />
+            <input type="hidden" asp-for="State"/>
         </form>
 
     </div>

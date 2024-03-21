@@ -22,6 +22,14 @@ namespace HalloDoc.Repositories.Implementation
             RequestClient requestClient = _dbcontext.RequestClients.FirstOrDefault(a=>a.RequestId == reqid);
             return requestClient ?? null;
         }
+
+        public List<RequestClient> requestClient()
+        {
+            List<RequestClient> requestClient = _dbcontext.RequestClients.Include(a=>a.Request).ToList();
+            return requestClient;
+        }
+
+
         public List<RequestClient> GetNewStateData(int status,int typeid,int regionid,string name)
         {
             if(typeid == 0 && regionid == 0 && name == null)

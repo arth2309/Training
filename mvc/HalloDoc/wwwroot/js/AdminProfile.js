@@ -61,3 +61,5 @@ function adminBillingInformation(adminid, ad1, ad2, city, state, zip, altphone)
         }
     });
 }
+
+

@@ -13,8 +13,36 @@
     <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/delete.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 </head>
 <body>
+
+    @if(TempData["Delete"]!=null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Delete"]');
+        </script>
+    }
+
+
+    @if (TempData["Upload"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Upload"]');
+        </script>
+    }
+
+    @if (TempData["UploadF"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.error('@TempData["UploadF"]');
+        </script>
+    }
+
     <header>
         <div class="d-flex d-lg-flex">
             <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
@@ -137,7 +165,7 @@
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-trash"></i></button></div>
                 <div><button type="button" class="btn btn-outline-info d-none d-lg-flex">Delete All</button></div>
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-link"></i></button></div>
-                <div><button type="button" class="btn btn-outline-info d-none d-lg-flex">Send Mail</button></div>
+                <a asp-controller="AdminSite" asp-action="ViewUploadsSendMail" asp-route-reqID="@Model.requestId"><button type="button" class="btn btn-outline-info d-none d-lg-flex">Send Mail</button></a>
 
 
             </div>
