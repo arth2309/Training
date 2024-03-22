@@ -38,7 +38,7 @@ namespace HalloDoc.Repositories.Implementation
             }
             else if (typeid == 0 && regionid == 0)
             {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.FirstName.Contains(name)).ToList();
+                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
             }
             else if (typeid == 0 && name == null)
             {
@@ -50,17 +50,17 @@ namespace HalloDoc.Repositories.Implementation
             }
             else if(regionid == 0)
             {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && a.FirstName.Contains(name)).ToList();
+                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
             }
             else if(typeid == 0)
             {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && a.FirstName.Contains(name)).ToList();
+                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
             }
             else if (name == null)
             {
                 return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && a.Request.RequestTypeId == typeid).ToList();
             }
-            return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && a.RegionId == regionid && a.FirstName.Contains(name)).ToList();
+            return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && a.RegionId == regionid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
 
             
         }

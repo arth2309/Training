@@ -14,6 +14,7 @@ function getEmail(id) {
             var emailforcontact = document.getElementById("emailForContact");
             emailforcontact.value = datalist.Email;
             console.log(emailforcontact.value);
+           
         }
     });
 }
@@ -33,3 +34,5 @@ function SendEmail(email,description) {
         }
     });
 }
+
+

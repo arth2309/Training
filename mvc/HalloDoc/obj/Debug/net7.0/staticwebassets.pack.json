@@ -77,6 +77,10 @@
       "PackagePath": "staticwebassets\\Files\\~ _Files_Test Instructions.pdf.pdf"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\AdminAccessRole.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\AdminAccessRole.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\AdminDashBoard.css",
       "PackagePath": "staticwebassets\\css\\AdminSite\\AdminDashBoard.css"
     },

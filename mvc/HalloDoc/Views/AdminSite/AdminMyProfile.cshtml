@@ -20,7 +20,7 @@
 <body>
     <header>
         <div class="d-flex d-lg-flex">
-            <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
         </div>
         <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
         <div class="right">
@@ -42,65 +42,60 @@
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
-                <li class="nav-item">
-                    <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
-                </li>
+        <div class="offcanvas-body align-items-center nav-tabs">
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
-                </li>
+            <a class="nav-link  text-black">DashBoard</a>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
-                </li>
+            <a class="nav-link text-black">Provider Location</a>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
-                </li>
+            <a class="nav-link border-dark text-black">My Profile</a>
 
-            </ul>
+
+
+            <a class="nav-link text-black">Providers</a>
+
+
+            <a class="nav-link text-black">Partners</a>
+
+
+            <a class="nav-link text-black">Access</a>
+
+
+            <a class="nav-link text-black">Records</a>
+
+
+
         </div>
     </div>
 
-    <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
         <li class="nav-item">
-            <a class="nav-link "><b>DashBoard</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"><b>Provider Location</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link"><b>My Profile</b></a>
+            <a class="nav-link text-black"><b>Provider Location</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Providers</b></a>
+            <a class="nav-link text-black active"><b>My Profile</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Partners</b></a>
+            <a class="nav-link text-black"><b>Providers</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Access</b></a>
+            <a class="nav-link text-black"><b>Partners</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Records</b></a>
+            <a class="nav-link text-black"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
         </li>
 
     </ul>
@@ -120,26 +115,26 @@
             Account Information
         </div>
         <div class="row">
-            <div class="col-12  col-md-6 form-floating pd">
+            <div class="col-12  col-md-6 form-floating mt-1">
                 <input asp-for="FirstName" type="text" class="form-control" id="UserName" placeholder="User Name" >
                 <label for="UserName">User Name</label>
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="col-12 col-md-6 form-floating pd">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <input asp-for="Password" type="text" class="form-control" id="Password" placeholder="Password">
                 <label for="Password">Password</label>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
-            <div class="col-12  col-md-6 form-floating pd">
+            <div class="col-12  col-md-6 form-floating mt-1">
                 <select  id="status" class="form-select" aria-label="status" >
                     <option value="1">Active</option>
                 </select>
                 <label for="status">Status</label>
                 
             </div>
-            <div class="col-12 col-md-6 form-floating pd">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <select  id="role" class="form-select" aria-label="role" >
                     <option value="1">Master Admin</option>
                 </select>
@@ -152,27 +147,27 @@
 
         </div>
 
-        <<div class="h5 mt-5">
+        <div class="h5 mt-3">
             Administrator Information
         </div>
         <div class="row">
-            <div class="col-12  col-md-6 form-floating pd">
+            <div class="col-12  col-md-6 form-floating mt-1">
                 <input asp-for="FirstName" type="text" class="form-control inp" id="FirstName" placeholder="Your First Name" >
                 <label for="FirstName">Your First Name</label>
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
-            <div class="col-12 col-md-6 form-floating pd">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <input asp-for="LastName" type="text" class="form-control inp" id="LastName" placeholder="Your Last Name" >
                 <label for="LastName">Your Last Name</label>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 form-floating pd">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <input asp-for="Email" type="email" class="form-control inp" id="Email" placeholder="Email address" >
                 <label for="Email">Email Address</label>
             </div>
-            <div class="col-12 col-md-6 form-floating pd">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <input asp-for="Email" type="email" class="form-control inp" id="EmailConfirmed" placeholder="Email address" >
                 <label for="EmailConfirmed">Confirm Email</label>
 
@@ -180,7 +175,7 @@
 
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 form-floating pd mobileinput">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <input asp-for="Mobile" type="tel" class="form-control inp ctel" id="patientMobileNumber" placeholder="" >
                 <span asp-validation-for="Mobile" class="text-danger"></span>
             </div>
@@ -188,16 +183,16 @@
         </div>
         <div class="d-flex justify-content-end mt-1 d-flex">
 
-            <button type="button" class="btn btn-info h-100" onclick="EditInfo()" id="enableButton">Edit</button>
-            <button type="button" class="btn btn-info sub " id="submit1" onclick="adminInformation(id.value, adminid.value, FirstName.value, LastName.value, Email.value,patientMobileNumber.value)">submit</button>
+            <button type="button" class="btn btn-info h-100 mx-1" onclick="EditInfo()" id="enableButton">Edit</button>
+            <button type="button" class="btn btn-info sub mx-1 " id="submit1" onclick="adminInformation(id.value, adminid.value, FirstName.value, LastName.value, Email.value,patientMobileNumber.value)">submit</button>
             <button type="button" class="btn btn-outline-info  mx-1" id="Cancel" onclick="EditInfo()">Cancel</button>
         </div>
 
-        <div class="h5 mt-5">
+        <div class="h5 mt-3">
             Mailing and Billing Information
         </div>
-        <div class="row">
-            <div class="col-12  col-md-6 form-floating pd">
+        <div class="row mt-1">
+            <div class="col-12  col-md-6 form-floating mt-1">
                 <input asp-for="address1" type="text" class="form-control inp2" id="Address1" placeholder="Address1" >
                 <label for="Address1">Address 1</label>
                 <span asp-validation-for="address1" class="text-danger"></span>
@@ -209,12 +204,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12  col-md-6 form-floating pd">
+            <div class="col-12  col-md-6 form-floating mt-1">
                 <input asp-for="City" type="text" class="form-control inp2" id="city" placeholder="city" >
                 <label for="city">city</label>
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
-            <div class="col-12 col-md-6 form-floating pd">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <select  id="state" class="form-select inp2" aria-label="state" >
                     <option value="15">Virginia</option>
                     <option value="16">District Of Columbia</option>
@@ -225,13 +220,13 @@
                
             </div>
         </div>
-        <div class="row">
-            <div class="col-12  col-md-6 form-floating pd">
+        <div class="row mt-1">
+            <div class="col-12  col-md-6 form-floating mt-1">
                 <input asp-for="ZipCode" type="text" class="form-control inp2" id="zipcode" placeholder="zipcode" >
                 <label for="zipcode">zipcode</label>
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
-            <div class="col-12 col-md-6 form-floating pd mobileinput">
+            <div class="col-12 col-md-6 form-floating mt-1">
                 <input asp-for="Mobile" type="tel" class="form-control inp2 ctel" id="patientMobileNumber2" placeholder="" >
                 <span asp-validation-for="Mobile" class="text-danger"></span>
             </div>
@@ -242,8 +237,8 @@
         </div>
         <div class="d-flex justify-content-end mt-1 d-flex mb-2">
 
-            <button type="button" class="btn btn-info h-100" onclick="EditInfoLocation()" id="enableButton2">Edit</button>
-            <button type="button" class="btn btn-info sub " id="submit2" onclick="adminBillingInformation(adminid.value, Address1.value, Address2.value, city.value, zipcode.value, patientMobileNumber2.value)">submit</button>
+            <button type="button" class="btn btn-info h-100 mx-1" onclick="EditInfoLocation()" id="enableButton2">Edit</button>
+            <button type="button" class="btn btn-info sub mx-1" id="submit2" onclick="adminBillingInformation(adminid.value, Address1.value, Address2.value, city.value, zipcode.value, patientMobileNumber2.value)">submit</button>
             <button type="button" class="btn btn-outline-info  mx-1" id="Cancel2" onclick="EditInfoLocation()">Cancel</button>
         </div>
     </div>

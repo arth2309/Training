@@ -1,0 +1,153 @@
+﻿@model HallodocServices.ModelView.AdminAccessRoleMV
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="~/css/adminsite/adminaccessrole.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/delete.js"></script>
+    <script src="~/js/AdminProfile.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <div class="d-flex d-lg-flex">
+            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+        <div class="right">
+            <div class="intro"><p>Welcome:</p></div>
+            <div class="s intro"><span><b>test1</b></span></div>
+            <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>
+            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </div>
+    </header>
+
+
+    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body align-items-center nav-tabs">
+
+
+            <a class="nav-link  text-black">DashBoard</a>
+
+            <a class="nav-link text-black">Provider Location</a>
+
+
+            <a class="nav-link border-dark text-black">My Profile</a>
+
+
+
+            <a class="nav-link text-black">Providers</a>
+
+
+            <a class="nav-link text-black">Partners</a>
+
+
+            <a class="nav-link text-black">Access</a>
+
+
+            <a class="nav-link text-black">Records</a>
+
+
+
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Provider Location</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black active"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
+        </li>
+
+    </ul>
+
+    <div class="he">
+        <div class="he1 h4">
+            <p>Create Role</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+
+    <div class="ct shadow">
+        <p class="h4 mt-1">Details</p>
+        <div class="row">
+            <div class="form-floating mt-2 col-12 col-lg-6 mt-1">
+                <input type="text" class="form-control" id="RoleName" placeholder="Role Name">
+                <label for="RoleName">Role Name</label>
+            </div>
+            <div class="col-12 col-lg-6 form-floating mt-1">
+                <select class="form-select form-select-lg" aria-label="Large select example" onchange="getMenu(this.value)">
+                <option value="0">All</option>
+                <option value="1">Admin</option>
+                <option value="2">Physicin</option>
+                <option value="3">Patient</option>
+
+            </select>
+            </div>
+
+        </div>
+        <div id="roleMenu">
+        @Html.Partial("~/Views/Shared/_MenuList.cshtml",Model.roleMenus)
+        </div>
+    </div>
+    <script>
+       
+        function getMenu(roleid) {
+            $.ajax({
+                url: '/AdminSite/GetMenuByRole',
+                type: 'GET',
+                data: {
+                    roleid: roleid
+                },
+
+                success: function (res) {
+                    $('#roleMenu').html(res);
+                    console.log(res);
+                }
+            });
+
+        }
+    </script>
+        </body>
+        </html>

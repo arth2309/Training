@@ -38,8 +38,9 @@ namespace HalloDoc.Controllers
         private readonly ICloseCaseServices _closeCaseServices;
         private readonly IAdminProfileServices _adminProfileServices;
         private readonly IAdminProviderInfoServices _adminProviderInfoServices;
+        private readonly IAdminAccessRoleServices _adminAccessRoleServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -56,6 +57,7 @@ namespace HalloDoc.Controllers
             _closeCaseServices = closeCaseServices;
             _adminProfileServices = adminProfileServices;
             _adminProviderInfoServices = adminProviderInfoServices;
+            _adminAccessRoleServices = adminAccessRoleServices;
         }
 
         public IActionResult AdminLogin()
@@ -191,6 +193,7 @@ namespace HalloDoc.Controllers
         [HttpGet]
         public async Task<IActionResult> CancelCase(string data)
         {
+            TempData["Cancel"] = "Request is Cancelled";
             var reqData = JsonSerializer.Deserialize<AdminCancelCase>(data);
             var result = _cancelCaseServices.CancelData(reqData);
             return Json(new { result });
@@ -201,6 +204,7 @@ namespace HalloDoc.Controllers
         [HttpGet]
         public async Task<IActionResult> AssignCase(string data)
         {
+            TempData["Assign"] = "Request is Assigned";
             var reqData = JsonSerializer.Deserialize<AdminAssignCase>(data);
             var result = _assignCaseServices.AdminAssignCase(reqData);
             return Json(new { result });
@@ -211,7 +215,7 @@ namespace HalloDoc.Controllers
         [HttpGet]
         public async Task<IActionResult> TransferCase(string data)
         {
-
+            TempData["Transfer"] = "Request is Transfered";
             var reqData = JsonSerializer.Deserialize<AdminAssignCase>(data);
             var result =  _assignCaseServices.AdminAssignCase(reqData);
             return Json(new { result });
@@ -220,7 +224,7 @@ namespace HalloDoc.Controllers
         [HttpGet]
         public async Task<IActionResult> BlockCase(string data)
         {
-
+            TempData["Block"] = "Request is Blocked";
             var reqData = JsonSerializer.Deserialize<AdminBlockCase>(data);
             var result = _blockCaseServices.AdminBlockCase(reqData);
             return Json(new { result });
@@ -280,6 +284,7 @@ namespace HalloDoc.Controllers
 
         public async Task<JsonResult> ClearCase(int RequestId)
         {
+            TempData["Clear"] = "Request is Cleared";
             _clearCaseServices.ClearCase(RequestId);
             return Json(new { redirect = Url.Action("AdminDashBoard") });
         }
@@ -305,9 +310,13 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> SendOrder(AdminSendOrder adminSendOrder)
         {
-            _sendOrderServices.AddDataServices(adminSendOrder);
-            TempData["Order"] = "Placed Order Successfully";
-            return RedirectToAction("AdminDashBoard");
+            if (ModelState.IsValid)
+            {
+                _sendOrderServices.AddDataServices(adminSendOrder);
+                TempData["Order"] = "Placed Order Successfully";
+                return RedirectToAction("AdminDashBoard");
+            }
+            return View(null);
         }
 
         public JsonResult GetRegions()
@@ -399,9 +408,9 @@ namespace HalloDoc.Controllers
             return Json(new { redirect = Url.Action("AdminDashBoard","AdminSite") });
         }
 
-        public IActionResult AdminMyProfile(int adminid = 1)
+        public IActionResult AdminMyProfile(int adminid)
         {
-            AdminProfile adminProfile = _adminProfileServices.GetAdminData(2);
+            AdminProfile adminProfile = _adminProfileServices.GetAdminData(adminid);
             return View(adminProfile);
            
         }
@@ -467,6 +476,20 @@ namespace HalloDoc.Controllers
             _adminProviderInfoServices.SendEmail(email, description);
             return Json(new { redirect = Url.Action("AdminProviderInformation") });
 
+        }
+
+        public IActionResult AdminAccessRole()
+        {
+            AdminAccessRoleMV adminAccessRoleMV = _adminAccessRoleServices.GetAccessRoleData();
+            return View(adminAccessRoleMV);
+        }
+
+        [HttpGet]
+
+        public IActionResult GetMenuByRole(int roleid) 
+        {
+            List<AdminRoleMenu> adminRoleMenus = _adminAccessRoleServices.GetAccessRoleDataById(roleid);
+            return PartialView("_MenuList", adminRoleMenus);
         }
 
     }

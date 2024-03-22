@@ -89,3 +89,6 @@ function cleartoggle() {
     window.sessionStorage.setItem("regionid", 0);
     window.sessionStorage.setItem("name",'');
 }
+
+
+

@@ -103,6 +103,46 @@
         </script>
 
     }
+    @if (TempData["Assign"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Assign"]');
+        </script>
+
+    }
+    @if (TempData["Transfer"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Transfer"]');
+        </script>
+
+    }
+    @if (TempData["Cancel"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Cancel"]');
+        </script>
+
+    }
+    @if (TempData["Block"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Block"]');
+        </script>
+
+    }
+    @if (TempData["Clear"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["Clear"]');
+        </script>
+
+    }
    
     <div class="modal fade" id="ClearCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -153,65 +193,60 @@
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
-                <li class="nav-item">
-                    <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
-                </li>
+        <div class="offcanvas-body align-items-center nav-tabs">
+            
+                
+                    <a class="nav-link border-dark text-black" >DashBoard</a>
+                
+                    <a class="nav-link text-black">Provider Location</a>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
-                </li>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2">My Profile</a>
+             
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
-                </li>
+                
+                    <a class="nav-link text-black">Providers</a>
+               
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
-                </li>
+                    <a class="nav-link text-black">Partners</a>
+                
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
-                </li>
+                    <a class="nav-link text-black">Access</a>
+                
 
-            </ul>
+                    <a class="nav-link text-black">Records</a>
+               
+
+            
         </div>
     </div>
 
-    <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
-        <li class="nav-item">
-            <a class="nav-link "><b>DashBoard</b></a>
+    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+        <li class="nav-item ">
+            <a class="nav-link active "><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"><b>Provider Location</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link"><b>My Profile</b></a>
+            <a class="nav-link text-black"><b>Provider Location</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Providers</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Partners</b></a>
+            <a class="nav-link text-black" ><b>Providers</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Access</b></a>
+            <a class="nav-link text-black"><b>Partners</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Records</b></a>
+            <a class="nav-link text-black"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
         </li>
 
     </ul>

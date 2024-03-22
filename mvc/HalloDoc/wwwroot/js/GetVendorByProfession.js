@@ -13,11 +13,14 @@ function loadProfession() {
             while (professionList.options.length > 0) {
                 professionList.remove(0);
             }
-            professionList.appendChild(new Option("Select Profession", "0"));
+         
+            professionList.appendChild(new Option("Select Profession", ""));
             listOfProfession.forEach(function (profession) {
                 professionList.appendChild(new Option(profession.ProfessionName, profession.HealthProfessionalId));
             });
             console.log(professionList);
+
+            
         },
         error: function (err) {
             console.error(err);
@@ -38,7 +41,7 @@ function loadBusinessList(professionTypeId) {
             while (businessList.options.length > 0) {
                 businessList.remove(0);
             }
-            businessList.appendChild(new Option("Select Business", "0"));
+            businessList.appendChild(new Option("Select Business", ""));
             listOfBusiness.forEach(function (business) {
                 businessList.appendChild(new Option(business.VendorName, business.VendorId));
             });
@@ -73,6 +76,10 @@ function loadBusinessData(vendorId) {
             contact.value = businessData.PhoneNumber;
             email.value = businessData.Email;
             faxNumber.value = businessData.FaxNumber;
+
+
+            import("~/lib/jquery-validation/dist/jquery.validate.min.js");
+            import("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js");
         },
         error: function (err) {
             console.error(err);

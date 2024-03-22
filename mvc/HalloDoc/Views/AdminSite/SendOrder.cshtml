@@ -10,6 +10,8 @@
     <link href="~/css/adminsite/viewcase.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/getvendorbyprofession.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
@@ -43,65 +45,60 @@
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            <ul class="nav nav-tabs " id="hide" style="padding-left: 2%;background-color: white; margin-bottom: 40px;">
-                <li class="nav-item">
-                    <a class="nav-link " style="color: rgb(0, 0, 0);">DashBoard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Provider Location</a>
-                </li>
+        <div class="offcanvas-body align-items-center nav-tabs">
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">My Profile</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Providers</a>
-                </li>
+            <a class="nav-link border-dark text-black">DashBoard</a>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Partners</a>
-                </li>
+            <a class="nav-link text-black">Provider Location</a>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Access</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" style="color: rgb(0, 0, 0);">Records</a>
-                </li>
+            <a class="nav-link text-black">My Profile</a>
 
-            </ul>
+
+
+            <a class="nav-link text-black">Providers</a>
+
+
+            <a class="nav-link text-black">Partners</a>
+
+
+            <a class="nav-link text-black">Access</a>
+
+
+            <a class="nav-link text-black">Records</a>
+
+
+
         </div>
     </div>
 
-    <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
         <li class="nav-item">
-            <a class="nav-link "><b>DashBoard</b></a>
+            <a class="nav-link text-black active"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"><b>Provider Location</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link"><b>My Profile</b></a>
+            <a class="nav-link text-black"><b>Provider Location</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Providers</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Partners</b></a>
+            <a class="nav-link text-black"><b>Providers</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Access</b></a>
+            <a class="nav-link text-black"><b>Partners</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Records</b></a>
+            <a class="nav-link text-black"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
         </li>
 
     </ul>
@@ -119,27 +116,29 @@
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt mb-3" >
                     <select asp-for="ProfessionTypeId" onchange="loadBusinessList(this.value)" id="professionList" class="form-select form-select-lg mb-3"  aria-label="Large select example" style="height:58px">
-                        <option selected value="0">Select Profession</option>
-                        
+                        <option selected value="">Select Profession</option>
                     </select>
+                    <span asp-validation-for="ProfessionTypeId" class="text-danger"></span>
 
                 </div>
                 <div class="col-md-12 col-lg-6 wt mb-3" >
                     <select asp-for= "VendorId" onchange="loadBusinessData(this.value)" id="businessList" class="form-select form-select-lg mb-3" aria-label="Large select example"  style="height:58px">
-                        <option selected value="0">Business</option>
-                        
+                        <option  value="">Business</option>
                     </select>
+                    <span asp-validation-for="VendorId" class="text-danger"></span>
                 </div>
             </div>
             <div class="row ">
                 <div class="col-md-12 col-lg-6 wt form-floating mb-3">
                     <input asp-for="PhoneNumber" type="tel" class="form-control iget BusinessContact" id="vendorMobileNumber"  style="height:58px">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-12 col-lg-6 wt form-floating mb-3">
 
                     <input asp-for="Email" type="email" class="form-control iget" id="email"
                            aria-describedby="emailHelp" placeholder="Enter email">
                      <label for="email">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
 
                 </div>
             </div>
@@ -150,12 +149,14 @@
                 <div class="col-12 col-lg-6 wt form-floating mb-3">
                     <input asp-for="FaxNumber" type="text" class="form-control dis" placeholder="Fax Number" id="faxnumber">
                     <label for="faxnumber">Fax Number</label>
+                    <span asp-validation-for="FaxNumber" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="form-floating mb-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" asp-for="Prescription"></textarea>
                 <label for="floatingTextarea2" style="top:-9px;left:-9px">Prescription or OrderDetails</label>
+                <span asp-validation-for="Prescription" class="text-danger"></span>
             </div>
 
             <div class="row ">
