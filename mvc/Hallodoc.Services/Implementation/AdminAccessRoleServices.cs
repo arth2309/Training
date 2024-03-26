@@ -13,10 +13,12 @@ namespace HallodocServices.Implementation
     public class AdminAccessRoleServices : IAdminAccessRoleServices
     {
         private readonly IMenuRepo _menuRepo;
+        private readonly IRoleRepo _roleRepo;
 
-        public  AdminAccessRoleServices (IMenuRepo menuRepo)
+        public  AdminAccessRoleServices (IMenuRepo menuRepo,IRoleRepo roleRepo)
         {
             _menuRepo = menuRepo;
+            _roleRepo = roleRepo;
         }
 
         public AdminAccessRoleMV GetAccessRoleData()
@@ -60,5 +62,69 @@ namespace HallodocServices.Implementation
             }
         }
 
+        public async Task<bool> CreateRole(AdminRoleMenu adminRoleMenu)
+        {
+
+            Role role = new();
+            role.Name = adminRoleMenu.Name;
+            role.CreatedDate = DateTime.Now;
+            role.AccountType = short.Parse(adminRoleMenu.Roleid.ToString());
+            role.CreatedBy = "1";
+            role.IsDeleted = new System.Collections.BitArray(1, false);
+            await _roleRepo.AddDataInRoleTable(role);
+
+
+            for (int i = 0;i <adminRoleMenu.MenuLists.Count();i++)
+            {
+                RoleMenu roleMenu = new();
+                roleMenu.MenuId = Int32.Parse(adminRoleMenu.MenuLists[i]);
+                roleMenu.RoleId = role.RoleId;
+                
+               await  _roleRepo.AddDataInRoleMenuTable(roleMenu);
+                
+            }
+
+            
+
+            return true;
+        }
+
+        public List<AdminAccountAccess> GetAdminAccountAccessList() 
+        {
+            List<AdminAccountAccess> adminAccountAccesses = new List<AdminAccountAccess>();
+            List<Role> roles = _roleRepo.GetRoleData();
+
+            if(roles!= null)
+            {
+                for(int i = 0;i < roles.Count;i++) 
+                {
+                    AdminAccountAccess adminAccountAccess = new AdminAccountAccess();
+                    adminAccountAccess.accounttype = roles[i].AccountType;
+                    adminAccountAccess.Name = roles[i].Name;
+                    adminAccountAccess.roleid = roles[i].RoleId;
+
+                    adminAccountAccesses.Add(adminAccountAccess);
+                }
+                return adminAccountAccesses;
+            }
+            return null;
+        }
+
+        public async Task<bool>  DeleteRole (int roleid)
+
+        {
+            List<RoleMenu> roleMenus = _roleRepo.GetRoleMenuDataByroleid(roleid);
+            for(int i = 0; i < roleMenus.Count;i++) 
+            {
+                RoleMenu roleMenu = roleMenus[i];
+                await _roleRepo.RemoveDataInRoleMenuTable(roleMenu);
+            }
+
+            Role role = _roleRepo.GetRoleById(roleid);
+            role.IsDeleted = new System.Collections.BitArray(1, true);
+            await _roleRepo.RemoveDataInRoleTable(role);
+            return true;
+
+        }
     }
 }

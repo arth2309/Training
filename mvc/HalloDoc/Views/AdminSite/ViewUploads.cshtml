@@ -143,11 +143,13 @@
         <div class="sp">
             check here to review and add files that you or the Client/Member has attached to the request.
         </div>
-        <div class="input-group mb-3 sp">
+        <div class="form-floating w-100 mb-3 sp">
             <form asp-controller="AdminSite" asp-action="ViewUploads" enctype="multipart/form-data">
+                <div class= "d-flex w-100">
             <input type="file" class="form-control" id="inputGroupFile02" asp-for="formFile">
             <input type="hidden" asp-for="requestId" />
-            <label class="input-group-text" for="inputGroupFile02"><button type="submit" >Upload</button></label>
+           <button class="btn btn-info text-white" type="submit">Upload</button>
+                </div>
             </form>
         </div>
         <div class="d-flex sp" style="justify-content: space-between;">
@@ -156,7 +158,7 @@
             </div>
             <div class="d-flex">
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-cloud-arrow-down"></i></button></div>
-                <div><button type="button" class="btn btn-outline-info d-none d-lg-flex">Download All</button></div>
+                <a asp-controller="AdminSite" asp-action="DownloadAll" asp-route-ReqId="@Model.requestId"><button type="button" class="btn btn-outline-info d-none d-lg-flex">Download All</button></a>
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-trash"></i></button></div>
                 <div><button type="button" class="btn btn-outline-info d-none d-lg-flex">Delete All</button></div>
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-link"></i></button></div>

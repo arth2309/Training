@@ -69,7 +69,7 @@
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SendOrder" asp-route-reqID="@item.RequestId"><i class="bi bi-card-checklist"></i> Orders</a></li>
                                 <li><a class="dropdown-item"><i class="bi bi-card-checklist"></i> Doctors Note</a></li>
-                                <li><a class="dropdown-item"><i class="bi bi-card-checklist"></i> Encounter</a></li>
+                                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EncounterForm" asp-route-reqID="@item.RequestId"><i class="bi bi-card-checklist"></i> Encounter</a></li>
                             </ul>
                         </div>
                     </td>

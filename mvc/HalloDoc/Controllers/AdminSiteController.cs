@@ -39,8 +39,9 @@ namespace HalloDoc.Controllers
         private readonly IAdminProfileServices _adminProfileServices;
         private readonly IAdminProviderInfoServices _adminProviderInfoServices;
         private readonly IAdminAccessRoleServices _adminAccessRoleServices;
+        private readonly IEncounterFormServices _encounterFormServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -58,6 +59,7 @@ namespace HalloDoc.Controllers
             _adminProfileServices = adminProfileServices;
             _adminProviderInfoServices = adminProviderInfoServices;
             _adminAccessRoleServices = adminAccessRoleServices;
+            _encounterFormServices = encounterFormServices;
         }
 
         public IActionResult AdminLogin()
@@ -267,7 +269,12 @@ namespace HalloDoc.Controllers
             return RedirectToAction("ViewUploads", new { reqID = adminViewUpoads.requestId });
         }
 
-        
+        public ActionResult DownloadAll(int ReqId)
+        {
+            byte[] fileBytes = _viewUploadsServices.GetFilesAsZip(ReqId);
+            return File(fileBytes, "application/zip", "files.zip");
+        }
+
 
         public IActionResult ViewUploadsSendMail(int reqID)
         {
@@ -490,6 +497,39 @@ namespace HalloDoc.Controllers
         {
             List<AdminRoleMenu> adminRoleMenus = _adminAccessRoleServices.GetAccessRoleDataById(roleid);
             return PartialView("_MenuList", adminRoleMenus);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> CreateRole(string data)
+        {
+            AdminRoleMenu reqData = JsonSerializer.Deserialize<AdminRoleMenu>(data);
+            await _adminAccessRoleServices.CreateRole(reqData);
+            TempData["AddRole"] = "Role added Successfully";
+            return Json(new { redirect = Url.Action("AdminAccountAccess") });
+        }
+
+        public IActionResult AdminAccountAccess()
+        {
+            List<AdminAccountAccess> adminAccountAccesses = _adminAccessRoleServices.GetAdminAccountAccessList();
+            return View(adminAccountAccesses);
+        }
+
+        public IActionResult EncounterForm(int reqID)
+        {
+            if(ModelState.IsValid) 
+            {
+                AdminEncounterForm adminEncounterForm = _encounterFormServices.GetEncounterFormData(reqID);
+                return View(adminEncounterForm);
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> DeleteRole(int RoleId)
+        {
+            await _adminAccessRoleServices.DeleteRole(RoleId);
+            TempData["DeleteRole"] = "Role Deleted Successfully";
+            return RedirectToAction("AdminAccountAccess");
         }
 
     }

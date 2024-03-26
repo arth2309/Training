@@ -50,6 +50,9 @@ builder.Services.AddScoped<IAdminProfileServices, AdminProfileServices>();
 builder.Services.AddScoped<IAdminProviderInfoServices, AdminProviderInfoServices>();
 builder.Services.AddScoped<IMenuRepo, MenuRepo>();
 builder.Services.AddScoped<IAdminAccessRoleServices, AdminAccessRoleServices>();
+builder.Services.AddScoped<IEncounterFormServices, EncounterFormServices>();
+builder.Services.AddScoped<IEncounterRepo, EncounterRepo>();
+builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 
 
 

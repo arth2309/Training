@@ -36,6 +36,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<EmailLog> EmailLogs { get; set; }
 
+    public virtual DbSet<Encounter> Encounters { get; set; }
+
     public virtual DbSet<HealthProfessional> HealthProfessionals { get; set; }
 
     public virtual DbSet<HealthProfessionalType> HealthProfessionalTypes { get; set; }
@@ -174,9 +176,16 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.EmailLogId).HasName("EmailLog_pkey");
         });
 
+        modelBuilder.Entity<Encounter>(entity =>
+        {
+            entity.HasKey(e => e.EncounterId).HasName("Encounter_pkey");
+        });
+
         modelBuilder.Entity<HealthProfessional>(entity =>
         {
             entity.HasKey(e => e.VendorId).HasName("HealthProfessionals_pkey");
+
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("now()");
 
             entity.HasOne(d => d.ProfessionNavigation).WithMany(p => p.HealthProfessionals).HasConstraintName("HealthProfessionals_Profession_fkey");
         });
@@ -184,6 +193,8 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<HealthProfessionalType>(entity =>
         {
             entity.HasKey(e => e.HealthProfessionalId).HasName("HealthProfessionalType_pkey");
+
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("now()");
         });
 
         modelBuilder.Entity<Menu>(entity =>

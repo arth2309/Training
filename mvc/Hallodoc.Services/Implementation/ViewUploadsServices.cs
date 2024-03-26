@@ -10,6 +10,7 @@ using HalloDoc.Repositories.DataModels;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Mail;
 using System.Net;
+using System.IO.Compression;
 
 namespace HallodocServices.Implementation
 {
@@ -91,7 +92,7 @@ namespace HallodocServices.Implementation
         public void SendEmail(int requestid)
         {
             
-            MailMessage mm = new MailMessage("tatva.dotnet.arthgandhi@outlook.com", "arthgandhi7@gmail.com");
+            MailMessage mm = new MailMessage("tatva.dotnet.arthgandhi@outlook.com", "arthgandhi151@gmail.com");
             mm.Subject = "Agreement";
             List<RequestWiseFile> requestWises = _fileRepo.GetAllFiles(requestid);
             for(int i= 0;i<requestWises.Count;i++)
@@ -110,6 +111,35 @@ namespace HallodocServices.Implementation
             smtp.Credentials = new NetworkCredential(userName: "tatva.dotnet.arthgandhi@outlook.com", password: "Liony@2002");
             smtp.Port = 587;
             smtp.Send(mm);
+        }
+
+        public byte[] GetFilesAsZip(int requestid)
+        {
+
+            List<RequestWiseFile> files = _fileRepo.GetAllFiles(requestid);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var file in files)
+                    {
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files", file.FileName);
+                        if (File.Exists(filePath))
+                        {
+                            // Add file to the zip archive
+                            
+                            string fileName = file.FileName;
+                            var zipEntry = archive.CreateEntry(fileName);
+                            using (var entryStream = zipEntry.Open())
+                            using (var fileStream = File.OpenRead(filePath))
+                            {
+                                fileStream.CopyTo(entryStream);
+                            }
+                        }
+                    }
+                }
+                return memoryStream.ToArray();
+            }
         }
     }
 }

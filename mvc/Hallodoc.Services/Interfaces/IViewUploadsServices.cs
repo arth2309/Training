@@ -15,5 +15,7 @@ namespace HallodocServices.Interfaces
         Task<bool> AddFileData(AdminViewUpoads adminViewUpoads);
 
         void SendEmail(int requestid);
+
+        byte[] GetFilesAsZip(int requestid);
     }
 }

@@ -11,5 +11,11 @@ namespace HallodocServices.Interfaces
     {
         AdminAccessRoleMV GetAccessRoleData();
         List<AdminRoleMenu> GetAccessRoleDataById(int id);
+
+        Task<bool> CreateRole(AdminRoleMenu adminRoleMenu);
+
+        List<AdminAccountAccess> GetAdminAccountAccessList();
+
+        Task<bool> DeleteRole(int roleid);
     }
 }
