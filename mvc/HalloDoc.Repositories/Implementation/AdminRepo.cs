@@ -31,5 +31,19 @@ namespace HalloDoc.Repositories.Implementation
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<AdminRegion> AddDataInAdminRegion(AdminRegion adminRegion)
+        {
+            _context.AdminRegions.Add(adminRegion);
+            await _context.SaveChangesAsync();
+            return adminRegion;
+        }
+
+        public async Task<Admin> AddDataInAdmin(Admin admin)
+        {
+            _context.Admins.Add(admin);
+            await _context.SaveChangesAsync();
+            return admin;
+        }
     }
 }

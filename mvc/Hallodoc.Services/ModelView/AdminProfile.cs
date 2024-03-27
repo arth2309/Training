@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HalloDoc.Repositories.DataModels;
 
 namespace HallodocServices.ModelView
 {
@@ -55,6 +56,16 @@ namespace HallodocServices.ModelView
         [StringLength(10)]
         [Required]
         public string? ZipCode { get; set; }
+
+        public List<Role>? roles { get;set; }
+
+        public List<Region>? regions { get; set; }
+
+        public List<int>? checkBoxes { get; set; }
+
+        public int?regionId { get; set; }
+
+        public int? roleId { get; set; }
 
     }
 }

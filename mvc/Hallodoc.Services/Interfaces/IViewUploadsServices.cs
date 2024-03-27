@@ -17,5 +17,7 @@ namespace HallodocServices.Interfaces
         void SendEmail(int requestid);
 
         byte[] GetFilesAsZip(int requestid);
+
+        byte[] GetSelectedFilesAsZip(List<string> files);
     }
 }

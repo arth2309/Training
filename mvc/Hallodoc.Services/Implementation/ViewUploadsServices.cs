@@ -141,5 +141,34 @@ namespace HallodocServices.Implementation
                 return memoryStream.ToArray();
             }
         }
+
+        public byte[] GetSelectedFilesAsZip(List<string> files)
+        {
+
+           
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var file in files)
+                    {
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files", file);
+                        if (File.Exists(filePath))
+                        {
+                            // Add file to the zip archive
+
+                            string fileName = file;
+                            var zipEntry = archive.CreateEntry(fileName);
+                            using (var entryStream = zipEntry.Open())
+                            using (var fileStream = File.OpenRead(filePath))
+                            {
+                                fileStream.CopyTo(entryStream);
+                            }
+                        }
+                    }
+                }
+                return memoryStream.ToArray();
+            }
+        }
     }
 }

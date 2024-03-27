@@ -155,6 +155,8 @@ function GetRequestIdBlock(requestId) {
             var name = "Patient: "+ datalist.FirstName + "," + datalist.LastName ;
             $('#blockCasePatientName').html(name);
             document.getElementById("RequestIdBlock").value = requestId;
+            var blocknotes = document.getElementById("ReasonForBlock");
+            blocknotes.value = "";
             console.log(document.getElementById("RequestIdBlock").value);
         }
     });
@@ -203,6 +205,8 @@ function removeValidationBlock() {
 
 
 function getRequestIdForCancelCase(requestID) {
+
+    
     $.ajax({
         url: '/AdminSite/LoadBlockCaseData',
         type: 'GET',
@@ -216,6 +220,8 @@ function getRequestIdForCancelCase(requestID) {
             $('#CancelCasePatientName').html(name);
             document.getElementById("RequestIdCancel").value = requestID;
             console.log(document.getElementById("RequestIdCancel").value);
+            var Notes = document.getElementById("descriptionCancel");
+            Notes.value = "";
         }
     });
 }

@@ -1,6 +1,7 @@
 ﻿function GetStatus(temp,currentPage,type) {
     var statusId = temp;
     window.sessionStorage.setItem("status", statusId);
+    window.sessionStorage.setItem("currentpage", currentPage);
     var typeid = window.sessionStorage.getItem("typeid");
     var regionid = window.sessionStorage.getItem("regionid");
     var name = window.sessionStorage.getItem("name");
@@ -66,6 +67,8 @@ function changetype(typeid)
     window.sessionStorage.setItem("typeid", typeid);
     var status = window.sessionStorage.getItem("status");
     GetStatus(status, 1, typeid);
+
+
     
 }
 

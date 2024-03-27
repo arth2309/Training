@@ -27,5 +27,7 @@ namespace HallodocServices.ModelView
         public List<RequestWiseFile> WiseFiles { get; set; }
 
         public IFormFile formFile { get; set; }
+
+        List<string>? files { get; set; }
     }
 }

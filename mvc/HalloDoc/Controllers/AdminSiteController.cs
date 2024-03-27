@@ -40,8 +40,9 @@ namespace HalloDoc.Controllers
         private readonly IAdminProviderInfoServices _adminProviderInfoServices;
         private readonly IAdminAccessRoleServices _adminAccessRoleServices;
         private readonly IEncounterFormServices _encounterFormServices;
+        private readonly ICreateAdminAccountServices _createAdminAccountServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -60,6 +61,7 @@ namespace HalloDoc.Controllers
             _adminProviderInfoServices = adminProviderInfoServices;
             _adminAccessRoleServices = adminAccessRoleServices;
             _encounterFormServices = encounterFormServices;
+            _createAdminAccountServices = createAdminAccountServices;
         }
 
         public IActionResult AdminLogin()
@@ -275,6 +277,15 @@ namespace HalloDoc.Controllers
             return File(fileBytes, "application/zip", "files.zip");
         }
 
+        [HttpPost]
+        public ActionResult DownloadSelected(List<string> filesChecked)
+        {
+
+            byte[] fileBytes = _viewUploadsServices.GetSelectedFilesAsZip(filesChecked);
+            return File(fileBytes, "application/zip", "files.zip");
+        }
+
+
 
         public IActionResult ViewUploadsSendMail(int reqID)
         {
@@ -462,6 +473,32 @@ namespace HalloDoc.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult ExportData(int statusid,int typeId,int regionId,string searchstr,int currentPage)
+        {
+            DataTable dt = _dashBoardServices.getExportData(statusid,currentPage,typeId,regionId,searchstr);
+            //Name of File  
+            string fileName = "Request.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+        public JsonResult SendLink(string FirstName,string LastName, string Email) 
+        {
+            _dashBoardServices.SendEmail(FirstName, LastName, Email);
+            var result = "good";
+            return Json(result);
+        }
+
         public IActionResult AdminProviderInformation()
         {
             AdminProviderInfo adminProviderInfo = _adminProviderInfoServices.GetProviderInfo();
@@ -530,6 +567,19 @@ namespace HalloDoc.Controllers
             await _adminAccessRoleServices.DeleteRole(RoleId);
             TempData["DeleteRole"] = "Role Deleted Successfully";
             return RedirectToAction("AdminAccountAccess");
+        }
+
+        public IActionResult CreateAdminAccount()
+        {
+            AdminProfile adminProfile = _createAdminAccountServices.GetLists();
+            return View(adminProfile);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAdminAccount(AdminProfile adminProfile)
+        {
+            await _createAdminAccountServices.AddData(adminProfile);
+            return RedirectToAction("AdminDashBoard");
         }
 
     }

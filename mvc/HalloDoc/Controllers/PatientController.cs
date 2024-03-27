@@ -13,6 +13,7 @@ using HallodocServices.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Azure;
 using HalloDoc.Repositories.Interfaces;
+using HalloDoc.Auth;
 
 namespace HalloDoc.Controllers
 {
@@ -104,7 +105,7 @@ namespace HalloDoc.Controllers
 
 
 
-        [Auth.CustomAuthorize("Patient")]
+        [CustomAuthorize("Patient")]
         public IActionResult PatientDashBoard()
         {
             if(Request.Cookies["id"] == null)
@@ -127,7 +128,7 @@ namespace HalloDoc.Controllers
 
         }
 
-        [Auth.CustomAuthorize("Patient")]
+        [CustomAuthorize("Patient")]
         public IActionResult PatientDashBoardDoc(int id)
         {
             
@@ -136,7 +137,7 @@ namespace HalloDoc.Controllers
             return View(patientShowDocuments);
         }
 
-        [Auth.CustomAuthorize("Patient")]
+        [CustomAuthorize("Patient")]
         public IActionResult UserProfile()
         {
 
@@ -162,7 +163,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Index","Users");
         }
 
-        [Auth.CustomAuthorize("Patient")]
+        [CustomAuthorize("Patient")]
         public IActionResult SubmitMe()
         {
             int id = Int32.Parse(Request.Cookies["UserId"]);
@@ -170,7 +171,7 @@ namespace HalloDoc.Controllers
             return View(showProfile);
         }
 
-        [Auth.CustomAuthorize("Patient")]
+        [CustomAuthorize("Patient")]
         public IActionResult SubmitSomeOne()
         {
             return View();

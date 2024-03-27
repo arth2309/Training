@@ -49,7 +49,7 @@ namespace HallodocServices.Implementation
             orderDetail.Email = adminSendOrder.Email;
             orderDetail.NoOfRefill = adminSendOrder.Refill;
             orderDetail.Prescription = adminSendOrder.Prescription;
-            _orderDetailRepo.AddData(orderDetail);
+            await _orderDetailRepo.AddData(orderDetail);
             return true;
         }
     }

@@ -22,6 +22,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         Role GetRoleById(int roleid);
 
+        List<Role> GetRoleDataForAdmin();
+
 
     }
 }

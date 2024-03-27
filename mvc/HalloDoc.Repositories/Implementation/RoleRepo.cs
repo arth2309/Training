@@ -71,5 +71,10 @@ namespace HalloDoc.Repositories.Implementation
             return true;
 
         }
+
+        public List<Role> GetRoleDataForAdmin()
+        {
+            return _context.Roles.Where(a=>a.AccountType == 1 && a.IsDeleted != new System.Collections.BitArray(1,true)).ToList();
+        }
     }
 }

@@ -13,6 +13,9 @@ using System.Data;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
+using static System.Net.WebRequestMethods;
 
 namespace HallodocServices.Implementation
 {
@@ -133,7 +136,7 @@ namespace HallodocServices.Implementation
                     if (requestClients[i].Request.PhysicianId != null)
                     {
                         Physician physician = _PhysicianRepo.GetPhysician(requestClients[i].Request.PhysicianId);
-                        newState.physicianName = "Dr" + physician.FirstName + " " + physician.LastName;
+                        newState.physicianName = "Dr." + physician.FirstName + " " + physician.LastName;
                     }
 
                     List<RequestStatusLog> requestStatusLogs = _requestStatusLogRepo.GetData(requestClients[i].RequestId);
@@ -203,8 +206,76 @@ namespace HallodocServices.Implementation
             return dt;
         }
 
-       
+        public DataTable getExportData(int status, int currentpage,int typeid,int regionid,string name)
+        {
+            //Creating DataTable  
+            DataTable dt = new DataTable();
+            //Setiing Table Name  
+            dt.TableName = "ImportData";
+            //Add Columns  
+
+            dt.Columns.Add("Sr.", typeof(int));
+            dt.Columns.Add("First Name", typeof(string));
+            dt.Columns.Add("Last Name", typeof(string));
+            dt.Columns.Add("Phone Number", typeof(string));
+            dt.Columns.Add("Email", typeof(string));
+            dt.Columns.Add("status", typeof(int));
+
+            List<RequestClient> requestClients;
+            if(status == 1) 
+            {
+                requestClients = _iRequestClientRepo.GetNewStateData(1, typeid, regionid, name);
+            }
+            else if(status == 2) 
+            {
+                requestClients = _iRequestClientRepo.GetNewStateData(2, typeid, regionid, name);
+            }
+            else if (status == 3)
+            {
+                requestClients = _iRequestClientRepo.GetNewStateData(4, typeid, regionid, name);
+                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(5, typeid, regionid, name));
+            }
+            else if (status == 4)
+            {
+                requestClients = _iRequestClientRepo.GetNewStateData(6, typeid, regionid, name);
+            }
+            else if (status == 5)
+            {
+                requestClients = _iRequestClientRepo.GetNewStateData(3, typeid, regionid, name);
+                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(7, typeid, regionid, name));
+                requestClients.AddRange(_iRequestClientRepo.GetNewStateData(8, typeid, regionid, name));
+            }
+            else
+            {
+                requestClients = _iRequestClientRepo.GetNewStateData(9, typeid, regionid, name);
+            }
+
+            int requestcount = currentpage;
+            for (int i = (requestcount-1)*5; i < requestClients.Count && i < (requestcount-1)*5+5; i++)
+            {
+                dt.Rows.Add(i + 1, requestClients[i].FirstName, requestClients[i].LastName, requestClients[i].PhoneNumber, requestClients[i].Email, requestClients[i].Request.Status);
+            }
+            dt.AcceptChanges();
+            return dt;
         }
+
+        public void SendEmail(string FirstName,string LastName, string email)
+        {
+            MailMessage mm = new MailMessage("tatva.dotnet.arthgandhi@outlook.com", email);
+            mm.Subject = "Create Request";
+            string url = "https://localhost:7091/Patient/SubmitRequest";
+            mm.Body = string.Format("Hi <p><a href=\"" + url+ "\">Create Request</a></p>");
+            mm.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.office365.com";
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(userName: "tatva.dotnet.arthgandhi@outlook.com", password: "Liony@2002");
+            smtp.Port = 587;
+            smtp.Send(mm);
+        }
+
+    }
 
     }
 

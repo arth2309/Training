@@ -11,5 +11,9 @@ namespace HalloDoc.Repositories.Interfaces
     {
         Admin GetAdminData(int adminid);
         Task<bool> UpdateTable(Admin admin);
+
+        Task<AdminRegion> AddDataInAdminRegion(AdminRegion adminRegion);
+
+        Task<Admin> AddDataInAdmin(Admin admin);
     }
 }

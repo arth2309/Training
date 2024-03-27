@@ -82,7 +82,11 @@ function loadRegion1() {
             listofregion.forEach(function (region) {
                 regionList.appendChild(new Option(region.Name, region.RegionId));
             });
-            console.log(regionList)
+            var physicianList = document.getElementById("PhysicianList1");
+            while (physicianList.options.length > 0) {
+                physicianList.remove(0);
+            }
+            physicianList.appendChild(new Option("Select Physician", ""));
         },
         error: function (err) {
             console.error(err);

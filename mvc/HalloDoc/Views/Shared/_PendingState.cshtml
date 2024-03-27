@@ -240,6 +240,9 @@
 
     </div>
 </div>
+
+@if(Model.TotalCount>0)
+{
 <ul class="pagination">
     @if (Model.HasPrevious)
     {
@@ -290,3 +293,4 @@
         <li class="page-item disabled"><button class="page-link">Next</button></li>
     }
 </ul>
+}

@@ -15,6 +15,10 @@ namespace HallodocServices.Interfaces
         AdminDashBoard newStates(int status,int currentPage, int typeid, int regionid, string name);
         DataTable getData();
 
+        DataTable getExportData(int status, int currentpage, int typeid, int regionid, string name);
+
+        void SendEmail(string FirstName, string LastName, string email);
+
 
     }
 }
