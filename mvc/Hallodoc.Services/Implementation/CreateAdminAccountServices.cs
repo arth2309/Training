@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.DataModels;
 using HallodocServices.Interfaces;
+using System.Collections;
+using DocumentFormat.OpenXml.Math;
+using DocumentFormat.OpenXml.EMMA;
 
 namespace HallodocServices.Implementation
 {
@@ -17,10 +20,12 @@ namespace HallodocServices.Implementation
         private readonly IAspNetUserRepo _userRepo;
         private readonly IAdminRepo _adminRepo;
 
-        public CreateAdminAccountServices(IRoleRepo roleRepo, IRegionRepo regionRepo)
+        public CreateAdminAccountServices(IRoleRepo roleRepo, IRegionRepo regionRepo, IAspNetUserRepo aspNetUserRepo,IAdminRepo adminRepo)
         {
             _roleRepo = roleRepo;
             _regionRepo = regionRepo;
+            _userRepo = aspNetUserRepo;
+            _adminRepo = adminRepo;
         }
 
         public AdminProfile GetLists()
@@ -42,7 +47,7 @@ namespace HallodocServices.Implementation
                 AspNetUser aspNetUser = new();
                 aspNetUser.PhoneNumber = adminProfile.Mobile;
                 aspNetUser.PasswordHash = adminProfile.Password;
-                aspNetUser.CreatedDate = DateTime.UtcNow;
+                aspNetUser.CreatedDate = DateTime.Now;
                 aspNetUser.Ip = "192.168.02";
                 aspNetUser.Email = adminProfile.Email;
                 aspNetUser.UserName = adminProfile.FirstName + " " + adminProfile.LastName;
@@ -66,12 +71,16 @@ namespace HallodocServices.Implementation
             admin.Address2 = adminProfile.address2;
             admin.AspNetUserId = 1;
             admin.CreatedBy = 1;
-            admin.CreatedDate = DateTime.UtcNow;
+            admin.CreatedDate = DateTime.Now;
             admin.FirstName = adminProfile.FirstName;
             admin.LastName = adminProfile.LastName;
             admin.City = adminProfile.City;
             admin.Email = adminProfile.Email;
             admin.RegionId = adminProfile.regionId;
+
+            
+
+           
             
             await _adminRepo.AddDataInAdmin(admin);
 

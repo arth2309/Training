@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.DataModels;
+using Microsoft.AspNetCore.Http;
 
 namespace HallodocServices.ModelView
 {
@@ -49,7 +50,7 @@ namespace HallodocServices.ModelView
         public string? City { get; set; }
 
         [StringLength(100)]
-        [Required]
+  
         public string? State { get; set; }
 
 
@@ -66,6 +67,20 @@ namespace HallodocServices.ModelView
         public int?regionId { get; set; }
 
         public int? roleId { get; set; }
+
+
+        
+        public IFormFile? Photo { get; set; }
+
+        public string? MedicalLicense { get; set; }
+
+        public string? NpiNumber { get; set; }
+
+        public string? BusinessName { get; set; }
+
+        public string? BusinessWebsite { get; set; }
+
+        public List<int>? documents {get; set;} 
 
     }
 }

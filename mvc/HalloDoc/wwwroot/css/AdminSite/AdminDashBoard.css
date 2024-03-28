@@ -51,13 +51,7 @@ header
     margin-right: 10px;
 }
 
-.ahref{
-    text-decoration: none;
-    color: rgb(41, 41, 41);
-    --bs-nav-link-color: rgb(31, 165, 165);
-    --bs-nav-link-hover-color: rgb(31, 165, 165);
-    --bs-nav-link-disabled-color: rgb(41, 41, 41);
-}
+
 
 .mainct
 {
@@ -74,63 +68,25 @@ header
 
 
 
-.ns{
-    background-color: #e9eaef;
-    color: #283f87;
-    border: 1px solid #283f87;
-    text-align: left;
-}
 
-.ps{
-    background-color: #e5f2f8;
-    color: #71b4cb;
-    border: 1px solid #71b4cb;
-    text-align: left;
-}
 
-.as{
-    background-color: #e9f0e8;
-    color: #558755;
-    border: 1px solid #558755;
-    text-align: left;
-}
 
-.cos{
-    background-color: #f7e6ee;
-    color: #944f75;
-    border: 1px solid #944f75;
-    text-align: left;
-}
-
-.tcs{
-    background-color: #e5eef5;
-    color: #618fb7;
-    border: 1px solid #618fb7;
-    text-align: left;
-}
-
-.ups{
-    background-color: #efeef4;
-    color: #967ac0;
-    border: 1px solid #967ac0;
-    text-align: left;
-}
 
 .table-success {
-    color:white;
+    --bs-table-color:white;
     --bs-table-bg: rgb(41, 167, 41);
 }
 
 .table-warning {
-    color: white;
+    --bs-table-color: white;
     --bs-table-bg: #ed9124;
 }
 .table-primary {
-    color: white;
+    --bs-table-color: white;
     --bs-table-bg: #3a3ae7;
 }
 .table-danger {
-    color: white;
+    --bs-table-color: white;
     --bs-table-bg: #c12121;
 }
 
@@ -151,7 +107,7 @@ header
     
 }
 
-}
+
 
 .bt1
 {
@@ -183,13 +139,74 @@ header
     padding-top: 12px;
 }
 
-.indigo {
-    background-color: #6610f2;
+
+
+.ns {
+    background-color: #e9eaef;
+    color: #283f87;
+    border: 1px solid #283f87;
+    text-align: left;
+    --bs-btn-hover-bg: #e9eaef;
+    --bs-btn-hover-border-color: #283f87;
 }
 
-@media only screen and (max-width:576px)
-{
+.ps {
+    background-color: #e5f2f8;
+    color: #71b4cb;
+    border: 1px solid #71b4cb;
+    text-align: left;
+    --bs-btn-hover-bg: #e5f2f8;
+    --bs-btn-hover-border-color: #71b4cb;
     
+}
+
+.as {
+    background-color: #e9f0e8;
+    color: #558755;
+    border: 1px solid #558755;
+    text-align: left;
+    --bs-btn-hover-bg: #e9f0e8;
+    --bs-btn-hover-border-color: #558755;
+}
+
+.cos {
+    background-color: #f7e6ee;
+    color: #944f75;
+    border: 1px solid #944f75;
+    text-align: left;
+    --bs-btn-hover-bg: #f7e6ee;
+    --bs-btn-hover-border-color: #944f75;
+}
+
+.tcs {
+    background-color: #e5eef5;
+    color: #618fb7;
+    border: 1px solid #618fb7;
+    text-align: left;
+    --bs-btn-hover-bg: #e5eef5;
+    --bs-btn-hover-border-color: #618fb7;
+}
+
+.ups {
+    background-color: #efeef4;
+    color: #967ac0;
+    border: 1px solid #967ac0;
+    text-align: left;
+    --bs-btn-hover-bg: #efeef4;
+    --bs-btn-hover-border-color: #967ac0;
+}
+.indigo {
+    background-color: #6610f2;
+    --bs-btn-hover-bg: #6610f2;
+}
+
+.nav-underline .nav-link.active, .nav-underline .show > .nav-link
+{
+    color:cadetblue;
+}
+
+
+@media only screen and (max-width:576px) {
     .Logout
     {
         display: none;

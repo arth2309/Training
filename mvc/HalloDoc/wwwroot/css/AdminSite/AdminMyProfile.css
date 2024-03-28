@@ -1,10 +1,17 @@
-﻿header {
+﻿body
+{
+    background-color:#fafafa;
+}
+
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-left: 10px;
     height: 90px;
     border: 1px solid #d1dcde94;
+    background-color:white;
 }
 
 
@@ -43,16 +50,24 @@
 .he {
     display: flex;
     justify-content: space-between;
-    width: 90%;
-    margin-left: 5%;
+    width: 60%;
+    margin-left: 20%;
     margin-top: 25px;
 }
 
 .ct 
 
 {
-    margin-left: 5%;
-    width: 90%;
+    margin-left: 20%;
+    width: 60%;
+    background-color:white;
+    padding-left:12px;
+    padding-right:12px;
+    border-radius:10px;
+}
+
+.nav-underline .nav-link.active, .nav-underline .show > .nav-link {
+    color: cadetblue;
 }
 
 

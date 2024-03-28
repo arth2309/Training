@@ -24,6 +24,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         List<Role> GetRoleDataForAdmin();
 
+        List<Role> GetRoleDataForPhysician();
+
 
     }
 }

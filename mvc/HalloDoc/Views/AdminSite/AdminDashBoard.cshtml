@@ -207,15 +207,15 @@
         </div>
         <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
         <div class="right">
-            <div class="intro"><p>Welcome:</p></div>
-            <div class="s intro"><span><b>test1</b></span></div>
+            <div class="intro mx-1"><p>Welcome:</p></div>
+            <div class="s intro mx-1"><span><b>test1</b></span></div>
             <div class="ilogout">
                 <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
             </div>
             <div class="Logout">
-                <button type="button" class="btn btn-outline-info">Logout</button>
+                <button type="button" class="btn btn-outline-info mx-1">Logout</button>
             </div>
-            <div class="theme" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+            <div class="theme mx-1" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
         </div>
     </header>
 
@@ -253,7 +253,7 @@
         </div>
     </div>
 
-    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+    <ul class="nav nav-underline d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
         <li class="nav-item ">
             <a class="nav-link active "><b>DashBoard</b></a>
         </li>
@@ -265,8 +265,13 @@
             <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link text-black" ><b>Providers</b></a>
+        <li class="nav-item dropdown">
+            <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                <li><a class="dropdown-item">Scheduling</a></li>
+                <li><a class="dropdown-item">Invoicing</a></li>
+            </ul>
         </li>
 
         <li class="nav-item">
@@ -288,7 +293,7 @@
        
         <div class="row container-fluid" style="margin:0px; padding:0px;">
             <div class="col-4 col-lg-2 b1 ">
-                <button class="bt btn w-100 shadow ns bg-primary text-white border-0" onclick="toggle(1)">
+                <button class="bt btn w-100 h-100 shadow ns bg-primary text-white border-0" onclick="toggle(1)">
                     <div>
                         <div class="d-flex">
                             <div class="ismall"><strong><i class="bi1 bi bi-plus-circle-dotted"></i> New</strong></div>
@@ -302,7 +307,7 @@
             </div>
            
             <div class="col-4 col-lg-2 b1">
-                <button class="bt btn w-100 ps" onclick="toggle(2)">
+                <button class="bt btn w-100 h-100 ps" onclick="toggle(2)">
                     <div>
                         <div class="d-flex">
                             <div class="ismall"><strong><i class="bi1 bi bi-hourglass-split"></i> PENDING</strong></div>
@@ -314,7 +319,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt btn w-100 as" onclick="toggle(3)">
+                <button class="bt btn w-100 h-100 as" onclick="toggle(3)">
                     <div>
                         <div class="d-flex">
                             <div class="ismall"><strong><i class="bi1 bi bi-check2-circle"></i> ACTIVE</strong></div>
@@ -328,7 +333,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt btn  w-100  cos" onclick="toggle(4)">
+                <button class="bt btn  w-100 h-100 cos" onclick="toggle(4)">
                     <div>
                         <div class="d-flex">
                             <div><strong class="ismall"><i class="bi1 bi bi-clock-history"></i> CONCLUDE</strong></div>
@@ -345,7 +350,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt btn w-100  tcs" onclick="toggle(5)">
+                <button class="bt btn w-100 h-100 tcs" onclick="toggle(5)">
                     <div>
                         <div class="d-flex">
                             <div class="ismall"><strong><i class="bi1 bi bi-alarm"></i> TO CLOSE</strong></div>
@@ -360,7 +365,7 @@
             </div>
 
             <div class="col-4 col-lg-2 b1">
-                <button class="bt btn w-100 ups" onclick="toggle(6)">
+                <button class="bt btn w-100 h-100 ups" onclick="toggle(6)">
                     <div>
                         <div class="d-flex">
                             <div class="ismall"><strong><i class="bi1 bi bi-coin"></i> UNPAID </strong></div>
@@ -381,16 +386,16 @@
                 <h5>Patients</h5><h6 id="statusname">(new)</h6>
             </div>
             <div class="d-flex" style="margin-left: auto;">
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex bt1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i>Send Link</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-pencil"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-pencil"></i>Create Requests</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-arrow-90deg-right"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex bt1" onclick="ExportData()"><i class="bi bi-arrow-90deg-right"></i>Export</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1"><i class="bi bi-arrow-up-right-square"></i></button>
-                <a asp-controller="AdminSite" asp-action="WriteDataToExcel"> <button type="button" class="btn btn-primary d-none d-lg-flex bt1"><i class="bi bi-arrow-up-right-square"></i>Export All</button> </a>
-                <button type="button" class="btn btn-primary d-flex d-lg-none "><i class="bi bi-person"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex "><i class="bi bi-person"></i>Request DTV Support</button>
+                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i></button>
+                <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i>Send Link</button>
+                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-pencil"></i></button>
+                <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1"><i class="bi bi-pencil"></i>Create Requests</button>
+                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-arrow-90deg-right"></i></button>
+                <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1" onclick="ExportData()"><i class="bi bi-arrow-90deg-right"></i>Export</button>
+                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-arrow-up-right-square"></i></button>
+                <a asp-controller="AdminSite" asp-action="WriteDataToExcel"> <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1"><i class="bi bi-arrow-up-right-square"></i>Export All</button> </a>
+                <button type="button" class="btn btn-primary d-flex d-lg-none mx-1"><i class="bi bi-person"></i></button>
+                <button type="button" class="btn btn-primary d-none d-lg-flex mx-1"><i class="bi bi-person"></i>Request DTV Support</button>
 
             </div>
         </div>
@@ -417,58 +422,53 @@
 
             <div class="d-flex col-8 col-lg-6 t">
                 <div class="pd">
-                    <button type="button" class="btn btn-outline-dark d-none d-lg-flex" onclick="changetype(0)">All</button>
+                    <button type="button" class="btn btn-outline-dark d-none d-lg-flex mx-1" onclick="changetype(0)">All</button>
                 </div>
-                <div class="pd rt" onclick="changetype(1)">
+                <div class="pd mx-1" onclick="changetype(1)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
                         <circle cx="6" cy="6" r="6" />
                     </svg>
                     Patient
                 </div>
-                <div class="pd" onclick="changetype(2)">
+                <div class="pd mx-1" onclick="changetype(2)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="yellow" class="bi bi-circle-fill" viewBox="0 0 16 16">
                         <circle cx="6" cy="6" r="6" />
                     </svg>
                     Family/Freind
                 </div>
-                <div class="pd" onclick="changetype(4)">
+                <div class="pd mx-1" onclick="changetype(4)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="red" class="bi bi-circle-fill" viewBox="0 0 16 16">
                         <circle cx="6" cy="6" r="6" />
                     </svg>
                     Business
                 </div>
-                <div class="pd" onclick="changetype(3)">
+                <div class="pd mx-1" onclick="changetype(3)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="blue" class="bi bi-circle-fill" viewBox="0 0 16 16">
                         <circle cx="6" cy="6" r="6" />
                     </svg>
                     Concierge
                 </div>
-                <div class="pd">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="purple" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                        <circle cx="6" cy="6" r="6" />
-                    </svg>
-                    VIP
-                </div>
+                
             </div>
         </div>
 
         <div class="cs" id="newstate">
-        @Html.Partial("~/Views/Shared/_NewState.cshtml",Model.AdminNewState);
+        @Html.Partial("~/Views/Shared/_NewState.cshtml",Model.AdminNewState)
         </div>
         <div class="cs" id="pendingstate" style="display:none">
-            @Html.Partial("~/Views/Shared/_PendingState.cshtml",Model.AdminNewState);
+            @Html.Partial("~/Views/Shared/_PendingState.cshtml",Model.AdminNewState)
         </div>
         <div class="cs" id="concludestate" style="display:none">
-            @Html.Partial("~/Views/Shared/_ConcludeState.cshtml",Model.AdminNewState);
+            @Html.Partial("~/Views/Shared/_ConcludeState.cshtml",Model.AdminNewState)
         </div>
         <div class="cs" id="activestate1" style="display:none">
-            @Html.Partial("~/Views/Shared/_ActiveState.cshtml",Model.AdminNewState);
+            @Html.Partial("~/Views/Shared/_ActiveState.cshtml",Model.AdminNewState)
         </div>
         <div class="cs" id="toclosestate" style="display:none">
-            @Html.Partial("~/Views/Shared/_ToCloseState.cshtml",Model.AdminNewState);
+            @Html.Partial("~/Views/Shared/_ToCloseState.cshtml",Model.AdminNewState)
         </div>
         <div class="cs" id="unpaidstate" style="display:none">
-            @Html.Partial("~/Views/Shared/_UnPaidState.cshtml",Model.AdminNewState);
+            @Html.Partial("~/Views/Shared/_UnPaidState.cshtml",Model.AdminNewState)
         </div>
 
        

@@ -6,18 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.DataModels;
 
-[PrimaryKey("UserId", "RoleId")]
 public partial class AspNetUserRole
 {
     [Key]
-    [StringLength(128)]
-    public string UserId { get; set; } = null!;
+    public int UserId { get; set; }
 
-    [Key]
-    [StringLength(128)]
-    public string RoleId { get; set; } = null!;
+    public int RoleId { get; set; }
+
+    [ForeignKey("RoleId")]
+    [InverseProperty("AspNetUserRoles")]
+    public virtual AspNetRole Role { get; set; } = null!;
 
     [ForeignKey("UserId")]
-    [InverseProperty("AspNetUserRoles")]
+    [InverseProperty("AspNetUserRole")]
     public virtual AspNetUser User { get; set; } = null!;
 }

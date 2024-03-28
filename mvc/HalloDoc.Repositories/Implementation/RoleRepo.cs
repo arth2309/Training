@@ -76,5 +76,9 @@ namespace HalloDoc.Repositories.Implementation
         {
             return _context.Roles.Where(a=>a.AccountType == 1 && a.IsDeleted != new System.Collections.BitArray(1,true)).ToList();
         }
+        public List<Role> GetRoleDataForPhysician()
+        {
+            return _context.Roles.Where(a => a.AccountType == 2 && a.IsDeleted != new System.Collections.BitArray(1, true)).ToList();
+        }
     }
 }

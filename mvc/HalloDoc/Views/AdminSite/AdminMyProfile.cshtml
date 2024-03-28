@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
         <li class="nav-item">
             <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
         </li>
@@ -79,11 +79,17 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-black active"><b>My Profile</b></a>
+            <a class="nav-link active"><b>My Profile</b></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Providers</b></a>
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                <li><a class="dropdown-item">Scheduling</a></li>
+                <li><a class="dropdown-item">Invoicing</a></li>
+            </ul>
         </li>
 
         <li class="nav-item">
@@ -91,7 +97,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-black"><b>Access</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
         </li>
 
         <li class="nav-item">

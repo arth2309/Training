@@ -134,11 +134,15 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<AspNetUserRole>(entity =>
         {
-            entity.HasOne(d => d.Role).WithMany()
+            entity.HasKey(e => e.UserId).HasName("AspNetUserRoles_pkey");
+
+            entity.Property(e => e.UserId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Role).WithMany(p => p.AspNetUserRoles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("AspNetUserRoles_RoleId_fkey");
 
-            entity.HasOne(d => d.User).WithMany()
+            entity.HasOne(d => d.User).WithOne(p => p.AspNetUserRole)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("AspNetUserRoles_UserId_fkey");
         });

@@ -89,7 +89,7 @@
         <div class="offcanvas-body align-items-center nav-tabs">
 
 
-            <a class="nav-link  text-black">DashBoard</a>
+            <a class="nav-link  text-black" >DashBoard</a>
 
             <a class="nav-link text-black">Provider Location</a>
 
@@ -104,7 +104,7 @@
             <a class="nav-link text-black">Partners</a>
 
 
-            <a class="nav-link text-black">Access</a>
+            <a class="nav-link text-black" >Access</a>
 
 
             <a class="nav-link text-black">Records</a>
@@ -114,32 +114,32 @@
         </div>
     </div>
 
-    <ul class="nav nav-tabs  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
+    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
         <li class="nav-item">
-            <a class="nav-link "><b>DashBoard</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"><b>Provider Location</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link"><b>My Profile</b></a>
+            <a class="nav-link text-black"><b>Provider Location</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Providers</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Partners</b></a>
+            <a class="nav-link active"><b>Providers</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Access</b></a>
+            <a class="nav-link text-black"><b>Partners</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link"><b>Records</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
         </li>
 
     </ul>
@@ -163,7 +163,7 @@
                 </select>
         </div>
         <div>
-            <button type="button" class="btn btn-primary">Create Provider Account</button>
+                <a asp-controller="AdminSite" asp-action="CreateProviderAccount">  <button type="button" class="btn btn-primary">Create Provider Account</button> </a>
         </div>
 
     </div>

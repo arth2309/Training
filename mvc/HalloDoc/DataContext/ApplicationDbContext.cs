@@ -24,6 +24,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
+    public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+
     public virtual DbSet<BlockRequest> BlockRequests { get; set; }
 
     public virtual DbSet<Business> Businesses { get; set; }
@@ -33,6 +35,8 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Concierge> Concierges { get; set; }
 
     public virtual DbSet<EmailLog> EmailLogs { get; set; }
+
+    public virtual DbSet<Encounter> Encounters { get; set; }
 
     public virtual DbSet<HealthProfessional> HealthProfessionals { get; set; }
 
@@ -126,23 +130,21 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<AspNetUser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("AspNetUsers_pkey");
+        });
 
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AspNetUserRole",
-                    r => r.HasOne<AspNetRole>().WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("AspNetUserRoles_RoleId_fkey"),
-                    l => l.HasOne<AspNetUser>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("AspNetUserRoles_UserId_fkey"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "RoleId").HasName("AspNetUserRoles_pkey");
-                        j.ToTable("AspNetUserRoles");
-                    });
+        modelBuilder.Entity<AspNetUserRole>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("AspNetUserRoles_pkey");
+
+            entity.Property(e => e.UserId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Role).WithMany(p => p.AspNetUserRoles)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("AspNetUserRoles_RoleId_fkey");
+
+            entity.HasOne(d => d.User).WithOne(p => p.AspNetUserRole)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("AspNetUserRoles_UserId_fkey");
         });
 
         modelBuilder.Entity<BlockRequest>(entity =>
@@ -178,9 +180,16 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.EmailLogId).HasName("EmailLog_pkey");
         });
 
+        modelBuilder.Entity<Encounter>(entity =>
+        {
+            entity.HasKey(e => e.EncounterId).HasName("Encounter_pkey");
+        });
+
         modelBuilder.Entity<HealthProfessional>(entity =>
         {
             entity.HasKey(e => e.VendorId).HasName("HealthProfessionals_pkey");
+
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("now()");
 
             entity.HasOne(d => d.ProfessionNavigation).WithMany(p => p.HealthProfessionals).HasConstraintName("HealthProfessionals_Profession_fkey");
         });
@@ -188,6 +197,8 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<HealthProfessionalType>(entity =>
         {
             entity.HasKey(e => e.HealthProfessionalId).HasName("HealthProfessionalType_pkey");
+
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("now()");
         });
 
         modelBuilder.Entity<Menu>(entity =>

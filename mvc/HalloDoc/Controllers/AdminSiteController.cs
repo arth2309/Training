@@ -41,8 +41,9 @@ namespace HalloDoc.Controllers
         private readonly IAdminAccessRoleServices _adminAccessRoleServices;
         private readonly IEncounterFormServices _encounterFormServices;
         private readonly ICreateAdminAccountServices _createAdminAccountServices;
+        private readonly ICreatePhysicianAccountServices _createPhysicianAccountServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -62,6 +63,7 @@ namespace HalloDoc.Controllers
             _adminAccessRoleServices = adminAccessRoleServices;
             _encounterFormServices = encounterFormServices;
             _createAdminAccountServices = createAdminAccountServices;
+            _createPhysicianAccountServices = createPhysicianAccountServices;
         }
 
         public IActionResult AdminLogin()
@@ -582,7 +584,21 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
+         public IActionResult CreateProviderAccount()
+        {
+            AdminProfile adminProfile = _createPhysicianAccountServices.GetLists();
+            return View(adminProfile);
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> CreateProviderAccount(AdminProfile adminProfile)
+        {
+            await _createPhysicianAccountServices.CreatePhysicianAccount(adminProfile);
+            return RedirectToAction("AdminDashBoard");
+        }
+
     }
+
 }
 
 

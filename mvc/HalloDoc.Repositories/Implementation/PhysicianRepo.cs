@@ -34,5 +34,28 @@ namespace HalloDoc.Repositories.Implementation
         {
             return _DbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianid);
         }
+
+        public async Task<Physician> AddDatainPhysician(Physician physician)
+        {
+            _DbContext.Physicians.Add(physician);
+            await _DbContext.SaveChangesAsync();
+            return physician;
+        }
+
+        public async Task<PhysicianRegion> AddDataInPhysicianRegion(PhysicianRegion physicianRegion)
+        {
+            _DbContext.PhysicianRegions.Add(physicianRegion);
+            await _DbContext.SaveChangesAsync();
+            return physicianRegion;
+        }
+
+        public async Task<PhysicianNotification> AddDataInPhysicianNotification(PhysicianNotification physicianNotification)
+        {
+            _DbContext.PhysicianNotifications.Add(physicianNotification);
+            await _DbContext.SaveChangesAsync();
+            return physicianNotification;
+        }
+
+
     }
 }

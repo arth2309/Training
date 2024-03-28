@@ -54,6 +54,7 @@ builder.Services.AddScoped<IEncounterFormServices, EncounterFormServices>();
 builder.Services.AddScoped<IEncounterRepo, EncounterRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<ICreateAdminAccountServices, CreateAdminAccountServices>();
+builder.Services.AddScoped<ICreatePhysicianAccountServices, CreatePhysicianAccountServices>();
 
 
 

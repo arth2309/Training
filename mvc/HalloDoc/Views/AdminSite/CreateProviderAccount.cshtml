@@ -1,0 +1,324 @@
+﻿@model HallodocServices.ModelView.AdminProfile
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="~/css/adminsite/adminmyprofile.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="~/css/adminsite/admindashboard.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/delete.js"></script>
+    <script src="~/js/AdminProfile.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <div class="d-flex d-lg-flex">
+            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+        <div class="right">
+            <div class="intro"><p>Welcome:</p></div>
+            <div class="s intro"><span><b>test1</b></span></div>
+            <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>
+            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </div>
+    </header>
+
+
+    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body align-items-center nav-tabs">
+
+
+            <a class="nav-link  text-black">DashBoard</a>
+
+            <a class="nav-link text-black">Provider Location</a>
+
+
+            <a class="nav-link border-dark text-black">My Profile</a>
+
+
+
+            <a class="nav-link text-black">Providers</a>
+
+
+            <a class="nav-link text-black">Partners</a>
+
+
+            <a class="nav-link text-black border-black">Access</a>
+
+
+            <a class="nav-link text-black">Records</a>
+
+
+
+        </div>
+    </div>
+
+    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Provider Location</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link active"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
+        </li>
+
+    </ul>
+
+    <div class="he">
+        <div class="he1 h4">
+            <p>Create Provider Account</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+
+    <div class="ct shadow mb-2 pb-2 pt-2">
+
+        <div class="h5">
+            Account Information
+        </div>
+        <form asp-controller="AdminSite" asp-action="CreateProviderAccount" enctype="multipart/form-data">
+            <div class="row mt-3">
+                <div class="col-12  col-md-4 form-floating mt-1">
+                    <input disabled type="text" class="form-control" id="UserName" placeholder="User Name">
+                    <label for="UserName">User Name</label>
+
+                </div>
+                <div class="col-12 col-md-4 form-floating mt-1">
+                    <input asp-for="Password" type="text" class="form-control" id="Password" placeholder="Password">
+                    <label for="Password">Password</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="col-12 col-md-4 form-floating mt-1">
+                    <select class="form-select inp2" aria-label="Role" asp-for="roleId">
+                        <option value="">Select Role</option>
+                        @foreach (var item in Model.roles)
+                        {
+                            <option value="@item.RoleId">@item.Name</option>
+                        }
+                    </select>
+                    <label for="role">State</label>
+
+                </div>
+            </div>
+
+
+            <div class="h5 mt-3">
+                Administrator Information
+            </div>
+            <div class="row mt-3">
+               <div class="col-12  col-md-6 form-floating mt-1">
+                    <input asp-for="FirstName" type="text" class="form-control inp" id="FirstName" placeholder="Your First Name">
+                    <label for="FirstName">Your First Name</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <input asp-for="LastName" type="text" class="form-control inp" id="LastName" placeholder="Your Last Name">
+                    <label for="LastName">Your Last Name</label>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <input asp-for="Email" type="email" class="form-control inp" id="Email" placeholder="Email address">
+                    <label for="Email">Email Address</label>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <input asp-for="Mobile" type="tel" class="form-control inp ctel" id="patientMobileNumber" placeholder="">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <input asp-for="MedicalLicense" type="text" class="form-control inp" id="Email" placeholder="Medical License">
+                    <span asp-validation-for="MedicalLicense" class="text-danger"></span>
+                    <label for="Email">Medical License</label>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <input asp-for="NpiNumber" type="text" class="form-control inp ctel" id="npiNumber" placeholder="NPI Number">
+                    <span asp-validation-for="NpiNumber" class="text-danger"></span>
+                    <label for="npiNumber">NPI Number</label>
+                </div>
+
+            </div>
+
+            <div class="row">
+                
+                <div class="col-12 col-md-6 d-flex flex-wrap">
+                    @foreach (var item in Model.regions)
+                    {
+                        <div class="form-check mx-1">
+                            <input class="form-check-input" name="checkBoxes" type="checkbox" value="@item.RegionId" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                @item.Name
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+            <div class="h5 mt-3">
+                Mailing and Billing Information
+            </div>
+            <div class="row mt-2">
+                <div class="col-12  col-md-6 form-floating mt-1">
+                    <input asp-for="address1" type="text" class="form-control inp2" id="Address1" placeholder="Address1">
+                    <label for="Address1">Address 1</label>
+                    <span asp-validation-for="address1" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pd">
+                    <input asp-for="address2" type="text" class="form-control inp2" id="Address2" placeholder="Address2">
+                    <label for="Address2">Address 2</label>
+                    <span asp-validation-for="address2" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12  col-md-6 form-floating mt-1">
+                    <input asp-for="City" type="text" class="form-control inp2" id="city" placeholder="city">
+                    <label for="city">city</label>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <select id="state" class="form-select inp2" aria-label="state" asp-for="regionId">
+                        <option value="">Select Region</option>
+                        @foreach (var item in Model.regions)
+                        {
+                            <option value="@item.RegionId">@item.Name</option>
+                        }
+                    </select>
+                    <label for="role">State</label>
+
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-12  col-md-6 form-floating mt-1">
+                    <input asp-for="ZipCode" type="text" class="form-control inp2" id="zipcode" placeholder="zipcode">
+                    <label for="zipcode">zipcode</label>
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-1">
+                    <input asp-for="Mobile" type="tel" class="form-control inp2 ctel" id="patientMobileNumber2" placeholder="">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="h5 mt-3">
+                Provider Profile
+            </div>
+            <div class="row mt-2">
+                <div class="col-12  col-md-6 form-floating mt-1">
+                    <input asp-for="BusinessName" type="text" class="form-control inp2" id="zipcode" placeholder="Business Name">
+                    <label for="zipcode">Business Name</label>
+                    <span asp-validation-for="BusinessName" class="text-danger"></span>
+                </div>
+                <div class="col-12  col-md-6 form-floating mt-1">
+                    <input asp-for="BusinessWebsite" type="text" class="form-control inp2" id="zipcode" placeholder="Business Website">
+                    <label for="zipcode">Business Website</label>
+                    <span asp-validation-for="BusinessWebsite" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-1 col-12  col-md-6">
+                <div class="input-group  ">
+                    <input type="file" class="form-control" id="file-picker" asp-for="Photo">
+                    <button class="btn btn-info">
+                        <i class="bi bi-cloud-arrow-up"></i>
+                        Upload
+                    </button>
+                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                </div>
+                </div>
+                <hr>
+            <div class="h5 mt-2">
+                OnBoarding
+            </div>
+            <div class="d-flex justify-content-between mt-2" style="padding-right:10%">
+                <div class="form-check mx-1">
+                    <input class="form-check-input" name="documents" type="checkbox" value="1" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Independent Contractor Agreement
+                    </label>
+                </div>
+                <button type="button" class="btn btn-info text-white"> Upload</button>
+                    </div>
+            <div class="d-flex justify-content-between mt-1" style="padding-right:10%">
+                <div class="form-check mx-1">
+                    <input class="form-check-input" name="documents" type="checkbox" value="2" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Background Check
+                    </label>
+                </div>
+                <button type="button" class="btn btn-info text-white"> Upload</button>
+            </div>
+            <div class="d-flex justify-content-between mt-1" style="padding-right:10%">
+                <div class="form-check mx-1" >
+                    <input class="form-check-input" name="documents" type="checkbox" value="3" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        HPAA Compliance
+                    </label>
+                </div>
+                <button type="button" class="btn btn-info text-white"> Upload</button>
+            </div>
+            <div class="d-flex justify-content-between mt-1" style="padding-right:10%">
+                <div class="form-check mx-1">
+                    <input class="form-check-input" name="documents" type="checkbox" value="4" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Non Disclosure Agreement
+                    </label>
+                </div>
+                <button type="button" class="btn btn-info text-white"> Upload</button>
+            </div>
+               
+            <hr>
+
+            <div class="d-flex justify-content-end mt-1 d-flex mb-2">
+                <button type="submit" class="btn btn-success text-white">Create Account</button>
+
+            </div>
+        </form>
+    </div>
+
+
+
+
+</body>
+</html>
