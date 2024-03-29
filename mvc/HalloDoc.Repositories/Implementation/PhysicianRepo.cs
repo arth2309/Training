@@ -23,6 +23,16 @@ namespace HalloDoc.Repositories.Implementation
 
         }
 
+        public List<Physician> GetPhysiciansListForScheduling(int regionId)
+        {
+            if(regionId == 0)
+            {
+                return _DbContext.Physicians.ToList();
+            }
+            return _DbContext.Physicians.Where(a => a.RegionId == regionId).ToList();
+
+        }
+
         public List<Physician> GetPhysiciansList()
         {
             return _DbContext.Physicians.ToList();

@@ -5,12 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.DataModels;
 
-namespace HalloDoc.Repositories.Interfaces
+namespace HallodocServices.ModelView
 {
-    public interface IPatientLoginRepo
+    public class SchedulingList
     {
-        int ValidateUser(string email, string password);
-        string GetUserName(int id);
-
+        public List<Physician>?  GetPhysicians { get; set; }
     }
 }

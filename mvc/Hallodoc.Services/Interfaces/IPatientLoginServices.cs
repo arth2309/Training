@@ -11,5 +11,7 @@ namespace HallodocServices.Interfaces
     public interface IPatientLoginServices
     {
         int ValidateUser(PatientLogin patientlogin);
+
+        String GetUserName(int id);
     }
 }

@@ -208,7 +208,7 @@
         <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
         <div class="right">
             <div class="intro mx-1"><p>Welcome:</p></div>
-            <div class="s intro mx-1"><span><b>test1</b></span></div>
+            <div class="s intro mx-1"><span><b>@Html.Raw(ViewBag.AdminName)</b></span></div>
             <div class="ilogout">
                 <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
             </div>
@@ -269,7 +269,7 @@
             <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
-                <li><a class="dropdown-item">Scheduling</a></li>
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
                 <li><a class="dropdown-item">Invoicing</a></li>
             </ul>
         </li>

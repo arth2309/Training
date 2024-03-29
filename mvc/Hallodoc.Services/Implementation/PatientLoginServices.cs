@@ -23,5 +23,11 @@ namespace HallodocServices.Implementation;
         return id;
     }
 
+    public String GetUserName(int id)
+    {
+        string UserName = _patientLoginRepo.GetUserName(id);
+        return UserName;
+    }
+
 }
 

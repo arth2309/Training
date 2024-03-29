@@ -18,6 +18,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using ClosedXML.Excel;
 using System.Data;
+using HalloDoc.Auth;
 
 namespace HalloDoc.Controllers
 {
@@ -42,8 +43,10 @@ namespace HalloDoc.Controllers
         private readonly IEncounterFormServices _encounterFormServices;
         private readonly ICreateAdminAccountServices _createAdminAccountServices;
         private readonly ICreatePhysicianAccountServices _createPhysicianAccountServices;
+        private readonly ISchedulingServices _schedulingServices;
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices)
+
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -64,6 +67,7 @@ namespace HalloDoc.Controllers
             _encounterFormServices = encounterFormServices;
             _createAdminAccountServices = createAdminAccountServices;
             _createPhysicianAccountServices = createPhysicianAccountServices;
+            _schedulingServices = schedulingServices;
         }
 
         public IActionResult AdminLogin()
@@ -79,6 +83,7 @@ namespace HalloDoc.Controllers
                 return View(patientLogin);
             }
             int id = _loginServices.ValidateUser(patientLogin);
+           
 
 
             if (id == 0)
@@ -89,6 +94,8 @@ namespace HalloDoc.Controllers
             }
             else
             {
+                string AdminName = _loginServices.GetUserName(id);
+                Response.Cookies.Append("AdminName", AdminName);
                 string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
                 Response.Cookies.Append("token", token);
                 TempData["success"] = "Successfully Login";
@@ -102,7 +109,7 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Admin")]
         public IActionResult AdminDashBoard()
         {
-
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1,1,0,0,null);
             return View(adminDashBoard);
         }
@@ -148,9 +155,10 @@ namespace HalloDoc.Controllers
 
         }
 
-        [Auth.CustomAuthorize("Admin")]
+        [CustomAuthorize("Admin")]
         public IActionResult ViewCase(int rcid)
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminViewCase adminViewCase = _viewCaseServices.GetAdminViewCaseData(rcid);
             return View(adminViewCase);
         }
@@ -178,6 +186,7 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int reqid)
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             ViewBag.ViewNotesReqid = reqid;
             AdminViewNote adminViewNote = _viewNoteServices.GetViewNote(reqid);
             return View(adminViewNote);
@@ -236,10 +245,11 @@ namespace HalloDoc.Controllers
             return Json(new { result });
         }
 
-        [Auth.CustomAuthorize("Admin")]
+        [CustomAuthorize("Admin")]
         public IActionResult ViewUploads(int reqID)
 
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminViewUpoads adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
             return View(adminViewUpoads);
         }
@@ -298,6 +308,7 @@ namespace HalloDoc.Controllers
         public IActionResult SendOrder(int reqID)
 
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             ViewBag.reqID = reqID;
             return View();
         }
@@ -405,6 +416,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult CloseCase(int reqID)
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminCloseCase adminClose = _closeCaseServices.GetCloseCaseData(reqID);
             return View(adminClose);
         }
@@ -430,6 +442,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminMyProfile(int adminid)
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminProfile adminProfile = _adminProfileServices.GetAdminData(adminid);
             return View(adminProfile);
            
@@ -503,6 +516,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminProviderInformation()
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminProviderInfo adminProviderInfo = _adminProviderInfoServices.GetProviderInfo();
             return View(adminProviderInfo);
         }
@@ -526,6 +540,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminAccessRole()
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminAccessRoleMV adminAccessRoleMV = _adminAccessRoleServices.GetAccessRoleData();
             return View(adminAccessRoleMV);
         }
@@ -549,14 +564,17 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminAccountAccess()
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             List<AdminAccountAccess> adminAccountAccesses = _adminAccessRoleServices.GetAdminAccountAccessList();
             return View(adminAccountAccesses);
         }
 
         public IActionResult EncounterForm(int reqID)
         {
-            if(ModelState.IsValid) 
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            if (ModelState.IsValid) 
             {
+
                 AdminEncounterForm adminEncounterForm = _encounterFormServices.GetEncounterFormData(reqID);
                 return View(adminEncounterForm);
             }
@@ -586,6 +604,7 @@ namespace HalloDoc.Controllers
 
          public IActionResult CreateProviderAccount()
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminProfile adminProfile = _createPhysicianAccountServices.GetLists();
             return View(adminProfile);
         }
@@ -595,6 +614,34 @@ namespace HalloDoc.Controllers
         {
             await _createPhysicianAccountServices.CreatePhysicianAccount(adminProfile);
             return RedirectToAction("AdminDashBoard");
+        }
+
+        public IActionResult Scheduling()
+        {
+           ViewBag.AdminName = Request.Cookies["AdminName"];
+            AdminScheduling adminScheduling = _schedulingServices.GetData(0);
+            return View(adminScheduling);
+        }
+
+        public IActionResult SchedulingFilter(int Scheduling,int RegionId)
+        {
+            SchedulingList schedulingList = _schedulingServices.GetSchedulingList(RegionId);
+            if(Scheduling == 1)
+            {
+                return PartialView("_DayWiseScheduling",schedulingList);
+            }
+            else if (Scheduling == 2)
+            {
+                return PartialView("_WeekWiseScheduling",schedulingList);
+            }
+            if (Scheduling == 3)
+            {
+                return PartialView("_MonthWiseScheduling");
+            }
+            else
+            {
+                return PartialView("_DayWiseScheduling", schedulingList);
+            }
         }
 
     }

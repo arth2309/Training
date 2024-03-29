@@ -23,4 +23,10 @@ public class PatientLoginRepo : IPatientLoginRepo
         AspNetUser userfromdb = _dbcontext.AspNetUsers.FirstOrDefault(user => user.Email == email && user.PasswordHash == password);
         return userfromdb?.Id??0;
     }
+
+    public string GetUserName(int id)
+    {
+        string username = _dbcontext.AspNetUsers.FirstOrDefault(a => a.Id == id).UserName;
+        return username;
+    }
 }

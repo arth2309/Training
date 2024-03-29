@@ -20,6 +20,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<PhysicianNotification> AddDataInPhysicianNotification(PhysicianNotification physicianNotification);
 
+        List<Physician> GetPhysiciansListForScheduling(int regionId);
+
 
     }
 }

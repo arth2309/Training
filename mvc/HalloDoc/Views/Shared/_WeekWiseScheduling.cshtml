@@ -1,0 +1,46 @@
+﻿
+@model HallodocServices.ModelView.SchedulingList
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>STAFF</th>
+                <th>SUN3</th>
+                <th>MON4</th>
+                <th>TUE5</th>
+                <th>WED6</th>
+                <th>THU7</th>
+                <th>FRI8</th>
+                <th>SAT9</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr>
+                <td>Coverage</td>
+                <td class="bg-pink">0/24</td>
+                <td class="bg-pink">0/24</td>
+                <td class="bg-pink">0/24</td>
+                <td class="bg-pink">0/24</td>
+                <td class="bg-pink">0/24</td>
+                <td class="bg-pink">0/24</td>
+                <td class="bg-pink">0/24</td>
+            </tr>
+
+            @foreach(var item in Model.GetPhysicians)
+            {
+                <tr>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>

@@ -121,6 +121,10 @@
       "PackagePath": "staticwebassets\\css\\AdminSite\\EncounterForm.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\Scheduling.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\Scheduling.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\ViewCase.css",
       "PackagePath": "staticwebassets\\css\\AdminSite\\ViewCase.css"
     },
@@ -247,6 +251,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\international-telephone-input.js",
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\scheduling.js",
+      "PackagePath": "staticwebassets\\js\\scheduling.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\site.js",
