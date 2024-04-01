@@ -1,0 +1,100 @@
+﻿@model HallodocServices.ModelView.ProviderList
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">
+                    stopped Notification
+                </th>
+                <th scope="col">Provider Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">On Call Status</th>
+                <th scope="col">Status</th>
+                <th scope="col">
+                    <div class="d-flex justify-content-center">
+                        Actions
+                    </div>
+                </th>
+
+
+            </tr>
+        </thead>
+
+        
+        @if (Model.physicianNotifications.Count > 0)
+        {
+            <tbody>
+
+                
+
+                @foreach (var item in Model.physicianNotifications)
+                {
+                    string check;
+                    if(item.IsNotificationStopped[0])
+                    {
+                        check = "checked";
+                    }
+                    else
+                    {
+                        check = "";
+                    }
+
+                    string role;
+                    if (item.Physician.RoleId == 1)
+                    {
+                        role = "Physician";
+                    }
+                    else if (item.Physician.RoleId == 2)
+                    {
+                        role = "Tester";
+                    }
+                    else
+                    {
+                        role = "MyNameis";
+                    }
+
+                    string status;
+                    if (item.Physician.Status == 1)
+                    {
+                        status = "pending";
+                    }
+                    else if (item.Physician.Status == 2)
+                    {
+                        status = "Active";
+                    }
+                    else
+                    {
+                        status = "close";
+                    }
+
+                    <tr>
+                        <td>
+                            <div class="d-flex" style="padding-left:20%;">
+                                <input type="checkbox" value="@item.Id" class="form-check-input" @check onclick="changeNotification(this)">
+                            </div>
+
+                        </td>
+                        <td> @Html.DisplayFor(modelitem => item.Physician.FirstName), @Html.DisplayFor(modelitem => item.Physician.LastName)</td>
+
+                        <td>@role</td>
+                        <td> Unavailable</td>
+                        <td>@status</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-info mx-1" data-bs-toggle="modal" data-bs-target="#ProviderMessage" onclick="getEmail(@item.PhysicianId)">Contact</button>
+                                <button type="button" class="btn btn-outline-info mx-1">Edit</button>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+
+
+            </tbody>
+        }
+
+
+
+    </table>
+</div>

@@ -11,7 +11,11 @@ namespace HallodocServices.Interfaces
     public interface IAdminProviderInfoServices
     {
         AdminProviderInfo GetProviderInfo();
+
+        ProviderList GetProviderList(int regionid);
         Physician GetPhysicianData(int id);
+
+        Task<bool> NotificationServices(int id, bool IsNotificationChecked);
 
         void SendEmail(string email, string description);
     }

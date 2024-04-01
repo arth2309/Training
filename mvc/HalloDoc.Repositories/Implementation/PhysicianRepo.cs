@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HalloDoc.Repositories.DataContext;
 using HalloDoc.Repositories.Interfaces;
 using HalloDoc.Repositories.DataModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {
@@ -31,6 +32,23 @@ namespace HalloDoc.Repositories.Implementation
             }
             return _DbContext.Physicians.Where(a => a.RegionId == regionId).ToList();
 
+        }
+
+        public List<PhysicianNotification> GetListForNotifications(int regionId)
+        {
+            List<PhysicianNotification> physicianNotifications;
+            if (regionId == 0)
+            {
+                physicianNotifications = _DbContext.PhysicianNotifications.Include(a => a.Physician).OrderBy(a => a.PhysicianId).ToList();
+                return physicianNotifications;
+
+            }
+            else
+            {
+
+                physicianNotifications = _DbContext.PhysicianNotifications.Include(a => a.Physician).Where(a => a.Physician.RegionId == regionId).OrderBy(a=>a.PhysicianId).ToList();
+                return physicianNotifications;
+            }
         }
 
         public List<Physician> GetPhysiciansList()
@@ -59,9 +77,21 @@ namespace HalloDoc.Repositories.Implementation
             return physicianRegion;
         }
 
+        public PhysicianNotification GetPhysicianNotificationData(int id)
+        {
+            return _DbContext.PhysicianNotifications.FirstOrDefault(a => a.Id == id);
+        }
+
         public async Task<PhysicianNotification> AddDataInPhysicianNotification(PhysicianNotification physicianNotification)
         {
             _DbContext.PhysicianNotifications.Add(physicianNotification);
+            await _DbContext.SaveChangesAsync();
+            return physicianNotification;
+        }
+
+        public async Task<PhysicianNotification> UpdateDataInPhysicianNotification(PhysicianNotification physicianNotification)
+        {
+            _DbContext.PhysicianNotifications.Update(physicianNotification);
             await _DbContext.SaveChangesAsync();
             return physicianNotification;
         }

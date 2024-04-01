@@ -521,6 +521,18 @@ namespace HalloDoc.Controllers
             return View(adminProviderInfo);
         }
 
+        public IActionResult GetListForInfo(int RegionId)
+        {
+            ProviderList providerList = _adminProviderInfoServices.GetProviderList(RegionId);
+            return PartialView("_PhysicianList", providerList);
+        }
+
+        [HttpGet]
+        public async Task<bool> ChangeNotification(int Id,bool IsNotificationChecked)
+        {
+            await _adminProviderInfoServices.NotificationServices(Id, IsNotificationChecked);
+            return true;
+        }
 
         [HttpGet]
         public JsonResult GetEmailForMessage(int id)
@@ -635,7 +647,7 @@ namespace HalloDoc.Controllers
                 return PartialView("_WeekWiseScheduling",schedulingList);
             }
             if (Scheduling == 3)
-            {
+            {   
                 return PartialView("_MonthWiseScheduling");
             }
             else

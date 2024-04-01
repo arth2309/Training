@@ -9,6 +9,8 @@ namespace HallodocServices.ModelView
 {
     public class AdminProviderInfo
     {
-      public  List<Physician> physicians { get; set; }
+
+        public ProviderList? providerList { get; set; }
+     
     }
 }

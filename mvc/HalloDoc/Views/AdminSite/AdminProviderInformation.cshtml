@@ -154,12 +154,12 @@
     <div class="ct">
     <div class="d-flex justify-content-between w-100 mb-3">
         <div>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" onchange="getPhysicianList(this.value)">
                     <option value="0">All</option>
                     <option value="1">MaryLand</option>
                     <option value="2">District of Columbia</option>
                     <option value="3">New York</option>
-                    <option value="3">Virginia</option>
+                    <option value="4">Virginia</option>
                 </select>
         </div>
         <div>
@@ -167,94 +167,57 @@
         </div>
 
     </div>
-   <div class="table-responsive">
-        <table class="table">
-            <thead class="table-light">
-                <tr>
-                    <th scope="col">
-                        stopped Notification
-                    </th>
-                    <th scope="col">Provider Name</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">On Call Status</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">
-                        <div class="d-flex justify-content-center">
-                        Actions
-                            </div>
-                        </th>
+   <div id="list">
+            @Html.Partial("~/Views/Shared/_PhysicianList.cshtml",Model.providerList)
+   </div>
+    </div>
 
+    <script>
+      function getPhysicianList(temp)
+      {
+          $.ajax({
+              url: '/AdminSite/GetListForInfo',
+              type: 'GET',
+              data:{
+                  RegionId: temp
+              },
+              success : function(res)
+              {
+                  $('#list').html(res);
+              }
+          });
 
-                </tr>
-            </thead>
+      }
 
-            @if (Model.physicians.Count > 0)
+        function changeNotification(temp) 
+       {
+
+           var bool;
+            if ($(temp).is(':checked')) 
+             {  
+
+                 bool = true;
+            
+            }
+            else
             {
-                <tbody>
-
-
-                    @foreach (var item in Model.physicians)
-                    {
-                            string role;
-                            if(item.RoleId == 1)
-                            {
-                                role = "Physician";
-                            }
-                            else if(item.RoleId == 2)
-                            {
-                                role = "Tester";
-                            }
-                            else
-                            {
-                                role = "MyNameis";
-                            }
-
-                            string status;
-                            if(item.Status == 1)
-                            {
-                                status = "pending";
-                            }
-                            else if(item.Status == 2)
-                            {
-                                status = "Active";
-                            }
-                            else
-                            {
-                                status = "close";
-                            }
-
-                        <tr>
-                            <td>
-                                <div class="d-flex" style="padding-left:20%;">
-                                <input type="checkbox" class="form-check-input">
-                                  </div>
-
-                            </td>
-                            <td> @Html.DisplayFor(modelitem => item.FirstName), @Html.DisplayFor(modelitem => item.LastName)</td>
-
-                            <td>@role</td>
-                            <td> Unavailable</td>
-                            <td>@status</td>
-                            <td>
-                                <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-outline-info mx-1" data-bs-toggle="modal" data-bs-target="#ProviderMessage" onclick="getEmail(@item.PhysicianId)">Contact</button>
-                                    <button type="button" class="btn btn-outline-info mx-1">Edit</button>
-                                </div>
-                            </td>
-                            
-                        </tr>
-                    }
-
-
-                </tbody>
+                bool = false;
             }
 
+            $.ajax({
 
+                url: '/AdminSite/ChangeNotification',
+                type: 'GET',
+                data:{
+                    Id: $(temp).val(),
+                    IsNotificationChecked: bool
+                },
+                
 
-        </table>
-    </div>
-    </div>
+            });
 
+        }
+    </script>
    
 
 </body>

@@ -25,14 +25,34 @@ namespace HallodocServices.Implementation
         public AdminProviderInfo GetProviderInfo()
         {
             AdminProviderInfo info = new();
-            info.physicians = _physicianRepo.GetPhysiciansList();
+            ProviderList providerList = new();
+            providerList.physicianNotifications = _physicianRepo.GetListForNotifications(0);
+            info.providerList = providerList;
+
             return info;
+        }
+
+        public ProviderList GetProviderList(int regionid)
+        {
+            ProviderList providerList = new();
+            List<PhysicianNotification> physicians = _physicianRepo.GetListForNotifications(regionid);
+            providerList.physicianNotifications = physicians;   
+            return providerList;
         }
 
         public Physician GetPhysicianData(int id)
         {
             Physician physcian = _physicianRepo.GetPhysician(id);
             return physcian;
+        }
+
+        public async Task<bool> NotificationServices(int id,bool IsNotificationChecked)
+        {
+            PhysicianNotification physicianNotification = _physicianRepo.GetPhysicianNotificationData(id);
+            physicianNotification.IsNotificationStopped = new System.Collections.BitArray(1, IsNotificationChecked);
+            await _physicianRepo.UpdateDataInPhysicianNotification(physicianNotification);
+           return true;
+
         }
 
         public void SendEmail(string email,string description) 
