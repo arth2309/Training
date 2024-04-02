@@ -56,6 +56,7 @@ builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<ICreateAdminAccountServices, CreateAdminAccountServices>();
 builder.Services.AddScoped<ICreatePhysicianAccountServices, CreatePhysicianAccountServices>();
 builder.Services.AddScoped<ISchedulingServices, SchedulingServices>();  
+builder.Services.AddScoped<IShiftRepo, ShiftRepo>();
 
 
 

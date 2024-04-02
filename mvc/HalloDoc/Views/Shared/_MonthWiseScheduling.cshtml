@@ -15,123 +15,66 @@
             </tr>
         </thead>
         <tbody class="text-center">
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="bg-pink">1</td>
-                <td class="bg-pink">2</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="bg-pink">3</td>
-                <td class="bg-pink">4</td>
-                <td class="bg-pink">5</td>
-                <td class="bg-pink">6</td>
-                <td class="bg-pink">7</td>
-                <td class="bg-pink">8</td>
-                <td class="bg-pink">9</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="bg-pink">10</td>
-                <td class="bg-pink">11</td>
-                <td class="bg-pink">12</td>
-                <td class="bg-pink">13</td>
-                <td class="bg-pink">14</td>
-                <td class="bg-pink">15</td>
-                <td class="bg-pink">16</td>
-            </tr>
+
+            @for(int i = 0;i<6;i++)
+            {
+                <tr class="row-@i">
+                    <td id="sun-@i" class="bg-pink bg-white"></td>
+                    <td id="mon-@i" class="bg-pink bg-white"></td>
+                    <td id="tue-@i" class="bg-pink bg-white"></td>
+                    <td id="wed-@i" class="bg-pink bg-white"></td>
+                    <td id="thu-@i" class="bg-pink bg-white"></td>
+                    <td id="fri-@i" class="bg-pink bg-white"></td>
+                    <td id="sat-@i" class="bg-pink bg-white"></td>
+                </tr>
+                <tr class="row-@i">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="row-@i">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="row-@i">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="row-@i">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="row-@i">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+            
+            
         </tbody>
     </table>
 

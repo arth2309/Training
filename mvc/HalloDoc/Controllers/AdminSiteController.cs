@@ -656,6 +656,22 @@ namespace HalloDoc.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateShift(AdminScheduling adminScheduling)
+        {
+            if (ModelState.IsValid)
+            {
+                await _schedulingServices.CreateShift(adminScheduling);
+                return RedirectToAction("Scheduling");
+            }
+            else
+            {
+                return View(null);
+            }
+        }
+        public IActionResult ProviderLocation()
+        { return View(); }
+
     }
 
 }
