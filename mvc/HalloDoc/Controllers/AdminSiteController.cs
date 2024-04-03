@@ -44,9 +44,10 @@ namespace HalloDoc.Controllers
         private readonly ICreateAdminAccountServices _createAdminAccountServices;
         private readonly ICreatePhysicianAccountServices _createPhysicianAccountServices;
         private readonly ISchedulingServices _schedulingServices;
+        private readonly IProviderLocationServices _providerLocationServices;
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -68,6 +69,7 @@ namespace HalloDoc.Controllers
             _createAdminAccountServices = createAdminAccountServices;
             _createPhysicianAccountServices = createPhysicianAccountServices;
             _schedulingServices = schedulingServices;
+            _providerLocationServices = providerLocationServices;
         }
 
         public IActionResult AdminLogin()
@@ -631,13 +633,13 @@ namespace HalloDoc.Controllers
         public IActionResult Scheduling()
         {
            ViewBag.AdminName = Request.Cookies["AdminName"];
-            AdminScheduling adminScheduling = _schedulingServices.GetData(0);
+            AdminScheduling adminScheduling = _schedulingServices.GetData(0,DateTime.Now);
             return View(adminScheduling);
         }
 
-        public IActionResult SchedulingFilter(int Scheduling,int RegionId)
+        public IActionResult SchedulingFilter(int Scheduling,int RegionId,string ReqDate)
         {
-            SchedulingList schedulingList = _schedulingServices.GetSchedulingList(RegionId);
+            List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId,DateTime.Parse(ReqDate));
             if(Scheduling == 1)
             {
                 return PartialView("_DayWiseScheduling",schedulingList);
@@ -669,8 +671,25 @@ namespace HalloDoc.Controllers
                 return View(null);
             }
         }
+
+        public IActionResult ShiftForReview()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ShiftForReviewVM shiftForReviewVM = _schedulingServices.GetDataForReviewShift(); 
+            return View(shiftForReviewVM);
+        }
+
         public IActionResult ProviderLocation()
-        { return View(); }
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            return View(); 
+        }
+
+        [HttpGet]
+        public JsonResult GetProviderLocation()
+        {
+            return Json(JsonSerializer.Serialize(_providerLocationServices.GetLocation()));
+        }
 
     }
 

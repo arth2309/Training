@@ -121,6 +121,10 @@
       "PackagePath": "staticwebassets\\css\\AdminSite\\EncounterForm.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\ProviderLocation.css",
+      "PackagePath": "staticwebassets\\css\\AdminSite\\ProviderLocation.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\AdminSite\\Scheduling.css",
       "PackagePath": "staticwebassets\\css\\AdminSite\\Scheduling.css"
     },

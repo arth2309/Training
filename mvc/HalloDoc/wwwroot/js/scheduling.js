@@ -1,10 +1,8 @@
 ﻿window.onload = () => {
 
-    getcurrentMonth();
-    getcurrentWeek();
     getCurrentDate();
     loadRegionForShift();
-    
+    $('#isRepeat').hide();
 }
 
 var regionid = 0;
@@ -65,6 +63,27 @@ async function Scheduling(temp)
    /* window.sessionStorage.setitem("scheduling", temp);*/
     /* var regionid = window.sessionStorage.getitem("region");*/
     scheduling = temp;
+    var reqDate;
+    if (scheduling == 1)
+    {
+        reqDate = today;
+    }
+    else if (scheduling == 2)
+    {
+        reqDate = Week;
+    }
+    else
+    {
+        reqDate = Month;
+    }
+
+    var weekday = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(reqDate);
+    let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(reqDate);
+    let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(reqDate);
+    let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(reqDate);
+    DateForDay = weekday + ", " + month + ' ' + day + ', ' + year;
+
+
 
     await $.ajax({
 
@@ -72,7 +91,8 @@ async function Scheduling(temp)
         type: 'GET',
         data: {
             Scheduling: scheduling,
-            RegionId: regionid
+            RegionId: regionid,
+            ReqDate: DateForDay
         },
 
         success: function (res)
@@ -168,16 +188,18 @@ function getcurrentWeek()
 
 async function Next()
 {
-    await Scheduling(scheduling);
+   
     if (scheduling == 1)
     {
         
         today.setDate(today.getDate() + 1);
+        await Scheduling(scheduling);
         await getCurrentDate();
     }
     if (scheduling == 2)
     {
-        Week.setDate(Week.getDate() + 7)
+        Week.setDate(Week.getDate() + 7);
+        await Scheduling(scheduling);
         await getcurrentWeek();
         
     }
@@ -197,20 +219,23 @@ async function Next()
 
         Month.setDate(1);
         Month.setMonth(Month.getMonth() + 1);
+        await Scheduling(scheduling);
         await getcurrentMonth();
     }
 }
 
 async function Previous() {
    
-    await Scheduling(scheduling);
+    
     if (scheduling == 1)
     {
         today.setDate(today.getDate() - 1);
+        await Scheduling(scheduling);
         getCurrentDate();
     }
     if (scheduling == 2) {
         Week.setDate(Week.getDate() - 7)
+        await Scheduling(scheduling);
         getcurrentWeek();
     }
     if (scheduling == 3)
@@ -225,6 +250,7 @@ async function Previous() {
 
         Month.setDate(1);
         Month.setMonth(Month.getMonth() - 1);
+        await Scheduling(scheduling);
         getcurrentMonth();
     }
 }
@@ -357,6 +383,21 @@ function loadPhysiciansByRegion(RegionId) {
 function stopModal()
 {
     $('#createShift').modal('toggle');
+}
+
+
+
+function Repeat(doc)
+{
+    if ($(doc).is(':checked'))
+    {
+        $('#isRepeat').show();
+    }
+    else
+    {
+        $('#isRepeat').hide();
+       
+    }
 }
 
             

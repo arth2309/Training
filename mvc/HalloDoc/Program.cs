@@ -57,6 +57,7 @@ builder.Services.AddScoped<ICreateAdminAccountServices, CreateAdminAccountServic
 builder.Services.AddScoped<ICreatePhysicianAccountServices, CreatePhysicianAccountServices>();
 builder.Services.AddScoped<ISchedulingServices, SchedulingServices>();  
 builder.Services.AddScoped<IShiftRepo, ShiftRepo>();
+builder.Services.AddScoped<IProviderLocationServices, ProviderLocationServices>();
 
 
 

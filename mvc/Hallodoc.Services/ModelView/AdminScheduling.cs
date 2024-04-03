@@ -9,12 +9,14 @@ namespace HallodocServices.ModelView
 {
     public class AdminScheduling
     {
-        public SchedulingList? SchedulingList { get; set; }
+        public List<SchedulingList>? SchedulingList { get; set; }
 
         public List<string>? RepeatedDays { get; set; }
 
 
         public int? NoRepeat { get; set; }
+
+        public bool IsRepeat { get; set; }
 
         [Required(ErrorMessage = "shiftdate is required")]
         public DateTime ShiftDate { get; set; }

@@ -9,9 +9,12 @@ namespace HallodocServices.Interfaces
 {
     public interface ISchedulingServices
     {
-        AdminScheduling GetData(int regionid);
-        SchedulingList GetSchedulingList(int regionid);
+        AdminScheduling GetData(int regionid, DateTime dateTime);
+
+        List<SchedulingList> GetSchedulingList(int regionid, DateTime dateTime);
 
         Task<AdminScheduling> CreateShift(AdminScheduling scheduling);
+
+        ShiftForReviewVM GetDataForReviewShift();
     }
 }

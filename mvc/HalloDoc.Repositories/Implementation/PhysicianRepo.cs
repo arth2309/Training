@@ -96,6 +96,11 @@ namespace HalloDoc.Repositories.Implementation
             return physicianNotification;
         }
 
+        public List<PhysicianLocation> GetProviderLocation()
+        {
+            return _DbContext.PhysicianLocations.ToList();
+        }
+
 
     }
 }

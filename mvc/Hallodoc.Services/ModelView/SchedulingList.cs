@@ -9,6 +9,8 @@ namespace HallodocServices.ModelView
 {
     public class SchedulingList
     {
-        public List<Physician>?  GetPhysicians { get; set; }
+        public Physician?  GetPhysicians { get; set; }
+
+        public List<ShiftDetail>? GetShiftDetail { get; set; }
     }
 }

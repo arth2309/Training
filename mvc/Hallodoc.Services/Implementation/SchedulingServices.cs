@@ -1,5 +1,7 @@
-﻿using HalloDoc.Repositories.DataModels;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using HalloDoc.Repositories.PagedList;
 using HallodocServices.Interfaces;
 using HallodocServices.ModelView;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HallodocServices.Implementation
 {
@@ -23,24 +26,46 @@ namespace HallodocServices.Implementation
 
        
 
-        public AdminScheduling GetData(int regionid)
+        public AdminScheduling GetData(int regionid,DateTime dateTime)
         {
             List<Physician> physicians = _physicianRepo.GetPhysiciansListForScheduling(regionid);
-            SchedulingList schedulingList = new SchedulingList();
-            schedulingList.GetPhysicians = physicians;
+            List<SchedulingList> schedulingList = new List<SchedulingList>();
 
+            for(int i = 0; i<physicians.Count; i++)
+            {
+                Physician physician = physicians[i];
+                List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetail(physicians[i].PhysicianId,dateTime);
+                SchedulingList schedulingList1 = new SchedulingList();
+
+                schedulingList1.GetPhysicians = physician;
+                schedulingList1.GetShiftDetail = shiftDetails;
+
+                schedulingList.Add(schedulingList1);
+            }
+           
             AdminScheduling scheduling = new AdminScheduling();
             scheduling.SchedulingList = schedulingList;
 
             return scheduling;
         }
 
-        public SchedulingList GetSchedulingList(int regionid) 
+        public List<SchedulingList> GetSchedulingList(int regionid,DateTime dateTime) 
         {
             List<Physician> physicians = _physicianRepo.GetPhysiciansListForScheduling(regionid);
-            SchedulingList list = new SchedulingList();
-            list.GetPhysicians = physicians;
-            return list;
+            List<SchedulingList> schedulingList = new List<SchedulingList>();
+
+            for (int i = 0; i < physicians.Count; i++)
+            {
+                Physician physician = physicians[i];
+                List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetail(physicians[i].PhysicianId,dateTime);
+                SchedulingList schedulingList1 = new SchedulingList();
+
+                schedulingList1.GetPhysicians = physician;
+                schedulingList1.GetShiftDetail = shiftDetails;
+
+                schedulingList.Add(schedulingList1);
+            }
+            return schedulingList;
         }
 
         public async Task<AdminScheduling> CreateShift(AdminScheduling scheduling)
@@ -50,48 +75,85 @@ namespace HallodocServices.Implementation
             shift.CreatedBy = 1;
             shift.StartDate = DateOnly.FromDateTime(scheduling.ShiftDate);
 
-            string repeatdays = "";
+            
             if (scheduling.RepeatedDays.Count() > 0)
             {
-                repeatdays = String.Join("",scheduling.RepeatedDays[0]);
-
-                for (int i = 1; i < scheduling.RepeatedDays.Count(); i++)
-                {
-                    repeatdays = String.Join(",", scheduling.RepeatedDays[i]);
-                }
+                
+            shift.WeekDays = System.String.Join("", scheduling.RepeatedDays);
+                
             }
-            shift.WeekDays = repeatdays;
 
+            shift.IsRepeat = new System.Collections.BitArray(1, scheduling.IsRepeat);
             shift.CreatedDate = DateTime.Now;
             shift.IsRepeat = new System.Collections.BitArray(1, true);
             shift.RepeatUpto = scheduling.NoRepeat;
 
             await _shiftRepo.AddDataInShift(shift);
 
-            DateTime currentdate = scheduling.ShiftDate;
-            DayOfWeek today = currentdate.DayOfWeek;
-            
 
-            for(int i = 0; i < scheduling.NoRepeat;i++)
+            if (scheduling.IsRepeat)
             {
-                for(int j = 0; j < scheduling.RepeatedDays.Count();j++)
+
+                for (int i = 0; i < scheduling.NoRepeat; i++)
                 {
-                    currentdate.AddDays(Int32.Parse(scheduling.RepeatedDays[j]));
-                    ShiftDetail shiftDetail = new();
-                    shiftDetail.ShiftDate = currentdate;
-                    shiftDetail.ShiftId = shift.ShiftId;
-                    shiftDetail.EndTime = scheduling.End;
-                    shiftDetail.StartTime = scheduling.Start;
-                    shiftDetail.Status = 1;
-                    shiftDetail.EventId = "1";
-                    shiftDetail.IsDeleted = new System.Collections.BitArray(1, false);
-                    shiftDetail.RegionId = scheduling.RegionId;
-                    await _shiftRepo.AddDataInShiftDetail(shiftDetail);
+                    for (int j = 0; j < scheduling.RepeatedDays.Count(); j++)
+                    {
+                        DateTime currentdate = scheduling.ShiftDate;
+                        var days = (int.Parse(scheduling.RepeatedDays[j]) - (int)currentdate.DayOfWeek + 7) % 7;
+                        currentdate = currentdate.AddDays(days);
+
+                        ShiftDetail shiftDetail = new();
+                        shiftDetail.ShiftDate = currentdate;
+                        shiftDetail.ShiftId = shift.ShiftId;
+                        shiftDetail.EndTime = scheduling.End;
+                        shiftDetail.StartTime = scheduling.Start;
+                        shiftDetail.Status = 1;
+                        shiftDetail.EventId = "1";
+                        shiftDetail.IsDeleted = new System.Collections.BitArray(1, false);
+                        shiftDetail.RegionId = scheduling.RegionId;
+                        await _shiftRepo.AddDataInShiftDetail(shiftDetail);
+                    }
+
+                    scheduling.ShiftDate = scheduling.ShiftDate.AddDays(7);
                 }
+
             }
-            
+
+            else
+
+            {
+                ShiftDetail shiftDetail = new();
+                shiftDetail.ShiftDate = scheduling.ShiftDate;
+                shiftDetail.ShiftId = shift.ShiftId;
+                shiftDetail.EndTime = scheduling.End;
+                shiftDetail.StartTime = scheduling.Start;
+                shiftDetail.Status = 1;
+                shiftDetail.EventId = "1";
+                shiftDetail.IsDeleted = new System.Collections.BitArray(1, false);
+                shiftDetail.RegionId = scheduling.RegionId;
+                await _shiftRepo.AddDataInShiftDetail(shiftDetail);
+            }
 
             return scheduling;
+        }
+
+        public ShiftForReviewVM GetDataForReviewShift()
+        {
+           List<ShiftDetail> shiftList = _shiftRepo.GetShiftDetailByRegion(0);
+           ShiftForReviewVM shiftForReview = new ShiftForReviewVM();
+            List<ShiftReviewList> shiftReviewLists = new List<ShiftReviewList>();
+            for(int i = 0; i < shiftList.Count;i++)
+            {
+                ShiftReviewList shiftReviewList = new ShiftReviewList();
+                shiftReviewList.PhysicianName = shiftList[i].Shift.PhysicianId.ToString();
+                shiftReviewList.startTime = shiftList[i].StartTime;
+                shiftReviewList.endTime = shiftList[i].EndTime;
+                shiftReviewList.shiftDate = DateOnly.FromDateTime(shiftList[i].ShiftDate);
+
+                shiftReviewLists.Add(shiftReviewList);
+            }
+           shiftForReview.shiftDetails = PaginatedList<ShiftReviewList>.ToPagedList(shiftReviewLists, 1, 5);
+           return shiftForReview;
         }
     }
 }

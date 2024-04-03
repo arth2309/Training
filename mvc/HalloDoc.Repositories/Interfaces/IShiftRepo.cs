@@ -12,5 +12,9 @@ namespace HalloDoc.Repositories.Interfaces
         Task<Shift> AddDataInShift(Shift shift);
 
         Task<ShiftDetail> AddDataInShiftDetail(ShiftDetail shiftDetail);
+
+        List<ShiftDetail> GetShiftDetail(int physicianid, DateTime dateTime);
+
+        List<ShiftDetail> GetShiftDetailByRegion(int Regionid);
     }
 }

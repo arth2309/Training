@@ -59,9 +59,11 @@
                         </div>
                     </div>
                     <div class="form-check form-switch mt-4">
-                        <input class="form-check-input" type="checkbox"  id="flexSwitchCheckDefault">
+                        <input asp-for="IsRepeat" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="Repeat(this)">
                         <label class="form-check-label" for="flexSwitchCheckDefault">Repeat</label>
                     </div>
+
+                    <div id="isRepeat">
                     <div class="mt-1" style="font-size:small">Repeat Days</div>
                    
                         <div class="d-flex mt-2">
@@ -119,6 +121,7 @@
                         </select>
                         <label for="repeat">Repeated</label>
                     </div>
+                    </div>
                    
                     <div class="d-flex justify-content-end mt-3">
                         <button type="submit" class="btn btn-info text-white mx-1">Save</button>
@@ -159,7 +162,7 @@
 
             <a class="nav-link  text-black">DashBoard</a>
 
-            <a class="nav-link text-black">Provider Location</a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
 
 
             <a class="nav-link border-dark text-black">My Profile</a>
@@ -187,7 +190,7 @@
             <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-black"><b>Provider Location</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
         </li>
 
         <li class="nav-item">
@@ -232,7 +235,7 @@
                 </div>
             <div class="d-flex">
                 <button class="btn btn-info text-white mx-1">Providers On Call</button>
-                <button class="btn btn-info text-white mx-1">Shifts For Review</button>
+                <a asp-controller="AdminSite" asp-action="ShiftForReview"><button class="btn btn-info text-white mx-1"> Shifts For Review</button> </a>
                 <button class="btn btn-info text-white mx-1" data-bs-toggle="modal" data-bs-target="#createShift">Add New Shift</button>
             </div>
         </div>

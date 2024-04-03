@@ -28,6 +28,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<PhysicianNotification> UpdateDataInPhysicianNotification(PhysicianNotification physicianNotification);
 
+        List<PhysicianLocation> GetProviderLocation();
+
 
     }
 }
