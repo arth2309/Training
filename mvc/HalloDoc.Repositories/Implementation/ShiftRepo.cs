@@ -33,21 +33,48 @@ namespace HalloDoc.Repositories.Implementation
             return shiftDetail;
         }
 
-        public List<ShiftDetail> GetShiftDetail(int physicianid,DateTime dateTime)
+        public ShiftDetail GetShiftDetailData(int id)
         {
-            return _context.ShiftDetails.Include(a=>a.Shift).Where(a=>a.Shift.PhysicianId == physicianid && DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime)).ToList();
+            return _context.ShiftDetails.FirstOrDefault(a => a.ShiftDetailId == id);
         }
 
-        public List<ShiftDetail> GetShiftDetailByRegion(int Regionid)
+        public async Task<ShiftDetail> UpdateShiftDetailData(ShiftDetail shiftDetail)
         {
-            if (Regionid > 0)
+            _context.ShiftDetails.Update(shiftDetail);
+            await _context.SaveChangesAsync();
+            return shiftDetail;
+        }
+
+        
+
+        public List<ShiftDetail> GetShiftDetail(int physicianid, DateTime dateTime)
+        {
+            return _context.ShiftDetails.Include(a => a.Shift).Where(a => a.Shift.PhysicianId == physicianid && DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime)).ToList();
+        }
+
+        public List<ShiftDetail> GetShiftDetailByRegion(int Regionid,bool CurrentMonth)
+        {
+
+            if(Regionid > 0 && CurrentMonth == true) 
             {
-                return _context.ShiftDetails.Include(a => a.Shift.Physician).Where(a => a.RegionId == Regionid).ToList();
+                return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(a => a.RegionId == Regionid && a.ShiftDate.Month == DateTime.Now.Month && a.Status == 1 && a.IsDeleted != new System.Collections.BitArray(1,true)).ToList();
+            }
+            else if(Regionid > 0 &&CurrentMonth == false) 
+            {
+                return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(a => a.RegionId == Regionid && a.Status == 1 && a.IsDeleted != new System.Collections.BitArray(1, true)).ToList();
+            }
+            else if(Regionid <= 0 && CurrentMonth == true)
+            {
+                return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(a => a.ShiftDate.Month == DateTime.Now.Month && a.Status == 1 && a.IsDeleted != new System.Collections.BitArray(1, true)).ToList();
             }
             else
             {
-                return _context.ShiftDetails.Include(a => a.Shift).ToList();
+                return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(a => a.Status == 1 && a.IsDeleted != new System.Collections.BitArray(1, true)).ToList();
             }
+            
+        }
+
+           
+            
         }
     }
-}

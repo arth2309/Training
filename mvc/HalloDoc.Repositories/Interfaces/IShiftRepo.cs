@@ -15,6 +15,10 @@ namespace HalloDoc.Repositories.Interfaces
 
         List<ShiftDetail> GetShiftDetail(int physicianid, DateTime dateTime);
 
-        List<ShiftDetail> GetShiftDetailByRegion(int Regionid);
+        List<ShiftDetail> GetShiftDetailByRegion(int Regionid, bool CurrentMonth);
+
+        ShiftDetail GetShiftDetailData(int id);
+
+        Task<ShiftDetail> UpdateShiftDetailData(ShiftDetail shiftDetail);
     }
 }

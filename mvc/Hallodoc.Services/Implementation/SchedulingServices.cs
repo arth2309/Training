@@ -139,13 +139,15 @@ namespace HallodocServices.Implementation
 
         public ShiftForReviewVM GetDataForReviewShift()
         {
-           List<ShiftDetail> shiftList = _shiftRepo.GetShiftDetailByRegion(0);
+          
+           List<ShiftDetail> shiftList = _shiftRepo.GetShiftDetailByRegion(0,false);
            ShiftForReviewVM shiftForReview = new ShiftForReviewVM();
             List<ShiftReviewList> shiftReviewLists = new List<ShiftReviewList>();
             for(int i = 0; i < shiftList.Count;i++)
             {
                 ShiftReviewList shiftReviewList = new ShiftReviewList();
-                shiftReviewList.PhysicianName = shiftList[i].Shift.PhysicianId.ToString();
+                shiftReviewList.ShiftDetailId = shiftList[i].ShiftDetailId;
+                shiftReviewList.PhysicianName = shiftList[i].Shift.Physician.FirstName + " " + shiftList[i].Shift.Physician.LastName;
                 shiftReviewList.startTime = shiftList[i].StartTime;
                 shiftReviewList.endTime = shiftList[i].EndTime;
                 shiftReviewList.shiftDate = DateOnly.FromDateTime(shiftList[i].ShiftDate);
@@ -154,6 +156,48 @@ namespace HallodocServices.Implementation
             }
            shiftForReview.shiftDetails = PaginatedList<ShiftReviewList>.ToPagedList(shiftReviewLists, 1, 5);
            return shiftForReview;
+        }
+
+        public PaginatedList<ShiftReviewList> FilterDataForReviewShift(int currentPage,int regionid,bool CurrentMonth)
+        {
+
+            List<ShiftDetail> shiftList = _shiftRepo.GetShiftDetailByRegion(regionid,CurrentMonth);
+            List<ShiftReviewList> shiftReviewLists = new List<ShiftReviewList>();
+            for (int i = 0; i < shiftList.Count; i++)
+            {
+                ShiftReviewList shiftReviewList = new ShiftReviewList();
+                shiftReviewList.ShiftDetailId = shiftList[i].ShiftDetailId;
+                shiftReviewList.PhysicianName = shiftList[i].Shift.Physician.FirstName + " " + shiftList[i].Shift.Physician.LastName;
+                shiftReviewList.startTime = shiftList[i].StartTime;
+                shiftReviewList.endTime = shiftList[i].EndTime;
+                shiftReviewList.shiftDate = DateOnly.FromDateTime(shiftList[i].ShiftDate);
+
+                shiftReviewLists.Add(shiftReviewList);
+            }
+
+            return PaginatedList<ShiftReviewList>.ToPagedList(shiftReviewLists, currentPage, 5);
+        }
+
+        public async Task<List<int>> ApproveShiftServices(List<int> List)
+        {
+            for(int i = 0; i < List.Count;i++)
+            {
+                ShiftDetail shiftDetail = _shiftRepo.GetShiftDetailData(List[i]);
+                shiftDetail.Status = 2;
+                await _shiftRepo.UpdateShiftDetailData(shiftDetail);
+            }
+            return List;
+        }
+
+        public async Task<List<int>> DeleteShiftServices(List<int> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+                ShiftDetail shiftDetail = _shiftRepo.GetShiftDetailData(List[i]);
+                shiftDetail.IsDeleted = new System.Collections.BitArray(1,true);
+                await _shiftRepo.UpdateShiftDetailData(shiftDetail);
+            }
+            return List;
         }
     }
 }

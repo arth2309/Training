@@ -261,6 +261,10 @@
       "PackagePath": "staticwebassets\\js\\scheduling.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\shiftreview.js",
+      "PackagePath": "staticwebassets\\js\\shiftreview.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

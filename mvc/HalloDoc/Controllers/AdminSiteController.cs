@@ -19,6 +19,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using ClosedXML.Excel;
 using System.Data;
 using HalloDoc.Auth;
+using HalloDoc.Repositories.PagedList;
 
 namespace HalloDoc.Controllers
 {
@@ -677,6 +678,35 @@ namespace HalloDoc.Controllers
             ViewBag.AdminName = Request.Cookies["AdminName"];
             ShiftForReviewVM shiftForReviewVM = _schedulingServices.GetDataForReviewShift(); 
             return View(shiftForReviewVM);
+        }
+
+        [HttpGet]
+        public IActionResult GetPhysicianListForShift(int CurrentPage,int RegionId,bool CurrentMonth)
+        {
+            PaginatedList<ShiftReviewList> shiftReviewLists = _schedulingServices.FilterDataForReviewShift(CurrentPage, RegionId,CurrentMonth);
+            return PartialView("_ShiftReviewList", shiftReviewLists);
+        }
+
+        [HttpPost]
+        public async  Task<JsonResult> ApproveShift(List<int> List)
+        {
+           if(List.Count > 0)
+            {
+                await _schedulingServices.ApproveShiftServices(List);
+            }
+           else
+            {
+                TempData["shift"] = "Please Select Atleast One Shift";
+            }
+           
+            return Json(List);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteShift(List<int> List)
+        {
+            await _schedulingServices.DeleteShiftServices(List);
+            return Json(List);
         }
 
         public IActionResult ProviderLocation()

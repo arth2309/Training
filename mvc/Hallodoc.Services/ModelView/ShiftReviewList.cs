@@ -8,6 +8,8 @@ namespace HallodocServices.ModelView
 {
     public class ShiftReviewList
     {
+
+        public int? ShiftDetailId { get; set; }
         public string? PhysicianName { get; set; }
 
         public DateOnly shiftDate { get; set; }

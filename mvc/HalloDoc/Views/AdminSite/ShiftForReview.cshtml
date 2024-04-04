@@ -13,6 +13,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/shiftreview.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    
     <title>Document</title>
    
 
@@ -20,6 +23,16 @@
 </head>
 
 <body>
+
+    @if (TempData["shift"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.error('@TempData["shift"]');
+        </script>
+
+    }
+    
     <header>
         <div class="d-flex d-lg-flex">
             <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
@@ -113,7 +126,7 @@
     <div class="ct shadow bg-white px-2 pt-3">
         <div class="d-flex justify-content-between">
             <div>
-                <select class="form-select" aria-label="Default select example" >
+                <select class="form-select" id="selectRegion" aria-label="Default select example" onchange="Region(this.value)">
                     <option value="0">All Regions</option>
                     <option value="1">MaryLand</option>
                     <option value="2">District of Columbia</option>
@@ -122,9 +135,9 @@
                 </select>
             </div>
             <div class="d-flex">
-                <button type="button" class="btn btn-success mx-1">View Current Month Shifts</button>
-                <button type="button" class="btn btn-success mx-1">Approved Selected</button>
-                <button type="button" class="btn btn-danger mx-1">Delete Selected</button>
+                <button type="button" id="currentMonth" class="btn btn-success mx-1" onclick="ViewCurrentMonth()">View Current Month Shifts</button>
+                <button type="button" class="btn btn-success mx-1" onclick="approveShift()">Approved Selected</button>
+                <button type="button" class="btn btn-danger mx-1" onclick="deleteShift()">Delete Selected</button>
             </div>
         </div>
         <div id="shiftforreview" class="mt-4">

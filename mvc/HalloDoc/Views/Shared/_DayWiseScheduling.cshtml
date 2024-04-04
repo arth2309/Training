@@ -67,8 +67,32 @@
                     <td>@item.GetPhysicians.FirstName,@item.GetPhysicians.LastName</td>
                     @for(int i = 0; i<24; i++)
                     {
-                        string shift = item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i) == null ? "" : "bg-success";
-                        <td class="@shift"></td>
+                     
+
+                        bool status = item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i) == null ? false : true;
+                        if (status)
+                        {
+                            if (item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime.Minute > 0)
+                            {
+                                float marginleft = ((item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime.Minute) * 100) / 60;
+                                float width = 100 - marginleft;
+                            }
+                            int diff = (item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).EndTime.Hour - item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime.Hour);
+                            string time = @item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime +"-" + @item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).EndTime;
+                            if(diff > 1)
+                            {
+                                for(int j = 1;j<diff; j++)
+                                {
+                                    i++;
+                                }
+                            }
+                            string shift = item.GetShiftDetail.FirstOrDefault(a => a.Status == 1) == null ? "bg-success" : "bg-pink";
+                            <td colspan="@diff"><div class="@shift"></div></td>
+                        }
+                        else
+                        {
+                            <td class=""></td>
+                        }
                     }
                    
                 </tr>
