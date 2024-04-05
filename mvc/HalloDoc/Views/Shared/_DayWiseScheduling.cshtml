@@ -1,5 +1,60 @@
 ﻿@model List<HallodocServices.ModelView.SchedulingList>
 
+<div class="modal fade" id="viewShift" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#00BCE9">
+                <h5 class="modal-title text-white">View Shift</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="modal-body">
+
+                <div class="mt-3 form-floating">
+                    <input disabled type="text" class="form-control dropdown" id="regionname">
+                    <label for="regionname">Region</label>
+                    </div>
+
+                    <div class="mt-3 form-floating">
+                        <input disabled type="text" class="form-control dropdown" id="pname">
+                        <label for="pname">Physician</label>
+                    </div>
+                <div class="mt-3 form-floating">
+                    <input disabled type="date" class="form-control dis" id="shiftdate">
+                    <label for="shiftdate">ShiftDate</label>
+                   
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6 form-floating">
+                        <input disabled  type="time" class="form-control dis" step="1" id="starttime">
+                        <label for="starttime">Start</label>
+                       
+                    </div>
+                    <div class="col-6 form-floating">
+                        <input disabled type="time" class="form-control dis" step="1" id="endtime" placeholder="End">
+                        <label for="endtime">End</label>
+                       
+                    </div>
+                </div>
+                <input type="hidden" id="shiftdetailid"/>
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="button" class="btn btn-info text-white mx-1" data-bs-dismiss="modal" onclick="removetoggle()">Return</button>
+                    <button type="button" class="btn btn-info  text-white mx-1" id="edit" onclick="toggle()">Edit</button>
+                    <button type="button" class="btn btn-info d-none text-white mx-1" id="save" onclick="editViewShift()">Save</button>
+                    <button type="button" class="btn btn-danger mx-1" onclick="deleteViewShift(shiftdetailid.value)">Delete</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+   
+   
+
+</script>
 
 <div class="table-responsive mt-4">
     <table class="table table-bordered">
@@ -67,27 +122,79 @@
                     <td>@item.GetPhysicians.FirstName,@item.GetPhysicians.LastName</td>
                     @for(int i = 0; i<24; i++)
                     {
-                     
 
-                        bool status = item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i) == null ? false : true;
+                        var shift = item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i);
+                        bool status = shift == null ? false : true;
                         if (status)
                         {
-                            if (item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime.Minute > 0)
+                            if (shift.StartTime.Minute > 0 && shift.EndTime.Minute>0)
                             {
-                                float marginleft = ((item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime.Minute) * 100) / 60;
-                                float width = 100 - marginleft;
-                            }
-                            int diff = (item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).EndTime.Hour - item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime.Hour);
-                            string time = @item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).StartTime +"-" + @item.GetShiftDetail.FirstOrDefault(a => a.StartTime.Hour == i).EndTime;
-                            if(diff > 1)
-                            {
-                                for(int j = 1;j<diff; j++)
+                               
+                                int diff = (shift.EndTime.Hour - shift.StartTime.Hour + 1);
+                                float marginleft = ((shift.StartTime.Minute) * 100) / (60 * diff);
+                                float marginright = ((60-shift.EndTime.Minute) * 100) / (60 * diff);
+                                float width = (100 - marginleft - marginright);
+                                string time = @shift.StartTime + "-" + shift.EndTime;
+                                string shift1 = item.GetShiftDetail.FirstOrDefault(a => a.Status == 1) == null ? "bg-success" : "bg-pink";
+                                <td class="p-0" colspan="@diff"><div class="@shift1" data-bs-toggle="modal" data-bs-target="#viewShift" style="margin-left:@marginleft%;width:@width%;margin-right:@marginright%;height:40px" onclick="viewShift(@shift.ShiftDetailId)"></div></td>
+
+                                for(int j = 1;j<diff;j++)
                                 {
                                     i++;
                                 }
+
                             }
-                            string shift = item.GetShiftDetail.FirstOrDefault(a => a.Status == 1) == null ? "bg-success" : "bg-pink";
-                            <td colspan="@diff"><div class="@shift"></div></td>
+
+                           else if (shift.StartTime.Minute > 0 && shift.EndTime.Minute == 0)
+                            {
+
+                                int diff = (shift.EndTime.Hour - shift.StartTime.Hour);
+                                float marginleft = ((shift.StartTime.Minute) * 100) / (60 * diff);
+                                float width = (100 - marginleft);
+                                string time = @shift.StartTime + "-" + shift.EndTime;
+                                string shift1 = item.GetShiftDetail.FirstOrDefault(a => a.Status == 1) == null ? "bg-success" : "bg-pink";
+                                <td class="p-0" colspan="@diff"><div class="@shift1" data-bs-toggle="modal" data-bs-target="#viewShift" style="margin-left:@marginleft%;width:@width%;height:40px" onclick="viewShift(@shift.ShiftDetailId)"></div></td>
+
+                                for (int j = 1; j < diff; j++)
+                                {
+                                    i++;
+                                }
+
+                            }
+
+                            else if (shift.StartTime.Minute == 0 && shift.EndTime.Minute > 0)
+                            {
+
+                                int diff = (shift.EndTime.Hour - shift.StartTime.Hour + 1);
+                                float marginright = ((60-shift.EndTime.Minute) * 100) / (60 * diff);
+                                float width = (100 - marginright);
+                                string time = @shift.StartTime + "-" + shift.EndTime;
+                                string shift1 = item.GetShiftDetail.FirstOrDefault(a => a.Status == 1) == null ? "bg-success" : "bg-pink";
+                                <td class="p-0" colspan="@diff"><div class="@shift1" data-bs-toggle="modal" data-bs-target="#viewShift" style="width:@width%;margin-right:@marginright%;height:40px" onclick="viewShift(@shift.ShiftDetailId)"></div></td>
+
+                                for (int j = 1; j < diff; j++)
+                                {
+                                    i++;
+                                }
+
+                            }
+
+                            else
+                            {
+                                int diff = (shift.EndTime.Hour - shift.StartTime.Hour);
+                                string time = @shift.StartTime + "-" + shift.EndTime;
+                                string shift1 = item.GetShiftDetail.FirstOrDefault(a => a.Status == 1) == null ? "bg-success" : "bg-pink";
+                                <td class="p-0" colspan="@diff"><div class="@shift1" data-bs-toggle="modal" data-bs-target="#viewShift" style="height:40px" onclick="viewShift(@shift.ShiftDetailId)"></div></td>
+
+
+                                for (int j = 1; j < diff; j++)
+                                {
+                                    i++;
+                                }
+
+                            }
+
+                            
                         }
                         else
                         {
@@ -101,3 +208,20 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    $(function () {
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+
+        var maxDate = year + '-' + month + '-' + day;
+        $('#shiftdate').attr('min', maxDate);
+    });
+</script>

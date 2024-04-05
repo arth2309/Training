@@ -20,5 +20,7 @@ namespace HalloDoc.Repositories.Interfaces
         ShiftDetail GetShiftDetailData(int id);
 
         Task<ShiftDetail> UpdateShiftDetailData(ShiftDetail shiftDetail);
+
+        ShiftDetail GetViewShiftData(int shiftdetailid);
     }
 }

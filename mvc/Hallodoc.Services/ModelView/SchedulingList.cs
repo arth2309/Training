@@ -12,5 +12,14 @@ namespace HallodocServices.ModelView
         public Physician?  GetPhysicians { get; set; }
 
         public List<ShiftDetail>? GetShiftDetail { get; set; }
+
+        public int Id { get; set; }
+        public string? PhysicianName { get; set; }
+
+        public DateOnly ShiftDate { get; set; }
+
+        public TimeOnly StartTime { get; set; }
+
+        public TimeOnly EndTime { get; set; }
     }
 }

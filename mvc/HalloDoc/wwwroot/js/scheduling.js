@@ -337,6 +337,7 @@ function loadRegionForShift() {
                 regionList.appendChild(new Option(region.Name, region.RegionId));
             });
             console.log(regionList);
+            
 
             //var physicianList = document.getElementById("PhysicianList");
             //while (physicianList.options.length > 0) {
@@ -373,10 +374,97 @@ function loadPhysiciansByRegion(RegionId) {
             listOfPhysicians.forEach(function (physician) {
                 physicianList.appendChild(new Option(physician.FirstName, physician.PhysicianId));
             });
+           
         },
         error: function (err) {
             console.error(err);
         }
+    });
+}
+
+
+function viewShift(id)
+{
+    $.ajax({
+        url: '/AdminSite/ViewShift',
+        type: 'GET',
+        data: {
+            ShiftDetailId: id
+        },
+        success: function (res) {
+
+            var list = JSON.parse(res);
+            console.log(list);
+
+            var physicianName = document.getElementById("pname");
+            var shiftDate = document.getElementById("shiftdate");
+            var startTime = document.getElementById("starttime");
+            var endTime = document.getElementById("endtime");
+            var sid = document.getElementById("shiftdetailid");
+
+            physicianName.value = list.PhysicianName;
+            shiftDate.value = list.ShiftDate;
+            startTime.value = list.StartTime;
+            endTime.value = list.EndTime;
+            sid.value = id;
+
+
+        },
+
+    });
+}
+
+function toggle()
+{
+    $('.dis').prop('disabled', false);
+    $('#edit').addClass("d-none");
+    $('#save').removeClass("d-none");
+}
+
+function removetoggle()
+{
+    $('.dis').prop('disabled', true);
+    $('#edit').removeClass("d-none");
+    $('#save').addClass("d-none");
+}
+
+function editViewShift()
+{
+    var data = JSON.stringify({
+        Id : parseInt($('#shiftdetailid').val()),
+        ShiftDate: $('#shiftdate').val(),
+        StartTime: $('#starttime').val(),
+        EndTime: $('#endtime').val()
+    });
+
+    $.ajax({
+
+        url: '/AdminSite/EditViewShift',
+        type: 'GET',
+        data: {
+            Data: data
+        },
+        success: function (res)
+        {
+            window.location.reload();
+        }
+
+    });
+}
+
+function deleteViewShift(id)
+{
+    $.ajax({
+
+        url: '/AdminSite/DeleteViewShift',
+        type: 'GET',
+        data: {
+            Id: id
+        },
+        success: function (res) {
+            window.location.reload();
+        }
+
     });
 }
 

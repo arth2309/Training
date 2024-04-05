@@ -199,5 +199,98 @@ namespace HallodocServices.Implementation
             }
             return List;
         }
+
+        public SchedulingList ViewShiftDetail(int shiftDetailId) 
+        {
+            ShiftDetail shiftDetail = _shiftRepo.GetViewShiftData(shiftDetailId);
+            SchedulingList schedulingList = new SchedulingList();
+            schedulingList.Id = shiftDetail.ShiftDetailId;
+            schedulingList.PhysicianName = "Dr " + shiftDetail.Shift.Physician.FirstName + " " + shiftDetail.Shift.Physician.LastName;  
+            schedulingList.ShiftDate = DateOnly.FromDateTime(shiftDetail.ShiftDate);
+            schedulingList.StartTime = shiftDetail.StartTime;
+            schedulingList.EndTime = shiftDetail.EndTime;
+            return schedulingList;
+        }
+
+        public async Task<SchedulingList> EditViewShift(SchedulingList schedulingList)
+        {
+            ShiftDetail shiftDetail = _shiftRepo.GetShiftDetailData(schedulingList.Id);
+            DateOnly dateOnly = schedulingList.ShiftDate;
+            shiftDetail.ShiftDate = dateOnly.ToDateTime(TimeOnly.Parse("12:00AM"));
+            shiftDetail.StartTime = schedulingList.StartTime;
+            shiftDetail.EndTime = schedulingList.EndTime;
+            await _shiftRepo.UpdateShiftDetailData(shiftDetail);
+            return schedulingList;
+            
+        }
+
+        public async Task<ShiftDetail> DeleteViewShift(int id)
+        {
+            
+            
+                ShiftDetail shiftDetail = _shiftRepo.GetShiftDetailData(id);
+                shiftDetail.IsDeleted = new System.Collections.BitArray(1, true);
+                await _shiftRepo.UpdateShiftDetailData(shiftDetail);
+            
+            return shiftDetail;
+        }
+
+        public MdsOnCallVM GetMdsOnCallList()
+        {
+            List<Physician> physicians = _physicianRepo.GetPhysiciansListForScheduling(0);
+            List<Physician> onDuty = new List<Physician>();
+            List<Physician> offDuty = new List<Physician>();
+            PhysicianDutyList physicianDutyList = new PhysicianDutyList();
+            MdsOnCallVM mdsOnCallVM = new MdsOnCallVM();
+
+            for(int i = 0; i < physicians.Count; i++)
+            {
+                if (physicians[i].Status == 1) 
+                {
+                    Physician physician = physicians[i];
+                    offDuty.Add(physician);
+
+                }
+                else
+                {
+                    Physician physician = physicians[i];
+                    onDuty.Add(physician);
+                }
+            }
+
+            physicianDutyList.PhysicianOnCall = onDuty;
+            physicianDutyList.PhysicianOnDuty = offDuty;
+            mdsOnCallVM.PhysicianDutyList = physicianDutyList;
+            return mdsOnCallVM;
+
+        }
+
+        public PhysicianDutyList GetMdsOnCallListFilter(int regionid)
+        {
+            List<Physician> physicians = _physicianRepo.GetPhysiciansListForScheduling(regionid);
+            List<Physician> onDuty = new List<Physician>();
+            List<Physician> offDuty = new List<Physician>();
+            PhysicianDutyList physicianDutyList = new PhysicianDutyList();
+            for (int i = 0; i < physicians.Count; i++)
+            {
+                if (physicians[i].Status == 1)
+                {
+                    Physician physician = physicians[i];
+                    offDuty.Add(physician);
+
+                }
+                else
+                {
+                    Physician physician = physicians[i];
+                    onDuty.Add(physician);
+                }
+            }
+
+            physicianDutyList.PhysicianOnCall = onDuty;
+            physicianDutyList.PhysicianOnDuty = offDuty;
+
+            return physicianDutyList;
+
+        }
     }
 }

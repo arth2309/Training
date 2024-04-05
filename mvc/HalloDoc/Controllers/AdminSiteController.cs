@@ -709,6 +709,28 @@ namespace HalloDoc.Controllers
             return Json(List);
         }
 
+        [HttpGet]
+
+        public JsonResult ViewShift(int ShiftDetailId)
+        {
+            return Json(JsonSerializer.Serialize(_schedulingServices.ViewShiftDetail(ShiftDetailId)));
+            
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> EditViewShift(string Data)
+        {
+            SchedulingList schedulingList = JsonSerializer.Deserialize<SchedulingList>(Data);
+            await _schedulingServices.EditViewShift(schedulingList);
+            return Json(schedulingList);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> DeleteViewShift(int Id)
+        {
+            await _schedulingServices.DeleteViewShift(Id);
+            return Json(Id);
+        }
         public IActionResult ProviderLocation()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
@@ -720,6 +742,23 @@ namespace HalloDoc.Controllers
         {
             return Json(JsonSerializer.Serialize(_providerLocationServices.GetLocation()));
         }
+
+        public IActionResult MDOnCalls()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            MdsOnCallVM mdsOnCallVM = _schedulingServices.GetMdsOnCallList();
+            return View(mdsOnCallVM);
+        }
+
+        [HttpGet]
+
+        public IActionResult MDOnCallsByRegion(int RegionId) 
+        {
+            PhysicianDutyList physicianDutyList = _schedulingServices.GetMdsOnCallListFilter(RegionId);
+            return PartialView("_PhysicianDutyList",physicianDutyList);
+        }
+
+       
 
     }
 

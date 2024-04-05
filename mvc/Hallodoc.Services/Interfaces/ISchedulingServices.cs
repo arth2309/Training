@@ -1,4 +1,5 @@
-﻿using HalloDoc.Repositories.PagedList;
+﻿using HalloDoc.Repositories.DataModels;
+using HalloDoc.Repositories.PagedList;
 using HallodocServices.ModelView;
 using System;
 using System.Collections.Generic;
@@ -23,5 +24,15 @@ namespace HallodocServices.Interfaces
         Task<List<int>> ApproveShiftServices(List<int> List);
 
         Task<List<int>> DeleteShiftServices(List<int> List);
+
+        SchedulingList ViewShiftDetail(int shiftDetailId);
+
+        Task<SchedulingList> EditViewShift(SchedulingList schedulingList);
+
+        Task<ShiftDetail> DeleteViewShift(int id);
+
+        MdsOnCallVM GetMdsOnCallList();
+
+        PhysicianDutyList GetMdsOnCallListFilter(int regionid);
     }
 }
