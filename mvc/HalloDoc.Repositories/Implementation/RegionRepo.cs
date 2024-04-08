@@ -25,5 +25,11 @@ namespace HalloDoc.Repositories.Implementation
         {
             return _Dbcontext.Regions.FirstOrDefault(a => a.RegionId == regionid);
         }
+
+        public string GetRegionName(int? regionid) 
+        {
+            string name = _Dbcontext.Regions.FirstOrDefault(a => a.RegionId == regionid).Name;
+            return name;
+        }
     }
 }

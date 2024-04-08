@@ -87,5 +87,23 @@ namespace HalloDoc.Repositories.Implementation
             return true;
         }
 
+        public List<RequestClient> BlockHistoryList(string name, string Mobile, DateOnly date, string email)
+        {
+            DateTime dateTime = new DateTime(0001,01,01);
+            DateOnly dateOnly = DateOnly.FromDateTime(dateTime);
+
+            Func<RequestClient, bool> predicate = a => (name == null || a.FirstName.Contains(name) || a.LastName.Contains(name)) &&
+                     (Mobile == null || a.PhoneNumber.Contains(Mobile)) &&
+                     (email == null || a.Email.Contains(email)) &&
+                     (date == dateOnly || DateOnly.FromDateTime(a.Request.CreatedDate) == date) &&
+                     (a.Request.Status == 10);
+
+            return _dbcontext.RequestClients.Include(a=>a.Request).Where(predicate).ToList(); 
+
+          
+
+        }
+       
+
     }
 }

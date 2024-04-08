@@ -275,15 +275,22 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-black"><b>Partners</b></a>
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProfessionMenu"><b>Partners</b></a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Records</b></a>
+        <li class="nav-item dropdown">
+            <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Records</b></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item">Patient History</a></li>
+                <li><a class="dropdown-item">Patient Records</a></li>
+                <li><a class="dropdown-item">Email Logs</a></li>
+                <li><a class="dropdown-item">SMS Logs</a></li>
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="BlockedHistory">Blocked History</a></li>
+            </ul>
         </li>
 
     </ul>

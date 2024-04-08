@@ -11,5 +11,7 @@ namespace HalloDoc.Repositories.Interfaces
     {
         List<Region> GetRegions();
         Region GetRegion(int? regionid);
+
+        string GetRegionName(int? regionid);
     }
 }

@@ -46,9 +46,11 @@ namespace HalloDoc.Controllers
         private readonly ICreatePhysicianAccountServices _createPhysicianAccountServices;
         private readonly ISchedulingServices _schedulingServices;
         private readonly IProviderLocationServices _providerLocationServices;
+        private readonly IProfessionMenuServices _professionMenuServices;
+        private readonly IBlockHistoryServices _blockHistoryServices;
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices,IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -71,6 +73,8 @@ namespace HalloDoc.Controllers
             _createPhysicianAccountServices = createPhysicianAccountServices;
             _schedulingServices = schedulingServices;
             _providerLocationServices = providerLocationServices;
+            _professionMenuServices = professionMenuServices;
+            _blockHistoryServices = blockHistoryServices;
         }
 
         public IActionResult AdminLogin()
@@ -86,7 +90,7 @@ namespace HalloDoc.Controllers
                 return View(patientLogin);
             }
             int id = _loginServices.ValidateUser(patientLogin);
-           
+
 
 
             if (id == 0)
@@ -113,13 +117,13 @@ namespace HalloDoc.Controllers
         public IActionResult AdminDashBoard()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
-            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1,1,0,0,null);
+            AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1, 1, 0, 0, null);
             return View(adminDashBoard);
         }
 
-        public IActionResult CheckStatus(int statusI, int currentPage,int typeid,int regionid,string name)
+        public IActionResult CheckStatus(int statusI, int currentPage, int typeid, int regionid, string name)
         {
-            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage,typeid,regionid,name);
+            List<NewState> newStates = _dashBoardServices.getStates(statusI, currentPage, typeid, regionid, name);
 
 
             if (statusI == 1)
@@ -169,14 +173,14 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> ViewCase(AdminViewCase adminViewCase)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 TempData["VUpdate"] = "Data Updated Successfully";
                 AdminViewCase adminViewCase1 = _viewCaseServices.EditViewData(adminViewCase);
-                return RedirectToAction("ViewCase", new {rcid = adminViewCase.id});
+                return RedirectToAction("ViewCase", new { rcid = adminViewCase.id });
             }
 
-           return View(null);
+            return View(null);
         }
 
         [Auth.CustomAuthorize("Admin")]
@@ -203,9 +207,9 @@ namespace HalloDoc.Controllers
             {
                 TempData["NUpdate"] = "Data Updated Successfully";
                 AdminViewNote adminViewNote1 = _viewNoteServices.EditAdminNote(adminViewNote);
-                return RedirectToAction("ViewNotes", new {reqid = adminViewNote.RequestId});
+                return RedirectToAction("ViewNotes", new { reqid = adminViewNote.RequestId });
             }
-            return View(null) ;
+            return View(null);
         }
 
         [HttpGet]
@@ -215,7 +219,7 @@ namespace HalloDoc.Controllers
             var reqData = JsonSerializer.Deserialize<AdminCancelCase>(data);
             var result = _cancelCaseServices.CancelData(reqData);
             return Json(new { result });
-           
+
         }
 
 
@@ -228,14 +232,14 @@ namespace HalloDoc.Controllers
             return Json(new { result });
         }
 
-      
+
 
         [HttpGet]
         public async Task<IActionResult> TransferCase(string data)
         {
             TempData["Transfer"] = "Request is Transfered";
             var reqData = JsonSerializer.Deserialize<AdminAssignCase>(data);
-            var result =  _assignCaseServices.AdminAssignCase(reqData);
+            var result = _assignCaseServices.AdminAssignCase(reqData);
             return Json(new { result });
         }
 
@@ -370,7 +374,7 @@ namespace HalloDoc.Controllers
 
             var reqData = JsonSerializer.Deserialize<SendAgreement>(data);
             string token = _jwtServices.GenerateJWTTokenForSendAgreement(reqData.Requestid);
-             _sendAgreementServices.SendEmail(reqData, token);
+            _sendAgreementServices.SendEmail(reqData, token);
             return Json(new { token });
 
         }
@@ -427,10 +431,10 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> CloseCase(AdminCloseCase adminClose)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-            await _closeCaseServices.UpdateCloseData(adminClose);
-            return RedirectToAction("CloseCase", new { reqID = adminClose.reqid });
+                await _closeCaseServices.UpdateCloseData(adminClose);
+                return RedirectToAction("CloseCase", new { reqID = adminClose.reqid });
             }
 
             return View(null);
@@ -440,7 +444,7 @@ namespace HalloDoc.Controllers
         public async Task<JsonResult> CloseRequest(int reqID)
         {
             await _closeCaseServices.UpdateStatus(reqID);
-            return Json(new { redirect = Url.Action("AdminDashBoard","AdminSite") });
+            return Json(new { redirect = Url.Action("AdminDashBoard", "AdminSite") });
         }
 
         public IActionResult AdminMyProfile(int adminid)
@@ -448,7 +452,7 @@ namespace HalloDoc.Controllers
             ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminProfile adminProfile = _adminProfileServices.GetAdminData(adminid);
             return View(adminProfile);
-           
+
         }
 
 
@@ -492,9 +496,9 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public ActionResult ExportData(int statusid,int typeId,int regionId,string searchstr,int currentPage)
+        public ActionResult ExportData(int statusid, int typeId, int regionId, string searchstr, int currentPage)
         {
-            DataTable dt = _dashBoardServices.getExportData(statusid,currentPage,typeId,regionId,searchstr);
+            DataTable dt = _dashBoardServices.getExportData(statusid, currentPage, typeId, regionId, searchstr);
             //Name of File  
             string fileName = "Request.xlsx";
             using (XLWorkbook wb = new XLWorkbook())
@@ -510,7 +514,7 @@ namespace HalloDoc.Controllers
             }
         }
 
-        public JsonResult SendLink(string FirstName,string LastName, string Email) 
+        public JsonResult SendLink(string FirstName, string LastName, string Email)
         {
             _dashBoardServices.SendEmail(FirstName, LastName, Email);
             var result = "good";
@@ -531,7 +535,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpGet]
-        public async Task<bool> ChangeNotification(int Id,bool IsNotificationChecked)
+        public async Task<bool> ChangeNotification(int Id, bool IsNotificationChecked)
         {
             await _adminProviderInfoServices.NotificationServices(Id, IsNotificationChecked);
             return true;
@@ -541,11 +545,11 @@ namespace HalloDoc.Controllers
         public JsonResult GetEmailForMessage(int id)
         {
             return Json(JsonSerializer.Serialize(_adminProviderInfoServices.GetPhysicianData(id)));
-            
+
         }
 
         [HttpGet]
-        public JsonResult SendEmailForMessage(string email,string description)
+        public JsonResult SendEmailForMessage(string email, string description)
 
         {
             _adminProviderInfoServices.SendEmail(email, description);
@@ -562,7 +566,7 @@ namespace HalloDoc.Controllers
 
         [HttpGet]
 
-        public IActionResult GetMenuByRole(int roleid) 
+        public IActionResult GetMenuByRole(int roleid)
         {
             List<AdminRoleMenu> adminRoleMenus = _adminAccessRoleServices.GetAccessRoleDataById(roleid);
             return PartialView("_MenuList", adminRoleMenus);
@@ -587,7 +591,7 @@ namespace HalloDoc.Controllers
         public IActionResult EncounterForm(int reqID)
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
 
                 AdminEncounterForm adminEncounterForm = _encounterFormServices.GetEncounterFormData(reqID);
@@ -617,7 +621,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("AdminDashBoard");
         }
 
-         public IActionResult CreateProviderAccount()
+        public IActionResult CreateProviderAccount()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
             AdminProfile adminProfile = _createPhysicianAccountServices.GetLists();
@@ -625,7 +629,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> CreateProviderAccount(AdminProfile adminProfile)
+        public async Task<IActionResult> CreateProviderAccount(AdminProfile adminProfile)
         {
             await _createPhysicianAccountServices.CreatePhysicianAccount(adminProfile);
             return RedirectToAction("AdminDashBoard");
@@ -633,24 +637,24 @@ namespace HalloDoc.Controllers
 
         public IActionResult Scheduling()
         {
-           ViewBag.AdminName = Request.Cookies["AdminName"];
-            AdminScheduling adminScheduling = _schedulingServices.GetData(0,DateTime.Now);
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            AdminScheduling adminScheduling = _schedulingServices.GetData(0, DateTime.Now);
             return View(adminScheduling);
         }
 
-        public IActionResult SchedulingFilter(int Scheduling,int RegionId,string ReqDate)
+        public IActionResult SchedulingFilter(int Scheduling, int RegionId, string ReqDate)
         {
-            List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId,DateTime.Parse(ReqDate));
-            if(Scheduling == 1)
+            List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId, DateTime.Parse(ReqDate));
+            if (Scheduling == 1)
             {
-                return PartialView("_DayWiseScheduling",schedulingList);
+                return PartialView("_DayWiseScheduling", schedulingList);
             }
             else if (Scheduling == 2)
             {
-                return PartialView("_WeekWiseScheduling",schedulingList);
+                return PartialView("_WeekWiseScheduling", schedulingList);
             }
             if (Scheduling == 3)
-            {   
+            {
                 return PartialView("_MonthWiseScheduling");
             }
             else
@@ -676,29 +680,29 @@ namespace HalloDoc.Controllers
         public IActionResult ShiftForReview()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
-            ShiftForReviewVM shiftForReviewVM = _schedulingServices.GetDataForReviewShift(); 
+            ShiftForReviewVM shiftForReviewVM = _schedulingServices.GetDataForReviewShift();
             return View(shiftForReviewVM);
         }
 
         [HttpGet]
-        public IActionResult GetPhysicianListForShift(int CurrentPage,int RegionId,bool CurrentMonth)
+        public IActionResult GetPhysicianListForShift(int CurrentPage, int RegionId, bool CurrentMonth)
         {
-            PaginatedList<ShiftReviewList> shiftReviewLists = _schedulingServices.FilterDataForReviewShift(CurrentPage, RegionId,CurrentMonth);
+            PaginatedList<ShiftReviewList> shiftReviewLists = _schedulingServices.FilterDataForReviewShift(CurrentPage, RegionId, CurrentMonth);
             return PartialView("_ShiftReviewList", shiftReviewLists);
         }
 
         [HttpPost]
-        public async  Task<JsonResult> ApproveShift(List<int> List)
+        public async Task<JsonResult> ApproveShift(List<int> List)
         {
-           if(List.Count > 0)
+            if (List.Count > 0)
             {
                 await _schedulingServices.ApproveShiftServices(List);
             }
-           else
+            else
             {
                 TempData["shift"] = "Please Select Atleast One Shift";
             }
-           
+
             return Json(List);
         }
 
@@ -714,7 +718,7 @@ namespace HalloDoc.Controllers
         public JsonResult ViewShift(int ShiftDetailId)
         {
             return Json(JsonSerializer.Serialize(_schedulingServices.ViewShiftDetail(ShiftDetailId)));
-            
+
         }
 
         [HttpGet]
@@ -734,7 +738,7 @@ namespace HalloDoc.Controllers
         public IActionResult ProviderLocation()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
-            return View(); 
+            return View();
         }
 
         [HttpGet]
@@ -752,13 +756,86 @@ namespace HalloDoc.Controllers
 
         [HttpGet]
 
-        public IActionResult MDOnCallsByRegion(int RegionId) 
+        public IActionResult MDOnCallsByRegion(int RegionId)
         {
             PhysicianDutyList physicianDutyList = _schedulingServices.GetMdsOnCallListFilter(RegionId);
-            return PartialView("_PhysicianDutyList",physicianDutyList);
+            return PartialView("_PhysicianDutyList", physicianDutyList);
         }
 
-       
+        public IActionResult ProfessionMenu()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ProfessionMenuVM professionMenuVM = _professionMenuServices.GetVendorList();
+            return View(professionMenuVM);
+        }
+
+        [HttpGet]
+        public IActionResult ProfessionMenuFilter(int ProfessionId, string Name, int CurrentPage)
+        {
+            PaginatedList<VendorsList> vendorsLists = _professionMenuServices.GetVendorListFilter(ProfessionId, Name, CurrentPage);
+            return PartialView("_VendorList", vendorsLists);
+        }
+
+        public IActionResult AddBusinessPage()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            return View();
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> AddBusinessPage(BusinessVM businessVM)
+        {
+            if (ModelState.IsValid)
+            {
+                await _professionMenuServices.AddData(businessVM);
+                return RedirectToAction("ProfessionMenu");
+            }
+            else
+            {
+                return View(null);
+            }
+           
+        }
+
+        public IActionResult UpdateBusinessPage(int VendorId)
+        {
+            BusinessVM businessVM = _professionMenuServices.ShowData(VendorId);
+            return View(businessVM);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> UpdateBusinessPage(BusinessVM businessVM)
+        {
+            if (ModelState.IsValid)
+            {
+                await _professionMenuServices.UpdateData(businessVM);
+                return RedirectToAction("ProfessionMenu");
+            }
+            else
+            {
+                return View(null);
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> DeleteVendor(int VendorId)
+        { 
+            await _professionMenuServices.DeleteData(VendorId);
+            return Json(new { Success = true });
+        }
+
+        public IActionResult BlockedHistory()
+        {
+            BlockedHistoryVM blockedHistoryVM = _blockHistoryServices.GetBlockHistoryData();
+            return View(blockedHistoryVM); 
+        }
+
+        public IActionResult BlockedHistoryFilter(string Name,string Email,DateOnly Date,string Mobile,int CurrentPage)
+        {
+            PaginatedList<BlockedList> blockedLists = _blockHistoryServices.GetBlockHistoryDataFilter(Name,Mobile,Email,Date,CurrentPage);
+            return PartialView("_BlockList",blockedLists);
+        }
 
     }
 

@@ -17,5 +17,7 @@ namespace HalloDoc.Repositories.Interfaces
          Task<RequestClient> UpdateTable(RequestClient requestClient);
         Task<bool> AddTable(RequestClient requestClient);
         List<RequestClient> requestClient();
+
+        List<RequestClient> BlockHistoryList(string name, string Mobile, DateOnly date, string email);
     }
 }

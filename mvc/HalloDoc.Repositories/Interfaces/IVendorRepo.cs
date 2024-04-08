@@ -11,6 +11,12 @@ namespace HalloDoc.Repositories.Interfaces
     {
         List<HealthProfessional> GetVendorList(int ProfessionId);
 
-        HealthProfessional GetVendor(int vendorId);
+        HealthProfessional GetVendor(int? vendorId);
+
+        List<HealthProfessional> GetVendorListForPartner(int ProfessionId, string name);
+
+        Task<HealthProfessional> AddData(HealthProfessional healthProfessional);
+
+        Task<HealthProfessional> UpDateData(HealthProfessional healthProfessional);
     }
 }

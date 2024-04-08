@@ -269,6 +269,10 @@
       "PackagePath": "staticwebassets\\js\\RegionWisePhysician.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\blockList.js",
+      "PackagePath": "staticwebassets\\js\\blockList.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\checkstatus.js",
       "PackagePath": "staticwebassets\\js\\checkstatus.js"
     },
@@ -279,6 +283,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\international-telephone-input.js",
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\professionMenu.js",
+      "PackagePath": "staticwebassets\\js\\professionMenu.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\scheduling.js",

@@ -58,6 +58,8 @@ builder.Services.AddScoped<ICreatePhysicianAccountServices, CreatePhysicianAccou
 builder.Services.AddScoped<ISchedulingServices, SchedulingServices>();  
 builder.Services.AddScoped<IShiftRepo, ShiftRepo>();
 builder.Services.AddScoped<IProviderLocationServices, ProviderLocationServices>();
+builder.Services.AddScoped<IProfessionMenuServices, ProfessionMenuServices>();
+builder.Services.AddScoped<IBlockHistoryServices, BlockHistoryServices>();
 
 
 

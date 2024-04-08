@@ -1,0 +1,243 @@
+﻿@model HallodocServices.ModelView.BusinessVM
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/scheduling.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <title>Document</title>
+
+
+
+</head>
+
+<body>
+
+    <header>
+        <div class="d-flex d-lg-flex">
+            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+        <div class="right">
+            <div class="intro mx-1"><p>Welcome:</p></div>
+            <div class="s intro mx-1"><span><b>@Html.Raw(ViewBag.AdminName)</b></span></div>
+            <div class="ilogout">
+                <button type="button" class="btn btn-outline-info mx-1"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="Logout">
+                <button type="button" class="btn btn-outline-info mx-1">Logout</button>
+            </div>
+            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </div>
+    </header>
+
+
+    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body align-items-center nav-tabs">
+
+
+
+
+            <a class="nav-link border-dark text-black">My Profile</a>
+
+
+
+            <a class="nav-link text-black">Providers</a>
+
+
+            <a class="nav-link text-black">Partners</a>
+
+
+            <a class="nav-link text-black">Access</a>
+
+
+            <a class="nav-link text-black">Records</a>
+
+
+
+        </div>
+    </div>
+
+    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
+       
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link active"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
+        </li>
+
+    </ul>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Add Business</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+    <div class="ct bg-white pt-2 pb-3 px-3 rounded-3 shadow">
+        <div class="h5">
+          Submit Information
+        </div>
+        <form asp-controller="AdminSite" asp-action="AddBusinessPage">
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Business Name" asp-for="BusinessName">
+                <label for="floatingInput">Business Name</label>
+                <span asp-validation-for="BusinessName" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <select class="form-select" id="selectProfession" aria-label="Default select example" asp-for="ProfessionId">
+                    <option selected>Select Profession</option>
+                </select>
+                <label for="selectProfession">Profession</label>
+                    <span asp-validation-for="ProfessionId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Fax Number" asp-for="FaxNumber">
+                <label for="floatingInput">Fax Number</label>
+                    <span asp-validation-for="FaxNumber" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="tel" style="height:58px" class="form-control" id="patientMobileNumber" asp-for="Mobile">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email">
+                <label for="floatingInput">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Business Contact" asp-for="BusinessContact">
+                <label for="floatingInput">Business Contact</label>
+                    <span asp-validation-for="BusinessContact" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
+                <label for="floatingInput">Street</label>
+                    <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City">
+                <label for="floatingInput">City</label>
+                    <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <select class="form-select" id="regionList" aria-label="Default select example" asp-for="regionid">
+                    <option selected>Select State</option>
+                </select>
+                    <span asp-validation-for="regionid" class="text-danger"></span>
+                <label for="regionList">State</label>
+            </div>
+            <div class="col-12 col-md-6 form-floating mt-1">
+                <input type="text" class="form-control" id="floatingInput" placeholder="ZipCode/Postal" asp-for="ZipCode">
+                <label for="floatingInput">ZipCode/Postal</label>
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-2">
+            <button type="submit" class="btn btn-info text-white mx-1">Save</button>
+            <button type="reset" class="btn btn-outline-info mx-1">Cancel</button>
+        </div>
+        </form>
+</div>
+<script>
+
+    window.onload = () => {
+            loadProfessionForAddBusiness();
+            loadRegionForAddBusiness();
+    }
+        const phoneInputField = document.getElementById("patientMobileNumber");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+
+        function loadProfessionForAddBusiness() {
+            $.ajax({
+                url: '/admin/profession',
+                type: 'GET',
+                success: function (res) {
+                    var listOfProfession = JSON.parse(res);
+                    var professionList = document.getElementById("selectProfession");
+                    while (professionList.options.length > 0) {
+                        professionList.remove(0);
+                    }
+                    professionList.appendChild(new Option("Select Profession", ""));
+                    listOfProfession.forEach(function (profession) {
+                        professionList.appendChild(new Option(profession.ProfessionName, profession.HealthProfessionalId));
+                    });
+                    console.log(professionList);
+
+
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+        function loadRegionForAddBusiness() {
+            $.ajax({
+                url: '/AdminSite/GetRegions',
+                type: 'GET',
+                success: function (res) {
+                    var listofregion = JSON.parse(res);
+                    console.log(listofregion);
+                    var regionList = document.getElementById("regionList");
+                    while (regionList.options.length > 0) {
+                        regionList.remove(0);
+                    }
+
+                    regionList.appendChild(new Option("Select State", ""));
+                    listofregion.forEach(function (region) {
+                        regionList.appendChild(new Option(region.Name, region.RegionId));
+                    });
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+
+</script>
+</body>
+</html>
