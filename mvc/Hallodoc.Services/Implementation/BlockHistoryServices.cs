@@ -14,10 +14,12 @@ namespace HallodocServices.Implementation
     public class BlockHistoryServices : IBlockHistoryServices
     {
         private readonly IRequestClientRepo _repo;
+        private readonly IRequestRepo _requestRepo;
 
-        public BlockHistoryServices(IRequestClientRepo repo)
+        public BlockHistoryServices(IRequestClientRepo repo, IRequestRepo requestRepo)
         {
             _repo = repo;
+            _requestRepo = requestRepo;
         }
 
         public BlockedHistoryVM GetBlockHistoryData()
@@ -37,6 +39,7 @@ namespace HallodocServices.Implementation
                 blockedList.year = requestClients[i].Request.CreatedDate.Year;
                 blockedList.Day = requestClients[i].Request.CreatedDate.Day;
                 blockedList.Mobile = requestClients[i].PhoneNumber;
+                blockedList.RequestId = requestClients[i].RequestId;
                 blockedLists.Add(blockedList);
             }
 
@@ -60,11 +63,20 @@ namespace HallodocServices.Implementation
                 blockedList.year = requestClients[i].Request.CreatedDate.Year;
                 blockedList.Day = requestClients[i].Request.CreatedDate.Day;
                 blockedList.Mobile = requestClients[i].PhoneNumber;
+                blockedList.RequestId = requestClients[i].RequestId;
                 blockedLists.Add(blockedList);
             }
 
             return PaginatedList<BlockedList>.ToPagedList(blockedLists, currentPage, 5);
 
+        }
+
+        public async Task<int> UnblockRequest(int RequestId)
+        {
+            Request request = _requestRepo.GetRequest(RequestId);
+            request.Status = 1;
+            await _requestRepo.UpdateTable(request);
+            return RequestId;
         }
     }
 }

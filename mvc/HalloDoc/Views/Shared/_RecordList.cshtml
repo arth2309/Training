@@ -1,0 +1,106 @@
+﻿@model PaginatedList<HallodocServices.ModelView.SearchRecordList>
+
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-light text-center">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Requestor</th>
+                    <th>Date of Service</th>
+                    <th>Close Case Date</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Zip</th>
+                    <th>Request Status</th>
+                    <th>Physician</th>
+                    <th>Physician Note</th>
+                    <th>Cancelled By Provider Note</th>
+                    <th>Admin Note</th>
+                    <th>Patient Note</th>
+                    <th>Delete Permanently</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.PatientName</td>
+                    <td>@item.Requestor</td>
+                    <td>@item.DateOfService.Value.ToString("MMM") @item.DateOfService.Value.Day,@item.DateOfService.Value.Year</td>
+                    <td>@item.DateOfService.Value.ToString("MMM") @item.DateOfService.Value.Day,@item.DateOfService.Value.Year</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Address</td>
+                    <td>@item.Zip</td>
+                    <td>Close</td>
+                    <td>@item.Physician</td>
+                    <td>@item.PhysicianNote</td>
+                    <td>@item.ProviderCancelledNote</td>
+                    <td>@item.AdminNote</td>
+                    <td>@item.PatientNote</td>
+                    <td><div> <button type="button" class="btn btn-outline-info">Delete</button></div></td>
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+
+@if (Model.TotalCount > 0)
+{
+    <div class="d-flex justify-content-end">
+        <ul class="pagination">
+            @if (Model.HasPrevious)
+            {
+                <li class="page-item" onclick="pageNumber(@(Model.CurrentPage-1))"><button class="page-link"><i class="bi bi-chevron-left"></i></button></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><button class="page-link"><i class="bi bi-chevron-left"></i></button></li>
+            }
+            @if (Model.TotalPages < 6)
+            {
+                for (var i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(Model.CurrentPage==i?"active":"")" onclick="pageNumber(@i)"><button class="page-link">@i</button></li>
+                }
+            }
+            else
+            {
+                <li class="page-item @(Model.CurrentPage > 2 ? "" :"d-none")" onclick="pageNumber(1)"><button class="page-link">1</button></li>
+                <li class="page-item disabled @(Model.CurrentPage > 3 ? "": "d-none")"><button class="page-link">...</button></li>
+                @if (Model.CurrentPage > 1 && Model.CurrentPage < Model.TotalPages)
+                {
+                    <li class="page-item" onclick="pageNumber(@(Model.CurrentPage-1))"><button class="page-link">@(Model.CurrentPage - 1)</button></li>
+                    <li class="page-item active" onclick="pageNumber(@(Model.CurrentPage))"><button class="page-link">@Model.CurrentPage</button></li>
+                    <li class="page-item" onclick="pageNumber(@(Model.CurrentPage + 1))"><button class="page-link">@(Model.CurrentPage + 1)</button></li>
+                }
+                @if (Model.CurrentPage == 1)
+                {
+                    <li class="page-item  active" onclick="pageNumber(1)"><button class="page-link">1</button></li>
+                    <li class="page-item" onclick="pageNumber(2)"><button class="page-link">2</button></li>
+                    <li class="page-item" onclick="pageNumber(3)"><button class="page-link">3</button></li>
+                }
+                @if (Model.CurrentPage == Model.TotalPages)
+                {
+                    <li class="page-item" onclick="pageNumber(@(Model.TotalPages - 2))"><button class="page-link">@(Model.TotalPages - 2)</button></li>
+                    <li class="page-item" onclick="pageNumber(@(Model.TotalPages - 1))"><button class="page-link">@(Model.TotalPages - 1)</button></li>
+                    <li class="page-item active" onclick="pageNumber(@(Model.TotalPages))"><button class="page-link">@Model.TotalPages</button></li>
+                }
+                <li class="page-item disabled @(Model.CurrentPage < Model.TotalPages-2? "" : "d-none")"><button class="page-link">...</button></li>
+                <li class="page-item @(Model.CurrentPage<Model.TotalPages-1? "" :"d-none")" onclick="pageNumber(@(Model.TotalPages))"><button class="page-link">@Model.TotalPages</button></li>
+            }
+            @if (Model.HasNext)
+            {
+                <li class="page-item "><button class="page-link" onclick="pageNumber(@(Model.CurrentPage+1))"><i class="bi bi-chevron-right"></i></button></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><button class="page-link"><i class="bi bi-chevron-right"></i></button></li>
+            }
+        </ul>
+
+    </div>
+
+} 

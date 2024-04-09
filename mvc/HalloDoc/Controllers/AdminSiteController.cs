@@ -48,9 +48,12 @@ namespace HalloDoc.Controllers
         private readonly IProviderLocationServices _providerLocationServices;
         private readonly IProfessionMenuServices _professionMenuServices;
         private readonly IBlockHistoryServices _blockHistoryServices;
+        private readonly IEmailLogServices _emailLogServices;
+        private readonly ISMSLogServices _sMSLogServices;
+        private readonly ISearchRecordServices _searchRecordServices;
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -75,6 +78,9 @@ namespace HalloDoc.Controllers
             _providerLocationServices = providerLocationServices;
             _professionMenuServices = professionMenuServices;
             _blockHistoryServices = blockHistoryServices;
+            _emailLogServices = emailLogServices;
+            _sMSLogServices = sMSLogServices;
+            _searchRecordServices = searchRecordServices;
         }
 
         public IActionResult AdminLogin()
@@ -827,6 +833,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult BlockedHistory()
         {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
             BlockedHistoryVM blockedHistoryVM = _blockHistoryServices.GetBlockHistoryData();
             return View(blockedHistoryVM); 
         }
@@ -837,6 +844,46 @@ namespace HalloDoc.Controllers
             return PartialView("_BlockList",blockedLists);
         }
 
+        public async Task<IActionResult> UnBlockRequest(int ReqId)
+        {
+            await _blockHistoryServices.UnblockRequest(ReqId);
+            return RedirectToAction("BlockedHistory");
+        }
+
+        public IActionResult SearchRecord()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            SearchRecordVM searchRecordVM = _searchRecordServices.GetList();
+            return View(searchRecordVM);
+        }
+
+        public IActionResult SMSLogs()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            SMSLogVM sMSLogVM = _sMSLogServices.GetLogs();
+            return View(sMSLogVM);
+        }
+
+        [HttpGet]
+        public IActionResult SmsLogFilter(string Name, int RoleId, string Mobile, DateOnly CDate, DateOnly SDate, int CurrentPage)
+        {
+            PaginatedList<SMSLogList> LogLists = _sMSLogServices.GetLogsFilter(Name, Mobile, SDate, CDate, RoleId, CurrentPage);
+            return PartialView("_SmsLogList", LogLists);
+        }
+
+        public IActionResult EmailLogs()
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            EmailLogVM emailLogVM = _emailLogServices.GetLogs();
+            return View(emailLogVM);
+        }
+
+        [HttpGet]
+        public IActionResult EmailLogFilter(string Name,int RoleId,string Email,DateOnly CDate,DateOnly SDate,int CurrentPage) 
+        {
+            PaginatedList<EmailLogList> emailLogLists = _emailLogServices.GetLogsFilter(Name, Email, SDate, CDate, RoleId, CurrentPage);
+            return PartialView("_EmailLogList", emailLogLists);
+        }
     }
 
 }

@@ -178,6 +178,10 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<EmailLog>(entity =>
         {
             entity.HasKey(e => e.EmailLogId).HasName("EmailLog_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.EmailLogs).HasConstraintName("EmailLog_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.EmailLogs).HasConstraintName("EmailLog_RequestId_fkey");
         });
 
         modelBuilder.Entity<Encounter>(entity =>
@@ -421,6 +425,10 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Smslog>(entity =>
         {
             entity.HasKey(e => e.SmslogId).HasName("SMSLog_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Smslogs).HasConstraintName("SMSLog_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Smslogs).HasConstraintName("SMSLog_RequestId_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>

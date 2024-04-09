@@ -60,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXENyZWF0ZVByb3ZpZGVyQWNjb3VudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/EmailLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEVtYWlsTG9ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/EncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEVuY291bnRlckZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,12 +84,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFNjaGVkdWxpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/SearchRecord.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFNlYXJjaFJlY29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/SendOrder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFNlbmRPcmRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/ShiftForReview.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFNoaWZ0Rm9yUmV2aWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/SMSLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFNNU0xvZ3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/UpdateBusinessPage.cshtml]
@@ -380,6 +392,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EYXlXaXNlU2NoZWR1bGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_EmailLogList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9FbWFpbExvZ0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_MenuList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW51TGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -404,12 +420,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QaHlzaWNpYW5MaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_RecordList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZWNvcmRMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_SendAgreement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TZW5kQWdyZWVtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ShiftReviewList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaGlmdFJldmlld0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_SmsLogList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TbXNMb2dMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ToCloseState.cshtml]

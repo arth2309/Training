@@ -277,6 +277,10 @@
       "PackagePath": "staticwebassets\\js\\checkstatus.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\emailLog.js",
+      "PackagePath": "staticwebassets\\js\\emailLog.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\getPhysiciansByRegion.js",
       "PackagePath": "staticwebassets\\js\\getPhysiciansByRegion.js"
     },
@@ -293,12 +297,20 @@
       "PackagePath": "staticwebassets\\js\\scheduling.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\searchRecord.js",
+      "PackagePath": "staticwebassets\\js\\searchRecord.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\shiftreview.js",
       "PackagePath": "staticwebassets\\js\\shiftreview.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\smsLog.js",
+      "PackagePath": "staticwebassets\\js\\smsLog.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\validationAndIntegration.js",

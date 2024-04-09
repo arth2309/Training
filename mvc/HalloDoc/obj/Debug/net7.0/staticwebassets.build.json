@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0DuV2g0FY9LGpiS+FQS/G3vhZbS6+fbhSM8m723HGjk=",
+  "Hash": "gc5W7F2AJ632JSXzT7duNfpB3bKN+rNG9ax6uSKogA4=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1156,6 +1156,23 @@
       "OriginalItemSpec": "wwwroot\\js\\Email.js"
     },
     {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\emailLog.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/emailLog.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\emailLog.js"
+    },
+    {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\getPhysiciansByRegion.js",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -1275,6 +1292,23 @@
       "OriginalItemSpec": "wwwroot\\js\\scheduling.js"
     },
     {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\searchRecord.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/searchRecord.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\searchRecord.js"
+    },
+    {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\shiftreview.js",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -1307,6 +1341,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\smsLog.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/smsLog.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\smsLog.js"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\validationAndIntegration.js",

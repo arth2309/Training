@@ -14,6 +14,8 @@ namespace HallodocServices.Interfaces
 
         public PaginatedList<BlockedList> GetBlockHistoryDataFilter(string name, string mobile, string email, DateOnly date, int currentPage);
 
+        Task<int> UnblockRequest(int RequestId);
+
 
 
     }

@@ -22,5 +22,6 @@ namespace HallodocServices.ModelView
 
         public string? Notes { get; set; }
 
+        public int? RequestId { get; set; }
     }
 }

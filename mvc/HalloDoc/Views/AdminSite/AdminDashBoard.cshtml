@@ -285,10 +285,10 @@
         <li class="nav-item dropdown">
             <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Records</b></a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item">Patient History</a></li>
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
                 <li><a class="dropdown-item">Patient Records</a></li>
-                <li><a class="dropdown-item">Email Logs</a></li>
-                <li><a class="dropdown-item">SMS Logs</a></li>
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="BlockedHistory">Blocked History</a></li>
             </ul>
         </li>

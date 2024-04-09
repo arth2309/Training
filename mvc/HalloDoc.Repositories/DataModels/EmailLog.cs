@@ -51,4 +51,12 @@ public partial class EmailLog
     public int? SentTries { get; set; }
 
     public int? Action { get; set; }
+
+    [ForeignKey("PhysicianId")]
+    [InverseProperty("EmailLogs")]
+    public virtual Physician? Physician { get; set; }
+
+    [ForeignKey("RequestId")]
+    [InverseProperty("EmailLogs")]
+    public virtual Request? Request { get; set; }
 }

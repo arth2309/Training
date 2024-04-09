@@ -60,6 +60,11 @@ builder.Services.AddScoped<IShiftRepo, ShiftRepo>();
 builder.Services.AddScoped<IProviderLocationServices, ProviderLocationServices>();
 builder.Services.AddScoped<IProfessionMenuServices, ProfessionMenuServices>();
 builder.Services.AddScoped<IBlockHistoryServices, BlockHistoryServices>();
+builder.Services.AddScoped<IEmailLogServices, EmailLogServices>();
+builder.Services.AddScoped<IEmailLogRepo, EmailLogRepo>();
+builder.Services.AddScoped<ISMSLogRepo, SMSLogRepo>();
+builder.Services.AddScoped<ISMSLogServices, SMSLogServices>();
+builder.Services.AddScoped<ISearchRecordServices, SearchRecordServices>();
 
 
 

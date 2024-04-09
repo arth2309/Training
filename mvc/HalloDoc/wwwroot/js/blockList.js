@@ -1,17 +1,29 @@
 ﻿
 var currentPage = 1;
+var email = '';
+var date = new Date(0001, 01, 01);
+var patientname = '';
+var mobile = '';
+
+
+function searchButton()
+    {
+    email = $('#email').val();
+    date = $('#date').val();
+    mobile = $('#mobile').val();
+    patientname = $('#name').val();
+    blockHistoryFilter();
+
+    }
+
 function blockHistoryFilter()
 {
-    var email = $('#email').val();
-    var date = $('#date').val();
-    var mobile = $('#mobile').val();
-    var name = $('#name').val();
 
     $.ajax({
         url: '/AdminSite/BlockedHistoryFilter',
         type: 'GET',
         data: {
-            Name: name,
+            Name: patientname,
             Email: email,
             Date: date,
             Mobile: mobile,
