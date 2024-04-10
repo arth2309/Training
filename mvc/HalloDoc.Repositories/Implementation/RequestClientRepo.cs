@@ -109,14 +109,15 @@ namespace HalloDoc.Repositories.Implementation
             DateOnly dateOnly = new DateOnly(0001,01,01);
 
             Func<RequestClient, bool> predicate = a => (PatientName == null || a.FirstName.Contains(PatientName) || a.LastName.Contains(PatientName)) &&
-                                                 (ProviderName == null || a.Request.Physician == null || a.Request.Physician.FirstName.Contains(ProviderName) || a.Request.Physician.LastName.Contains(ProviderName)) &&
+                                                 (ProviderName == null || (ProviderName == null && a.Request.Physician == null) || ( a.Request.Physician !=null && a.Request.Physician.FirstName.Contains(ProviderName)) || (a.Request.Physician != null && a.Request.Physician.LastName.Contains(ProviderName))) &&
                                                  (Email == null || a.Email.Contains(Email)) &&
                                                  (PhoneNumber == null || a.PhoneNumber.Contains(PhoneNumber)) &&
                                                  (RequestTypeId == 0 || a.Request.RequestTypeId == RequestTypeId) &&
                                                  (FromService == dateOnly  || DateOnly.FromDateTime(a.Request.CreatedDate) >= FromService)&&
-                                                 (ToService == dateOnly || DateOnly.FromDateTime(a.Request.CreatedDate) <= ToService);
+                                                 (ToService == dateOnly || DateOnly.FromDateTime(a.Request.CreatedDate) <= ToService) &&
+                                                 (a.Request.IsDeleted == null || !a.Request.IsDeleted[0]);
 
-                                 return _dbcontext.RequestClients.Include(a=>a.Request).Include(a=>a.Request.RequestNotes).Include(a=>a.Request.RequestStatusLogs).Include(a=>a.Request.Physician).ToList();               
+                                 return _dbcontext.RequestClients.Include(a=>a.Request).Include(a=>a.Request.RequestNotes).Include(a=>a.Request.RequestStatusLogs).Include(a=>a.Request.Physician).Where(predicate).ToList();               
         }
 
 

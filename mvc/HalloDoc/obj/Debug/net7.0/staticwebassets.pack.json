@@ -289,6 +289,10 @@
       "PackagePath": "staticwebassets\\js\\international-telephone-input.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\patientHistory.js",
+      "PackagePath": "staticwebassets\\js\\patientHistory.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\professionMenu.js",
       "PackagePath": "staticwebassets\\js\\professionMenu.js"
     },

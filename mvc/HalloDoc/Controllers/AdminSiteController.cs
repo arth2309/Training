@@ -20,6 +20,8 @@ using ClosedXML.Excel;
 using System.Data;
 using HalloDoc.Auth;
 using HalloDoc.Repositories.PagedList;
+using System.Reflection;
+using System;
 
 namespace HalloDoc.Controllers
 {
@@ -51,9 +53,11 @@ namespace HalloDoc.Controllers
         private readonly IEmailLogServices _emailLogServices;
         private readonly ISMSLogServices _sMSLogServices;
         private readonly ISearchRecordServices _searchRecordServices;
+        private readonly IPatientHistoryServices _patientHistoryServices;
+        private readonly IPatientRecordServices _patientRecordServices;
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -81,6 +85,8 @@ namespace HalloDoc.Controllers
             _emailLogServices = emailLogServices;
             _sMSLogServices = sMSLogServices;
             _searchRecordServices = searchRecordServices;
+            _patientHistoryServices = patientHistoryServices;
+            _patientRecordServices = patientRecordServices;
         }
 
         public IActionResult AdminLogin()
@@ -857,6 +863,14 @@ namespace HalloDoc.Controllers
             return View(searchRecordVM);
         }
 
+        [HttpGet]
+
+        public IActionResult SearchRecordFilter(string PatientName, string ProviderName, int TypeId, string Email, string Mobile, DateOnly FDate, DateOnly TDate, int CurrentPage)
+        {
+            PaginatedList<SearchRecordList> searchRecordLists = _searchRecordServices.GetListFilter(PatientName,ProviderName,TypeId,Email,Mobile,FDate,TDate,CurrentPage);
+            return PartialView("_RecordList",searchRecordLists);
+        }
+
         public IActionResult SMSLogs()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
@@ -884,6 +898,58 @@ namespace HalloDoc.Controllers
             PaginatedList<EmailLogList> emailLogLists = _emailLogServices.GetLogsFilter(Name, Email, SDate, CDate, RoleId, CurrentPage);
             return PartialView("_EmailLogList", emailLogLists);
         }
+
+        [HttpPost]
+        public ActionResult ExportSearchRecord(string PatientName, string ProviderName, int TypeId, string Email, string Mobile, DateOnly FDate, DateOnly TDate)
+        {
+            DataTable dt = _searchRecordServices.getExportData(PatientName, ProviderName, TypeId, Email, Mobile, FDate, TDate);
+            //Name of File  
+            string fileName = "Record.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+        public async Task<IActionResult> DeleteRecord(int RequestId)
+        {
+            await  _searchRecordServices.Delete(RequestId);
+            return RedirectToAction("SearchRecord");
+        }
+
+        public IActionResult PatientHistory()
+        {
+            PatientHistoryVM patientHistoryVM = _patientHistoryServices.GetList();
+            return View(patientHistoryVM);
+        }
+
+        [HttpGet]
+        public IActionResult PatientHistoryFilter(string FirstName,string LastName,string Email,string Mobile,int CurrentPage)
+        {
+            PaginatedList<PatientHistoryList> patientHistoryLists = _patientHistoryServices.GetListFilter(FirstName,LastName,Email,Mobile,CurrentPage);
+            return PartialView("_PatientHistoryList",patientHistoryLists);
+        }
+
+        public IActionResult PatientRecord(int UserId)
+        {
+            PatientRecordVM patientRecordVM = _patientRecordServices.GetPatientRecord(UserId);
+            return View(patientRecordVM);
+        }
+
+        [HttpGet]
+        public IActionResult PatientRecordFilter(int UserId,int CurrentPage)
+        {
+            PaginatedList<PatientRecordList> patientRecordLists = _patientRecordServices.GetRecordFilter(UserId,CurrentPage);
+            return PartialView("_PatientRecordList", patientRecordLists);
+        }
+
     }
 
 }

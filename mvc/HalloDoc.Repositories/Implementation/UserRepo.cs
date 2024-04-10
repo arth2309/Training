@@ -51,5 +51,15 @@ namespace HalloDoc.Repositories.Implementation
             int Userid = user != null ? user.UserId : 0;
             return Userid;
         }
+
+        public List<User> GetPatientHistory(string FirstName, string LastName, string Email,string Mobile) 
+        {
+            Func<User,bool> predicate = a => (FirstName == null || a.FirstName.Contains(FirstName)) &&
+                                              (LastName == null || a.LastName.Contains(LastName)) &&
+                                              (Email == null || a.Email.Contains(Email)) &&
+                                              (Mobile == null || a.Mobile.Contains(Mobile));
+
+            return _dbcontext.Users.Where(predicate).ToList();  
+        }
     }
 }

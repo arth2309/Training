@@ -65,6 +65,8 @@ builder.Services.AddScoped<IEmailLogRepo, EmailLogRepo>();
 builder.Services.AddScoped<ISMSLogRepo, SMSLogRepo>();
 builder.Services.AddScoped<ISMSLogServices, SMSLogServices>();
 builder.Services.AddScoped<ISearchRecordServices, SearchRecordServices>();
+builder.Services.AddScoped<IPatientHistoryServices, PatientHistoryServices>();
+builder.Services.AddScoped<IPatientRecordServices, PatientRecordServices>();
 
 
 

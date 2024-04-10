@@ -32,5 +32,7 @@ namespace HallodocServices.ModelView
 
         public string? PatientNote { get; set; }
 
+        public int? RequestId { get; set; }
+
     }
 }

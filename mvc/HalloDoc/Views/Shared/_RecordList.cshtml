@@ -32,7 +32,7 @@
                     <td>@item.DateOfService.Value.ToString("MMM") @item.DateOfService.Value.Day,@item.DateOfService.Value.Year</td>
                     <td>@item.Email</td>
                     <td>@item.PhoneNumber</td>
-                    <td>@item.Address</td>
+                    <td style="font-size:small">@item.Address</td>
                     <td>@item.Zip</td>
                     <td>Close</td>
                     <td>@item.Physician</td>
@@ -40,7 +40,7 @@
                     <td>@item.ProviderCancelledNote</td>
                     <td>@item.AdminNote</td>
                     <td>@item.PatientNote</td>
-                    <td><div> <button type="button" class="btn btn-outline-info">Delete</button></div></td>
+                    <td><div> <a asp-controller="AdminSite" asp-action="DeleteRecord" asp-route-RequestId="@item.RequestId"><button type="button" class="btn btn-outline-info">Delete</button></a></div></td>
                 </tr>
             }
         </tbody>

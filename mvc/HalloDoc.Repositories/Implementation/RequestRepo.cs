@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {
@@ -25,7 +26,7 @@ namespace HalloDoc.Repositories.Implementation
         
         public List<Request> GetAllRequests(int uid)
         {
-            List<Request> requests = _dbcontext.Requests.Where(a=>a.UserId == uid).ToList();
+            List<Request> requests = _dbcontext.Requests.Include(a=>a.Physician).Include(a=>a.RequestWiseFiles).Where(a=>a.UserId == uid).ToList();
             return requests;
         }
         public Request GetRequest(int id)

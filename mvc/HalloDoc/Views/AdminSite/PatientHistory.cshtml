@@ -1,0 +1,157 @@
+﻿@model HallodocServices.ModelView.PatientHistoryVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/scheduling.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/patientHistory.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <style>
+        .he {
+            margin-left: 5%;
+            width: 90%;
+        }
+
+        .ct {
+            margin-left: 5%;
+            width: 90%;
+        }
+    </style>
+
+    <title>Document</title>
+
+
+
+</head>
+
+<body>
+    <div class="sticky-top">
+        <header class="position-sticky">
+
+            <div class="d-flex d-lg-flex">
+                <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+            </div>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right">
+                <div class="intro mx-1"><p>Welcome:</p></div>
+                <div class="s intro mx-1"><span><b>@Html.Raw(ViewBag.AdminName)</b></span></div>
+                <div class="ilogout">
+                    <button type="button" class="btn btn-outline-info mx-1"><i class="bi bi-box-arrow-right"></i></button>
+                </div>
+                <div class="Logout">
+                    <button type="button" class="btn btn-outline-info mx-1">Logout</button>
+                </div>
+                <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+            </div>
+        </header>
+
+
+        <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body align-items-center nav-tabs">
+
+
+                <a class="nav-link  text-black">DashBoard</a>
+
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
+
+
+                <a class="nav-link border-dark text-black">My Profile</a>
+
+
+
+                <a class="nav-link text-black">Providers</a>
+
+
+                <a class="nav-link text-black">Partners</a>
+
+
+                <a class="nav-link text-black">Access</a>
+
+
+                <a class="nav-link text-black">Records</a>
+
+
+
+            </div>
+        </div>
+
+        <ul class="nav nav-underline position-sticky d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black"><b>Providers</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black"><b>Partners</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active"><b>Records</b></a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Patient History</p>
+        </div>
+        <div class="he2">
+            
+        </div>
+    </div>
+    <div class="ct bg-white pt-2 px-2 rounded-3 shadow">
+        <div class="row">
+            <div class="col-3 form-floating mt-1">
+                <input type="text" class="form-control" id="fname" placeholder="First Name">
+                <label for="fname">First Name</label>
+            </div>
+            <div class="col-3 form-floating mt-1">
+                <input type="text" class="form-control" id="lname" placeholder="Last Name">
+                <label for="lname">Last Name</label>
+            </div>
+            <div class="col-3 form-floating mt-1">
+                <input type="email" class="form-control" id="email" placeholder="Email">
+                <label for="email">email</label>
+            </div>
+            <div class="col-3 form-floating mt-1">
+                <input type="text" class="form-control" id="mobile" placeholder="mobile">
+                <label for="mobile">Phone Number</label>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+            <button type="button" class="btn btn-outline-info mx-1" onclick="window.location.reload()">Clear</button>
+            <button type="button" class="btn btn-info text-white mx-1" onclick="searchButton()">Search</button>
+        </div>
+        <div id="patienthistory">
+            @Html.Partial("~/Views/Shared/_PatientHistoryList.cshtml",@Model.list)
+        </div>
+</div>
+</body>
+</html>

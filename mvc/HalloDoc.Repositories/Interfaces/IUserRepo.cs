@@ -14,5 +14,6 @@ namespace HalloDoc.Repositories.Interfaces
         bool CheckUser(string Email);
         Task<bool> AddTable(User user);
         int GetUserId(string email);
+        List<User> GetPatientHistory(string FirstName, string LastName, string Email, string Mobile);
     }
 }

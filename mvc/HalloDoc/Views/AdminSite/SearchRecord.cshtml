@@ -18,14 +18,14 @@
     <style>
         .he
         {
-            margin-left:5%;
-            width:90%;
+            margin-left:1%;
+            width:98%;
         }
 
         .ct
         {
-            margin-left: 5%;
-            width: 90%;
+            margin-left: 1%;
+            width: 98%;
         }
     </style>
 
@@ -36,7 +36,9 @@
 </head>
 
 <body>
-    <header>
+    <div class="sticky-top">
+    <header class="position-sticky">
+        
         <div class="d-flex d-lg-flex">
             <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
         </div>
@@ -88,7 +90,7 @@
         </div>
     </div>
 
-    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
+    <ul class="nav nav-underline position-sticky d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
         <li class="nav-item">
             <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
         </li>
@@ -117,12 +119,13 @@
         </li>
 
     </ul>
+    </div>
     <div class="he">
         <div class="he1 h4">
             <p>Search Record</p>
         </div>
         <div class="he2">
-            <button type="button" class="btn btn-info text-white">Export Data To Excel</button>
+            <button type="button" class="btn btn-info text-white" onclick="ExportRecordData()">Export Data To Excel</button>
         </div>
     </div>
     <div class="ct bg-white pt-2 px-2 rounded-3">
@@ -178,7 +181,7 @@
         </div>
         <div class="d-flex justify-content-end mt-3">
             <button type="button" class="btn btn-outline-info mx-1" onclick="window.location.reload()">Clear</button>
-            <button type="button" class="btn btn-info text-white mx-1">Search</button>
+            <button type="button" class="btn btn-info text-white mx-1" onclick="searchButton()">Search</button>
         </div>
         <div id="recordlist" class="mt-4">
             @Html.Partial("~/Views/Shared/_RecordList.cshtml",Model.lists)
