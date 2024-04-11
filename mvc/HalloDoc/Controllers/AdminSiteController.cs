@@ -55,9 +55,10 @@ namespace HalloDoc.Controllers
         private readonly ISearchRecordServices _searchRecordServices;
         private readonly IPatientHistoryServices _patientHistoryServices;
         private readonly IPatientRecordServices _patientRecordServices;
+        private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -87,6 +88,7 @@ namespace HalloDoc.Controllers
             _searchRecordServices = searchRecordServices;
             _patientHistoryServices = patientHistoryServices;
             _patientRecordServices = patientRecordServices;
+            _encryptionDecryptionServices = encryptionDecryptionServices;
         }
 
         public IActionResult AdminLogin()
@@ -309,11 +311,14 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public ActionResult DownloadSelected(List<string> filesChecked)
+        public ActionResult? DownloadSelected(List<string> filesChecked)
         {
-
-            byte[] fileBytes = _viewUploadsServices.GetSelectedFilesAsZip(filesChecked);
-            return File(fileBytes, "application/zip", "files.zip");
+            
+            
+                byte[] fileBytes = _viewUploadsServices.GetSelectedFilesAsZip(filesChecked);
+                return File(fileBytes, "application/zip", "files.zip");
+            
+           
         }
 
 
@@ -654,9 +659,9 @@ namespace HalloDoc.Controllers
             return View(adminScheduling);
         }
 
-        public IActionResult SchedulingFilter(int Scheduling, int RegionId, string ReqDate)
+        public IActionResult SchedulingFilter(int Scheduling, int RegionId, string StartDay,string EndDay)
         {
-            List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId, DateTime.Parse(ReqDate));
+            List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId, DateTime.Parse(StartDay), DateTime.Parse(EndDay));
             if (Scheduling == 1)
             {
                 return PartialView("_DayWiseScheduling", schedulingList);

@@ -13,7 +13,7 @@ namespace HallodocServices.Interfaces
     {
         AdminScheduling GetData(int regionid, DateTime dateTime);
 
-        List<SchedulingList> GetSchedulingList(int regionid, DateTime dateTime);
+        List<SchedulingList> GetSchedulingList(int regionid, DateTime dateTime1, DateTime dateTime2);
 
         Task<AdminScheduling> CreateShift(AdminScheduling scheduling);
 

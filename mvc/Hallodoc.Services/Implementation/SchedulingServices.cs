@@ -34,7 +34,7 @@ namespace HallodocServices.Implementation
             for(int i = 0; i<physicians.Count; i++)
             {
                 Physician physician = physicians[i];
-                List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetail(physicians[i].PhysicianId,dateTime);
+                List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetail(physicians[i].PhysicianId,dateTime,dateTime);
                 SchedulingList schedulingList1 = new SchedulingList();
 
                 schedulingList1.GetPhysicians = physician;
@@ -49,7 +49,7 @@ namespace HallodocServices.Implementation
             return scheduling;
         }
 
-        public List<SchedulingList> GetSchedulingList(int regionid,DateTime dateTime) 
+        public List<SchedulingList> GetSchedulingList(int regionid,DateTime dateTime1, DateTime dateTime2) 
         {
             List<Physician> physicians = _physicianRepo.GetPhysiciansListForScheduling(regionid);
             List<SchedulingList> schedulingList = new List<SchedulingList>();
@@ -57,7 +57,7 @@ namespace HallodocServices.Implementation
             for (int i = 0; i < physicians.Count; i++)
             {
                 Physician physician = physicians[i];
-                List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetail(physicians[i].PhysicianId,dateTime);
+                List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetail(physicians[i].PhysicianId,dateTime1,dateTime2);
                 SchedulingList schedulingList1 = new SchedulingList();
 
                 schedulingList1.GetPhysicians = physician;

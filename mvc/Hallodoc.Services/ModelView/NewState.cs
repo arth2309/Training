@@ -51,13 +51,20 @@ namespace HallodocServices.ModelView
         public string? Notes { get; set; }
         public string? CaseTag { get; set; }
         public int RequestTypeId { get; set; }
+
+        public string? StrMonth { get; set; }
+
+        public int? year { get; set; }
+
+        public int? day { get; set; }
+
         public AdminCancelCase? cancelCases { get; set; }
         public AdminAssignCase? assignCases { get; set; }
         public  AdminBlockCase? blockCases { get; set; }
         public SendAgreement? sendAgreement { get; set; }
 
-        public string physicianName { get; set; }
-        public string regionName { get; set; }
+        public string? physicianName { get; set; }
+        public string? regionName { get; set; }
 
        
     }

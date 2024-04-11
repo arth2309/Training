@@ -12,14 +12,16 @@ namespace HallodocServices.Implementation;
     public class PatientLoginServices: IPatientLoginServices
 {
     private readonly IPatientLoginRepo _patientLoginRepo;
+    private readonly IPasswordHashServices _passwordHashServices;
 
-    public PatientLoginServices(IPatientLoginRepo patientLoginRepo)
+    public PatientLoginServices(IPatientLoginRepo patientLoginRepo,IPasswordHashServices passwordHashServices)
     {
         _patientLoginRepo = patientLoginRepo;
+        _passwordHashServices = passwordHashServices;
     }
     public int ValidateUser( PatientLogin patientlogin )
     {
-        int id = _patientLoginRepo.ValidateUser(patientlogin.Email, patientlogin.PasswordHash);
+        int id = _patientLoginRepo.ValidateUser(patientlogin.Email,_passwordHashServices.PasswordHash(patientlogin.PasswordHash));
         return id;
     }
 

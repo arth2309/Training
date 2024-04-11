@@ -232,6 +232,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQYXRpZW50TG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/Patient/PatientResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQYXRpZW50UmVzZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/Patient/SubmitMe.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxTdWJtaXRNZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

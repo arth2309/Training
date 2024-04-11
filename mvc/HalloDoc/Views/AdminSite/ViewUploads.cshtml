@@ -14,13 +14,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/delete.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </head>
 <body>
 
     @if(TempData["Delete"]!=null)
     {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        
         <script>
             toastr.success('@TempData["Delete"]');
         </script>
@@ -29,7 +30,7 @@
 
     @if (TempData["Upload"] != null)
     {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+     
         <script>
             toastr.success('@TempData["Upload"]');
         </script>
@@ -37,11 +38,24 @@
 
     @if (TempData["UploadF"] != null)
     {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        
         <script>
             toastr.error('@TempData["UploadF"]');
         </script>
     }
+   
+
+    <div class="modal fade" id="selectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white">Please Select File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
     <header>
         <div class="d-flex d-lg-flex">
@@ -157,8 +171,8 @@
                 <p>Documents</p>
             </div>
             <div class="d-flex">
-                <div><button type="button" class="btn btn-outline-info d-flex d-lg-none" onclick="DownloadSelected()"><i class="bi bi-cloud-arrow-down"></i></button></div>
-                <a asp-controller="AdminSite" asp-action="DownloadAll" asp-route-ReqId="@Model.requestId"><button type="button" class="btn btn-outline-info d-none d-lg-flex">Download All</button></a>
+                <div><button type="button" class="btn btn-outline-info d-flex d-lg-none download" onclick="DownloadSelected()"><i class="bi bi-cloud-arrow-down"></i></button></div>
+               <div><button type="button" class="btn btn-outline-info d-none d-lg-flex download" onclick="DownloadSelected()">Download All</button> </div>
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-trash"></i></button></div>
                 <div><button type="button" class="btn btn-outline-info d-none d-lg-flex">Delete All</button></div>
                 <div><button type="button" class="btn btn-outline-info d-flex d-lg-none"><i class="bi bi-link"></i></button></div>
@@ -174,7 +188,7 @@
                     <tr>
                         <th scope="col">
 
-                            <input class="form-check-input" type="checkbox" id="selectAll">
+                            <input class="form-check-input" type="checkbox" id="selectAll" onclick="SelectAll(this)">
                         </th>
                         <th scope="col"></th>
                         <th scope="col">upload Date</th>
@@ -191,7 +205,7 @@
                         {
                             <tr>
                                 <td>
-                                    <input type="checkbox" value="@item.FileName" class="form-check-input" onclick="DownloadList(this)">
+                                    <input type="checkbox" value="@item.FileName" id="@item.FileName" class="form-check-input sel" name="sel" onclick="DownloadList(this)">
 
                                 </td>
                                 <td><i class="bi bi-file-earmark-pdf"></i> @Html.DisplayFor(modelitem => item.FileName)</td>
@@ -267,6 +281,17 @@
             if ($(temp).is(':checked')) {
                 var checked = ($(temp).val());
                 filesChecked.push(checked);
+
+                var checkboxes = document.querySelectorAll('input[name=sel]');
+                var checkedBoxes = document.querySelectorAll('input[name=sel]:checked');
+
+                console.log(checkboxes);
+                console.log(checkedBoxes);
+
+                if (checkedBoxes.length == checkboxes.length) 
+                {
+                    $('#selectAll').prop('checked', true);
+                }
                 console.log(filesChecked);
 
             }
@@ -274,9 +299,30 @@
                 var index = filesChecked.indexOf($(temp).val());
                 if (index > -1) {
                     filesChecked.splice(index, 1);
+                    $('#selectAll').prop('checked',false);
+                    console.log(filesChecked);
                 }
             }
 
+        }
+
+        function SelectAll(temp)
+        {
+            if($(temp).is(':checked'))
+            {
+                filesChecked = [];
+                $('.sel').prop('checked',true);
+                var checked = $('.sel');
+                for (i = 0; i < checked.length; i++) {
+                    filesChecked.push($(checked[i]).attr("id"));
+                }
+                console.log(filesChecked);
+            }
+            else
+            {
+                filesChecked = [];
+                $('.sel').prop('checked', false);
+            }
         }
         
         function DownloadSelected() {
@@ -293,7 +339,10 @@
                 xhrFields: {
                     responseType: 'arraybuffer'
                 },
-                success: function (res) {
+                success: function (res) 
+                {
+                    if(filesChecked.length > 0)
+                    {
                     console.log(res);
                     const a = document.createElement('a');
                     var unit8array = new Uint8Array(res);
@@ -301,6 +350,11 @@
                         { type: 'application/zip' }));
                     a.download = 'files.zip';
                     a.click();
+                    }
+                    else
+                    {
+                        toastr.error('please select file');
+                    }
 
                 },
                 error: function (err) {

@@ -48,7 +48,7 @@
                 <tr class="@backcolor">
                     <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
-                    <td></td>
+                    <td>@item.StrMonth @item.day,@item.year</td>
                     <td>@Html.DisplayFor(modelItem => item.physicianName)</td>
                     <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>@Html.DisplayFor(modelItem => item.Mobile)</button></td>

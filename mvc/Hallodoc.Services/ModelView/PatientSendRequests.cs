@@ -80,7 +80,8 @@ namespace HallodocServices.ModelView
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "please enter number and special symbol")]
         public string? PasswordHashC { get; set; }
 
-
+        [Required(ErrorMessage ="Please select BirthDate")]
+        public DateOnly BirthDate  { get; set; }
 
         [StringLength(512)]
         public string? symptoms { get; set; }
@@ -88,7 +89,7 @@ namespace HallodocServices.ModelView
         [StringLength(128)]
         public string? roomsuite { get; set; }
 
-        public IFormFile File { get; set; }
+        public IFormFile? File { get; set; }
 
 
         //[StringLength(100)]

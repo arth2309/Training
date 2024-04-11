@@ -173,6 +173,9 @@ namespace HallodocServices.Implementation
                     newState.sendAgreement = sendAgreement;
                     newState.Notes = notes;
                     newState.regionName = regionName;
+                    newState.StrMonth = requestClients[i].StrMonth;
+                    newState.year = requestClients[i].IntYear;
+                    newState.day = requestClients[i].IntDate;
 
                 };
                 newStates.Add(newState);

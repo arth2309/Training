@@ -20,8 +20,9 @@ namespace HallodocServices.Implementation
         private readonly IRequestConceirgeRepo _requestConceirgeRepo;
         private readonly IRequestFileRepo _requestFileRepo;
         private readonly IRequestRepo _requestRepo;
+        private readonly IPasswordHashServices _passwordHashServices;
 
-        public PatientSendRequestServices(IAspNetUserRepo aspNetUserRepo, IUserRepo userRepo, IRequestRepo requestRepo, IRequestFileRepo requestFileRepo, IRequestConceirgeRepo requestConceirgeRepo, IRequestClientRepo requestClientRepo, IRequestBusinessRepo requestBusinessRepo)
+        public PatientSendRequestServices(IAspNetUserRepo aspNetUserRepo, IUserRepo userRepo, IRequestRepo requestRepo, IRequestFileRepo requestFileRepo, IRequestConceirgeRepo requestConceirgeRepo, IRequestClientRepo requestClientRepo, IRequestBusinessRepo requestBusinessRepo,IPasswordHashServices passwordHashServices)
         {
             _aspNetUserRepo = aspNetUserRepo;
             _userRepo = userRepo;
@@ -30,6 +31,7 @@ namespace HallodocServices.Implementation
             _requestClientRepo = requestClientRepo;
             _requestBusinessRepo = requestBusinessRepo;
             _requestConceirgeRepo = requestConceirgeRepo;
+            _passwordHashServices = passwordHashServices;
         }
 
         
@@ -43,13 +45,21 @@ namespace HallodocServices.Implementation
                 {
 
                     UserName = user.FirstName,
-                    PasswordHash = user.PasswordHash,
+                    PasswordHash =  _passwordHashServices.PasswordHash(user.PasswordHash),
                     Email = user.Email,
                     PhoneNumber = user.Mobile,
                     Ip = "192.168.0.2",
                     CreatedDate = DateTime.Now
                 };
                 await _aspNetUserRepo.AddTable(aspNetUser);
+
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = 3
+                };
+
+                await _aspNetUserRepo.AddData(aspNetUserRole);
             }
 
 
@@ -106,6 +116,9 @@ namespace HallodocServices.Implementation
                 State = user.State,
                 ZipCode = user.ZipCode,
                 Email = user.Email,
+                StrMonth = user.BirthDate.ToString("MMM"),
+                IntYear = user.BirthDate.Year,
+                IntDate = user.BirthDate.Day
 
 
             };
@@ -142,7 +155,7 @@ namespace HallodocServices.Implementation
                 {
 
                     UserName = user.FirstName,
-                    PasswordHash = user.PasswordHash,
+                    PasswordHash = _passwordHashServices.PasswordHash(user.PasswordHash),
                     Email = user.Email,
                     PhoneNumber = user.Mobile,
                     Ip = "192.168.0.2",
@@ -150,6 +163,14 @@ namespace HallodocServices.Implementation
                 };
 
                 await _aspNetUserRepo.AddTable(aspNetUser);
+
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = 3
+                };
+
+                await _aspNetUserRepo.AddData(aspNetUserRole);
             }
 
 
@@ -208,6 +229,9 @@ namespace HallodocServices.Implementation
                 State = user.State,
                 ZipCode = user.ZipCode,
                 Email = user.Email,
+                StrMonth = user.BirthDate.ToString("MMM"),
+                IntYear = user.BirthDate.Year,
+                IntDate = user.BirthDate.Day
 
 
             };
@@ -256,7 +280,7 @@ namespace HallodocServices.Implementation
                 {
 
                     UserName = user.FirstName,
-                    PasswordHash = user.PasswordHash,
+                    PasswordHash =_passwordHashServices.PasswordHash(user.PasswordHash),
                     Email = user.Email,
                     PhoneNumber = user.Mobile,
                     Ip = "192.168.0.2",
@@ -264,6 +288,14 @@ namespace HallodocServices.Implementation
                 };
 
                 await _aspNetUserRepo.AddTable(aspNetUser);
+
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = 3
+                };
+
+                await _aspNetUserRepo.AddData(aspNetUserRole);
             }
 
             
@@ -322,6 +354,9 @@ namespace HallodocServices.Implementation
                 State = user.State,
                 ZipCode = user.ZipCode,
                 Email = user.Email,
+                StrMonth = user.BirthDate.ToString("MMM"),
+                IntYear = user.BirthDate.Year,
+                IntDate = user.BirthDate.Day
 
 
             };
@@ -368,13 +403,21 @@ namespace HallodocServices.Implementation
                 {
 
                     UserName = user.FirstName,
-                    PasswordHash = user.PasswordHash,
+                    PasswordHash = _passwordHashServices.PasswordHash(user.PasswordHash),
                     Email = user.Email,
                     PhoneNumber = user.Mobile,
                     Ip = "192.168.0.2",
                     CreatedDate = DateTime.Now
                 };
                 await _aspNetUserRepo.AddTable(aspNetUser);
+
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = 3
+                };
+
+                await _aspNetUserRepo.AddData(aspNetUserRole);
             }
 
 
@@ -431,6 +474,9 @@ namespace HallodocServices.Implementation
                 State = user.State,
                 ZipCode = user.ZipCode,
                 Email = user.Email,
+                StrMonth = user.BirthDate.ToString("MMM"),
+                IntYear = user.BirthDate.Year,
+                IntDate = user.BirthDate.Day
 
 
             };
@@ -508,6 +554,9 @@ namespace HallodocServices.Implementation
                 State = user.State,
                 ZipCode = user.ZipCode,
                 Email = user.Email,
+                StrMonth = user.BirthDate.ToString("MMM"),
+                IntYear = user.BirthDate.Year,
+                IntDate = user.BirthDate.Day
 
 
             };
@@ -540,7 +589,7 @@ namespace HallodocServices.Implementation
 
         public bool CheckEmail(string email)
         {
-            return _aspNetUserRepo.CheckAspNetUser(email);
+            return _aspNetUserRepo.CheckAspNetUser(email) == true? false : true;
         }
     }
    

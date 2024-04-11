@@ -63,25 +63,37 @@ async function Scheduling(temp)
    /* window.sessionStorage.setitem("scheduling", temp);*/
     /* var regionid = window.sessionStorage.getitem("region");*/
     scheduling = temp;
-    var reqDate;
+    var startDate;
+    var endDate;
     if (scheduling == 1)
     {
-        reqDate = today;
+        startDate = today;
+        endDate = today;
     }
     else if (scheduling == 2)
     {
-        reqDate = Week;
+        startDate = Week.setDate(Week.getDate() - Week.getDay());
+        endDate = Week.setDate((Week.getDate() - Week.getDay()) + 6);
+        
     }
     else
     {
-        reqDate = Month;
+        startDate = Month.setDate(1);
+        Month.setMonth(Month.getMonth() + 1);
+        endDate = Month.setDate(Month.getDate() - 1);
     }
 
-    var weekday = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(reqDate);
-    let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(reqDate);
-    let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(reqDate);
-    let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(reqDate);
-    DateForDay = weekday + ", " + month + ' ' + day + ', ' + year;
+    var weekday = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(startDate);
+    let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(startDate);
+    let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(startDate);
+    let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(startDate);
+    startDay = weekday + ", " + month + ' ' + day + ', ' + year;
+
+    var weekday1 = new Intl.DateTimeFormat('en', { weekday: 'long' }).format(endDate);
+    let year1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(endDate);
+    let month1 = new Intl.DateTimeFormat('en', { month: 'short' }).format(endDate);
+    let day1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(endDate);
+    endDay = weekday1 + ", " + month1 + ' ' + day1 + ', ' + year1;
 
 
 
@@ -92,7 +104,8 @@ async function Scheduling(temp)
         data: {
             Scheduling: scheduling,
             RegionId: regionid,
-            ReqDate: DateForDay
+            StartDay: startDay,
+            EndDay: endDay
         },
 
         success: function (res)
@@ -206,15 +219,7 @@ async function Next()
     if (scheduling == 3)
     {
 
-        //for (i = 0; i < 6; i++)
-        //{
-        //    for (j = 0; j < 7; j++)
-        //    {
-        //        var y = weekDays[j] + "-" + i;
-        //        $(`#${y}`).text("");
-        //        $(`#${y}`).addClass("bg-white");
-        //    }
-        //}
+        
         
 
         Month.setDate(1);
@@ -240,13 +245,7 @@ async function Previous() {
     }
     if (scheduling == 3)
     {
-        //for (i = 0; i < 6; i++) {
-        //    for (j = 0; j < 7; j++) {
-        //        var y = weekDays[j] + "-" + i;
-        //        $(`#${y}`).text("");
-        //        $(`#${y}`).addClass("bg-white");
-        //    }
-        //}
+       
 
         Month.setDate(1);
         Month.setMonth(Month.getMonth() - 1);

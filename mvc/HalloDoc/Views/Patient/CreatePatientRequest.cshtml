@@ -88,8 +88,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 wt form-floating">
-                        <input type="date" class="form-control" id="floatingInput">
+                        <input type="date" class="form-control" id="floatingInput" asp-for="BirthDate">
                         <label for="floatingInput">Date</label>
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
                        
                     </div>
                     <div class="col-md-12 col-lg-6 wt form-floating"></div>

@@ -13,7 +13,7 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<ShiftDetail> AddDataInShiftDetail(ShiftDetail shiftDetail);
 
-        List<ShiftDetail> GetShiftDetail(int physicianid, DateTime dateTime);
+        List<ShiftDetail> GetShiftDetail(int physicianid, DateTime dateTime1, DateTime dateTime2);
 
         List<ShiftDetail> GetShiftDetailByRegion(int Regionid, bool CurrentMonth);
 

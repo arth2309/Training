@@ -31,6 +31,9 @@ namespace HallodocServices.ModelView
         [Required(ErrorMessage = "this field is required")]
         public string? BusinessName { get; set; }
 
+        [Required(ErrorMessage = "Please select BirthDate")]
+        public DateOnly BirthDate { get; set; }
+
         [StringLength(100)]
         public string? Case { get; set; }
 

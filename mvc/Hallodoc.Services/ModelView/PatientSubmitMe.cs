@@ -45,6 +45,9 @@ namespace HallodocServices.ModelView
         public string? State { get; set; }
 
 
+        [Required(ErrorMessage = "Please select BirthDate")]
+        public DateOnly BirthDate { get; set; }
+
         [StringLength(10)]
         [Required(ErrorMessage = "this field is required")]
         public string? ZipCode { get; set; }

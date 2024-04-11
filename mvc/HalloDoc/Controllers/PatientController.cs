@@ -25,6 +25,8 @@ namespace HalloDoc.Controllers
         private readonly IForgotPasswordServices _forgotPasswordServices;
         private readonly IJwtServices _jwtServices;
         private readonly IPasswordHashServices _passwordHashServices;
+        private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
+        private readonly IResetPasswordServices _resetPasswordServices;
         private readonly IPatientUserProfileServices _profileServices;
         private readonly IPatientShowDocumentsServices _showDocumentsServices;
         private readonly IPatientSendRequestServices _sendRequestServices;
@@ -32,7 +34,7 @@ namespace HalloDoc.Controllers
         
        
 
-        public PatientController(IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices,IPatientUserProfileServices patientUserProfileServices,IPatientShowDocumentsServices patientShowDocumentsServices,IPatientSendRequestServices sendRequestServices)
+        public PatientController(IPatientLoginServices loginServices, IPatientDashBoardServices dashBoardServices, IForgotPasswordServices forgotPasswordServices,IJwtServices jwtServices,IPasswordHashServices passwordHashServices,IPatientUserProfileServices patientUserProfileServices,IPatientShowDocumentsServices patientShowDocumentsServices,IPatientSendRequestServices sendRequestServices,IEncryptionDecryptionServices encryptionDecryptionServices,IResetPasswordServices resetPasswordServices)
         {
             
             _loginServices = loginServices;
@@ -43,6 +45,8 @@ namespace HalloDoc.Controllers
             _profileServices = patientUserProfileServices;
             _showDocumentsServices = patientShowDocumentsServices;
             _sendRequestServices = sendRequestServices;
+            _encryptionDecryptionServices = encryptionDecryptionServices;
+            _resetPasswordServices = resetPasswordServices;
         }
 
       
@@ -74,6 +78,20 @@ namespace HalloDoc.Controllers
         {
             _forgotPasswordServices.SendEmail(forgotPassword.Email);
             return View();
+        }
+
+        public IActionResult PatientResetPassword(string Id)
+        {
+         
+            ViewBag.Id = _encryptionDecryptionServices.Decrypt(Id);
+            return View();
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> PatientResetPassword(PatientResetPasswordVM patientResetPasswordVM)
+        {
+            bool id = await _resetPasswordServices.ResetPassword(patientResetPasswordVM);
+            return RedirectToAction("PatientLogin");
         }
         public IActionResult CreatePatientRequest()
         {

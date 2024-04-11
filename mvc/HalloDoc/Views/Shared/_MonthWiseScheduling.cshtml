@@ -1,7 +1,4 @@
-﻿<div>@ViewBag.NoOfDays</div>
-<div>@ViewBag.FirstDay</div>
-
-<div class="table-responsive mt-4">
+﻿<div class="table-responsive mt-4">
     <table class="table table-bordered">
         <thead class="table-dark text-center">
             <tr>
@@ -18,6 +15,8 @@
 
             @for(int i = 0;i<6;i++)
             {
+                
+
                 <tr class="row-@i">
                     <td id="sun-@i" class="bg-pink bg-white"></td>
                     <td id="mon-@i" class="bg-pink bg-white"></td>
