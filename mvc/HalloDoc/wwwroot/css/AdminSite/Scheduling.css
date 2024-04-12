@@ -113,6 +113,10 @@ header {
     --bs-table-bg: #FFACFA;
 }
 
+.b-pink {
+    background-color: #FFACFA;
+}
+
 
 
 @media only screen and (max-width:576px) {

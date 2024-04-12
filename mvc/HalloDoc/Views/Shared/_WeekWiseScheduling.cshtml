@@ -1,7 +1,7 @@
 ﻿
 @model List<HallodocServices.ModelView.SchedulingList>
 
-<div class="table-responsive mt-4">
+<div class="table-responsive mt-4 d-none d-md-flex">
     <table class="table table-bordered">
         <thead class="table-dark text-center justify-content-center">
             <tr>
@@ -55,3 +55,64 @@
         </tbody>
     </table>
 </div>
+
+<div class="table-responsive mt-4 d-flex d-md-none">
+    <table class="table table-bordered">
+        <thead class="text-center justify-content-center">
+            <tr>
+             
+                <th>SUN <span id="sun1">1</span></th>
+                <th>MON <span id="mon1">1</span></th>
+                <th>TUE <span id="tue1">1</span></th>
+                <th>WED <span id="wed1">1</span></th>
+                <th>THU <span id="thu1">1</span></th>
+                <th>FRI <span id="fri1">1</span></th>
+                <th>SAT <span id="sat1">1</span></th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr>
+         
+                <td>0/24</td>
+                <td>0/24</td>
+                <td>0/24</td>
+                <td>0/24</td>
+                <td>0/24</td>
+                <td>0/24</td>
+                <td>0/24</td>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                   
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        var shift = item.GetShiftDetail.Where(a => (int)a.ShiftDate.DayOfWeek == i).ToList();
+                        if (shift.Count > 0)
+                        {
+                            <td>
+                                @foreach (var s in shift)
+                                {
+                                        <div class="d-block @(s.Status == 1? "b-pink":"bg-success")">
+                                        <div>@s.StartTime - @s.EndTime</div>
+                                        <div>@item.GetPhysicians.FirstName @item.GetPhysicians.LastName</div>
+                                       </div>
+                                    
+                                }
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+

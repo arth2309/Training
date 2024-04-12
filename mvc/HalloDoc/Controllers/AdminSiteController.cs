@@ -662,6 +662,7 @@ namespace HalloDoc.Controllers
         public IActionResult SchedulingFilter(int Scheduling, int RegionId, string StartDay,string EndDay)
         {
             List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId, DateTime.Parse(StartDay), DateTime.Parse(EndDay));
+            MonthSchedulingVM monthSchedulingVM = _schedulingServices.GetMonthScheduling(RegionId,DateTime.Parse(StartDay), DateTime.Parse(EndDay));
             if (Scheduling == 1)
             {
                 return PartialView("_DayWiseScheduling", schedulingList);
@@ -672,7 +673,7 @@ namespace HalloDoc.Controllers
             }
             if (Scheduling == 3)
             {
-                return PartialView("_MonthWiseScheduling");
+                return PartialView("_MonthWiseScheduling",monthSchedulingVM);
             }
             else
             {

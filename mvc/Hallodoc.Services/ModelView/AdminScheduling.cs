@@ -11,6 +11,8 @@ namespace HallodocServices.ModelView
     {
         public List<SchedulingList>? SchedulingList { get; set; }
 
+        public MonthSchedulingVM? MonthSchedulingVM { get; set; }
+
         public List<string>? RepeatedDays { get; set; }
 
 

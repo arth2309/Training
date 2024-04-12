@@ -223,17 +223,20 @@
         </div>
     </div>
     <div class="ct">
-        <div class="d-flex justify-content-between">
-            <div>
+        <div class="row">
+            <div class="col-12 col-md-6 d-flex justify-content-start mt-1">
+                <div>
                 <select class="form-select" aria-label="Default select example" onchange="SchedulingByRegion(this.value)">
                 <option value="0">All Regions</option>
                 <option value="1">MaryLand</option>
                 <option value="2">District of Columbia</option>
                 <option value="3">New York</option>
                 <option value="4">Virginia</option>
+               
             </select>
                 </div>
-            <div class="d-flex">
+                </div>
+            <div class="col-12 col-md-6 d-flex justify-content-start justify-content-md-end mt-1">
                 <a asp-controller="AdminSite" asp-action="MDOnCalls"><button class="btn btn-info text-white mx-1">Providers On Call</button></a>
                 <a asp-controller="AdminSite" asp-action="ShiftForReview"><button class="btn btn-info text-white mx-1"> Shifts For Review</button> </a>
                 <button class="btn btn-info text-white mx-1" data-bs-toggle="modal" data-bs-target="#createShift">Add New Shift</button>
@@ -242,7 +245,7 @@
         <div class="h5 mt-3" id="date">
             
         </div>
-        <div class="d-flex mt-2 justify-content-end">
+        <div class="d-flex mt-2 justify-content-md-end justify-content-center">
             <div class="d-flex mx-2">
                 <div class="rectangle" style="background-color:#FFACFA"></div>
             <div class="mx-1">Pending Shifts</div>
@@ -252,16 +255,16 @@
             <div class="mx-1">Approved shifts</div>
             </div>
         </div>
-        <div class="d-flex justify-content-between mt-3">
-            <div class="d-flex">
+        <div class="row mt-2">
+            <div class="col-12 col-md-6  d-flex justify-content-md-start justify-content-center mt-1">
                 <button class="btn btn-info rounded-circle text-white mx-1" onclick="Previous()"><i class="bi bi-chevron-left"></i></button>
                 <div class="pt-2"> <i class="bi bi-calendar4-week"></i> </div>
                 <button class="btn btn-info rounded-circle text-white mx-1" onclick="Next()"><i class="bi bi-chevron-right"></i></button>
             </div>
-            <div class="d-flex">
-                <button class="btn btn-info text-white mx-1 day sc" onclick="MainScheduling(1)">Day</button>
-                <button class="btn btn-outline-info  mx-1 week sc" onclick="MainScheduling(2)">Week</button>
-                <button class="btn btn-outline-info  mx-1 month sc" onclick="MainScheduling(3)">Month</button>
+            <div class="col-12 col-md-6  d-flex justify-content-md-end justify-content-center mt-1">
+                <button class="btn btn-info text-white mx-2 mx-md-1 day sc" onclick="MainScheduling(1)">Day</button>
+                <button class="btn btn-outline-info  mx-2 mx-md-1 week sc" onclick="MainScheduling(2)">Week</button>
+                <button class="btn btn-outline-info mx-2 mx-md-1 month sc" onclick="MainScheduling(3)">Month</button>
             </div>
         </div>
 

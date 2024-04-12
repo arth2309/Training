@@ -68,6 +68,18 @@ namespace HallodocServices.Implementation
             return schedulingList;
         }
 
+        public MonthSchedulingVM GetMonthScheduling(int RegionId,DateTime dateTime1, DateTime dateTime2)
+        {
+            List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetailForMonth(RegionId,dateTime1,dateTime2);
+            int startDay = (int)dateTime1.DayOfWeek;
+
+            MonthSchedulingVM monthSchedulingVM = new MonthSchedulingVM();
+            monthSchedulingVM.startDay = startDay;
+            monthSchedulingVM.GetDetail  = shiftDetails;
+
+            return monthSchedulingVM;
+        }
+
         public async Task<AdminScheduling> CreateShift(AdminScheduling scheduling)
         {
             Shift shift = new();
@@ -76,12 +88,13 @@ namespace HallodocServices.Implementation
             shift.StartDate = DateOnly.FromDateTime(scheduling.ShiftDate);
 
             
-            if (scheduling.RepeatedDays.Count() > 0)
+            if (scheduling.RepeatedDays != null)
             {
                 
             shift.WeekDays = System.String.Join("", scheduling.RepeatedDays);
                 
             }
+   
 
             shift.IsRepeat = new System.Collections.BitArray(1, scheduling.IsRepeat);
             shift.CreatedDate = DateTime.Now;

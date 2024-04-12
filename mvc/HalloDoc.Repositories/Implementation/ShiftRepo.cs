@@ -52,6 +52,20 @@ namespace HalloDoc.Repositories.Implementation
             return _context.ShiftDetails.Include(a => a.Shift).Where(a => a.Shift.PhysicianId == physicianid && DateOnly.FromDateTime(a.ShiftDate) >= DateOnly.FromDateTime(dateTime1) && DateOnly.FromDateTime(a.ShiftDate) <= DateOnly.FromDateTime(dateTime2) && a.IsDeleted != new System.Collections.BitArray(1,true)).ToList();
         }
 
+        public List<ShiftDetail> GetShiftDetailForMonth(int RegionId,DateTime dateTime1, DateTime dateTime2)
+        {
+            if(RegionId == 0) 
+            {
+                return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(a => DateOnly.FromDateTime(a.ShiftDate) >= DateOnly.FromDateTime(dateTime1) && DateOnly.FromDateTime(a.ShiftDate) <= DateOnly.FromDateTime(dateTime2) && a.IsDeleted != new System.Collections.BitArray(1, true)).ToList();
+            }
+
+          else
+            {
+                return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(a => DateOnly.FromDateTime(a.ShiftDate) >= DateOnly.FromDateTime(dateTime1) && DateOnly.FromDateTime(a.ShiftDate) <= DateOnly.FromDateTime(dateTime2) && a.IsDeleted != new System.Collections.BitArray(1, true) && a.RegionId == RegionId).ToList();
+            }
+        }
+           
+
         public List<ShiftDetail> GetShiftDetailByRegion(int Regionid,bool CurrentMonth)
         {
 

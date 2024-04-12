@@ -34,5 +34,7 @@ namespace HallodocServices.Interfaces
         MdsOnCallVM GetMdsOnCallList();
 
         PhysicianDutyList GetMdsOnCallListFilter(int regionid);
+
+        MonthSchedulingVM GetMonthScheduling(int RegionId, DateTime dateTime1, DateTime dateTime2);
     }
 }

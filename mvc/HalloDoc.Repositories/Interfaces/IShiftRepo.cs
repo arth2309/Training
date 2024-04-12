@@ -22,5 +22,7 @@ namespace HalloDoc.Repositories.Interfaces
         Task<ShiftDetail> UpdateShiftDetailData(ShiftDetail shiftDetail);
 
         ShiftDetail GetViewShiftData(int shiftdetailid);
+
+        List<ShiftDetail> GetShiftDetailForMonth(int RegionId,DateTime dateTime1, DateTime dateTime2);
     }
 }

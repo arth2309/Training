@@ -11,6 +11,8 @@ var today = new Date();
 var Week = new Date();
 var Month = new Date();
 const weekDays = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+const weekDays1 = ["sun1", "mon1", "tue1", "wed1", "thu1", "fri1", "sat1"];
+
 
 
 async  function MainScheduling(temp)
@@ -144,8 +146,11 @@ function getCurrentDate()
     let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(today);
     let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(today);
     let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(today);
+    let mday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(today);
     DateForDay = weekday + ", " + month + ' ' + day + ', ' + year;
     document.getElementById("date").innerHTML = DateForDay;
+    document.getElementById("mMonth").innerHTML = month;
+    document.getElementById("mDay").innerHTML = mday;
 }
 
 function getcurrentWeek()
@@ -163,32 +168,38 @@ function getcurrentWeek()
     var sun = Week.setDate((Week.getDate() - Week.getDay()));
     let sunday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(sun);
     $('#sun').html(sunday);
+    $('#sun1').html(sunday);
 
 
     var mon = Week.setDate((Week.getDate() - Week.getDay()) + 1);
     let monday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(mon);
     $('#mon').html(monday);
+    $('#mon1').html(monday);
 
     var tue = Week.setDate((Week.getDate() - Week.getDay()) + 2);
     let tuesday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(tue);
     $('#tue').html(tuesday);
+    $('#tue1').html(tuesday);
 
     var wed = Week.setDate((Week.getDate() - Week.getDay()) + 3);
     let wednseday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(wed);
     $('#wed').html(wednseday);
-
+    $('#wed1').html(wednseday);
 
     var thu = Week.setDate((Week.getDate() - Week.getDay()) + 4);
     let thursday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(thu);
     $('#thu').html(thursday);
+    $('#thu1').html(thursday);
 
     var fri = Week.setDate((Week.getDate() - Week.getDay()) + 5);
     let friday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(fri);
     $('#fri').html(friday);
+    $('#fri1').html(friday);
 
     var sat = Week.setDate((Week.getDate() - Week.getDay()) + 6);
     let saturday = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(sat);
     $('#sat').html(saturday);
+    $('#sat1').html(saturday);
 
     document.getElementById("date").innerHTML = DateForDay;
 
@@ -305,16 +316,21 @@ function getcurrentMonth() {
             temp++;
         }
         var y = weekDays[x] + "-" + temp;
+        var z = weekDays1[x] + "-" + temp;
+        
         console.log(y);
         $(`#${y}`).text(i + 1);
+        $(`#${z}`).text(i + 1);
          $(`#${y}`).removeClass("bg-white");
         Month.setDate(Month.getDate() + 1);
     }
     if (temp != 4) {
         $(`.row-4`).css("display", "none");
+        $(`.row1-4`).css("display", "none");
     }
     if (temp != 5) {
         $(`.row-5`).css("display", "none");
+        $(`.row1-5`).css("display", "none");
     }
     Month.setDate(Month.getDate() - 1);
 }
@@ -487,4 +503,20 @@ function Repeat(doc)
     }
 }
 
+
+async function ChangeShift(temp)
+{
+    console.log(today);
+    Month.setDate(temp)
+    today = Month;
+
+    $('.sc').removeClass("btn-info btn-outline-info text-white");
+    $('.day').addClass("btn-info text-white");
+    $('.week').addClass("btn-outline-info");
+    $('.month').addClass("btn-outline-info");
+
+    await Scheduling(1);
+
+    getCurrentDate();
+}
             
