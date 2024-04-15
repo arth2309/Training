@@ -16,7 +16,7 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<bool> RemoveDataInRoleMenuTable(RoleMenu roleMenu);
 
-        List<RoleMenu> GetRoleMenuDataByroleid(int roleid);
+        List<RoleMenu> GetRoleMenuDataByroleid(int? roleid);
 
         Task<bool> RemoveDataInRoleTable(Role role);
 
@@ -25,6 +25,8 @@ namespace HalloDoc.Repositories.Interfaces
         List<Role> GetRoleDataForAdmin();
 
         List<Role> GetRoleDataForPhysician();
+
+        int GetAccountType(int RoleId);
 
 
     }

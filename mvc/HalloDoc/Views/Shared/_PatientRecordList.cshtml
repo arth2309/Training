@@ -1,6 +1,6 @@
 ﻿@model PaginatedList<HallodocServices.ModelView.PatientRecordList>
 
-<div class="table-responsive">
+<div class="table-responsive d-none d-sm-flex">
     <table class="table">
         <thead class="table-light text-center">
             <tr>
@@ -104,6 +104,135 @@
         </tbody>
 
     </table>
+</div>
+
+
+<div class="d-flex d-sm-none">
+    <div class="accordion" id="accordionExample" style="width:100%">
+
+
+
+        @foreach (var item in Model)
+        {
+
+
+
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.RequestId" aria-expanded="false" aria-controls="collapseOne" style="display:block">
+                        <div class="d-block">
+                            <div>
+                                @item.Name
+                            </div>
+                            <div class="mt-1">
+                                @item.ConfirmationNumber
+                            </div>
+
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapse-@item.RequestId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-calendar"></i></button> Created Date:@item.CreatedDate.ToString("MMM") @item.CreatedDate.Day,@item.CreatedDate.Year
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-person-fill"></i></button> Provider: @item.ProviderName
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-calendar"></i></button> Concluded Date Date:@item.CreatedDate.ToString("MMM") @item.CreatedDate.Day,@item.CreatedDate.Year
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-check-lg"></i></button> Status:@if (item.status == 1)
+                                {
+                                    @Html.Raw("Unassigned")
+                                }
+                                @if (item.status == 2)
+                                {
+                                    @Html.Raw("Accepted")
+                                }
+                                @if (item.status == 3)
+                                {
+                                    @Html.Raw("Cancelled By Admin")
+                                }
+                                @if (item.status == 4)
+                                {
+                                    @Html.Raw("Reserving")
+                                }
+                                @if (item.status == 5)
+                                {
+                                    @Html.Raw("MDonRoute")
+                                }
+                                @if (item.status == 6)
+                                {
+                                    @Html.Raw("MDOnSite")
+                                }
+                                @if (item.status == 7)
+                                {
+                                    @Html.Raw("FollowUp")
+                                }
+                                @if (item.status == 8)
+                                {
+                                    @Html.Raw("Closed")
+                                }
+                                @if (item.status == 9)
+                                {
+                                    @Html.Raw("Locked")
+                                }
+                                @if (item.status == 10)
+                                {
+                                    @Html.Raw("Declined")
+                                }
+                                @if (item.status == 11)
+                                {
+                                    @Html.Raw("Consult")
+                                }
+                                @if (item.status == 12)
+                                {
+                                    @Html.Raw("Clear")
+                                }
+                                @if (item.status == 13)
+                                {
+                                    @Html.Raw("CancelledByProvider")
+                                }
+                                @if (item.status == 14)
+                                {
+                                    @Html.Raw("CCUploadedByClient")
+                                }
+                                @if (item.status == 15)
+                                {
+                                    @Html.Raw("CCApprovedByAdmin")
+                                }
+                            </div>
+                        </div>
+
+                        <div class="d-flex px-1 mt-2">
+                            <button type="button" class="btn btn-outline-info w-100">View Case</button>
+                        </div>
+                        <div class="d-flex px-1 mt-2">
+                            <button type="button" class="btn btn-outline-info w-100">Documents</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        }
+
+    </div>
 </div>
 
 @if (Model.TotalCount > 0)

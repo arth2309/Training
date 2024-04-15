@@ -36,6 +36,8 @@ namespace HallodocServices.Implementation
                 adminRoleMenus.Add(adminRoleMenu);
             }
             adminAccessRoleMV.roleMenus = adminRoleMenus;
+            adminAccessRoleMV.IsUpdate = false;
+            adminAccessRoleMV.RoleId = 0;
             return adminAccessRoleMV;
         }
 
@@ -64,7 +66,7 @@ namespace HallodocServices.Implementation
 
         public async Task<bool> CreateRole(AdminRoleMenu adminRoleMenu)
         {
-
+            
             Role role = new();
             role.Name = adminRoleMenu.Name;
             role.CreatedDate = DateTime.Now;
@@ -86,6 +88,71 @@ namespace HallodocServices.Implementation
 
             
 
+            return true;
+        }
+
+        public async Task<bool> CreateUpdateRole(AdminAccessRoleMV adminAccessRoleMV)
+        {
+            if(adminAccessRoleMV.IsUpdate)
+            {
+                List<RoleMenu> roleMenus = _roleRepo.GetRoleMenuDataByroleid(adminAccessRoleMV.RoleId);
+
+                for(int i = 0;i<roleMenus.Count;i++)
+                {
+                    bool IsAbsent = adminAccessRoleMV.checkedBoxes.Contains(roleMenus[i].MenuId)?false: true;
+                    if (IsAbsent)
+                    {
+                        await _roleRepo.RemoveDataInRoleMenuTable(roleMenus[i]);
+                    }
+                }
+
+                for(int i = 0;i<adminAccessRoleMV.checkedBoxes.Count;i++)
+                {
+                    bool IsAbsent = true;
+                    for(int j = 0;j<roleMenus.Count;j++)
+                    {
+                        if (adminAccessRoleMV.checkedBoxes[i] == roleMenus[j].MenuId)
+                        {
+                            IsAbsent = false;
+                            break;
+                        }
+
+                        if (IsAbsent)
+                        {
+                            RoleMenu roleMenu = new();
+                            roleMenu.RoleId = adminAccessRoleMV.RoleId;
+                            roleMenu.MenuId = adminAccessRoleMV.checkedBoxes[i];
+                            await _roleRepo.AddDataInRoleMenuTable(roleMenu);
+                        }
+                    }
+
+                    
+                }
+
+
+            }
+            else
+            {
+                Role role = new();
+                role.Name = adminAccessRoleMV.RoleName;
+                role.CreatedDate = DateTime.Now;
+                role.AccountType = short.Parse(adminAccessRoleMV.Accountype.ToString());
+                role.CreatedBy = "1";
+                role.IsDeleted = new System.Collections.BitArray(1, false);
+                await _roleRepo.AddDataInRoleTable(role);
+
+
+                for (int i = 0; i < adminAccessRoleMV.checkedBoxes.Count; i++)
+                {
+                    RoleMenu roleMenu = new();
+                    roleMenu.MenuId = Int32.Parse(adminAccessRoleMV.checkedBoxes[i].ToString());
+                    roleMenu.RoleId = role.RoleId;
+
+                    await _roleRepo.AddDataInRoleMenuTable(roleMenu);
+
+                }
+
+            }
             return true;
         }
 
@@ -126,5 +193,44 @@ namespace HallodocServices.Implementation
             return true;
 
         }
+
+        public AdminAccessRoleMV EditAccessRoleData(int RoleId)
+        {
+           Role role = _roleRepo.GetRoleById (RoleId);
+            int AccountType = role!=null ? role.AccountType : 0;
+            AdminAccessRoleMV adminAccessRoleMV = new();
+            List<Menu> menu = _menuRepo.getMenuByRole(AccountType);
+            List<AdminRoleMenu> adminRoleMenus = new();
+            List<int?> Menus = new List<int?>();
+
+            List<RoleMenu> roleMenu = _roleRepo.GetRoleMenuDataByroleid(RoleId);
+
+            for (int i = 0; i < roleMenu.Count; i++)
+            {
+                int Menu = roleMenu[i].MenuId;
+                Menus.Add(Menu);
+            }
+
+            for (int i = 0; i < menu.Count; i++)
+            {
+                AdminRoleMenu adminRoleMenu = new();
+                adminRoleMenu.Name = menu[i].Name;
+                adminRoleMenu.Roleid = menu[i].AccountType;
+                adminRoleMenu.Menuid = menu[i].MenuId;
+                adminRoleMenu.SelectedMenu = Menus;
+                adminRoleMenus.Add(adminRoleMenu);
+            }
+
+            
+
+            
+            adminAccessRoleMV.roleMenus = adminRoleMenus;
+            adminAccessRoleMV.RoleName = role.Name;
+            adminAccessRoleMV.Accountype = role.AccountType;
+            adminAccessRoleMV.IsUpdate = true;
+            return adminAccessRoleMV;
+        }
+
+        //public async Task<bool> UpdateTable(Admin)
     }
 }

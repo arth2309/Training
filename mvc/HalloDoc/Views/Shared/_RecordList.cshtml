@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<HallodocServices.ModelView.SearchRecordList>
 
 
-    <div class="table-responsive">
+    <div class="table-responsive d-none d-sm-flex">
         <table class="table">
             <thead class="table-light text-center">
                 <tr>
@@ -46,6 +46,119 @@
         </tbody>
         </table>
     </div>
+
+
+<div class="d-flex d-sm-none">
+    <div class="accordion" id="accordionExample" style="width:100%">
+
+
+
+        @foreach (var item in Model)
+        {
+
+            
+
+
+            <div class="accordion-item">
+
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@item.RequestId" aria-expanded="false" aria-controls="collapseOne" style="display:block">
+                        <div class="d-block">
+                            <div class="ms-3">
+                                <input class="form-check-input shift" type="checkbox"> <strong>@item.PatientName</strong>
+                            </div>
+                            <div class="mt-3">@item.Address</div>
+                            
+
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapse-@item.RequestId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+       
+
+                        <div class="row mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-person-fill"></i></button> Requestor:@item.Requestor
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-calendar"></i></button> Date of Service: @item.DateOfService.Value.ToString("MMM") @item.DateOfService.Value.Day,@item.DateOfService.Value.Year
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-calendar"></i></button> Case Closed Date: @item.DateOfService.Value.ToString("MMM") @item.DateOfService.Value.Day,@item.DateOfService.Value.Year
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-envelope"></i></button> Email: @item.Email
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-telephone"></i></button> Phone: @item.PhoneNumber
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-geo-alt"></i></button> Address: @item.Address
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-geo-alt"></i></button> ZipCode: @item.Zip
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-check-lg"></i></button> Request Status: unpaid Request
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-person-fill"></i></button> Provider: @item.Physician
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-card-list"></i></button> Provider Note: @item.PhysicianNote
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-card-list"></i></button> Cancelled By Provider Note: @item.ProviderCancelledNote
+                            </div>
+                        </div>
+
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-card-list"></i></button> Patient Note: @item.PatientNote
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end mt-3">
+                            <a asp-controller="AdminSite" asp-action="DeleteRecord" asp-route-RequestId="@item.RequestId"><button type="button" class="btn btn-outline-info">Delete</button></a>
+
+                         </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+</div>
 
 @if (Model.TotalCount > 0)
 {

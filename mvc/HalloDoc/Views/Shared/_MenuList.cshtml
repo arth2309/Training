@@ -7,8 +7,18 @@
        {
     @foreach (var item in Model)
     {
-        <div class="form-check mx-2">
-                <input class="form-check-input" value="@item.Menuid" type="checkbox" id="flexCheckDefault" onclick="CreateRole(this)">
+            string check = "";
+
+
+            if (item.SelectedMenu != null)
+            {
+                check = item.SelectedMenu.Contains(item.Menuid) ? "checked" : "";
+                
+            }
+           
+
+            <div class="form-check mx-2">
+                <input class="form-check-input" value="@item.Menuid" type="checkbox" name="checkedBoxes"  id="flexCheckDefault" onclick="CreateRole(this)" @check>
             <label class="form-check-label" for="flexCheckDefault">
                 @item.Name
             </label>
@@ -17,4 +27,3 @@
     }
        }
 </div>
-<div class="d-flex justify-content-end"> <button class="btn btn-info text-white" onclick="createRoleTable()">Save Changes</button> </div>

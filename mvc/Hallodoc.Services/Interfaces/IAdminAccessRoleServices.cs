@@ -17,5 +17,9 @@ namespace HallodocServices.Interfaces
         List<AdminAccountAccess> GetAdminAccountAccessList();
 
         Task<bool> DeleteRole(int roleid);
+
+        AdminAccessRoleMV EditAccessRoleData(int RoleId);
+
+        Task<bool> CreateUpdateRole(AdminAccessRoleMV adminAccessRoleMV);
     }
 }

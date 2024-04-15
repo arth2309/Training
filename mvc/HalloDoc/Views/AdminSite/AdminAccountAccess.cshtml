@@ -179,7 +179,7 @@
         <div class="d-flex justify-content-end">
             <a asp-controller="AdminSite" asp-action="AdminAccessRole"> <button class="btn btn-outline-info">Create Access</button> </a>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive d-none d-sm-flex">
             <table class="table">
                 <thead class="table-light">
                     <tr>
@@ -213,7 +213,7 @@
                                 <td>@Html.DisplayFor(modelitem => item.accounttype)</td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-outline-info mx-1">Edit</button>
+                                        <a asp-controller="AdminSite" asp-action="EditAccessRole" asp-route-RoleId="@item.roleid"><button type="button" class="btn btn-outline-info mx-1">Edit</button></a>
                                         <a asp-controller="AdminSite" asp-action="DeleteRole" asp-route-RoleId ="@item.roleid"> <button type="button" class="btn btn-outline-info mx-1">Delete</button> </a>
                                     </div>
                                 </td>
@@ -227,9 +227,37 @@
 
 
 
+
             </table>
         </div>
+        <div class="accordion accordion-flush d-block d-sm-none" id="accordionFlushExample">
+            @foreach (var item in Model)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <div class="accordion-button bg-white"  aria-expanded="false" aria-controls="flush-collapseOne">
+                            <div class="d-block">
+                                <div>
+                                  @item.Name
+                                </div>
+                                <div class="mt-1">@item.accounttype</div>
+                                <div class="mt-1 d-flex">
+                                    <button type="button" class="btn btn-outline-info mx-1">Edit</button>
+                                    <a asp-controller="AdminSite" asp-action="DeleteRole" asp-route-RoleId="@item.roleid"> <button type="button" class="btn btn-outline-info mx-1">Delete</button> </a>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+            }
+
+        </div>
+        
     </div>
+
+
 
 
 

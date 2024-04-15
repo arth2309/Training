@@ -589,6 +589,13 @@ namespace HalloDoc.Controllers
             return PartialView("_MenuList", adminRoleMenus);
         }
 
+        public IActionResult EditAccessRole(int RoleId)
+        {
+            ViewBag.AdminName = Request.Cookies["AdminName"];
+            AdminAccessRoleMV adminAccessRoleMV = _adminAccessRoleServices.EditAccessRoleData(RoleId);
+            return View(adminAccessRoleMV);
+        }
+
         [HttpGet]
         public async Task<JsonResult> CreateRole(string data)
         {
@@ -596,6 +603,23 @@ namespace HalloDoc.Controllers
             await _adminAccessRoleServices.CreateRole(reqData);
             TempData["AddRole"] = "Role added Successfully";
             return Json(new { redirect = Url.Action("AdminAccountAccess") });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUpdateAccessRole(AdminAccessRoleMV adminAccessRoleMV)
+        {
+           
+            await _adminAccessRoleServices.CreateUpdateRole(adminAccessRoleMV);
+            if(adminAccessRoleMV.IsUpdate)
+            {
+                TempData["UpdateRole"] = "Role updated Successfully";
+            }
+            else
+            {
+                TempData["AddRole"] = "Role added Successfully";
+            }
+            
+            return RedirectToAction("AdminAccountAccess");
         }
 
         public IActionResult AdminAccountAccess()

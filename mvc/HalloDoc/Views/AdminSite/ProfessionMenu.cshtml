@@ -114,20 +114,24 @@
         </div>
     </div>
 <div class="ct bg-white pt-2 px-2 border-1">
-    <div class="d-flex justify-content-between">
-        <div class="d-flex">
-                <div class="col-auto mx-2">
+    <div class="row">
+
+            <div class="col-12 col-sm-4  mt-2 mt-sm-0 d-flex justify-content-start">
                     <input type="search" id="vendorsearch" class="form-control" aria-describedby="passwordHelpInline" placeholder="Search Vendors" oninput="searchVendor(this.value)">
                 </div>
-                <select class="form-select mx-2" aria-label="Default select example" onchange="searchProfession(this.value)">
+                <div class="col-12 col-sm-4 mt-2 mt-sm-0">
+                    <div>
+                <select class="form-select" aria-label="Default select example" onchange="searchProfession(this.value)">
                     <option value="0">All Professions</option>
                     @foreach(var item in Model.Professions)
                     {
                         <option value="@item.HealthProfessionalId">@item.ProfessionName</option>
                     }
                 </select>
-        </div>
-        <div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-4  mt-2 mt-sm-0 d-flex justify-content-end">
                 <a asp-controller="AdminSite" asp-action="AddBusinessPage"> <button class="btn btn-outline-info">+ Add Business</button> </a>
         </div>
         

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HalloDoc.Repositories.DataContext;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {
@@ -44,13 +45,15 @@ namespace HalloDoc.Repositories.Implementation
             return _context.Roles.Where(a=>a.IsDeleted == new System.Collections.BitArray(1,false)).ToList();
         }
 
+       
+
         public Role GetRoleById(int roleid)
         {
             return _context.Roles.FirstOrDefault(a => a.RoleId == roleid);
         }
-        public List<RoleMenu> GetRoleMenuDataByroleid(int roleid)
+        public List<RoleMenu> GetRoleMenuDataByroleid(int? roleid)
         {
-            return _context.RoleMenus.Where(a=>a.RoleId == roleid).ToList();
+            return _context.RoleMenus.Include(a=>a.Role).Include(a=>a.Menu).Where(a=>a.RoleId == roleid).ToList();
         }
 
         public async Task<bool> RemoveDataInRoleTable(Role role)
@@ -79,6 +82,11 @@ namespace HalloDoc.Repositories.Implementation
         public List<Role> GetRoleDataForPhysician()
         {
             return _context.Roles.Where(a => a.AccountType == 2 && a.IsDeleted != new System.Collections.BitArray(1, true)).ToList();
+        }
+
+        public int GetAccountType(int RoleId)
+        {
+            return _context.Roles.First(a=>a.RoleId==RoleId)!=null ? _context.Roles.First(a => a.RoleId == RoleId).AccountType:0;
         }
     }
 }

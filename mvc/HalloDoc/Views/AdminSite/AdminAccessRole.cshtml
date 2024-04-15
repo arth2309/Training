@@ -118,14 +118,15 @@
     </div>
 
     <div class="ct shadow">
+        <form asp-controller="AdminSite" asp-action="CreateUpdateAccessRole">
         <p class="h4 mt-1">Details</p>
         <div class="row">
             <div class="form-floating mt-2 col-12 col-lg-6 mt-1">
-                <input type="text" class="form-control" id="roleName" placeholder="Role Name">
+                <input type="text" class="form-control" id="roleName" placeholder="Role Name" asp-for="RoleName">
                 <label for="RoleName">Role Name</label>
             </div>
             <div class="col-12 col-lg-6 form-floating mt-1">
-                <select id="roleId" class="form-select  form-select-lg" aria-label="Large select example" onchange="getMenu(this.value)">
+                <select id="roleId" class="form-select  form-select-lg" aria-label="Large select example" onchange="getMenu(this.value)" asp-for="Accountype">
                 <option value="0">All</option>
                 <option value="1">Admin</option>
                 <option value="2">Physicin</option>
@@ -138,6 +139,10 @@
         <div id="roleMenu">
         @Html.Partial("~/Views/Shared/_MenuList.cshtml",Model.roleMenus)
         </div>
+        <input type="hidden" asp-for="IsUpdate"/>
+        <input type="hidden" asp-for="RoleId" />
+        <div class="d-flex justify-content-end"> <button type="submit" class="btn btn-info text-white">Save Changes</button> </div>
+        </form>
     </div>
     <script>
        

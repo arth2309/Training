@@ -12,7 +12,10 @@ namespace HallodocServices.ModelView
         public int Roleid { get; set; }
         public string? Name { get; set; }
 
+
         public List<string>? MenuLists { get; set; }
+
+        public List<int?>? SelectedMenu { get; set; }
 
     }
 }
