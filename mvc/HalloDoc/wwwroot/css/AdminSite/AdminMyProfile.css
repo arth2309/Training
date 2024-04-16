@@ -71,6 +71,14 @@ header {
 }
 
 
+input[type=file]::-webkit-file-upload-button {
+    display: none;
+}
+
+.input-group-text {
+    display: none;
+}
+
 
 @media only screen and (max-width:576px) {
 
@@ -98,7 +106,7 @@ header {
 }
 
 .form-floating > label {
-    left: 0px;
+    left: 12px;
     top: 0px;
     background-color: transparent;
 }

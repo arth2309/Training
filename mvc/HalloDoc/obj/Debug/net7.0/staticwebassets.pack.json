@@ -169,6 +169,10 @@
       "PackagePath": "staticwebassets\\css\\AdminSite\\ViewUploads.css"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\Provider\\ProviderDashBoard.css",
+      "PackagePath": "staticwebassets\\css\\Provider\\ProviderDashBoard.css"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\css\\international-telephone-input.css",
       "PackagePath": "staticwebassets\\css\\international-telephone-input.css"
     },

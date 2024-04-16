@@ -22,6 +22,7 @@ using HalloDoc.Auth;
 using HalloDoc.Repositories.PagedList;
 using System.Reflection;
 using System;
+using HalloDoc.Repositories.DataModels;
 
 namespace HalloDoc.Controllers
 {
@@ -115,19 +116,28 @@ namespace HalloDoc.Controllers
             }
             else
             {
+                string role = _loginServices.GetRole(patientLogin.Email);
                 string AdminName = _loginServices.GetUserName(id);
                 Response.Cookies.Append("AdminName", AdminName);
                 string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
                 Response.Cookies.Append("token", token);
                 TempData["success"] = "Successfully Login";
-                return RedirectToAction("AdminDashBoard");
+                if(role == "Admin")
+                {
+                    return RedirectToAction("AdminDashBoard");
+                }
+                else
+                {
+                    return RedirectToAction("ProviderDashBoard","Provider");
+                }
+              
             }
 
 
 
         }
 
-        [Auth.CustomAuthorize("Admin")]
+        [CustomAuthorize("Admin")]
         public IActionResult AdminDashBoard()
         {
             ViewBag.AdminName = Request.Cookies["AdminName"];
@@ -608,6 +618,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUpdateAccessRole(AdminAccessRoleMV adminAccessRoleMV)
         {
+            
            
             await _adminAccessRoleServices.CreateUpdateRole(adminAccessRoleMV);
             if(adminAccessRoleMV.IsUpdate)
@@ -620,6 +631,7 @@ namespace HalloDoc.Controllers
             }
             
             return RedirectToAction("AdminAccountAccess");
+            
         }
 
         public IActionResult AdminAccountAccess()
@@ -674,6 +686,35 @@ namespace HalloDoc.Controllers
         {
             await _createPhysicianAccountServices.CreatePhysicianAccount(adminProfile);
             return RedirectToAction("AdminDashBoard");
+        }
+
+        public IActionResult EditProviderAccount(int PhysicianId)
+        {
+            AdminProfile adminProfile = _createPhysicianAccountServices.GetPhysician(PhysicianId);
+            return View(adminProfile);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> ProviderResetPassword(int Id, string Password,int Pid)
+        {
+            bool result = await _createPhysicianAccountServices.ResetPassword(Id, Password);
+            return Json(new { redirect = Url.Action("EditProviderAccount", new { PhysicianId = Pid }) });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProviderAccountInformation(AdminProfile adminProfile)
+        {
+            bool result = await _createPhysicianAccountServices.EditProviderAccountInformation(adminProfile);
+            return RedirectToAction("EditProviderAccount", new { PhysicianId = adminProfile.AdminId});
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> EditPhysicianInformation(AdminProfile adminProfile)
+        {
+            bool result = await _createPhysicianAccountServices.EditPhysicianInformation(adminProfile);
+            return RedirectToAction("EditProviderAccount", new { PhysicianId = adminProfile.AdminId });
         }
 
         public IActionResult Scheduling()

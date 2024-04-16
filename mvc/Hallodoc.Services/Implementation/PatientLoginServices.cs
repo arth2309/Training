@@ -13,11 +13,13 @@ namespace HallodocServices.Implementation;
 {
     private readonly IPatientLoginRepo _patientLoginRepo;
     private readonly IPasswordHashServices _passwordHashServices;
+    private readonly IAspNetUserRepo _userRepo;
 
-    public PatientLoginServices(IPatientLoginRepo patientLoginRepo,IPasswordHashServices passwordHashServices)
+    public PatientLoginServices(IPatientLoginRepo patientLoginRepo,IPasswordHashServices passwordHashServices, IAspNetUserRepo userRepo)
     {
         _patientLoginRepo = patientLoginRepo;
         _passwordHashServices = passwordHashServices;
+        _userRepo = userRepo;
     }
     public int ValidateUser( PatientLogin patientlogin )
     {
@@ -29,6 +31,12 @@ namespace HallodocServices.Implementation;
     {
         string UserName = _patientLoginRepo.GetUserName(id);
         return UserName;
+    }
+
+    public string GetRole(string email) 
+    {
+        string role = _userRepo.role(email);
+        return role;
     }
 
 }

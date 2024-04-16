@@ -13,5 +13,7 @@ namespace HallodocServices.Interfaces
         int ValidateUser(PatientLogin patientlogin);
 
         String GetUserName(int id);
+
+        string GetRole(string email);
     }
 }

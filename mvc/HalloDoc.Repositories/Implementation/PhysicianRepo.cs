@@ -60,7 +60,7 @@ namespace HalloDoc.Repositories.Implementation
 
         public Physician GetPhysician(int? physicianid)
         {
-            return _DbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianid);
+            return _DbContext.Physicians.Include(a=>a.AspNetUser).Include(a=>a.PhysicianRegions).FirstOrDefault(a => a.PhysicianId == physicianid);
         }
 
         public async Task<Physician> AddDatainPhysician(Physician physician)
@@ -101,6 +101,19 @@ namespace HalloDoc.Repositories.Implementation
             return _DbContext.PhysicianLocations.ToList();
         }
 
+        public async Task<Physician> UpdateDatainPhysician(Physician physician)
+        {
+            _DbContext.Physicians.Update(physician);
+            await _DbContext.SaveChangesAsync();
+            return physician;
+        }
 
+        public async Task<PhysicianRegion> RemoveDataInPhysicianRegion(PhysicianRegion physicianRegion)
+        {
+
+            _DbContext.PhysicianRegions.Remove(physicianRegion);
+            await _DbContext.SaveChangesAsync();
+            return physicianRegion;
+        }
     }
 }

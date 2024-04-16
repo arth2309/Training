@@ -15,6 +15,8 @@ namespace HallodocServices.ModelView
 
         public int Id { get; set; }
 
+        public string? UserName { get; set; }
+
         [StringLength(100)]
         [Required]
         public string FirstName { get; set; } = null!;
@@ -82,6 +84,15 @@ namespace HallodocServices.ModelView
 
         public List<int>? documents {get; set;} 
 
+        public List<int>? WorkingRegions { get; set; } 
+
+        public bool IsAgreementDoc { get; set; }
+
+        public bool IsBackGroundDoc { get; set; }
+
+        public bool IsTrainingDoc { get; set; }
+
+        public bool IsNonDisclosureDoc { get; set; }
     }
 }
 

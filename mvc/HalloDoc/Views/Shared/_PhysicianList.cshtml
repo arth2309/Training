@@ -83,7 +83,7 @@
                         <td>
                             <div class="d-flex justify-content-center">
                                 <button type="button" class="btn btn-outline-info mx-1" data-bs-toggle="modal" data-bs-target="#ProviderMessage" onclick="getEmail(@item.PhysicianId)">Contact</button>
-                                <button type="button" class="btn btn-outline-info mx-1">Edit</button>
+                                <a asp-controller="AdminSite" asp-action="EditProviderAccount" asp-route-PhysicianId="@item.PhysicianId"> <button type="button" class="btn btn-outline-info mx-1">Edit</button> </a>
                             </div>
                         </td>
 

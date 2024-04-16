@@ -117,16 +117,18 @@ namespace HallodocServices.Implementation
                             break;
                         }
 
-                        if (IsAbsent)
-                        {
-                            RoleMenu roleMenu = new();
-                            roleMenu.RoleId = adminAccessRoleMV.RoleId;
-                            roleMenu.MenuId = adminAccessRoleMV.checkedBoxes[i];
-                            await _roleRepo.AddDataInRoleMenuTable(roleMenu);
-                        }
+                        
                     }
 
-                    
+                    if (IsAbsent)
+                    {
+                        RoleMenu roleMenu = new();
+                        roleMenu.RoleId = adminAccessRoleMV.RoleId;
+                        roleMenu.MenuId = adminAccessRoleMV.checkedBoxes[i];
+                        await _roleRepo.AddDataInRoleMenuTable(roleMenu);
+                    }
+
+
                 }
 
 

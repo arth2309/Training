@@ -16,6 +16,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<Physician> AddDatainPhysician(Physician physician);
 
+        Task<Physician> UpdateDatainPhysician(Physician physician);
+
         List<PhysicianNotification> GetListForNotifications(int regionId);
 
         Task<PhysicianRegion> AddDataInPhysicianRegion(PhysicianRegion physicianRegion);
@@ -29,6 +31,8 @@ namespace HalloDoc.Repositories.Interfaces
         Task<PhysicianNotification> UpdateDataInPhysicianNotification(PhysicianNotification physicianNotification);
 
         List<PhysicianLocation> GetProviderLocation();
+
+        Task<PhysicianRegion> RemoveDataInPhysicianRegion(PhysicianRegion physicianRegion);
 
 
     }

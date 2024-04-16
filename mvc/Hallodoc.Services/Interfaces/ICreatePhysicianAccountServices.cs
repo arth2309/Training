@@ -11,5 +11,13 @@ namespace HallodocServices.Interfaces
     {
         AdminProfile GetLists();
        Task<AdminProfile> CreatePhysicianAccount(AdminProfile adminProfile);
+
+        AdminProfile GetPhysician(int PhysicianId);
+
+        Task<bool> ResetPassword(int Id,string Password);
+
+        Task <bool> EditProviderAccountInformation(AdminProfile adminProfile);
+
+        Task<bool> EditPhysicianInformation(AdminProfile adminProfile);
     }
 }
