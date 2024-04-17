@@ -15,5 +15,7 @@ namespace HallodocServices.Interfaces
         String GetUserName(int id);
 
         string GetRole(string email);
+
+        UserVM Object(int id);
     }
 }

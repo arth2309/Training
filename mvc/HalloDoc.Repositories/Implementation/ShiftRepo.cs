@@ -93,7 +93,16 @@ namespace HalloDoc.Repositories.Implementation
             return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).FirstOrDefault(a => a.ShiftDetailId == shiftdetailid);
         }
 
-           
-            
+        public List<ShiftDetail> GetProviderScheduling(int PhysicianId, DateTime dateTime1, DateTime dateTime2)
+        {
+
+            return _context.ShiftDetails.Include(a => a.Shift).ThenInclude(a => a.Physician).Where(  a => DateOnly.FromDateTime(a.ShiftDate) >= DateOnly.FromDateTime(dateTime1) && DateOnly.FromDateTime(a.ShiftDate) <= DateOnly.FromDateTime(dateTime2) && a.IsDeleted != new System.Collections.BitArray(1, true) && a.Shift.PhysicianId == PhysicianId).ToList();
+
         }
+
     }
+
+    
+
+
+}

@@ -68,6 +68,7 @@ namespace HallodocServices.Implementation
             return schedulingList;
         }
 
+       
         public MonthSchedulingVM GetMonthScheduling(int RegionId,DateTime dateTime1, DateTime dateTime2)
         {
             List<ShiftDetail> shiftDetails = _shiftRepo.GetShiftDetailForMonth(RegionId,dateTime1,dateTime2);
@@ -76,6 +77,30 @@ namespace HallodocServices.Implementation
             MonthSchedulingVM monthSchedulingVM = new MonthSchedulingVM();
             monthSchedulingVM.startDay = startDay;
             monthSchedulingVM.GetDetail  = shiftDetails;
+
+            return monthSchedulingVM;
+        }
+
+        public AdminScheduling GetProviderScheduling(int PhysicianId)
+        {
+            DateTime dateTime = DateTime.Now;
+            DateTime dateTime1 = new DateTime(dateTime.Year, dateTime.Month, 1);
+            DateTime dateTime2 = dateTime1.AddMonths(1).AddDays(-1);
+
+            MonthSchedulingVM monthSchedulingVM = GetProviderSchedulingFilter(PhysicianId, dateTime1, dateTime2);
+            AdminScheduling scheduling = new AdminScheduling();
+            scheduling.MonthSchedulingVM = monthSchedulingVM;
+            return scheduling;
+        }
+
+        public MonthSchedulingVM GetProviderSchedulingFilter(int PhysicianId, DateTime dateTime1, DateTime dateTime2)
+        {
+            List<ShiftDetail> shiftDetails = _shiftRepo.GetProviderScheduling(PhysicianId,dateTime1,dateTime2);
+            int startDay = (int)dateTime1.DayOfWeek;
+
+            MonthSchedulingVM monthSchedulingVM = new MonthSchedulingVM();
+            monthSchedulingVM.startDay = startDay;
+            monthSchedulingVM.GetDetail = shiftDetails;
 
             return monthSchedulingVM;
         }

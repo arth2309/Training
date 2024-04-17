@@ -1,4 +1,8 @@
-﻿function GetStatus(temp,currentPage,type) {
+﻿window.onload = () => {
+    window.sessionStorage.clear();
+}
+
+function GetStatus(temp, currentPage, type) {
     var statusId = temp;
     window.sessionStorage.setItem("status", statusId);
     window.sessionStorage.setItem("currentpage", currentPage);

@@ -51,7 +51,7 @@ namespace HallodocServices.Implementation
         {
             if(adminViewNote.RequestNotesId != 0) { 
             RequestNote requestNote = _repo.GetNoteData(adminViewNote.RequestId);
-            requestNote.AdminNotes = adminViewNote.AdminNotes;
+            requestNote.AdminNotes = adminViewNote.AdditionalNotes;
             requestNote.PhysicianNotes = adminViewNote.PhysicianNotes;
             requestNote.RequestId = adminViewNote.RequestId;
             requestNote.RequestNotesId = adminViewNote.RequestNotesId;
@@ -63,12 +63,39 @@ namespace HallodocServices.Implementation
             {
                 RequestNote requestnote = new();
                 requestnote.RequestId = adminViewNote.RequestId;
-                requestnote.AdminNotes = adminViewNote.AdminNotes;
+                requestnote.AdminNotes = adminViewNote.AdditionalNotes;
                 requestnote.CreatedBy = 2;
                 requestnote.CreatedDate = DateTime.Now;
                 _repo.AddTable(requestnote);
                 return adminViewNote;
                 
+            }
+
+        }
+
+        public async Task<AdminViewNote> EditPhysicianNote(AdminViewNote adminViewNote)
+        {
+            if (adminViewNote.RequestNotesId != 0)
+            {
+                RequestNote requestNote = _repo.GetNoteData(adminViewNote.RequestId);
+                requestNote.AdminNotes = adminViewNote.AdminNotes;
+                requestNote.PhysicianNotes = adminViewNote.AdditionalNotes;
+                requestNote.RequestId = adminViewNote.RequestId;
+                requestNote.RequestNotesId = adminViewNote.RequestNotesId;
+                await _repo.UpdateTable(requestNote);
+                return adminViewNote;
+            }
+
+            else
+            {
+                RequestNote requestnote = new();
+                requestnote.RequestId = adminViewNote.RequestId;
+                requestnote.PhysicianNotes = adminViewNote.AdditionalNotes;
+                requestnote.CreatedBy = 2;
+                requestnote.CreatedDate = DateTime.Now;
+                await _repo.AddTable(requestnote);
+                return adminViewNote;
+
             }
 
         }

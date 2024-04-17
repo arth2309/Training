@@ -21,5 +21,7 @@ namespace HalloDoc.Repositories.Interfaces
         List<RequestClient> BlockHistoryList(string name, string Mobile, DateOnly date, string email);
 
         List<RequestClient> SearchRecordList(string PatientName, string ProviderName, string Email, string PhoneNumber, int RequestTypeId, DateOnly ToService, DateOnly FromService);
+
+        List<RequestClient> ProviderDashBoardList(string Name, int typeId, List<int> statuses, int PhysicianId);
     }
 }

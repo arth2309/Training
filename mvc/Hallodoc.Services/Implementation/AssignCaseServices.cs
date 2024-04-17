@@ -29,13 +29,12 @@ namespace HallodocServices.Implementation
         public async Task <AdminAssignCase> AdminAssignCase(AdminAssignCase adminAssignCase)
         {
             Request request = _requestRepo.GetRequest(adminAssignCase.RequestId);
-            request.Status = 2;
             request.PhysicianId = adminAssignCase.PhysicianId;
             request.RequestId = adminAssignCase.RequestId;
             _requestRepo.UpdateTable(request);
 
             RequestStatusLog requestStatusLog = new();
-            requestStatusLog.Status = 2;
+            requestStatusLog.Status = 1;
             requestStatusLog.PhysicianId = adminAssignCase.PhysicianId;
             requestStatusLog.RequestId = adminAssignCase.RequestId;
             requestStatusLog.Notes = adminAssignCase.Description;

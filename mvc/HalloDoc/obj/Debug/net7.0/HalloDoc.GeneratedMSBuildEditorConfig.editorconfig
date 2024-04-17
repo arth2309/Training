@@ -260,8 +260,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxVc2VyUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/Provider/MyProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcTXlQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Provider/MySchedule.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcTXlTY2hlZHVsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/Provider/ProviderDashBoard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJEYXNoQm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Provider/ProviderViewCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJWaWV3Q2FzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Provider/ProviderViewNotes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJWaWV3Tm90ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Regions/Create.cshtml]
@@ -450,6 +466,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_PhysicianList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QaHlzaWNpYW5MaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderActiveState.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlckFjdGl2ZVN0YXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderConcludeState.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlckNvbmNsdWRlU3RhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderNewState.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlck5ld1N0YXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderPendingState.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlclBlbmRpbmdTdGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderScheduling.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlclNjaGVkdWxpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_RecordList.cshtml]

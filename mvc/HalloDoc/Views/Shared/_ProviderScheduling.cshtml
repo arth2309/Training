@@ -1,0 +1,259 @@
+﻿@model HallodocServices.ModelView.MonthSchedulingVM
+
+<div class="table-responsive mt-4 d-none d-md-flex">
+    <table class="table table-bordered">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>SUN</th>
+                <th>MON</th>
+                <th>TUE</th>
+                <th>WED</th>
+                <th>THU</th>
+                <th>FRI</th>
+                <th>SAT</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+
+            @for (int i = 0; i < 6; i++)
+            {
+                var shift = Model.GetDetail.Where(a => ((int)a.ShiftDate.Day + Model.startDay - 1) / 7 == i).ToList();
+                var sun = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 0).ToList();
+                var mon = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 1).ToList();
+                var tue = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 2).ToList();
+                var wed = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 3).ToList();
+                var thu = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 4).ToList();
+                var fri = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 5).ToList();
+                var sat = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 6).ToList();
+
+                <tr class="row-@i">
+                    <td id="sun-@i" class="bg-pink bg-white"></td>
+                    <td id="mon-@i" class="bg-pink bg-white"></td>
+                    <td id="tue-@i" class="bg-pink bg-white"></td>
+                    <td id="wed-@i" class="bg-pink bg-white"></td>
+                    <td id="thu-@i" class="bg-pink bg-white"></td>
+                    <td id="fri-@i" class="bg-pink bg-white"></td>
+                    <td id="sat-@i" class="bg-pink bg-white"></td>
+                </tr>
+                @for (int j = 0; j < 5; j++)
+                {
+
+                    <tr class="row-@i">
+
+                        @if (sun.Count > j)
+                        {
+                            @if (j == 4 && sun.Count > j + 1)
+                            {
+
+                                int currentDay = sun[j].ShiftDate.Day;
+                                <td><button type="button" class="btn btn-info text-white w-100 h-100" onclick="ChangeShift(@currentDay)">View Shift</button></td>
+                            }
+                            else
+                            {
+                                <td class="@(sun[j].Status == 1? "bg-pink": "bg-success")">
+                                    <div class="d-block">
+                                        <div>@sun[j].StartTime - @sun[j].EndTime</div>
+                                      
+                                    </div>
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (mon.Count > j)
+                        {
+                            <td class="@(mon[j].Status == 1? "bg-pink": "bg-success")">
+                                <div class="d-block">
+                                    <div>@mon[j].StartTime - @mon[j].EndTime</div>
+                                    
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (tue.Count > j)
+                        {
+                            <td class="@(tue[j].Status == 1? "bg-pink": "bg-success")">
+                                <div class="d-block ">
+                                    <div>@tue[j].StartTime - @tue[j].EndTime</div>
+                                   
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (wed.Count > j)
+                        {
+                            <td class="@(wed[j].Status == 1? "bg-pink": "bg-success")">
+                                <div class="d-block">
+                                    <div>@wed[j].StartTime - @wed[j].EndTime</div>
+                                
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (thu.Count > j)
+                        {
+                            <td class=" @(thu[j].Status == 1? "bg-pink": "bg-success")">
+                                <div class="d-block">
+                                    <div>@thu[j].StartTime - @thu[j].EndTime</div>
+                                 
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (fri.Count > j)
+                        {
+                            <td cl>
+                                <div class="d-block @(fri[j].Status == 1? "bg-pink": "bg-success")">
+                                    <div>@fri[j].StartTime - @fri[j].EndTime</div>
+                                  
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (sat.Count > j)
+                        {
+                            <td class="@(sat[j].Status == 1? "bg-pink": "bg-success")">
+                                <div class="d-block">
+                                    <div>@sat[j].StartTime - @sat[j].EndTime</div>
+       
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                    </tr>
+                }
+
+
+            }
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+
+<div class="table-responsive mt-4 d-flex d-md-none">
+    <table class="table table-bordered">
+        <thead class="text-center">
+            <tr>
+                <th>SUN</th>
+                <th>MON</th>
+                <th>TUE</th>
+                <th>WED</th>
+                <th>THU</th>
+                <th>FRI</th>
+                <th>SAT</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+
+            @for (int i = 0; i < 6; i++)
+            {
+                var shift = Model.GetDetail.Where(a => ((int)a.ShiftDate.Day + Model.startDay - 1) / 7 == i).ToList();
+                var sun = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 0).ToList();
+                var mon = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 1).ToList();
+                var tue = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 2).ToList();
+                var wed = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 3).ToList();
+                var thu = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 4).ToList();
+                var fri = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 5).ToList();
+                var sat = shift.Where(a => (int)a.ShiftDate.DayOfWeek == 6).ToList();
+
+                <tr class="row-@i">
+
+                    @if (sun.Count > 0)
+                    {
+                        <td id="sun1-@i" class="bg-info" > </td>
+                    }
+                    else
+                    {
+                        <td id="sun1-@i" class="bg-white"></td>
+                    }
+
+                    @if (mon.Count > 0)
+                    {
+                        <td id="mon1-@i" class="bg-info" > </td>
+                    }
+                    else
+                    {
+                        <td id="mon1-@i" class="bg-white"></td>
+                    }
+
+                    @if (tue.Count > 0)
+                    {
+                        <td id="tue1-@i" class="bg-info" > </td>
+                    }
+                    else
+                    {
+                        <td id="tue1-@i" class="bg-white"></td>
+                    }
+
+                    @if (wed.Count > 0)
+                    {
+                        <td id="wed1-@i" class="bg-info"> </td>
+                    }
+                    else
+                    {
+                        <td id="wed1-@i" class="bg-white"></td>
+                    }
+
+                    @if (thu.Count > 0)
+                    {
+                        <td id="thu1-@i" class="bg-info" > </td>
+                    }
+                    else
+                    {
+                        <td id="thu1-@i" class="bg-white"></td>
+                    }
+
+                    @if (fri.Count > 0)
+                    {
+                        <td id="fri1-@i" class="bg-info"> </td>
+                    }
+                    else
+                    {
+                        <td id="fri1-@i" class="bg-white"></td>
+                    }
+
+                    @if (sat.Count > 0)
+                    {
+                        <td id="sat1-@i" class="bg-info"> </td>
+                    }
+                    else
+                    {
+                        <td id="sat1-@i" class="bg-white"></td>
+                    }
+
+
+                </tr>
+
+
+            }
+
+
+        </tbody>
+    </table>
+
+</div>

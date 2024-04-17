@@ -69,6 +69,16 @@ builder.Services.AddScoped<IPatientHistoryServices, PatientHistoryServices>();
 builder.Services.AddScoped<IPatientRecordServices, PatientRecordServices>();
 builder.Services.AddScoped<IEncryptionDecryptionServices, EncryptionDecryptionServices>();
 builder.Services.AddScoped<IResetPasswordServices , ResetPasswordServices>();
+builder.Services.AddScoped<IProviderDashBoardServices , ProviderDashBoardServices>();
+
+builder.Services.AddSession(
+    options => {
+        options.Cookie.Name = ".MySession";
+        options.IdleTimeout = TimeSpan.FromMinutes(20);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    }
+);
 
 
 
@@ -90,6 +100,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 
 app.UseAuthorization();

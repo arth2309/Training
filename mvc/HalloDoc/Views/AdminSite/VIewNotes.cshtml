@@ -178,9 +178,9 @@
         <div class="showNotes shadow mt-2" style="background-color: white;">
             <form asp-controller="AdminSite" asp-action="ViewNotes">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 120px" asp-for="AdminNotes"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 120px" asp-for="AdditionalNotes"></textarea>
                 <label for="floatingTextarea2">Admin Notes</label>
-                            <span asp-validation-for="AdminNotes" class="text-danger"></span>
+                            <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
                             <input type="text" class="form-control d-none" placeholder="Urname" aria-label="Username" aria-describedby="basic-addon1" asp-for="PhysicianNotes">
                             <input type="text" value="@ViewBag.ViewNotesReqid" class="form-control d-none" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" asp-for="RequestId">
                             <input type="text" class="form-control d-none" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" asp-for="RequestNotesId">

@@ -305,6 +305,14 @@
       "PackagePath": "staticwebassets\\js\\professionMenu.js"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\providerDashBoard.js",
+      "PackagePath": "staticwebassets\\js\\providerDashBoard.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\providerSchedule.js",
+      "PackagePath": "staticwebassets\\js\\providerSchedule.js"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\scheduling.js",
       "PackagePath": "staticwebassets\\js\\scheduling.js"
     },

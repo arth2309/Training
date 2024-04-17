@@ -12,5 +12,7 @@ namespace HalloDoc.Repositories.Interfaces
         int ValidateUser(string email, string password);
         string GetUserName(int id);
 
+        AspNetUser aspNetUser(int id);
+
     }
 }

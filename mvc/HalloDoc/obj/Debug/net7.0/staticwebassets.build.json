@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OmPlX9iJvqgPmZxpcXsfLFbYKlSliFBTDx1sFfmJBZY=",
+  "Hash": "3MH3MB+GRLSfSVVefvQ2pidA48PMW34Ulth4ItM1qQc=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1292,6 +1292,23 @@
       "OriginalItemSpec": "wwwroot\\js\\professionMenu.js"
     },
     {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\providerDashBoard.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/providerDashBoard.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\providerDashBoard.js"
+    },
+    {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\Providerinfo.js",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -1307,6 +1324,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Providerinfo.js"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\providerSchedule.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/providerSchedule.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\providerSchedule.js"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\RegionWisePhysician.js",

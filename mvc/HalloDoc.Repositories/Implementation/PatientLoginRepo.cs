@@ -29,4 +29,10 @@ public class PatientLoginRepo : IPatientLoginRepo
         string username = _dbcontext.AspNetUsers.FirstOrDefault(a => a.Id == id).UserName;
         return username;
     }
+
+    public AspNetUser aspNetUser(int id)
+    {
+        return _dbcontext.AspNetUsers.Include(a => a.AspNetUserRole).Include(a => a.AdminAspNetUsers).Include(a => a.UserAspNetUsers).Include(a => a.PhysicianAspNetUsers).FirstOrDefault(a => a.Id == id);
+
+    }
 }

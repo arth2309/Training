@@ -57,6 +57,7 @@ namespace HalloDoc.Controllers
         private readonly IPatientHistoryServices _patientHistoryServices;
         private readonly IPatientRecordServices _patientRecordServices;
         private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
+        
 
 
         public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices)
@@ -90,6 +91,7 @@ namespace HalloDoc.Controllers
             _patientHistoryServices = patientHistoryServices;
             _patientRecordServices = patientRecordServices;
             _encryptionDecryptionServices = encryptionDecryptionServices;
+         
         }
 
         public IActionResult AdminLogin()
@@ -122,9 +124,15 @@ namespace HalloDoc.Controllers
                 string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
                 Response.Cookies.Append("token", token);
                 TempData["success"] = "Successfully Login";
-                if(role == "Admin")
+
+                UserVM userVM = _loginServices.Object(id);
+                Response.Cookies.Append("Name", userVM.UserName);
+                Response.Cookies.Append("lid", userVM.Id.ToString());
+                if (role == "Admin")
                 {
+                   
                     return RedirectToAction("AdminDashBoard");
+                    
                 }
                 else
                 {
@@ -207,7 +215,7 @@ namespace HalloDoc.Controllers
             return View(null);
         }
 
-        [Auth.CustomAuthorize("Admin")]
+        [CustomAuthorize("Admin")]
         public IActionResult ChangeState(int rid)
         {
             AdminViewCase adminViewCase1 = _viewCaseServices.CancelViewData(rid);

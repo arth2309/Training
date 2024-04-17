@@ -11,5 +11,7 @@ namespace HallodocServices.Interfaces
     {
         AdminViewNote GetViewNote(int id);
         AdminViewNote EditAdminNote(AdminViewNote adminViewNote);
+
+        Task<AdminViewNote> EditPhysicianNote(AdminViewNote adminViewNote);
     }
 }

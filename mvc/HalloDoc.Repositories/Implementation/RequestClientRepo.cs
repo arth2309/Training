@@ -32,37 +32,45 @@ namespace HalloDoc.Repositories.Implementation
 
         public List<RequestClient> GetNewStateData(int status,int typeid,int regionid,string name)
         {
-            if(typeid == 0 && regionid == 0 && name == null)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status).ToList();
-            }
-            else if (typeid == 0 && regionid == 0)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
-            }
-            else if (typeid == 0 && name == null)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid).ToList();
-            }
-            else if (name == null && regionid == 0)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid).ToList();
-            }
-            else if(regionid == 0)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
-            }
-            else if(typeid == 0)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
-            }
-            else if (name == null)
-            {
-                return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && a.Request.RequestTypeId == typeid).ToList();
-            }
-            return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && a.RegionId == regionid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
+            //    if(typeid == 0 && regionid == 0 && name == null)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status).ToList();
+            //    }
+            //    else if (typeid == 0 && regionid == 0)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
+            //    }
+            //    else if (typeid == 0 && name == null)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid).ToList();
+            //    }
+            //    else if (name == null && regionid == 0)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid).ToList();
+            //    }
+            //    else if(regionid == 0)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
+            //    }
+            //    else if(typeid == 0)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
+            //    }
+            //    else if (name == null)
+            //    {
+            //        return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.RegionId == regionid && a.Request.RequestTypeId == typeid).ToList();
+            //    }
+            //    return _dbcontext.RequestClients.Include(a => a.Request).Where(a => a.Request.Status == status && a.Request.RequestTypeId == typeid && a.RegionId == regionid && (a.FirstName.Contains(name) || a.LastName.Contains(name))).ToList();
 
-            
+            Func<RequestClient, bool> predicate = a =>
+            (typeid == 0 || a.Request.RequestTypeId == typeid) &&
+            (regionid == 0 || a.RegionId == regionid) &&
+            (name == null || a.FirstName.Contains(name) || a.LastName.Contains(name)) &&
+            ((status == 1 && a.Request.Status == 1 && a.Request.PhysicianId == null) || a.Request.Status == status);
+
+            return _dbcontext.RequestClients.Include(r => r.Request).Where(predicate).ToList();
+
+
         }
         public int GetCount(int status)
         {
@@ -118,6 +126,16 @@ namespace HalloDoc.Repositories.Implementation
                                                  (a.Request.IsDeleted == null || !a.Request.IsDeleted[0]);
 
                                  return _dbcontext.RequestClients.Include(a=>a.Request).Include(a=>a.Request.RequestNotes).Include(a=>a.Request.RequestStatusLogs).Include(a=>a.Request.Physician).Where(predicate).ToList();               
+        }
+
+        public List<RequestClient> ProviderDashBoardList(string Name,int typeId,List<int> statuses,int PhysicianId)
+        {
+            Func<RequestClient,bool> predicate = a=> (Name == null || a.FirstName.Contains(Name) || a.LastName.Contains(Name)) &&
+                                                      (typeId == 0 || a.Request.RequestTypeId == typeId)  &&
+                                                      (a.Request.PhysicianId == PhysicianId) &&
+                                                       (statuses.Contains(a.Request.Status));
+
+            return _dbcontext.RequestClients.Include(a=>a.Request).Where(predicate).ToList();
         }
 
 
