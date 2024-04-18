@@ -22,5 +22,19 @@ namespace HalloDoc.Repositories.Implementation
         {
             return _context.Encounters.FirstOrDefault(a => a.RequestId == requestid);
         }
+
+        public async Task<Encounter> AddData(Encounter encounter) 
+        {
+            _context.Encounters.Add(encounter); 
+            await _context.SaveChangesAsync();
+            return encounter;
+        }
+
+        public async Task<Encounter> UpDateData(Encounter encounter)
+        {
+            _context.Encounters.Update(encounter);
+            await _context.SaveChangesAsync();
+            return encounter;
+        }
     }   
 }

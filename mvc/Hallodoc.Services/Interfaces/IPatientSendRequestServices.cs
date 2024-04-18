@@ -18,5 +18,7 @@ namespace HallodocServices.Interfaces
         Task<bool> SubmitMeRequest(PatientSubmitMe user,int Userid);
         bool CheckEmail(string email);
 
+        Task<bool> CreateRequest(CreateRequestVM user);
+
     }
 }

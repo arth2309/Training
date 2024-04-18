@@ -591,6 +591,96 @@ namespace HallodocServices.Implementation
         {
             return _aspNetUserRepo.CheckAspNetUser(email) == true? false : true;
         }
+
+        public async Task<bool> CreateRequest(CreateRequestVM user)
+        {
+
+            if (_aspNetUserRepo.CheckAspNetUser(user.Email))
+            {
+                AspNetUser aspNetUser = new()
+                {
+
+                    UserName = user.FirstName,
+                    Email = user.Email,
+                    PhoneNumber = user.Mobile,
+                    Ip = "192.168.0.2",
+                    CreatedDate = DateTime.Now
+                };
+                await _aspNetUserRepo.AddTable(aspNetUser);
+
+                AspNetUserRole aspNetUserRole = new()
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = 3
+                };
+
+                await _aspNetUserRepo.AddData(aspNetUserRole);
+            }
+
+
+            if (_userRepo.CheckUser(user.Email))
+            {
+                User user2 = new()
+                {
+                    AspNetUserId = _aspNetUserRepo.GetId(user.Email),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Mobile = user.Mobile,
+                    Street = user.Street,
+                    City = user.City,
+                    State = user.State,
+                    ZipCode = user.ZipCode,
+                    CreatedBy = _aspNetUserRepo.GetId(user.Email),
+                    CreatedDate = DateTime.Now
+
+
+                };
+                await _userRepo.AddTable(user2);
+            }
+
+
+
+
+
+            Request user3 = new()
+            {
+                RequestTypeId = 1,
+                UserId = _userRepo.GetUserId(user.Email),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.Mobile,
+                CreatedDate = DateTime.Now,
+                Status = 1
+
+
+            };
+
+            await _requestRepo.AddTable(user3);
+
+
+            RequestClient user4 = new()
+            {
+                RequestId = user3.RequestId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.Mobile,
+                Street = user.Street,
+                City = user.City,
+                State = user.State,
+                ZipCode = user.ZipCode,
+                Email = user.Email,
+                StrMonth = user.DateOfBirth.ToString("MMM"),
+                IntYear = user.DateOfBirth.Year,
+                IntDate = user.DateOfBirth.Day
+
+
+            };
+
+            await _requestClientRepo.AddTable(user4);
+            return true;
+        }
     }
    
 }

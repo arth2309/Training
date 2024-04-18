@@ -93,6 +93,7 @@ namespace HallodocServices.Implementation
                         newState.id = requestClients[i].RequestClientId;
                         newState.RequestId = requestClients[i].RequestId;
                         newState.RequestTypeId = requestClients[i].Request.RequestTypeId;
+                        newState.Calltype = requestClients[i].Request.CallType;
 
 
                     };

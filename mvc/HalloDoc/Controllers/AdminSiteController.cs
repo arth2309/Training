@@ -57,10 +57,11 @@ namespace HalloDoc.Controllers
         private readonly IPatientHistoryServices _patientHistoryServices;
         private readonly IPatientRecordServices _patientRecordServices;
         private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
+        private readonly IPatientSendRequestServices _patientSendRequestServices;
         
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices,IPatientSendRequestServices patientSendRequestServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -91,6 +92,7 @@ namespace HalloDoc.Controllers
             _patientHistoryServices = patientHistoryServices;
             _patientRecordServices = patientRecordServices;
             _encryptionDecryptionServices = encryptionDecryptionServices;
+            _patientSendRequestServices = patientSendRequestServices;
          
         }
 
@@ -1028,6 +1030,19 @@ namespace HalloDoc.Controllers
             PaginatedList<PatientRecordList> patientRecordLists = _patientRecordServices.GetRecordFilter(UserId,CurrentPage);
             return PartialView("_PatientRecordList", patientRecordLists);
         }
+
+        public IActionResult CreateRequest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> CreateRequest(CreateRequestVM createRequestVM)
+        {
+           bool request = await _patientSendRequestServices.CreateRequest(createRequestVM);
+            return RedirectToAction("AdminDashBoard");
+        }
+
 
     }
 

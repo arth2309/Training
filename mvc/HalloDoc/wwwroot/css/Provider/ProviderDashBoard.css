@@ -1,4 +1,8 @@
-﻿header {
+﻿body {
+    background-color: #FAF9F9;
+}
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,8 +47,9 @@
 
 
 .mainct {
-    width: 90%;
-    margin-left: 5%;
+    width: 95%;
+    margin-left: 2.5%;
+  
 }
 
 .bt {
@@ -165,7 +170,7 @@
 
 
 .nav-underline .nav-link.active, .nav-underline .show > .nav-link {
-    color: cadetblue;
+    color: #78b4b7;
 }
 
 

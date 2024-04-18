@@ -10,5 +10,10 @@ namespace HalloDoc.Repositories.Interfaces
     public interface IEncounterRepo
     {
         Encounter GetData(int requestid);
+
+        Task<Encounter> AddData(Encounter encounter);
+
+        Task<Encounter> UpDateData(Encounter encounter);
+      
     }
 }

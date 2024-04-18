@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3MH3MB+GRLSfSVVefvQ2pidA48PMW34Ulth4ItM1qQc=",
+  "Hash": "p5pUSZyesAs5oc/QCybWrp7oeOjS7QR9h1KL8Zg5/p8=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -474,6 +474,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files___ _Files_Fig56. Patient site 1.png (6).png (2).png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/__ _Files___ _Files_Fig56. Patient site 1.png (6).png (2).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\__ _Files___ _Files_Fig56. Patient site 1.png (6).png (2).png"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (1).png.png",

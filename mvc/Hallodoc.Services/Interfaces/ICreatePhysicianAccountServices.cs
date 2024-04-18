@@ -19,5 +19,8 @@ namespace HallodocServices.Interfaces
         Task <bool> EditProviderAccountInformation(AdminProfile adminProfile);
 
         Task<bool> EditPhysicianInformation(AdminProfile adminProfile);
+
+        Task<bool> ProviderMailingAndBillingInformation(AdminProfile adminProfile);
+        Task<bool> EditProviderProfile(AdminProfile adminProfile);
     }
 }

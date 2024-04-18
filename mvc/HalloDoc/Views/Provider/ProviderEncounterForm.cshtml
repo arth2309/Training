@@ -1,0 +1,330 @@
+﻿@model HallodocServices.ModelView.AdminEncounterForm
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/encounterform.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div class="sticky-top bg-white shadow">
+        <header>
+            <div class="d-flex d-lg-flex">
+                <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+            </div>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right">
+                <div class="intro mx-1"><p>Welcome:</p></div>
+                <div class="s intro mx-1"><span><b>@ViewBag.Name</b></span></div>
+                <div class="ilogout">
+                    <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+                </div>
+                <div class="Logout">
+                    <button type="button" class="btn btn-outline-info mx-1">Logout</button>
+                </div>
+                <div class="theme mx-1" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+            </div>
+        </header>
+
+
+        <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome,@ViewBag.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body align-items-center nav-tabs p-0">
+
+
+                <a class="nav-link mt-3 ps-2 fw-semibold" style="background-color:#e5f8fd">DashBoard</a>
+
+
+                <a class="nav-link  mt-3 ps-2">Invoicing</a>
+
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="Provider" asp-action="MySchedule">MySchedule</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="Provider" asp-action="MyProfile">My Profile</a>
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <ul class="nav nav-underline d-none d-lg-flex shadow" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+            <li class="nav-item ">
+                <a class="nav-link active"><b>DashBoard</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black"><b>Invoicing</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="Provider" asp-action="MySchedule"><b>My Schedule</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="Provider" asp-action="MyProfile"><b>My Profile</b></a>
+            </li>
+
+        </ul>
+
+    </div>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Encounter Form</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+    <div class="ct mt-3 shadow bg-white">
+        <div class="h2 text-center mt-2 text-info fw-bold">
+            Medical Report-Confidential
+        </div>
+        <form asp-controller="Provider" asp-action="EditEncounterForm">
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="FirstName" type="text" class="form-control" id="FirstName" placeholder="First Name">
+                    <label for="FirstName">First Name</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="LastName" type="text" class="form-control" id="LastName" placeholder="Last Name">
+                    <label for="LastName">Last Name</label>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-floating pt-1">
+                <textarea  asp-for="Location" class="form-control" placeholder="Location" id="Textarea"></textarea>
+                <label for="Textarea">Location</label>
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  type="date" class="form-control" id="DateOfBirth" placeholder="Date Of Birth">
+                    <label for="DateOfBirth">Date Of Birth</label>
+
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Date" type="date" class="form-control" id="CurrentDate" placeholder="Date">
+                    <label for="CurrentDate">Date</label>
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="PhoneNumber" type="tel" class="form-control" id="phone" placeholder="phone">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Email" type="email" class="form-control" id="email" placeholder="email">
+                    <label for="email">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="IllnessOrInjury" type="text" class="form-control" id="HistoryOfIll" placeholder="History Of Present illness Or injury">
+                    <label for="HistoryOfIll">History Of Present illness Or injury</label>
+                    <span asp-validation-for="IllnessOrInjury" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="MedicalHistory" type="text" class="form-control" id="MedicalHistory" placeholder="Medical History">
+                    <label for="MedicalHistory">Medical History</label>
+                    <span asp-validation-for="MedicalHistory" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="Medications" type="text" class="form-control" id="Medications" placeholder="Medications">
+                    <label for="Medications">Medications</label>
+                    <span asp-validation-for="Medications" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Allergies" type="text" class="form-control" id="Allergies" placeholder="Allergies">
+                    <label for="Allergies">Allergies</label>
+                    <span asp-validation-for="Allergies" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-4 form-floating pt-1">
+                    <input  asp-for="Temperature" type="text" class="form-control" id="Temp" placeholder="Temp">
+                    <label for="Temp">Temp</label>
+                    <span asp-validation-for="Temperature" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-4 form-floating pt-1">
+                    <input  asp-for="HeartRate" type="text" class="form-control" id="HR" placeholder="HR">
+                    <label for="HR">HR</label>
+                    <span asp-validation-for="HeartRate" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-4 form-floating pt-1">
+                    <input  asp-for="RespiratoryRate" type="text" class="form-control" id="RR" placeholder="RR">
+                    <label for="RR">RR</label>
+                    <span asp-validation-for="RespiratoryRate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-2 form-floating pt-1">
+                    <input  asp-for="BloodPressure" type="text" class="form-control" id="BloodPressure" placeholder="BloodPressure">
+                    <label for="BloodPressure">Blood Pressure (S...</label>
+                    <span asp-validation-for="BloodPressure" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-2 form-floating pt-1">
+                    <input  type="text" class="form-control" id="BloodPressured" placeholder="BloodPressured">
+                    <label for="BloodPressured">Blood Pressure (D...</label>
+                    <span asp-validation-for="BloodPressure" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-4 form-floating pt-1">
+                    <input  asp-for="O2" type="text" class="form-control" id="O2" placeholder="O2">
+                    <label for="O2">O2</label>
+                    <span asp-validation-for="O2" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-4 form-floating pt-1">
+                    <input  asp-for="Pain" type="text" class="form-control" id="Pain" placeholder="Pain">
+                    <label for="Pain">Pain</label>
+                    <span asp-validation-for="Pain" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="Heent" type="text" class="form-control" id="Heent" placeholder="Heent">
+                    <label for="Heent">Heent</label>
+                    <span asp-validation-for="Heent" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Cv" type="text" class="form-control" id="CV" placeholder="CV">
+                    <label for="CV">CV</label>
+                    <span asp-validation-for="Cv" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="Chest" type="text" class="form-control" id="Chest" placeholder="Chest">
+                    <label for="Chest">Chest</label>
+                    <span asp-validation-for="Chest" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Abd" type="text" class="form-control" id="ABD" placeholder="ABD">
+                    <label for="ABD">ABD</label>
+                    <span asp-validation-for="Abd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="Extr" type="text" class="form-control" id="Extr" placeholder="Extr">
+                    <label for="Extr">Extr</label>
+                    <span asp-validation-for="Extr" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Skin" type="text" class="form-control" id="Skin" placeholder="Skin">
+                    <label for="Skin">Skin</label>
+                    <span asp-validation-for="Skin" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="Neuro" type="text" class="form-control" id="Neuro" placeholder="Neuro">
+                    <label for="Neuro">Neuro</label>
+                    <span asp-validation-for="Neuro" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Other" type="text" class="form-control" id="Other" placeholder="Other">
+                    <label for="Other">Other</label>
+                    <span asp-validation-for="Other" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="Diagnosis" type="text" class="form-control" id="Diagnosis" placeholder="Diagnosis">
+                    <label for="Diagnosis">Diagnosis</label>
+                    <span asp-validation-for="Diagnosis" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="TreatmentPlan" type="text" class="form-control" id="TreatmentPlan" placeholder="TreatmentPlan">
+                    <label for="TreatmentPlan">Treatment Plan</label>
+                    <span asp-validation-for="TreatmentPlan" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row pt-1">
+                <div class="col-12  col-md-6 form-floating pt-1">
+                    <input  asp-for="MedicationsDispensed" type="text" class="form-control" id="Medications" placeholder="Medications">
+                    <label for="Medications">Medications Dispensed</label>
+                    <span asp-validation-for="MedicationsDispensed" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating pt-1">
+                    <input  asp-for="Procedures" type="text" class="form-control" id="Procedures" placeholder="Procedures">
+                    <label for="Procedures">Procedures</label>
+                    <span asp-validation-for="Procedures" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-floating pt-1">
+                <input  asp-for="Followup" type="text" class="form-control" id="Procedures" placeholder="Procedures">
+                <label for="Procedures">Followup</label>
+                <span asp-validation-for="Followup" class="text-danger"></span>
+
+                <input type="hidden" value="@ViewBag.RequestId" asp-for="RequestId" />
+                <input  type="hidden" asp-for="EncounterId" />
+            </div>
+            <div class="d-flex justify-content-end mt-3 mb-2">
+                <button type="submit" class="btn btn-info text-white mx-1">Save Changes</button>
+                <button type="button" class="btn btn-danger mx-1" onclick=" generatePdf(@ViewBag.RequestId)">Finalize</button>
+                <button type="button" class="btn btn-outline-info mx-1" onclick="window.location.reload()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        function generatePdf(temp) {
+
+            
+
+            $.ajax({
+                url: "/Provider/downloadEncounterDocument",
+                type:'GET',
+                data: {
+                    requestId: temp
+                },
+                
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                
+                success: function (response) {
+
+                    var blob = new Blob([response], { type: "application/pdf" });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = "Encounter.pdf";
+                    link.click();
+
+                    window.location.href = "/Provider/ProviderDashboard";
+                },
+                error: function (error) {
+                    console.error("Error generating PDF:", error);
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

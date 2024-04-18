@@ -1,6 +1,8 @@
 ﻿
 window.onload = () => {
     window.sessionStorage.clear();
+    window.sessionStorage.setItem("status", 1);
+    
 }
 function GetStatus(temp, currentPage, type) {
     var statusId = temp;
@@ -79,3 +81,24 @@ function cleartoggle()
     window.sessionStorage.setItem("name",'');
 }
 
+
+function sendRequestId(temp)
+{
+    var requestId = document.getElementById("ride");
+    requestId.value = temp;
+}
+
+function houseCall(temp) 
+{
+    $.ajax({
+        url: '/Provider/HouseCall',
+        type: 'GET',
+        data: {
+            RequestId: temp
+        },
+        success: function (res)
+        {
+            window.location.reload();
+        }
+    });
+}

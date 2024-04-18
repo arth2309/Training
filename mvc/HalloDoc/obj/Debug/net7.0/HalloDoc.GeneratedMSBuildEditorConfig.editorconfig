@@ -60,6 +60,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXENyZWF0ZVByb3ZpZGVyQWNjb3VudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/CreateRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXENyZWF0ZVJlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/EditAccessRole.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEVkaXRBY2Nlc3NSb2xlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -270,6 +274,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Provider/ProviderDashBoard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJEYXNoQm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Provider/ProviderEncounterForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJcUHJvdmlkZXJFbmNvdW50ZXJGb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Provider/ProviderViewCase.cshtml]

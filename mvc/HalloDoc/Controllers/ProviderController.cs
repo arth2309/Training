@@ -32,14 +32,16 @@ namespace HalloDoc.Controllers
         private readonly IViewNoteServices _viewNoteServices;
         private readonly ISchedulingServices _schedulingServices;
         private readonly ICreatePhysicianAccountServices _createPhysicianAccountServices;
+        private readonly IEncounterFormServices _createEncounterFormServices;
 
-        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices)
+        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
             _viewNoteServices = viewNoteServices;
             _schedulingServices = schedulingServices;
             _createPhysicianAccountServices = createPhysicianAccountServices;
+            _createEncounterFormServices = createEncounterFormServices;
         }
 
         [CustomAuthorize("Provider")]
@@ -160,6 +162,61 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ProviderMailingAndBillingInformation(AdminProfile adminProfile)
+        {
+            bool result = await _createPhysicianAccountServices.ProviderMailingAndBillingInformation(adminProfile);
+            return RedirectToAction("MyProfile");
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditProviderProfile(AdminProfile adminProfile)
+        {
+            bool result = await _createPhysicianAccountServices.EditProviderProfile(adminProfile);
+            return RedirectToAction("MyProfile");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> HouseCall(int RequestId)
+        {
+            bool result = await _createEncounterFormServices.HouseCall(RequestId);
+            return Json(new { result });
+        }
+
+        public IActionResult ProviderEncounterForm(int RequestId)
+        {
+            ViewBag.Name = Request.Cookies["Name"];
+            ViewBag.RequestId = RequestId;
+             AdminEncounterForm adminEncounterForm = _createEncounterFormServices.GetEncounterFormData(RequestId);
+           return View(adminEncounterForm);
+            
+
+           
+        }
+
+        [HttpGet]
+        public IActionResult downloadEncounterDocument(int requestId)
+        {
+            AdminEncounterForm encounterDetails = _createEncounterFormServices.GetEncounterFormData(requestId) ;
+
+            // Generate PDF
+            var pdfBytes =  _createEncounterFormServices.GeneratePDFServices(encounterDetails);
+
+            // Return the PDF as a file
+            return File(pdfBytes, "application/pdf", "Encounter.pdf");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEncounterForm(AdminEncounterForm adminEncounterForm)
+        {
+       
+           
+            bool result = await _createEncounterFormServices.UpdateaddEncounterFormData(adminEncounterForm);
+            return RedirectToAction("ProviderEncounterForm", new {RequestId = adminEncounterForm.RequestId});
+
+
+
+        }
 
     }
 }

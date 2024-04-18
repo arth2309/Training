@@ -66,6 +66,8 @@ namespace HallodocServices.ModelView
         public string? physicianName { get; set; }
         public string? regionName { get; set; }
 
+        public int? Calltype { get; set; }
+
        
     }
 }

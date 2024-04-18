@@ -185,7 +185,7 @@
 
 
 
-
+    <div class="sticky-top bg-white shadow">
     <header>
         <div class="d-flex d-lg-flex">
             <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
@@ -207,25 +207,23 @@
 
     <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome,@ViewBag.Name</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body align-items-center nav-tabs">
+        <div class="offcanvas-body align-items-center nav-tabs p-0">
 
 
-            <a class="nav-link border-dark text-black">DashBoard</a>
-
-            <a class="nav-link text-black">Provider Location</a>
+            <a class="nav-link mt-3 ps-2 fw-semibold" style="background-color:#e5f8fd">DashBoard</a>
 
 
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2">My Profile</a>
+                <a class="nav-link  mt-3 ps-2">Invoicing</a>
 
 
 
-            <a class="nav-link text-black">Providers</a>
+                <a class="nav-link  mt-3 ps-2" asp-controller="Provider" asp-action="MySchedule">MySchedule</a>
 
 
-            <a class="nav-link text-black">Partners</a>
+                <a class="nav-link  mt-3 ps-2" asp-controller="Provider" asp-action="MyProfile">My Profile</a>
 
 
          
@@ -235,32 +233,25 @@
         </div>
     </div>
 
-    <ul class="nav nav-underline d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+    <ul class="nav nav-underline d-none d-lg-flex shadow" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
         <li class="nav-item ">
-            <a class="nav-link active "><b>DashBoard</b></a>
+            <a class="nav-link active"><b>DashBoard</b></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
+            <a class="nav-link text-black"><b>Invoicing</b></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
+            <a class="nav-link text-black" asp-controller="Provider" asp-action="MySchedule"><b>My Schedule</b></a>
         </li>
 
-        <li class="nav-item dropdown">
-            <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
-                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
-                <li><a class="dropdown-item">Invoicing</a></li>
-            </ul>
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="Provider" asp-action="MyProfile"><b>My Profile</b></a>
         </li>
-
-       
-
-        
-
+      
     </ul>
+
+    </div>
 
 
     <div class="mainct">
@@ -334,12 +325,13 @@
                 <h5>Patients</h5><h6 id="statusname">(new)</h6>
             </div>
             <div class="d-flex" style="margin-left: auto;">
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i>Send Link</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-pencil"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1"><i class="bi bi-pencil"></i>Create Requests</button>
+                <button type="button" class="btn btn-info text-white d-flex d-lg-none bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i></button>
+                <button type="button" class="btn btn-info text-white d-none d-lg-flex bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i>Send Link</button>
+                <button type="button" class="btn btn-info text-white d-flex d-lg-none bt1 mx-1"><i class="bi bi-pencil"></i></button>
+                <button type="button" class="btn btn-info text-white d-none d-lg-flex bt1 mx-1"><i class="bi bi-pencil"></i>Create Requests</button>
             </div>
         </div>
+        <div class="bg-white shadow p-2 rounded-3">
         <div class="d-flex row" style="justify-content: space-between;">
             <div class="d-flex col-12 col-lg-3">
                 <div class="input-group mb-3 input-with-icon">
@@ -397,6 +389,7 @@
         </div>
         <div id="states">
             @Html.Partial("~/Views/Shared/_ProviderNewState.cshtml",Model.AdminNewState)
+        </div>
         </div>
         </div>
         </body>

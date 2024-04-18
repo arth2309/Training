@@ -156,6 +156,7 @@ namespace HallodocServices.Implementation
 
            
             AdminProfile adminProfile = new AdminProfile();
+            adminProfile.UserName = physician.AspNetUser.UserName;
             adminProfile.Id = physician.AspNetUser.Id;
             adminProfile.AdminId = physician.PhysicianId;
             adminProfile.roles = roles;
@@ -171,6 +172,7 @@ namespace HallodocServices.Implementation
             adminProfile.regionId = physician.RegionId;
             adminProfile.City = physician.City;
             adminProfile.Email  = physician.Email;
+            adminProfile.ZipCode = physician.Zip;
             adminProfile.BusinessName = physician.BusinessName;
             adminProfile.BusinessWebsite = physician.BusinessWebsite;
             adminProfile.WorkingRegions = ints;
@@ -257,6 +259,47 @@ namespace HallodocServices.Implementation
                 }
             }
 
+            return true;
+        }
+
+        public async Task<bool> ProviderMailingAndBillingInformation(AdminProfile adminProfile)
+        {
+            Physician physician = _physicianRepo.GetPhysician(adminProfile.AdminId);
+            physician.Address1 = adminProfile.address1;
+            physician.Address2 = adminProfile.address2;
+            physician.City = adminProfile.City;
+            physician.RegionId = adminProfile.regionId;
+            physician.Zip = adminProfile.ZipCode;
+
+            await _physicianRepo.UpdateDatainPhysician(physician);
+            return true;
+        }
+
+        public async Task<bool> EditProviderProfile(AdminProfile adminProfile)
+        {
+            Physician physician = _physicianRepo.GetPhysician(adminProfile.AdminId);
+            physician.BusinessName = adminProfile.BusinessName;
+            physician.BusinessWebsite = adminProfile.BusinessWebsite;
+
+
+            if (adminProfile.Photo != null)
+            {
+
+
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                string fileName = adminProfile.Photo.FileName;
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    adminProfile.Photo.CopyTo(stream);
+                }
+
+                physician.Photo = fileName;
+            }
+
+            await _physicianRepo.UpdateDatainPhysician(physician);
             return true;
         }
     }
