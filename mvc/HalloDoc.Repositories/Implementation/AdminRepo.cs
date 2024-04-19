@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HalloDoc.Repositories.DataContext;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Repositories.Implementation
 {
@@ -20,9 +21,8 @@ namespace HalloDoc.Repositories.Implementation
 
         public Admin GetAdminData(int adminid)
         {
-             return _context.Admins.FirstOrDefault(a=>a.AdminId == adminid);
+             return _context.Admins.Include(a=>a.AdminRegions).FirstOrDefault(a=>a.AdminId == adminid);
            
-
         }
 
         public async Task<bool> UpdateTable(Admin admin) 

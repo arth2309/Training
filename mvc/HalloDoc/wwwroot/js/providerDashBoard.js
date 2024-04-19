@@ -102,3 +102,97 @@ function houseCall(temp)
         }
     });
 }
+
+function sendTransferRequestId(temp) {
+    var requestId = document.getElementById("trid1");
+    requestId.value = temp;
+}
+
+function removeValidationTransfer() {
+    $('#tdes').text("");
+}
+
+function loadSendAgreeMentData(requestid) {
+    $.ajax({
+        url: '/AdminSite/LoadAgreementData',
+        type: 'GET',
+
+        data: {
+            Requestid: requestid
+        },
+        success: function (res) {
+            var dataList = JSON.parse(res);
+            console.log(dataList);
+            var requestTypeId = document.getElementById("requestTypeIdForAgreement");
+            var email = document.getElementById("emailForAgreement");
+            var phoneNumber = document.getElementById("phoneNumberForAgreement");
+            var request = document.getElementById("requestIdForAgreement");
+
+
+
+            requestTypeId.value = dataList.RequestTypeId;
+            email.value = dataList.Email;
+            phoneNumber.value = dataList.PhoneNumber;
+            request.value = dataList.RequestId;
+
+
+
+            document.getElementById("patientagreement").classList.remove("d-flex");
+            document.getElementById("patientagreement").classList.add("d-none");
+            document.getElementById("familyagreement").classList.remove("d-flex");
+            document.getElementById("familyagreement").classList.add("d-none");
+            document.getElementById("conciergeagreement").classList.remove("d-flex");
+            document.getElementById("conciergeagreement").classList.add("d-none");
+            document.getElementById("businessagreement").classList.remove("d-flex");
+            document.getElementById("businessagreement").classList.add("d-none");
+
+
+
+            if (requestTypeId.value == 1) {
+                document.getElementById("patientagreement").classList.add("d-flex");
+                document.getElementById("patientagreement").classList.remove("d-none");
+
+
+            }
+            else if (requestTypeId.value == 2) {
+                document.getElementById("familyagreement").classList.add("d-flex");
+                document.getElementById("familyagreement").classList.remove("d-none");
+
+            }
+            else if (requestTypeId.value == 3) {
+                document.getElementById("conciergeagreement").classList.add("d-flex");
+                document.getElementById("conciergeagreement").classList.remove("d-none");
+
+
+            }
+            else {
+
+                document.getElementById("businessagreement").classList.add("d-flex");
+                document.getElementById("businessagreement").classList.remove("d-none");
+
+            }
+        },
+
+        error: function (err) {
+            console.error(err);
+        }
+
+    });
+}
+
+
+function toConclude(temp)
+{
+    $.ajax
+        ({
+            url: '/Provider/ToConclude',
+            type: 'GET',
+            data: {
+                RequestId:temp
+            },
+            success: function (res)
+            {
+                window.location.reload();
+            }
+        });
+}

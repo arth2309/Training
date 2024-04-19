@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div style="display: flex; justify-content: center;">
                     <button type="button" class="btn btn-outline-info mx-1" onclick="houseCall(ride.value)">House Call</button>
-                    <button type="button" class="btn btn-outline-info mx-1">Consult</button>
+                    <button type="button" class="btn btn-outline-info mx-1" onclick="toConclude(ride.value)">Consult</button>
                    <input type="hidden" id="ride"/>
                 </div>
                 <br>
@@ -81,10 +81,13 @@
 
                         <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>@Html.DisplayFor(modelItem => item.Mobile)</button></td>
                         <td>@Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City),@Html.DisplayFor(modelItem => item.State)</td>
-
-                        @if(item.Calltype == 1)
+                        
                     {
-                        <td><button type="button" class="btn btn-info text-white">House Call</button></td>
+                        
+                    }
+                    @if(item.Calltype == 1)
+                    {
+                        <td><button type="button" class="btn btn-info text-white" onclick="toConclude(@item.RequestId)">House Call</button></td>
                     }
                     else
                     {
@@ -100,7 +103,8 @@
 
                                     <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id><i class="bi bi-card-list"></i> View Case</a></li>
                                     <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>
-                                    @if(item.Calltype == 1)
+                            
+                            @if(item.Calltype == 1)
                             {
                                 <li><a class="dropdown-item btn" asp-controller="Provider" asp-action="ProviderEncounterForm" asp-route-RequestId="@item.RequestId">Encounter</a></li>
                             }
@@ -108,6 +112,7 @@
                             {
                                 <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#encounter" onclick="sendRequestId(@item.RequestId)">Encounter</a></li>
                             }
+                            <li><a class="dropdown-item" asp-controller="Provider" asp-action="ProviderSendOrder" asp-route-reqID="@item.RequestId"><i class="bi bi-card-checklist"></i> Orders</a></li>
                            
                                 </ul>
                             

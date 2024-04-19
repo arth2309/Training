@@ -10,7 +10,9 @@ using HallodocServices.Interfaces;
 using iText.Kernel.Pdf;
 using iText.Layout.Properties;
 using iText.Layout.Element;
-
+using DocumentFormat.OpenXml.Bibliography;
+using HalloDoc.Repositories.Implementation;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HallodocServices.Implementation
 {
@@ -18,11 +20,15 @@ namespace HallodocServices.Implementation
     {
         private readonly IEncounterRepo _encounterRepo;
         private readonly IRequestRepo _requestRepo;
+        private readonly IRequestFileRepo _requestFileRepo;
+        private readonly IRequestNoteRepo _requestNoteRepo;
 
-        public EncounterFormServices(IEncounterRepo encounterRepo,IRequestRepo requestRepo)
+        public EncounterFormServices(IEncounterRepo encounterRepo,IRequestRepo requestRepo,IRequestFileRepo requestFileRepo,IRequestNoteRepo requestNoteRepo)
         {
             _encounterRepo = encounterRepo;
             _requestRepo = requestRepo;
+            _requestFileRepo = requestFileRepo;
+            _requestNoteRepo = requestNoteRepo;
         }
 
         public AdminEncounterForm GetEncounterFormData(int requestid)
@@ -338,6 +344,81 @@ namespace HallodocServices.Implementation
 
                 return memoryStream.ToArray();
             }
+
+          
+        }
+
+        public async Task<bool> Finalize(int Requestid)
+        {
+            Request request = _requestRepo.GetRequest(Requestid);
+            request.IsMobile = new System.Collections.BitArray(1, true);
+            await _requestRepo.UpdateTable(request);
+            return true;
+        }
+        public ConcludeCareVM GetConcludeCareFile(int RequestId)
+        {
+            List<RequestWiseFile> requestWiseFile = _requestFileRepo.GetAllFiles(RequestId);
+            ConcludeCareVM concludeCareVM = new ConcludeCareVM();
+            concludeCareVM.WiseFiles = requestWiseFile;
+            concludeCareVM.reqid = RequestId;
+            return concludeCareVM;
+        }
+
+        public async Task<bool> AddFileData(ConcludeCareVM concludeCareVM)
+        {
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+            FileInfo fileInfo = new FileInfo(concludeCareVM.file.FileName);
+            string fileName = concludeCareVM.file.FileName;
+
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                concludeCareVM.file.CopyTo(stream);
+            }
+
+            RequestWiseFile requestWise = new RequestWiseFile();
+            requestWise.RequestId = concludeCareVM.reqid;
+            requestWise.FileName = fileName;
+            requestWise.CreatedDate = DateTime.Now;
+            await _requestFileRepo.AddData(requestWise);
+            return true;
+        }
+
+        public async Task<bool> Conclude(ConcludeCareVM concludeCareVM)
+        {
+            RequestNote requestNote = _requestNoteRepo.GetNoteData(concludeCareVM.reqid);
+            if(requestNote != null) 
+            {
+                requestNote.PhysicianNotes = concludeCareVM.ProviderNotes;
+                requestNote.ModifiedDate = DateTime.Now;
+                await _requestNoteRepo.UpdateTable(requestNote);
+
+               
+            }
+            else
+            {
+                RequestNote requestNote1 = new();
+                requestNote1.RequestId = concludeCareVM.reqid;
+                requestNote1.PhysicianNotes = concludeCareVM.ProviderNotes;
+                requestNote1.CreatedDate = DateTime.Now;
+                await _requestNoteRepo.AddTable(requestNote1);
+            }
+
+            Request request = _requestRepo.GetRequest(concludeCareVM.reqid);
+            request.Status = 8;
+            await _requestRepo.UpdateTable(request);
+
+            return true;
+        }
+
+        public async Task<bool> ToConclude(int Requestid)
+        {
+            Request request = _requestRepo.GetRequest(Requestid);
+            request.Status = 6;
+            await _requestRepo.UpdateTable(request);
+            return true;
         }
 
     }

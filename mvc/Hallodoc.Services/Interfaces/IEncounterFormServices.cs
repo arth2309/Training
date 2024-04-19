@@ -18,7 +18,15 @@ namespace HallodocServices.Interfaces
 
         Task<bool> UpdateaddEncounterFormData(AdminEncounterForm encounter);
 
+        ConcludeCareVM GetConcludeCareFile(int RequestId);
 
+        Task<bool> AddFileData(ConcludeCareVM concludeCareVM);
+
+        Task<bool> Conclude(ConcludeCareVM concludeCareVM);
+
+        Task<bool> ToConclude(int Requestid);
+
+        Task<bool> Finalize(int Requestid);
 
     }
 }

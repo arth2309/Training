@@ -23,87 +23,119 @@
 </head>
 
 <body>
-    <header>
-        <div class="d-flex d-lg-flex">
-            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
-        </div>
-        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
-        <div class="right">
-            <div class="intro mx-1"><p>Welcome:</p></div>
-            <div class="s intro mx-1"><span><b>@Html.Raw(ViewBag.AdminName)</b></span></div>
-            <div class="ilogout">
-                <button type="button" class="btn btn-outline-info mx-1"><i class="bi bi-box-arrow-right"></i></button>
+    <div class="sticky-top bg-white shadow">
+        <header>
+            <div class="d-flex d-lg-flex">
+                <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
             </div>
-            <div class="Logout">
-                <button type="button" class="btn btn-outline-info mx-1">Logout</button>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right">
+                <div class="intro mx-1"><p>Welcome:</p></div>
+                <div class="s intro mx-1"><span><b>@ViewBag.Name</b></span></div>
+                <div class="ilogout">
+                    <a asp-controller="AdminSite" asp-action="AdminLogout">  <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button> </a>
+                </div>
+                <div class="Logout">
+                    <a asp-controller="AdminSite" asp-action="AdminLogout"><button type="button" class="btn btn-outline-info mx-1">Logout</button> </a>
+                </div>
+                <div class="theme mx-1" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
             </div>
-            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </header>
+
+
+        <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome,@ViewBag.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body align-items-center nav-tabs p-0">
+
+
+                <a class="nav-link mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminDashBoard">DashBoard</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminMyProfile">
+                    My Profile
+                </a>
+
+
+                <a class="nav-link  mt-3 ps-2 dropdown" data-bs-toggle="dropdown">Providers</a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
+                    <li><a class="dropdown-item">Invoicing</a></li>
+                </ul>
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="ProfessionMenu">Partners</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminAccountAccess">Access</a>
+
+
+                <a class="nav-link  mt-3 ps-2 fw-semibold" style="background-color:#e5f8fd" data-bs-toggle="dropdown">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="PatientHistory">Patient Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
+                    <li><a class="dropdown-item">Blocked History</a></li>
+                </ul>
+
+
+
+
+
+
+            </div>
         </div>
-    </header>
 
+        <ul class="nav nav-underline d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+            <li class="nav-item ">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>DashBoard</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
+            </li>
 
-    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body align-items-center nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile"><b>My Profile</b></a>
+            </li>
 
+            <li class="nav-item dropdown">
+                <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
+                    <li><a class="dropdown-item">Invoicing</a></li>
+                </ul>
+            </li>
 
-            <a class="nav-link  text-black">DashBoard</a>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProfessionMenu"><b>Partners</b></a>
+            </li>
 
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+            </li>
 
+            <li class="nav-item dropdown">
+                <a class="nav-link active btn" data-bs-toggle="dropdown"><b>Records</b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="PatientHistory">Patient Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
+                    <li><a class="dropdown-item" >Blocked History</a></li>
+                </ul>
+            </li>
 
-            <a class="nav-link border-dark text-black">My Profile</a>
+        </ul>
 
-
-
-            <a class="nav-link text-black">Providers</a>
-
-
-            <a class="nav-link text-black">Partners</a>
-
-
-            <a class="nav-link text-black">Access</a>
-
-
-            <a class="nav-link text-black">Records</a>
-
-
-
-        </div>
     </div>
 
-    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
-        <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Providers</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Partners</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link active"><b>Records</b></a>
-        </li>
-
-    </ul>
     <div class="he">
         <div class="he1 h4">
             <p>Block History</p>

@@ -15,6 +15,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="~/js/providerDashBoard.js"></script>
+    <script src="~/js/validationAndIntegration.js"></script>
 
     <script>
         function toggle(temp) {
@@ -129,25 +130,7 @@
 
     }
 
-    <div class="modal fade" id="ClearCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body" style="text-align: center;">
-                    <img src="~/images/Screenshot 2024-01-19 160841.png" alt="alert">
-                    <div class="h1">Information</div>
-                    <div style="text-align: left;">
-                        While submitting a request you must provide the correct information about the patient or the resposibly party.
-                        Failure to provide the correct email and phone will delay service or be declined.
-                    </div>
-                </div>
-                <div class="modal-footer" style="justify-content: center;">
-                    <input type="hidden" id="reqforclearcase" />
-                    <button type="button" class="btn btn-secondary" onclick="clearCase(reqforclearcase.value)">clear</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+   
 
     <div class="modal fade" id="sendlink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -183,6 +166,42 @@
         </div>
     </div>
 
+  
+    <div class="modal fade" id="Transfer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="removeValidationTransfer()"></button>
+                </div>
+                <form asp-controller="Provider" asp-action="Transfer">
+                <div class="modal-body">
+                    <p class="mt-2">This Request will be Transfer to Admin</p>
+                    <div class="form-floating">
+                        <textarea  class="form-control" placeholder="Leave a comment here" id="desc" style="height: 100px" asp-for="Description"></textarea>
+                        <label for="desc">Description</label>
+                        <span asp-validation-for="Description" class="text-danger" id="tdes"></span>
+                        <input type="hidden" id="trid1" asp-for="RId" />
+
+                        
+
+
+                    </div>
+                    <div class="d-flex mt-2" style="justify-content:end">
+                        <button type="submit" class="btn btn-info text-white">Submit</button>
+                        <button type="reset" class="btn btn-outline-info" data-bs-dismiss="modal" onclick="removeValidationTransfer()">Cancel</button>
+                    </div>
+
+
+
+
+
+                </div>
+                </form>
+            </div>
+            </div>
+            </div>
+       
 
 
     <div class="sticky-top bg-white shadow">

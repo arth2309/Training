@@ -2,7 +2,7 @@
 
 
 
-
+@Html.Partial("~/Views/Shared/_SendAgreement.cshtml")
 
 
 <div class="table-responsive d-none d-lg-flex" style="width:100%">
@@ -64,17 +64,19 @@
 
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Admin</button></td>
                     <td>
-                        <div class="btn-group">
+                        
                             <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
                                 Action
                             </button>
                             <ul class="dropdown-menu">
-
+                            <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#sendagreement" onclick="loadSendAgreeMentData(@item.RequestId)"><i class="bi bi-card-checklist"></i> Send Agreement</a></li>
                                 <li><a class="dropdown-item" asp-controller="Provider" asp-action="ProviderViewCase" asp-route-rcid=@item.id><i class="bi bi-card-list"></i> View Case</a></li>
                                 <li><a class="dropdown-item" asp-controller="Provider" asp-action="ProviderViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>
-                                <li><a class="dropdown-item"><i class="bi bi-check-lg"></i> Accept</a></li>
+                            <li><a class="dropdown-item" asp-controller="Provider" asp-action="ProviderViewUploads" asp-route-reqID="@item.RequestId"><i class="bi bi-cloud-arrow-up"></i> View Uploads</a></li>
+                               <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#Transfer" onclick="sendTransferRequestId(@item.RequestId)"><i class="bi bi-check-lg"></i>Transfer </a></li>
+
                             </ul>
-                        </div>
+                       
                     </td>
                 </tr>
 

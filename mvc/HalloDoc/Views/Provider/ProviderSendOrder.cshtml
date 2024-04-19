@@ -1,0 +1,203 @@
+﻿@model HallodocServices.ModelView.AdminSendOrder
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/viewcase.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/getvendorbyprofession.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <title>Document</title>
+</head>
+<body>
+
+    <header>
+        <div class="d-flex d-lg-flex">
+            <button type="button" class="btn btn-outline-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+        </div>
+        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+        <div class="right">
+            <div class="intro"><p>Welcome:</p></div>
+            <div class="s intro"><span><b>@Html.Raw(ViewBag.Name)</b></span></div>
+            <div class="ilogout">
+                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+            </div>
+            <div class="Logout">
+                <button type="button" class="btn btn-outline-info">Logout</button>
+            </div>
+            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </div>
+    </header>
+
+
+    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body align-items-center nav-tabs">
+
+
+            <a class="nav-link border-dark text-black">DashBoard</a>
+
+            <a class="nav-link text-black">Provider Location</a>
+
+
+            <a class="nav-link text-black">My Profile</a>
+
+
+
+            <a class="nav-link text-black">Providers</a>
+
+
+            <a class="nav-link text-black">Partners</a>
+
+
+            <a class="nav-link text-black">Access</a>
+
+
+            <a class="nav-link text-black">Records</a>
+
+
+
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+        <li class="nav-item">
+            <a class="nav-link text-black active"><b>DashBoard</b></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile" asp-route-adminid="2"><b>My Profile</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Providers</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Partners</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Access</b></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-black"><b>Records</b></a>
+        </li>
+
+    </ul>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Send Orders</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+    <div class="mainct shadow">
+        <form asp-controller="Provider" asp-action="ProviderSendOrder">
+
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt mb-3">
+                    <select asp-for="ProfessionTypeId" onchange="loadBusinessList(this.value)" id="professionList" class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                        <option selected value="">Select Profession</option>
+                    </select>
+                    <span asp-validation-for="ProfessionTypeId" class="text-danger"></span>
+
+                </div>
+                <div class="col-md-12 col-lg-6 wt mb-3">
+                    <select asp-for="VendorId" onchange="loadBusinessData(this.value)" id="businessList" class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px">
+                        <option value="">Business</option>
+                    </select>
+                    <span asp-validation-for="VendorId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt form-floating mb-3">
+                    <input asp-for="PhoneNumber" type="tel" class="form-control iget BusinessContact" id="vendorMobileNumber" style="height:58px">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 col-lg-6 wt form-floating mb-3">
+
+                    <input asp-for="Email" type="email" class="form-control iget" id="email"
+                           aria-describedby="emailHelp" placeholder="Enter email">
+                    <label for="email">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <input type="hidden" value="@ViewBag.reqID" asp-for="RequestId" />
+                <div class="col-12 col-lg-6 wt form-floating mb-3">
+                    <input asp-for="FaxNumber" type="text" class="form-control dis" placeholder="Fax Number" id="faxnumber">
+                    <label for="faxnumber">Fax Number</label>
+                    <span asp-validation-for="FaxNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" asp-for="Prescription"></textarea>
+                <label for="floatingTextarea2" style="top:-9px;left:-9px">Prescription or OrderDetails</label>
+                <span asp-validation-for="Prescription" class="text-danger"></span>
+            </div>
+
+            <div class="row ">
+                <div class="col-md-12 col-lg-6 wt mb-3 ">
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" style="height:58px" asp-for="Refill">
+                        <option selected value="0">No of refill</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex wt">
+                <div class="bt">
+                    <div><button type="Submit" class="btn btn-info">Submit</button></div>
+                    <div style="margin-left: 4px;"><button type="button" class="btn btn-outline-info">Cancel</button></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+            //const phoneInputField = document.getElementById("patientMobileNumber");
+            //const phoneInput = window.intlTelInput(phoneInputField, {
+            //    utilsScript:
+            //        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            //});
+
+        //    function GetData(int id) {
+        //        console.log(id);
+        //        if (id != 0) {
+        //            $('.BusinessContact').attr("asp-for", Model.professionalList[id].BusinessContact);
+        //        }
+        //    }
+
+        //</script>
+
+</body>
+</html>

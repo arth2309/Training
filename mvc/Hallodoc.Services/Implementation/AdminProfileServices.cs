@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HalloDoc.Repositories.Implementation;
 
 namespace HallodocServices.Implementation
 {
@@ -14,16 +15,36 @@ namespace HallodocServices.Implementation
     {
         private readonly IAdminRepo _adminRepo;
         private readonly IAspNetUserRepo _userRepo;
+        private readonly IRegionRepo _regionRepo;
+        private readonly IRoleRepo _roleRepo;
 
-        public AdminProfileServices(IAdminRepo adminRepo, IAspNetUserRepo userRepo)
+        public AdminProfileServices(IAdminRepo adminRepo, IAspNetUserRepo userRepo, IRegionRepo regionRepo, IRoleRepo roleRepo)
         {
             _adminRepo = adminRepo;
             _userRepo = userRepo;
+            _regionRepo = regionRepo;
+            _roleRepo = roleRepo;
         }
 
-        public AdminProfile GetAdminData(int adminid) 
-        { 
+        public AdminProfile GetAdminData(int adminid)
+        {
+
+            List<Region> regions = _regionRepo.GetRegions();
+            List<Role> roles = _roleRepo.GetRoleDataForAdmin();
+
+          
+
             Admin admin = _adminRepo.GetAdminData(adminid);
+            List<AdminRegion> adminRegions = admin.AdminRegions.ToList();
+
+            List<int> ints = new List<int>();
+
+            for (int i = 0; i < adminRegions.Count; i++)
+            {
+                int region = adminRegions[i].RegionId;
+                ints.Add(region);
+            }
+
             AspNetUser aspNetUser = _userRepo.GetData(admin.AspNetUserId);
             AdminProfile profile = new AdminProfile();
             profile.AdminId = adminid;
@@ -35,8 +56,15 @@ namespace HallodocServices.Implementation
             profile.City = admin.City;
             profile.State = "Maryland";
             profile.Id = admin.AspNetUserId;
-            profile.Password = aspNetUser.PasswordHash;
             profile.ZipCode = admin.Zip;
+            profile.roles = roles;
+            profile.WorkingRegions = ints;
+            profile.regions = regions;
+            profile.roleId = admin.RoleId;
+            
+
+
+
 
             return profile;
         } 

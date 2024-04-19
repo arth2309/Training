@@ -15,97 +15,121 @@
     <script src="~/js/delete.js"></script>
     <script src="~/js/AdminProfile.js"></script>
 
-    
+
 </head>
 <body>
-    <header>
-        <div class="d-flex d-lg-flex">
-            <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
-        </div>
-        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
-        <div class="right">
-            <div class="intro"><p>Welcome:</p></div>
-            <div class="s intro"><span><b>@Html.Raw(ViewBag.AdminName)</b></span></div>
-            <div class="ilogout">
-                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+    <div class="sticky-top bg-white shadow">
+        <header>
+            <div class="d-flex d-lg-flex">
+                <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
             </div>
-            <div class="Logout">
-                <button type="button" class="btn btn-outline-info">Logout</button>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right">
+                <div class="intro mx-1"><p>Welcome:</p></div>
+                <div class="s intro mx-1"><span><b>@ViewBag.Name</b></span></div>
+                <div class="ilogout">
+                    <a asp-controller="AdminSite" asp-action="AdminLogout">  <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button> </a>
+                </div>
+                <div class="Logout">
+                    <a asp-controller="AdminSite" asp-action="AdminLogout"><button type="button" class="btn btn-outline-info mx-1">Logout</button> </a>
+                </div>
+                <div class="theme mx-1" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
             </div>
-            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+        </header>
+
+
+        <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome,@ViewBag.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body align-items-center nav-tabs p-0">
+
+
+                <a class="nav-link mt-3 ps-2 " asp-controller="AdminSite" asp-action="AdminDashBoard">DashBoard</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
+
+                <a class="nav-link  mt-3 ps-2 fw-semibold" style="background-color:#e5f8fd">
+                    My Profile
+                </a>
+
+
+                <a class="nav-link  mt-3 ps-2 dropdown" data-bs-toggle="dropdown">Providers</a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
+                    <li><a class="dropdown-item">Invoicing</a></li>
+                </ul>
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="ProfessionMenu">Partners</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminAccountAccess">Access</a>
+
+
+                <a class="nav-link  mt-3 ps-2" data-bs-toggle="dropdown">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="PatientHistory">Patient Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="BlockedHistory">Blocked History</a></li>
+                </ul>
+
+
+
+
+
+
+            </div>
         </div>
-    </header>
 
+        <ul class="nav nav-underline d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+            <li class="nav-item ">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
+            </li>
 
-    <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body align-items-center nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active"><b>My Profile</b></a>
+            </li>
 
+            <li class="nav-item dropdown">
+                <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
+                    <li><a class="dropdown-item">Invoicing</a></li>
+                </ul>
+            </li>
 
-            <a class="nav-link  text-black">DashBoard</a>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProfessionMenu"><b>Partners</b></a>
+            </li>
 
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+            </li>
 
+            <li class="nav-item dropdown">
+                <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Records</b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="PatientHistory">Patient Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="BlockedHistory">Blocked History</a></li>
+                </ul>
+            </li>
 
-            <a class="nav-link border-dark text-black">My Profile</a>
+        </ul>
 
-
-
-            <a class="nav-link text-black">Providers</a>
-
-
-            <a class="nav-link text-black">Partners</a>
-
-
-            <a class="nav-link text-black">Access</a>
-
-
-            <a class="nav-link text-black">Records</a>
-
-
-
-        </div>
     </div>
-
-    <ul class="nav nav-underline  d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;background-color: white;">
-        <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminDashBoard"><b>DashBoard</b></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Provider Location</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link active"><b>My Profile</b></a>
-        </li>
-
-        
-        <li class="nav-item dropdown">
-            <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
-                <li><a class="dropdown-item">Scheduling</a></li>
-                <li><a class="dropdown-item">Invoicing</a></li>
-            </ul>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Partners</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link text-black"><b>Records</b></a>
-        </li>
-
-    </ul>
-
     <div class="he">
         <div class="he1 h4">
             <p>MyProfile</p>
@@ -120,137 +144,193 @@
         <div class="h5 mt-3">
             Account Information
         </div>
-        <div class="row">
-            <div class="col-12  col-md-6 form-floating mt-1">
-                <input asp-for="FirstName" type="text" class="form-control" id="UserName" placeholder="User Name" >
-                <label for="UserName">User Name</label>
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <input asp-for="Password" type="text" class="form-control" id="Password" placeholder="Password">
-                <label for="Password">Password</label>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12  col-md-6 form-floating mt-1">
-                <select  id="status" class="form-select" aria-label="status" >
-                    <option value="1">Active</option>
-                </select>
-                <label for="status">Status</label>
-                
-            </div>
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <select  id="role" class="form-select" aria-label="role" >
-                    <option value="1">Master Admin</option>
-                </select>
-                <label for="role">Role</label>
-                <span  class="text-danger"></span>
-            </div>
-        </div>
-        <div class="d-flex justify-content-end mt-1">
-            <button type="button" class="btn btn-outline-info" onclick="adminResetPassword(id.value, Password.value, adminid.value)">Reset Password</button>
+        <form asp-controller="AdminSite" asp-action="AdminResetPassword">
+            <div class="row mt-3">
+                <div class="col-12  col-md-6 form-floating mt-2">
+                    <input disabled type="text" class="form-control d1" id="UserName" placeholder="User Name" asp-for="UserName">
+                    <label for="UserName">User Name</label>
 
-        </div>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input asp-for="Password" type="text" class="form-control" id="Password" placeholder="Password">
+                    <label for="Password">Password</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
 
-        <div class="h5 mt-3">
-            Administrator Information
-        </div>
-        <div class="row">
-            <div class="col-12  col-md-6 form-floating mt-1">
-                <input asp-for="FirstName" type="text" class="form-control inp" id="FirstName" placeholder="Your First Name" >
-                <label for="FirstName">Your First Name</label>
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <select disabled class="form-select d1" aria-label="Role">
+                        <option value="">Pending</option>
+                        <option value="">Active</option>
+                    </select>
+                    <label for="role">Status</label>
+
+                </div>
+
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <select disabled class="form-select d1" aria-label="Role" asp-for="roleId">
+                        <option value="0">Select Role</option>
+                        @foreach (var item in Model.roles)
+                        {
+                            <option value="@item.RoleId">@item.Name</option>
+                        }
+                    </select>
+                    <label for="role">Role</label>
+                    <input type="hidden" id="aid" asp-for="Id" />
+                    <input type="hidden" id="pid" asp-for="AdminId" />
+
+                </div>
+                <div class="mt-2 d-flex justify-content-end">
+
+
+                    <button type="submit" class="btn btn-outline-info">Reset Password</button>
+                </div>
             </div>
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <input asp-for="LastName" type="text" class="form-control inp" id="LastName" placeholder="Your Last Name" >
-                <label for="LastName">Your Last Name</label>
-                <span asp-validation-for="LastName" class="text-danger"></span>
+        </form>
+
+        <form asp-controller="AdminSite" asp-action="AdminInformation">
+            <div class="row mt-3">
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="FirstName" type="text" class="form-control d2" id="FirstName" placeholder="Your First Name">
+                    <label for="FirstName">Your First Name</label>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="LastName" type="text" class="form-control d2" id="LastName" placeholder="Your Last Name">
+                    <label for="LastName">Your Last Name</label>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="Email" type="email" class="form-control d2" id="Email" placeholder="Email address">
+                    <label for="Email">Email Address</label>
+                </div>
+
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="Email" type="email" class="form-control d2" id="Email" placeholder="Confirm Email address">
+                    <label for="Email">Confirm Email Address</label>
+                </div>
+
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="Mobile" type="tel" class="form-control d2" id="patientMobileNumber">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+
+
+
+
+
+
+                <div class="col-12 col-md-6 d-flex flex-wrap mt-2">
+                    @foreach (var item in Model.regions)
+                    {
+                        string check = Model.WorkingRegions.Contains(item.RegionId) ? "checked" : "";
+                        <div class="form-check mx-1">
+                            <input class="form-check-input" name="checkBoxes" type="checkbox" value="@item.RegionId" id="flexCheckDefault" @check>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                @item.Name
+                            </label>
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <input asp-for="Email" type="email" class="form-control inp" id="Email" placeholder="Email address" >
-                <label for="Email">Email Address</label>
-            </div>
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <input asp-for="Email" type="email" class="form-control inp" id="EmailConfirmed" placeholder="Email address" >
-                <label for="EmailConfirmed">Confirm Email</label>
+            <input type="hidden" id="aid" asp-for="Id" />
+            <input type="hidden" id="pid" asp-for="AdminId" />
+            <div class="mt-2 d-flex justify-content-end">
+
+                <button type="button" class="btn btn-info text-white mx-1 e2" onclick="Edit2()">Edit</button>
+                <button type="submit" class="btn btn-info text-white mx-1 s2 d-none">Submit</button>
+                <button type="reset" class="btn btn-danger text-white mx-1 s2 d-none" onclick="Cancel2()">Cancel</button>
 
             </div>
 
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <input asp-for="Mobile" type="tel" class="form-control inp ctel" id="patientMobileNumber" placeholder="" >
-                <span asp-validation-for="Mobile" class="text-danger"></span>
-            </div>
 
-        </div>
-        <div class="d-flex justify-content-end mt-1 d-flex">
-
-            <button type="button" class="btn btn-info h-100 mx-1" onclick="EditInfo()" id="enableButton">Edit</button>
-            <button type="button" class="btn btn-info sub mx-1 " id="submit1" onclick="adminInformation(id.value, adminid.value, FirstName.value, LastName.value, Email.value,patientMobileNumber.value)">submit</button>
-            <button type="button" class="btn btn-outline-info  mx-1" id="Cancel" onclick="EditInfo()">Cancel</button>
-        </div>
+        </form>
 
         <div class="h5 mt-3">
             Mailing and Billing Information
         </div>
-        <div class="row mt-1">
-            <div class="col-12  col-md-6 form-floating mt-1">
-                <input asp-for="address1" type="text" class="form-control inp2" id="Address1" placeholder="Address1" >
-                <label for="Address1">Address 1</label>
-                <span asp-validation-for="address1" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 form-floating pd">
-                <input asp-for="address2" type="text" class="form-control inp2" id="Address2" placeholder="Address2" >
-                <label for="Address2">Address 2</label>
-                <span asp-validation-for="address2" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12  col-md-6 form-floating mt-1">
-                <input asp-for="City" type="text" class="form-control inp2" id="city" placeholder="city" >
-                <label for="city">city</label>
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <select  id="state" class="form-select inp2" aria-label="state" >
-                    <option value="15">Virginia</option>
-                    <option value="16">District Of Columbia</option>
-                    <option value="17">Newyork</option>
-                    <option value="12">Maryland</option>
-                </select>
-                <label for="role">State</label>
-               
-            </div>
-        </div>
-        <div class="row mt-1">
-            <div class="col-12  col-md-6 form-floating mt-1">
-                <input asp-for="ZipCode" type="text" class="form-control inp2" id="zipcode" placeholder="zipcode" >
-                <label for="zipcode">zipcode</label>
-                <span asp-validation-for="ZipCode" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 form-floating mt-1">
-                <input asp-for="Mobile" type="tel" class="form-control inp2 ctel" id="patientMobileNumber2" placeholder="" >
-                <span asp-validation-for="Mobile" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="d-none">
-            <input id="id" asp-for="Id" />
-            <input id="adminid" asp-for="AdminId" />
-        </div>
-        <div class="d-flex justify-content-end mt-1 d-flex mb-2">
+        <form asp-controller="AdminSite" asp-action="AdminBillingInformation">
+            <div class="row mt-2">
+                <div class="col-12  col-md-6 form-floating mt-2">
+                    <input disabled asp-for="address1" type="text" class="form-control d3" id="Address1" placeholder="Address1">
+                    <label for="Address1">Address 1</label>
+                    <span asp-validation-for="address1" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="address2" type="text" class="form-control d3" id="Address2" placeholder="Address2">
+                    <label for="Address2">Address 2</label>
+                    <span asp-validation-for="address2" class="text-danger"></span>
+                </div>
 
-            <button type="button" class="btn btn-info h-100 mx-1" onclick="EditInfoLocation()" id="enableButton2">Edit</button>
-            <button type="button" class="btn btn-info sub mx-1" id="submit2" onclick="adminBillingInformation(adminid.value, Address1.value, Address2.value, city.value, zipcode.value, patientMobileNumber2.value)">submit</button>
-            <button type="button" class="btn btn-outline-info  mx-1" id="Cancel2" onclick="EditInfoLocation()">Cancel</button>
-        </div>
+
+                <div class="col-12  col-md-6 form-floating mt-2">
+                    <input disabled asp-for="City" type="text" class="form-control d3" id="city" placeholder="city">
+                    <label for="city">city</label>
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <select disabled id="state" class="form-select d3" aria-label="state" asp-for="regionId">
+                        <option value="">Select Region</option>
+                        @foreach (var item in Model.regions)
+                        {
+                            <option value="@item.RegionId">@item.Name</option>
+                        }
+                    </select>
+                    <label for="role">State</label>
+
+                </div>
+
+
+                <div class="col-12  col-md-6 form-floating mt-2">
+                    <input disabled asp-for="ZipCode" type="text" class="form-control d3" id="zipcode" placeholder="zipcode">
+                    <label for="zipcode">zipcode</label>
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-6 form-floating mt-2">
+                    <input disabled asp-for="Mobile" type="tel" class="form-control d3" id="patientMobileNumber2" placeholder="">
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="mt-2 d-flex justify-content-end">
+
+                <button type="button" class="btn btn-info text-white mx-1 e3" onclick="Edit3()">Edit</button>
+                <button type="button" class="btn btn-info text-white mx-1 s3 d-none">Submit</button>
+                <button type="reset" class="btn btn-danger text-white mx-1 s3 d-none" onclick="Cancel3()">Cancel</button>
+
+            </div>
+        </form>
     </div>
 
+    <script>
+        function Edit2() {
+            $('.d2').prop('disabled', false);
+            $('.e2').addClass('d-none');
+            $('.s2').removeClass('d-none');
 
-    
+        }
 
-    </body>
-    </html>
+        function Cancel2() {
+            $('.d2').prop('disabled', true);
+            $('.e2').removeClass('d-none');
+            $('.s2').addClass('d-none');
+        }
+
+        function Edit3() {
+            $('.d3').prop('disabled', false);
+            $('.e3').addClass('d-none');
+            $('.s3').removeClass('d-none');
+
+        }
+
+        function Cancel3() {
+            $('.d3').prop('disabled', true);
+            $('.e3').removeClass('d-none');
+            $('.s3').addClass('d-none');
+        }
+    </script>
+
+
+</body>
+</html>

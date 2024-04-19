@@ -14,5 +14,9 @@ namespace HallodocServices.Interfaces
         Task<AdminAssignCase> AdminAssignCase(AdminAssignCase adminAssignCase);
         List<Region> GetRegions();
         List<Physician> GetPhysciansByRegions(int regionid);
+
+        Task<bool> AcceptRequest(int RequestId);
+
+        Task<bool> Transfer(AdminDashBoard newState);
     }
 }

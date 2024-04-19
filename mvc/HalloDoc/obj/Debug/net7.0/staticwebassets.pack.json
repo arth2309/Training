@@ -53,6 +53,10 @@
       "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees-14Feb24.pdf.pdf"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees-17April24-GoodToHave.pdf",
+      "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees-17April24-GoodToHave.pdf"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\SRS-23-24-Trainees-21Feb24.pdf",
       "PackagePath": "staticwebassets\\Files\\SRS-23-24-Trainees-21Feb24.pdf"
     },
@@ -67,6 +71,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-01-19 160841.png.png",
       "PackagePath": "staticwebassets\\Files\\Screenshot 2024-01-19 160841.png.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-04-18 121953.png",
+      "PackagePath": "staticwebassets\\Files\\Screenshot 2024-04-18 121953.png"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Session 2 (1).txt.txt",

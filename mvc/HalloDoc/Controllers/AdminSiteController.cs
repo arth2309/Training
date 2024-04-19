@@ -147,10 +147,18 @@ namespace HalloDoc.Controllers
 
         }
 
+        public IActionResult AdminLogout()
+        {
+            Response.Cookies.Delete("Name");
+            Response.Cookies.Delete("lid");
+            Response.Cookies.Delete("token");
+            return RedirectToAction("AdminLogin");
+        }
+
         [CustomAuthorize("Admin")]
         public IActionResult AdminDashBoard()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1, 1, 0, 0, null);
             return View(adminDashBoard);
         }
@@ -199,7 +207,7 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Admin")]
         public IActionResult ViewCase(int rcid)
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminViewCase adminViewCase = _viewCaseServices.GetAdminViewCaseData(rcid);
             return View(adminViewCase);
         }
@@ -227,7 +235,7 @@ namespace HalloDoc.Controllers
         [Auth.CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int reqid)
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             ViewBag.ViewNotesReqid = reqid;
             AdminViewNote adminViewNote = _viewNoteServices.GetViewNote(reqid);
             return View(adminViewNote);
@@ -290,7 +298,7 @@ namespace HalloDoc.Controllers
         public IActionResult ViewUploads(int reqID)
 
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminViewUpoads adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
             return View(adminViewUpoads);
         }
@@ -352,7 +360,7 @@ namespace HalloDoc.Controllers
         public IActionResult SendOrder(int reqID)
 
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             ViewBag.reqID = reqID;
             return View();
         }
@@ -460,7 +468,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult CloseCase(int reqID)
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminCloseCase adminClose = _closeCaseServices.GetCloseCaseData(reqID);
             return View(adminClose);
         }
@@ -484,34 +492,35 @@ namespace HalloDoc.Controllers
             return Json(new { redirect = Url.Action("AdminDashBoard", "AdminSite") });
         }
 
-        public IActionResult AdminMyProfile(int adminid)
+        public IActionResult AdminMyProfile()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
-            AdminProfile adminProfile = _adminProfileServices.GetAdminData(adminid);
+            int id = Int32.Parse(Request.Cookies["lid"]);
+            ViewBag.Name = Request.Cookies["Name"];
+            AdminProfile adminProfile = _adminProfileServices.GetAdminData(id);
             return View(adminProfile);
 
         }
 
 
-        [HttpGet]
-        public async Task<JsonResult> AdminResetPassword(string password, int adminid, int id = 3)
+        [HttpPost]
+        public async Task<IActionResult> AdminResetPassword(AdminProfile adminProfile)
         {
-            await _adminProfileServices.ResetPassword(id, password);
-            return Json(new { redirect = Url.Action("AdminProfile", new { adminid = adminid }) });
+            await _adminProfileServices.ResetPassword(adminProfile.Id, adminProfile.Password);
+            return RedirectToAction("AdminProfile");
         }
 
-        [HttpGet]
-        public async Task<JsonResult> AdminInformation(int adminid, string firstname, string lastname, string email, string mobile, int id = 3)
+        [HttpPost]
+        public async Task<IActionResult> AdminInformation(AdminProfile adminProfile)
         {
-            await _adminProfileServices.UpdateInformation(id, adminid, firstname, lastname, email, mobile);
-            return Json(new { redirect = Url.Action("AdminMyProfile", new { adminid = adminid }) });
+            await _adminProfileServices.UpdateInformation(adminProfile.Id, adminProfile.AdminId, adminProfile.FirstName, adminProfile.LastName, adminProfile.Email, adminProfile.Mobile);
+            return RedirectToAction("AdminMyProfile");
         }
 
-        [HttpGet]
-        public async Task<JsonResult> AdminBillingInformation(int adminid, string ad1, string ad2, string city, int state, string zip, string altphone, int id = 3)
+        [HttpPost]
+        public async Task<IActionResult> AdminBillingInformation(AdminProfile adminprofile)
         {
-            await _adminProfileServices.UpDateBillingInformation(adminid, ad1, ad2, city, zip, altphone);
-            return Json(new { redirect = Url.Action("AdminMyProfile", new { adminid = adminid }) });
+            await _adminProfileServices.UpDateBillingInformation(adminprofile.AdminId, adminprofile.address1, adminprofile.address2, adminprofile.City, adminprofile.ZipCode, adminprofile.Mobile);
+            return RedirectToAction("AdminMyProfile");
         }
 
         public ActionResult WriteDataToExcel()
@@ -560,7 +569,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminProviderInformation()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminProviderInfo adminProviderInfo = _adminProviderInfoServices.GetProviderInfo();
             return View(adminProviderInfo);
         }
@@ -596,7 +605,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminAccessRole()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminAccessRoleMV adminAccessRoleMV = _adminAccessRoleServices.GetAccessRoleData();
             return View(adminAccessRoleMV);
         }
@@ -611,7 +620,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult EditAccessRole(int RoleId)
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminAccessRoleMV adminAccessRoleMV = _adminAccessRoleServices.EditAccessRoleData(RoleId);
             return View(adminAccessRoleMV);
         }
@@ -646,14 +655,14 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminAccountAccess()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             List<AdminAccountAccess> adminAccountAccesses = _adminAccessRoleServices.GetAdminAccountAccessList();
             return View(adminAccountAccesses);
         }
 
         public IActionResult EncounterForm(int reqID)
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             if (ModelState.IsValid)
             {
 
@@ -673,6 +682,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult CreateAdminAccount()
         {
+            ViewBag.Name = Request.Cookies["Name"];
             AdminProfile adminProfile = _createAdminAccountServices.GetLists();
             return View(adminProfile);
         }
@@ -686,7 +696,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult CreateProviderAccount()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminProfile adminProfile = _createPhysicianAccountServices.GetLists();
             return View(adminProfile);
         }
@@ -700,6 +710,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult EditProviderAccount(int PhysicianId)
         {
+            ViewBag.Name = Request.Cookies["Name"];
             AdminProfile adminProfile = _createPhysicianAccountServices.GetPhysician(PhysicianId);
             return View(adminProfile);
         }
@@ -729,7 +740,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult Scheduling()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             AdminScheduling adminScheduling = _schedulingServices.GetData(0, DateTime.Now);
             return View(adminScheduling);
         }
@@ -772,7 +783,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult ShiftForReview()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             ShiftForReviewVM shiftForReviewVM = _schedulingServices.GetDataForReviewShift();
             return View(shiftForReviewVM);
         }
@@ -830,7 +841,7 @@ namespace HalloDoc.Controllers
         }
         public IActionResult ProviderLocation()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             return View();
         }
 
@@ -842,7 +853,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult MDOnCalls()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             MdsOnCallVM mdsOnCallVM = _schedulingServices.GetMdsOnCallList();
             return View(mdsOnCallVM);
         }
@@ -857,7 +868,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult ProfessionMenu()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             ProfessionMenuVM professionMenuVM = _professionMenuServices.GetVendorList();
             return View(professionMenuVM);
         }
@@ -871,7 +882,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult AddBusinessPage()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             return View();
         }
 
@@ -892,6 +903,8 @@ namespace HalloDoc.Controllers
 
         public IActionResult UpdateBusinessPage(int VendorId)
         {
+
+            ViewBag.Name = Request.Cookies["Name"];
             BusinessVM businessVM = _professionMenuServices.ShowData(VendorId);
             return View(businessVM);
         }
@@ -920,7 +933,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult BlockedHistory()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             BlockedHistoryVM blockedHistoryVM = _blockHistoryServices.GetBlockHistoryData();
             return View(blockedHistoryVM); 
         }
@@ -939,7 +952,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult SearchRecord()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             SearchRecordVM searchRecordVM = _searchRecordServices.GetList();
             return View(searchRecordVM);
         }
@@ -954,7 +967,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult SMSLogs()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             SMSLogVM sMSLogVM = _sMSLogServices.GetLogs();
             return View(sMSLogVM);
         }
@@ -968,7 +981,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult EmailLogs()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             EmailLogVM emailLogVM = _emailLogServices.GetLogs();
             return View(emailLogVM);
         }
@@ -1007,6 +1020,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult PatientHistory()
         {
+            ViewBag.Name = Request.Cookies["Name"];
             PatientHistoryVM patientHistoryVM = _patientHistoryServices.GetList();
             return View(patientHistoryVM);
         }
@@ -1020,6 +1034,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult PatientRecord(int UserId)
         {
+            ViewBag.Name = Request.Cookies["Name"];
             PatientRecordVM patientRecordVM = _patientRecordServices.GetPatientRecord(UserId);
             return View(patientRecordVM);
         }
@@ -1033,6 +1048,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult CreateRequest()
         {
+            ViewBag.Name = Request.Cookies["Name"];
             return View();
         }
 

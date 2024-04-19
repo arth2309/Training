@@ -75,7 +75,7 @@
 
                                 <li><a class="dropdown-item" asp-controller="Provider" asp-action="ProviderViewCase" asp-route-rcid=@item.id><i class="bi bi-card-list"></i> View Case</a></li>
                                 <li><a class="dropdown-item" asp-controller="Provider" asp-action="ProviderViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>
-                                <li><a class="dropdown-item"><i class="bi bi-check-lg"></i> Accept</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Provider" asp-action="AcceptRequest" asp-route-RequestId="@item.RequestId"><i class="bi bi-check-lg"></i> Accept</a></li>
                             </ul>
                         </div>
                     </td>

@@ -94,6 +94,7 @@ namespace HallodocServices.Implementation
                         newState.RequestId = requestClients[i].RequestId;
                         newState.RequestTypeId = requestClients[i].Request.RequestTypeId;
                         newState.Calltype = requestClients[i].Request.CallType;
+                        newState.IsFinalize = requestClients[i].Request.IsMobile!=null?false:true;
 
 
                     };

@@ -57,7 +57,7 @@ namespace HallodocServices.Implementation
 
         public async Task<bool> DeleteFileService(int id)
         {
-            _fileRepo.DeleteFile(id);
+           await _fileRepo.DeleteFile(id);
             return true;
         }
 
@@ -85,7 +85,7 @@ namespace HallodocServices.Implementation
             requestWise.RequestId = adminViewUpoads.requestId;
             requestWise.FileName = fileName;
             requestWise.CreatedDate = DateTime.Now;
-            _fileRepo.AddData(requestWise);
+           await _fileRepo.AddData(requestWise);
             return true;
         }
 

@@ -56,6 +56,30 @@ namespace HallodocServices.Implementation
             List<Physician> physicians = _physicianRepo.GetPhysiciansData(regionid);
             return physicians;
         }
-        
+
+        public async Task<bool> AcceptRequest(int RequestId)
+        {
+            Request request = _requestRepo.GetRequest(RequestId);
+            request.Status = 2;
+            await _requestRepo.UpdateTable(request);
+            return true;
+        }
+
+        public async Task<bool> Transfer(AdminDashBoard newState)
+        {
+            Request request = _requestRepo.GetRequest(newState.RId);
+            request.Status = 1;
+            request.PhysicianId = null;
+            await _requestRepo.UpdateTable(request);
+
+            RequestStatusLog requestStatusLog = new();
+            requestStatusLog.RequestId = newState.RId;
+            requestStatusLog.Notes = newState.Description;
+            await _requestStatusLogRepo.AddData(requestStatusLog);
+
+            return true;
+
+        }
+
     }
 }

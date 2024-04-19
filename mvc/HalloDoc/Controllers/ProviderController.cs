@@ -33,8 +33,11 @@ namespace HalloDoc.Controllers
         private readonly ISchedulingServices _schedulingServices;
         private readonly ICreatePhysicianAccountServices _createPhysicianAccountServices;
         private readonly IEncounterFormServices _createEncounterFormServices;
+        private readonly IAssignCaseServices _assignCaseServices;
+        private readonly ISendOrderServices _sendOrderServices;
+        private readonly IViewUploadsServices _viewUploadsServices;
 
-        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices)
+        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices, IAssignCaseServices assignCaseServices, ISendOrderServices sendOrderServices, IViewUploadsServices viewUploadsServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -42,6 +45,9 @@ namespace HalloDoc.Controllers
             _schedulingServices = schedulingServices;
             _createPhysicianAccountServices = createPhysicianAccountServices;
             _createEncounterFormServices = createEncounterFormServices;
+            _assignCaseServices = assignCaseServices;
+            _sendOrderServices = sendOrderServices;
+            _viewUploadsServices = viewUploadsServices;
         }
 
         [CustomAuthorize("Provider")]
@@ -216,6 +222,134 @@ namespace HalloDoc.Controllers
 
 
 
+        }
+
+        public async Task<IActionResult> AcceptRequest(int RequestId)
+        {
+            bool result = await _assignCaseServices.AcceptRequest(RequestId);
+            return RedirectToAction("ProviderDashBoard");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Transfer(AdminDashBoard newState)
+        {
+            bool result = await _assignCaseServices.Transfer(newState);
+            return RedirectToAction("ProviderDashBoard");
+        }
+
+
+        [CustomAuthorize("Provider")]
+        public IActionResult ProviderSendOrder(int reqID)
+
+        {
+            ViewBag.Name = Request.Cookies["Name"];
+            ViewBag.reqID = reqID;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProviderSendOrder(AdminSendOrder adminSendOrder)
+        {
+            if (ModelState.IsValid)
+            {
+                await _sendOrderServices.AddDataServices(adminSendOrder);
+                TempData["Order"] = "Placed Order Successfully";
+                return RedirectToAction("ProviderDashBoard");
+            }
+            return View(null);
+        }
+
+        [CustomAuthorize("Provider")]
+        public IActionResult ProviderViewUploads(int reqID)
+
+        {
+            ViewBag.Name = Request.Cookies["Name"];
+            AdminViewUpoads adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
+            return View(adminViewUpoads);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> Delete(int id)
+        {
+            int reqId = _viewUploadsServices.GetReqIdService(id);
+            await _viewUploadsServices.DeleteFileService(id);
+            TempData["Delete"] = "File Deleted Successfully";
+            return Json(new { redirect = Url.Action("ProviderViewUploads", new { reqID = reqId }) });
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> ProviderViewUploads(AdminViewUpoads adminViewUpoads)
+        {
+            if (adminViewUpoads.formFile != null)
+            {
+               await _viewUploadsServices.AddFileData(adminViewUpoads);
+                TempData["Upload"] = "File Uploaded Successfully";
+                return RedirectToAction("ProviderViewUploads", new { reqID = adminViewUpoads.requestId });
+            }
+            TempData["UploadF"] = "File is Required";
+            return RedirectToAction("ProviderViewUploads", new { reqID = adminViewUpoads.requestId });
+        }
+
+        public ActionResult DownloadAll(int ReqId)
+        {
+            byte[] fileBytes = _viewUploadsServices.GetFilesAsZip(ReqId);
+            return File(fileBytes, "application/zip", "files.zip");
+        }
+
+        [HttpPost]
+        public ActionResult? DownloadSelected(List<string> filesChecked)
+        {
+
+
+            byte[] fileBytes = _viewUploadsServices.GetSelectedFilesAsZip(filesChecked);
+            return File(fileBytes, "application/zip", "files.zip");
+
+
+        }
+
+
+
+        public IActionResult ViewUploadsSendMail(int reqID)
+        {
+            _viewUploadsServices.SendEmail(reqID);
+            return RedirectToAction("ProviderViewUploads", new { reqID = reqID });
+        }
+
+        public IActionResult ConcludeCare(int RequestId)
+        {
+            ConcludeCareVM concludeCareVM = _createEncounterFormServices.GetConcludeCareFile(RequestId);
+            return View(concludeCareVM);
+        }
+
+
+        public async  Task<IActionResult> Finalize(int RequestId)
+        {
+            bool result = await _createEncounterFormServices.Finalize(RequestId);
+            return RedirectToAction("ProviderDashBoard");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(ConcludeCareVM concludeCareVM)
+        {
+            bool result = await _createEncounterFormServices.AddFileData(concludeCareVM);
+            return RedirectToAction("ConcludeCare", new { RequestId = concludeCareVM.reqid });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Conclude(ConcludeCareVM concludeCareVM)
+        {
+            bool result = await _createEncounterFormServices.Conclude(concludeCareVM);
+            return RedirectToAction("ProviderDashBoard");
+        }
+
+        [HttpGet]
+
+        public async Task<JsonResult> ToConclude(int RequestId)
+        {
+            bool result = await _createEncounterFormServices.ToConclude(RequestId);
+            return Json(result);
         }
 
     }
