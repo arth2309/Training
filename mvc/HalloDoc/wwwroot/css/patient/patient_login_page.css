@@ -93,8 +93,7 @@ button
     align-items: center;
 }
 
-#eyeicon
-{
+.eyeicon {
     position: absolute;
     top: 16px;
     right: 25px;

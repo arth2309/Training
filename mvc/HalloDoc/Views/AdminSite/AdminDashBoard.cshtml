@@ -198,7 +198,37 @@
         </div>
     </div>
    
-   
+    <div class="modal fade" id="dtv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Request DTV Support</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="removeValidationTransfer()"></button>
+                </div>
+                <form asp-controller="AdminSite" asp-action="DtvSupport">
+                    <div class="modal-body">
+                        <p class="mt-2"> To all unscheduled Physicians: We are short on coverage and needs additional support On Call to respond to Requests.</p>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="desc" style="height: 100px" asp-for="Description"></textarea>
+                            <label for="desc">Description</label>
+                            <span asp-validation-for="Description" class="text-danger" id="tdes"></span>
+
+
+                        </div>
+                        <div class="d-flex mt-2" style="justify-content:end">
+                            <button type="submit" class="btn btn-info text-white">Submit</button>
+                            <button type="reset" class="btn btn-outline-info" data-bs-dismiss="modal" onclick="removeValidationTransfer()">Cancel</button>
+                        </div>
+
+
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="sticky-top bg-white shadow">
     <header>
@@ -219,6 +249,8 @@
         </div>
     </header>
 
+
+       
 
     <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
@@ -413,14 +445,14 @@
             <div class="d-flex" style="margin-left: auto;">
                 <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i></button>
                 <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1" data-bs-toggle="modal" data-bs-target="#sendlink"><i class="bi bi-link"></i>Send Link</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-pencil"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1"><i class="bi bi-pencil"></i>Create Requests</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-arrow-90deg-right"></i></button>
+                 <a asp-controller="AdminSite" asp-action="CreateRequest"> <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-pencil"></i></button> </a>
+                <a asp-controller="AdminSite" asp-action="CreateRequest">  <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1"><i class="bi bi-pencil"></i>Create Requests</button> </a>
+                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1" onclick="ExportData()"><i class="bi bi-arrow-90deg-right"></i></button>
                 <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1" onclick="ExportData()"><i class="bi bi-arrow-90deg-right"></i>Export</button>
-                <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-arrow-up-right-square"></i></button>
+                 <a asp-controller="AdminSite" asp-action="WriteDataToExcel"> <button type="button" class="btn btn-primary d-flex d-lg-none bt1 mx-1"><i class="bi bi-arrow-up-right-square"></i></button> </a>
                 <a asp-controller="AdminSite" asp-action="WriteDataToExcel"> <button type="button" class="btn btn-primary d-none d-lg-flex bt1 mx-1"><i class="bi bi-arrow-up-right-square"></i>Export All</button> </a>
-                <button type="button" class="btn btn-primary d-flex d-lg-none mx-1"><i class="bi bi-person"></i></button>
-                <button type="button" class="btn btn-primary d-none d-lg-flex mx-1"><i class="bi bi-person"></i>Request DTV Support</button>
+                <button type="button" class="btn btn-primary d-flex d-lg-none mx-1" data-bs-toggle="modal" data-bs-target="#dtv" ><i class="bi bi-person"></i></button>
+                <button type="button" class="btn btn-primary d-none d-lg-flex mx-1" data-bs-toggle="modal" data-bs-target="#dtv"><i class="bi bi-person"></i>Request DTV Support</button>
 
             </div>
         </div>
@@ -550,6 +582,10 @@
                 }
 
             });
+        }
+
+        function removeValidationTransfer() {
+            $('#tdes').text("");
         }
    </script>
    

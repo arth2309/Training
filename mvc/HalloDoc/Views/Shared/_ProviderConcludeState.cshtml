@@ -22,12 +22,7 @@
             @foreach (var item in Model)
             {
 
-                if (Model != null)
-                {
-                    <!-- Modal -->
-                    <!-- Modal -->
-                    <!-- Modal -->
-                }
+                
 
                 string backcolor;
                 @if (@item.RequestTypeId == 1)
@@ -60,17 +55,17 @@
 
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Admin</button></td>
                     <td>
-                        <div class="btn-group">
+                        
                             <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
                                 Action
                             </button>
                             <ul class="dropdown-menu">
-
+                                <li><a class="dropdown-item" asp-controller="Provider" asp-action="ConcludeCare" asp-route-RequestId="@item.RequestId"><i class="bi bi-check-lg"></i> Conclude Care</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id><i class="bi bi-card-list"></i> View Case</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>
-                                <li><a class="dropdown-item" asp-controller="Provider" asp-action="ConcludeCare" asp-route-RequestId="@item.RequestId"><i class="bi bi-check-lg"></i> ConClude Care</a></li>
+                                <li><a class="dropdown-item btn" asp-controller="Provider" asp-action="ProviderEncounterForm" asp-route-RequestId="@item.RequestId">Encounter</a></li>
                             </ul>
-                        </div>
+                        
                     </td>
                 </tr>
 
@@ -168,7 +163,7 @@
                                 <a asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Notes</button> </a>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-danger w-100 rounded-pill">Accept</button>
+                                <a asp-controller="Provider" asp-action="ProviderViewUploads" asp-route-reqID="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Uploads</button> </a>
                             </div>
                         </div>
                         <div class="row  mt-2">

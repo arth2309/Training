@@ -141,6 +141,9 @@
                             </div>
                         </div>
                         <div class="row  mt-2" style="width:100%">
+                            <div class="col-6 ">
+                                @Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City)
+                            </div>
 
                             <div class="col-6 d-flex" style="justify-content:end">
                                 <button type="button" class="btn btn-outline-info rounded-pill">Map Location</button>
@@ -152,7 +155,7 @@
                 <div id="collapse-@Html.DisplayFor(modelItem => item.id)" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="w-100">
-                            <a asp-controller="Provider" asp-action="ProviderViewCase"  asp-route-rcid=@item.id>
+                            <a asp-controller="Provider" asp-action="ProviderViewCase" asp-route-rcid=@item.id>
                                 <button type="button" class="btn btn-light  vwbtn rounded-pill" style="color:#6610f2; border-color:#6610f2">
                                     View Case
                                 </button>
@@ -168,18 +171,31 @@
                             </div>
                         </div>
 
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-link"></i></button>Email: @Html.DisplayFor(modelItem => item.Email)
+                            </div>
+                        </div>
 
                         <div class="row  mt-2">
                             <div class="col-6">
-                                <a asp-controller="Provider" asp-action="ProviderViewNotes" asp-route-reqid="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Notes</button> </a>
+                                <button type="button" class="btn btn-warning w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#sendagreement" onclick="loadSendAgreeMentData(@item.RequestId)">Send Agreement</button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-danger w-100 rounded-pill">Accept</button>
+                                <a asp-controller="Provider" asp-action="ProviderViewNotes" asp-route-reqid="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Notes</button> </a>
                             </div>
                         </div>
                         <div class="row  mt-2">
                             <div class="col-6">
-                                <button type="button" class="btn btn-success w-100 rounded-pill">Email</button>
+                                <button type="button" class="btn btn-primary w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#Transfer" onclick="sendTransferRequestId(@item.RequestId)">Transfer</button>
+                            </div>
+                            <div class="col-6">
+                                <a asp-controller="Provider" asp-action="ProviderViewUploads" asp-route-reqID="@item.RequestId"> <button type="button" class="btn btn-success w-100 rounded-pill">View Uploads</button> </a>
+                            </div>
+                        </div>
+                        <div class="row  mt-2">
+                            <div class="col-6">
+                                <a href="mailto:@item.Email">  <button type="button" class="btn btn-success w-100 rounded-pill">Email</button> </a>
                             </div>
                         </div>
 

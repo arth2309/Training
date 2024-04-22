@@ -97,6 +97,7 @@ namespace HallodocServices.Implementation
                 Email = user.Email,
                 PhoneNumber = user.Mobile,
                 CreatedDate = DateTime.Now,
+                ConfirmationNumber = GenerateConfirmationNumber(DateTime.Now, user.FirstName, user.LastName),
                 Status = 1
 
 
@@ -208,7 +209,7 @@ namespace HallodocServices.Implementation
                 Email = user.BEmail,
                 PhoneNumber = user.BMobile,
                 CreatedDate = DateTime.Now,
-
+                ConfirmationNumber = GenerateConfirmationNumber(DateTime.Now, user.FirstName, user.LastName),
                 Status = 1
 
 
@@ -680,6 +681,14 @@ namespace HallodocServices.Implementation
 
             await _requestClientRepo.AddTable(user4);
             return true;
+        }
+
+        public string GenerateConfirmationNumber(DateTime dateTime,string FirstName,string LastName)
+        {
+            string number1 = dateTime.ToString("yyyyMMdd") + FirstName.Substring(0,2).ToUpper() + LastName.Substring(0,2).ToUpper();
+            string count1 = _requestRepo.NoOfRequestToday(dateTime).ToString("0000");
+            number1 = number1 + count1;
+            return number1;
         }
     }
    

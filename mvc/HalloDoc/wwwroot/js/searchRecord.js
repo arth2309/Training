@@ -13,10 +13,10 @@ function searchButton() {
     currentPage = 1;
     fdate = $('#fromdate').val();
     tdate = $('#todate').val();
-    patientname = $('#patientname').val();
-    providername = $('#providername').val();
-    email = $('#email').val();
-    mobile = $('#mobile').val();
+    patientname = $('#patientname').val().trim();
+    providername = $('#providername').val().trim();
+    email = $('#email').val().trim();
+    mobile = $('#mobile').val().trim();
     type = $('#requestType').val();
     getFilter();
 }

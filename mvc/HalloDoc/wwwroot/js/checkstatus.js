@@ -1,5 +1,8 @@
 ﻿window.onload = () => {
     window.sessionStorage.clear();
+    window.sessionStorage.setItem("status", 1);
+    window.sessionStorage.setItem("currentpage", 1);
+
 }
 
 function GetStatus(temp, currentPage, type) {

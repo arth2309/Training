@@ -36,8 +36,9 @@ namespace HalloDoc.Controllers
         private readonly IAssignCaseServices _assignCaseServices;
         private readonly ISendOrderServices _sendOrderServices;
         private readonly IViewUploadsServices _viewUploadsServices;
+        private readonly IPatientSendRequestServices _patientSendRequestServices;
 
-        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices, IAssignCaseServices assignCaseServices, ISendOrderServices sendOrderServices, IViewUploadsServices viewUploadsServices)
+        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices, IAssignCaseServices assignCaseServices, ISendOrderServices sendOrderServices, IViewUploadsServices viewUploadsServices, IPatientSendRequestServices patientSendRequestServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -48,6 +49,7 @@ namespace HalloDoc.Controllers
             _assignCaseServices = assignCaseServices;
             _sendOrderServices = sendOrderServices;
             _viewUploadsServices = viewUploadsServices;
+            _patientSendRequestServices = patientSendRequestServices;
         }
 
         [CustomAuthorize("Provider")]
@@ -350,6 +352,19 @@ namespace HalloDoc.Controllers
         {
             bool result = await _createEncounterFormServices.ToConclude(RequestId);
             return Json(result);
+        }
+
+        public IActionResult ProviderCreateRequest()
+        {
+            ViewBag.Name = Request.Cookies["Name"];
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProviderCreateRequest(CreateRequestVM createRequestVM)
+        {
+            bool request = await _patientSendRequestServices.CreateRequest(createRequestVM);
+            return RedirectToAction("ProviderDashBoard");
         }
 
     }

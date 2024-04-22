@@ -15,5 +15,7 @@ namespace HalloDoc.Repositories.Interfaces
         Request GetRequest(int id);
         Task<bool> AddTable(Request request);
 
+        int NoOfRequestToday(DateTime dateTime);
+
     }
 }

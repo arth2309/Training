@@ -49,5 +49,11 @@ namespace HalloDoc.Repositories.Implementation
             return true;
         }
 
+        public int NoOfRequestToday(DateTime dateTime)
+        {
+            int count = _dbcontext.Requests.Where(a=>DateOnly.FromDateTime(a.CreatedDate) == DateOnly.FromDateTime(dateTime)).Count() + 1;
+            return count;
+        }
+
     }
 }

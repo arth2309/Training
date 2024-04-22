@@ -19,6 +19,8 @@ namespace HallodocServices.Interfaces
 
         void SendEmail(string FirstName, string LastName, string email);
 
+        Task<bool> SendEmailForSupport(string Description);
+
 
     }
 }

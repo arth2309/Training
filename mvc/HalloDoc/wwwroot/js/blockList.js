@@ -8,10 +8,10 @@ var mobile = '';
 
 function searchButton()
     {
-    email = $('#email').val();
+    email = $('#email').val().trim();
     date = $('#date').val();
-    mobile = $('#mobile').val();
-    patientname = $('#name').val();
+    mobile = $('#mobile').val().trim();
+    patientname = $('#name').val().trim();
     blockHistoryFilter();
 
     }

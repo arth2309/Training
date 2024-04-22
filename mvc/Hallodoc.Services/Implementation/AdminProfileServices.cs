@@ -61,6 +61,7 @@ namespace HallodocServices.Implementation
             profile.WorkingRegions = ints;
             profile.regions = regions;
             profile.roleId = admin.RoleId;
+            profile.Mobile = admin.Mobile;
             
 
 

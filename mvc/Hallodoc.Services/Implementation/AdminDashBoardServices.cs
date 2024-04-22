@@ -16,6 +16,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Net;
 using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace HallodocServices.Implementation
 {
@@ -277,6 +278,32 @@ namespace HallodocServices.Implementation
             smtp.Port = 587;
             smtp.Send(mm);
         }
+
+        public async Task<bool> SendEmailForSupport(string Description)
+        {
+            MailMessage mm = new MailMessage("tatva.dotnet.arthgandhi@outlook.com", "tatva.dotnet.arthgandhi@outlook.com");
+            mm.Subject = "DTV Support";
+
+           
+            mm.Body = string.Format(Description);
+            mm.IsBodyHtml = true;
+            //List<Physician> physicians = _PhysicianRepo.GetPhysiciansList().Where(a => a.Status == 1).ToList();
+            //foreach (Physician physician in physicians)
+            //{
+            //    mm.Bcc.Add(physician.Email);
+            //}
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.office365.com";
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(userName: "tatva.dotnet.arthgandhi@outlook.com", password: "Liony@2002");
+            smtp.Port = 587;
+           await smtp.SendMailAsync(mm);
+
+            return true;
+        }
+
+      
 
     }
 

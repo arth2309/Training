@@ -205,6 +205,18 @@ header
     color:cadetblue;
 }
 
+.accordion-body {
+    background-color: #dae8eb;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #dae8eb;
+}
+
+.accordion-button {
+    background-color: #ebfafd;
+}
+
 
 @media only screen and (max-width:576px) {
     .Logout

@@ -148,6 +148,9 @@
                             </div>
                         </div>
                         <div class="row  mt-2" style="width:100%">
+                            <div class="col-6 " >
+                                @Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City)
+                            </div>
              
                             <div class="col-6 d-flex" style="justify-content:end">
                                 <button type="button" class="btn btn-outline-info rounded-pill">Map Location</button>
@@ -175,6 +178,11 @@
                             </div>
                         </div>
 
+                        <div class="row  mt-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-outline-info rounded-circle"><i class="bi bi-link"></i></button>Email: @Html.DisplayFor(modelItem => item.Email)
+                            </div>
+                        </div>
           
                         <div class="row  mt-2">
                             <div class="col-6">
@@ -186,7 +194,7 @@
                         </div>
                         <div class="row  mt-2">
                             <div class="col-6">
-                                <button type="button" class="btn btn-success w-100 rounded-pill">Email</button>
+                                <a href="mailto:@item.Email">  <button type="button" class="btn btn-success w-100 rounded-pill">Email</button> </a>
                             </div>
                         </div>
 

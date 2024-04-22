@@ -9,10 +9,10 @@ var roleid = 0;
 
 function searchButton()
 {
-    cdate = $('#cdate').val();
-    sdate = $('#sdate').val();
-    recname = $('#name').val();
-    email = $('#email').val();
+    cdate = $('#cdate').val().trim();
+    sdate = $('#sdate').val().trim();
+    recname = $('#name').val().trim();
+    email = $('#email').val().trim();
     roleid = $('#role').val();
     getFilter();
 }

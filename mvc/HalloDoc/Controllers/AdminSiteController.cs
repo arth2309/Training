@@ -505,7 +505,10 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> AdminResetPassword(AdminProfile adminProfile)
         {
-            await _adminProfileServices.ResetPassword(adminProfile.Id, adminProfile.Password);
+            
+                await _adminProfileServices.ResetPassword(adminProfile.Id, adminProfile.Password);
+            
+           
             return RedirectToAction("AdminProfile");
         }
 
@@ -1056,6 +1059,13 @@ namespace HalloDoc.Controllers
         public async  Task<IActionResult> CreateRequest(CreateRequestVM createRequestVM)
         {
            bool request = await _patientSendRequestServices.CreateRequest(createRequestVM);
+            return RedirectToAction("AdminDashBoard");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DtvSupport(AdminDashBoard adminDashBoard)
+        {
+            bool result = await _dashBoardServices.SendEmailForSupport(adminDashBoard.Description);
             return RedirectToAction("AdminDashBoard");
         }
 

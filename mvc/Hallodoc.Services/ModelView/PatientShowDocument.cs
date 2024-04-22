@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace HallodocServices.ModelView
 {
@@ -27,5 +28,7 @@ namespace HallodocServices.ModelView
 
         [Column(TypeName = "timestamp without time zone")]
         public DateTime UploadDate { get; set; }
+
+        public IFormFile? formFile { get; set; }
     }
 }

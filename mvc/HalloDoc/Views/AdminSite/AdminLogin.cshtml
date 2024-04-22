@@ -57,11 +57,12 @@
                     </div>
                     <div class="text">
                         <h1>Login to your Account</h1>
-
+                       
                     </div>
-                    <form asp-controller="AdminSite" asp-action="AdminLogin" style="width:60%">
+                    <form asp-controller="AdminSite" asp-action="AdminLogin" style="width:60%" >
+                        <a asp-controller="Patient" asp-action="index"  style="text-align: left; text-decoration:none; color:rgb(60, 179, 159);"> &lt Back </a>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" style="background: transparent;" placeholder="Email" asp-for="Email">
+                            <input type="email" class="form-control" id="floatingInput" style="background: transparent;" placeholder="Email" asp-for="Email">
                             <span asp-validation-for="Email" class="text-danger"></span>
                             <label for="floatingInput">Email</label>
                             <i class="bi bi-person-circle" id="per"></i>
@@ -81,14 +82,16 @@
                             </div>
                         }
 
-                        
-                        <button type="submit" class="btn bg-info text-white form-control">Log in</button>
+                        <div>
+                            <button type="submit" class="bg-info text-white form-control">Log in</button>
+                        </div>
+                       
                        
                     </form>
 
                     <div class="fplink">
-                        <a href="patient_forgot_password.html" style="text-align:center;text-decoration: none;">
-                            <p>Forget Password?</p>
+                        <a asp-controller="Patient" asp-action="PatientForgotPassword" style="text-align:center;text-decoration: none; color:rgb(60, 179, 159);">
+                            <p style="font-weight:501;">Forget Password?</p>
                         </a>
                     </div>
                     <div class="policy">
