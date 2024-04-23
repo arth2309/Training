@@ -68,7 +68,7 @@ namespace HallodocServices.ModelView
 
         public int? Calltype { get; set; }
 
-        public bool IsFinalize { get; set; }
+        public bool? IsFinalize { get; set; }
 
        
     }

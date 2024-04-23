@@ -60,7 +60,7 @@ namespace HalloDoc.Repositories.Implementation
 
         public Physician GetPhysician(int? physicianid)
         {
-            return _DbContext.Physicians.Include(a=>a.AspNetUser).Include(a=>a.PhysicianRegions).FirstOrDefault(a => a.PhysicianId == physicianid);
+            return _DbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianid);
         }
 
         public async Task<Physician> AddDatainPhysician(Physician physician)

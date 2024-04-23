@@ -33,42 +33,42 @@ namespace HallodocServices.ModelView
         //public string? Relation { get; set; }
 
         [StringLength(100)]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string? Street { get; set; }
 
         [StringLength(100)]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string? City { get; set; }
 
         [StringLength(100)]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string? State { get; set; }
 
 
         [StringLength(10)]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string? ZipCode { get; set; }
 
         [StringLength(100)]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string FirstName { get; set; } = null!;
 
         [StringLength(100)]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string? LastName { get; set; }
 
 
 
         [StringLength(50)]
         [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "please enter valid Email")]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string Email { get; set; } = null!;
 
 
 
         [StringLength(20)]
         [RegularExpression(@"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$", ErrorMessage = "please enter valid mobile number")]
-        [Required(ErrorMessage = "this field is required")]
+        [Required]
         public string? Mobile { get; set; }
 
         [StringLength(256, MinimumLength = 8, ErrorMessage = "please enter atleast 8 characters")]
@@ -90,14 +90,6 @@ namespace HallodocServices.ModelView
         public string? roomsuite { get; set; }
 
         public IFormFile? File { get; set; }
-
-
-        //[StringLength(100)]
-        //[Required(ErrorMessage = "this field is required")]
-        //public string? BusinessName { get; set; }
-
-        //[StringLength(100)]
-        //public string? Case { get; set; }
 
 
     }

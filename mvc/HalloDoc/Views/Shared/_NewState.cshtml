@@ -36,14 +36,7 @@
 
                 if (Model != null)
                 {
-                    <!-- Modal -->
-                    
-                    <!-- Modal -->
-
-
-
-
-                    <!-- Modal -->
+                  
                     
 
                 }
@@ -71,7 +64,7 @@
                 }
                     <tr class="@backcolor hide">
                         <td>@Html.DisplayFor(modelItem => item.FirstName),@Html.DisplayFor(modelItem => item.LastName)</td>
-                        <td><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></td>
+                    <td> <a href="mailto:@item.Email"><button type="button" class="btn btn-outline-light"><i class="bi bi-envelope"></i></button></a></td>
                         <td>@item.StrMonth @item.day,@item.year</td>
                         <td>@Html.DisplayFor(modelItem => item.RFirstName),@Html.DisplayFor(modelItem => item.RLastName)</td>
                         <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>

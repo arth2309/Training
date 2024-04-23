@@ -196,3 +196,35 @@ function toConclude(temp)
             }
         });
 }
+
+function generatePdf(temp) {
+
+
+
+    $.ajax({
+        url: "/Provider/downloadEncounterDocument",
+        type: 'GET',
+        data: {
+            requestId: temp
+        },
+
+        xhrFields: {
+            responseType: 'blob'
+        },
+
+        success: function (response) {
+
+            var blob = new Blob([response], { type: "application/pdf" });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = "Encounter.pdf";
+            link.click();
+
+            window.location.href = "/Provider/ProviderDashboard";
+        },
+        error: function (error) {
+            console.error("Error generating PDF:", error);
+        }
+    });
+
+}

@@ -178,7 +178,7 @@ namespace HalloDoc.Controllers
         {
 
           await  _profileServices.EditUserProfile(up);
-            return RedirectToAction("Index","Users");
+            return RedirectToAction("UserProfile");
         }
 
         [CustomAuthorize("Patient")]
@@ -252,7 +252,7 @@ namespace HalloDoc.Controllers
             {
 
                await _sendRequestServices.SendPatientRequest(patientSendRequests);
-                return RedirectToAction("Index", "AspNetUsers");
+                return RedirectToAction("PatientLogin");
 
             }
                else
@@ -272,8 +272,8 @@ namespace HalloDoc.Controllers
                 if(ModelState.IsValid)
             {
 
-               await _sendRequestServices.SendConciergeRequest(conciergeSendRequests); 
-                return RedirectToAction("Index", "AspNetUsers");
+               await _sendRequestServices.SendConciergeRequest(conciergeSendRequests);
+                return RedirectToAction("PatientLogin");
             }
                 else
             {
@@ -291,7 +291,7 @@ namespace HalloDoc.Controllers
             {
 
                await  _sendRequestServices.SendFamilyFriendRequest(familyFriendSendRequests);
-                return RedirectToAction("Index", "AspNetUsers");
+                return RedirectToAction("PatientLogin");
 
             }
             else
@@ -309,7 +309,7 @@ namespace HalloDoc.Controllers
             {
 
                await _sendRequestServices.SubmitMeRequest(user,id);
-                return RedirectToAction("Index", "AspNetUsers");
+                return RedirectToAction("PatientLogin");
 
             }
             else
@@ -327,7 +327,7 @@ namespace HalloDoc.Controllers
             {
 
                 await _sendRequestServices.SubmitMeRequest(user,id);
-                return RedirectToAction("Index", "AspNetUsers");
+                return RedirectToAction("PatientLogin");
             }
             else
             {
@@ -343,7 +343,7 @@ namespace HalloDoc.Controllers
             {
 
                await _sendRequestServices.SendBusinessRequest(businessSendRequests);
-                return RedirectToAction("Index", "AspNetUsers");
+                return RedirectToAction("PatientLogin");
             }
             else
             {

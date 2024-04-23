@@ -31,10 +31,11 @@ namespace HallodocServices.Implementation
             Request request = _requestRepo.GetRequest(adminAssignCase.RequestId);
             request.PhysicianId = adminAssignCase.PhysicianId;
             request.RequestId = adminAssignCase.RequestId;
+            request.Status = 2;
             _requestRepo.UpdateTable(request);
 
             RequestStatusLog requestStatusLog = new();
-            requestStatusLog.Status = 1;
+            requestStatusLog.Status = 2;
             requestStatusLog.PhysicianId = adminAssignCase.PhysicianId;
             requestStatusLog.RequestId = adminAssignCase.RequestId;
             requestStatusLog.Notes = adminAssignCase.Description;

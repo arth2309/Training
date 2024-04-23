@@ -287,7 +287,7 @@
             <div class="d-flex justify-content-end mt-3 mb-2">
                 <button type="submit" class="btn btn-info text-white mx-1">Save Changes</button>
                
-                <button type="button" class="btn btn-danger mx-1" onclick=" generatePdf(@ViewBag.RequestId)">Finalize</button>
+                <button type="button" class="btn btn-danger mx-1">Finalize</button>
                 
                
                 <button type="button" class="btn btn-outline-info mx-1" onclick="window.location.reload()">Cancel</button>
@@ -295,39 +295,6 @@
         </form>
     </div>
 
-    <script>
-
-        function generatePdf(temp) {
-
-            
-
-            $.ajax({
-                url: "/Provider/downloadEncounterDocument",
-                type:'GET',
-                data: {
-                    requestId: temp
-                },
-                
-                xhrFields: {
-                    responseType: 'blob'
-                },
-                
-                success: function (response) {
-
-                    var blob = new Blob([response], { type: "application/pdf" });
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = "Encounter.pdf";
-                    link.click();
-
-                    window.location.href = "/Provider/ProviderDashboard";
-                },
-                error: function (error) {
-                    console.error("Error generating PDF:", error);
-                }
-            });
-
-        }
-    </script>
+   
 </body>
 </html>

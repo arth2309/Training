@@ -68,20 +68,27 @@ namespace HallodocServices.ModelView
 
         public int?regionId { get; set; }
 
+
+        [Required(ErrorMessage ="Please Select Role")]
         public int? roleId { get; set; }
 
 
         
         public IFormFile? Photo { get; set; }
 
+        [Required]
         public string? MedicalLicense { get; set; }
 
+        [Required]
         public string? NpiNumber { get; set; }
 
+        [Required]
         public string? BusinessName { get; set; }
 
+        [Required]
         public string? BusinessWebsite { get; set; }
 
+    
         public List<int>? documents {get; set;} 
 
         public List<int>? WorkingRegions { get; set; } 
