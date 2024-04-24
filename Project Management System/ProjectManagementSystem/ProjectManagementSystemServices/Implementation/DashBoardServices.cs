@@ -113,12 +113,10 @@ namespace ProjectManagementSystemServices.Implementation
         public async Task<bool> UpdateData(ProjectList projectList)
         {
             Project project = _projectRepo.GetData(projectList.ProjectId);
-            project.DomainId = 1;
             project.ProjectName = projectList.ProjectName;
             project.CreatedDate = DateTime.Now;
             project.DueDate = projectList.DueDate;
             project.Description = projectList.ProjectDescription;
-            project.Domain = "Not required";
             project.Assignee = projectList.Assignee;
             project.City = projectList.City;
 
