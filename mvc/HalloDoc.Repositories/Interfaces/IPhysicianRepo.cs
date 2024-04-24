@@ -34,6 +34,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<PhysicianRegion> RemoveDataInPhysicianRegion(PhysicianRegion physicianRegion);
 
+        Physician GetPhysicianForProfile(int? physicianid);
+
 
     }
 }

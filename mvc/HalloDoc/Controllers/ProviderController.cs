@@ -124,9 +124,11 @@ namespace HalloDoc.Controllers
             return View(null);
         }
 
+
+        [CustomAuthorize("Provider")]
         public IActionResult MySchedule()
         {
-            ViewBag.AdminName = Request.Cookies["AdminName"];
+            ViewBag.Name = Request.Cookies["Name"];
             int id = Int32.Parse(Request.Cookies["lid"]);
       
             AdminScheduling adminScheduling = _schedulingServices.GetProviderScheduling(id);
@@ -140,8 +142,10 @@ namespace HalloDoc.Controllers
             return PartialView("_ProviderScheduling", monthSchedulingVM);
         }
 
+        [CustomAuthorize("Provider")]
         public IActionResult MyProfile()
         {
+            ViewBag.Name = Request.Cookies["Name"];
             int id = Int32.Parse(Request.Cookies["lid"]);
             AdminProfile adminProfile = _createPhysicianAccountServices.GetPhysician(id);
             return View(adminProfile);
@@ -190,6 +194,7 @@ namespace HalloDoc.Controllers
             return Json(new { result });
         }
 
+        [CustomAuthorize("Provider")]
         public IActionResult ProviderEncounterForm(int RequestId)
         {
             ViewBag.Name = Request.Cookies["Name"];
@@ -319,8 +324,11 @@ namespace HalloDoc.Controllers
             return RedirectToAction("ProviderViewUploads", new { reqID = reqID });
         }
 
+
+        [CustomAuthorize("Provider")]
         public IActionResult ConcludeCare(int RequestId)
         {
+            ViewBag.Name = Request.Cookies["Name"];
             ConcludeCareVM concludeCareVM = _createEncounterFormServices.GetConcludeCareFile(RequestId);
             return View(concludeCareVM);
         }
@@ -350,10 +358,12 @@ namespace HalloDoc.Controllers
 
         public async Task<JsonResult> ToConclude(int RequestId)
         {
+            
             bool result = await _createEncounterFormServices.ToConclude(RequestId);
             return Json(result);
         }
 
+        [CustomAuthorize("Provider")]
         public IActionResult ProviderCreateRequest()
         {
             ViewBag.Name = Request.Cookies["Name"];

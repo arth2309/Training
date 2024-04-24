@@ -53,8 +53,9 @@ namespace HalloDoc.Controllers
 
         public IActionResult Index()
         {
-            Response.Cookies.Delete("Id");
-            Response.Cookies.Delete("UserId");
+
+            Response.Cookies.Delete("Name");
+            Response.Cookies.Delete("lid");
             Response.Cookies.Delete("token");
             return View();
         }
@@ -130,16 +131,10 @@ namespace HalloDoc.Controllers
               {
                 return RedirectToAction("PatientLogin");
               }
-            int id = Int32.Parse(Request.Cookies["id"]);
+            int id = Int32.Parse(Request.Cookies["lid"]);
             string token = Request.Cookies["token"];
-            int uid = _dashBoardServices.GetId(id);
             List<PatientDashBoard> patientDashreq = _dashBoardServices.patientDashBoards(id);
-
-
-            CookieOptions cookieOptions = new CookieOptions();
-            cookieOptions.Secure = true;
-            cookieOptions.Expires = DateTime.Now.AddMinutes(30);
-            Response.Cookies.Append("UserId", uid.ToString().ToString(), cookieOptions);
+            ViewBag.Name = Request.Cookies["Name"];
 
             return View("PatientDashboard", patientDashreq);
 
@@ -149,7 +144,7 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Patient")]
         public IActionResult PatientDashBoardDoc(int id)
         {
-            
+            ViewBag.Name = Request.Cookies["Name"];
             List<PatientShowDocument> patientShowDocuments = _showDocumentsServices.showDocuments(id);
 
             return View(patientShowDocuments);
@@ -158,13 +153,8 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Patient")]
         public IActionResult UserProfile()
         {
-
-            if(Request.Cookies["UserId"] == null)
-            {
-                return RedirectToAction("PatientLogin");
-            }
-
-            int id = Int32.Parse(Request.Cookies["UserId"]);
+            ViewBag.Name = Request.Cookies["Name"];
+            int id = Int32.Parse(Request.Cookies["lid"]);
             
 
             PatientUserProfile profile = _profileServices.GetUserProfile(id);
@@ -184,6 +174,7 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Patient")]
         public IActionResult SubmitMe()
         {
+            ViewBag.Name = Request.Cookies["Name"];
             int id = Int32.Parse(Request.Cookies["UserId"]);
             PatientSubmitMe showProfile = _sendRequestServices.SubmitMeData(id);
             return View(showProfile);
@@ -192,21 +183,21 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Patient")]
         public IActionResult SubmitSomeOne()
         {
+            ViewBag.Name = Request.Cookies["Name"];
             return View();
         }
 
         public IActionResult AccessDenied() 
         {
-            Response.Cookies.Delete("Id");
-            Response.Cookies.Delete("UserId");
-            Response.Cookies.Delete("token");
+           
             return View();
         }
        
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("Id");
-            Response.Cookies.Delete("UserId");
+
+            Response.Cookies.Delete("Name");
+            Response.Cookies.Delete("lid");
             Response.Cookies.Delete("token");
             return RedirectToAction("PatientLogin");
         }
@@ -233,6 +224,10 @@ namespace HalloDoc.Controllers
                 options.Secure = true;
                 options.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Append("Id", id.ToString(), options);
+
+                UserVM userVM = _loginServices.Object(id);
+                Response.Cookies.Append("Name", userVM.UserName);
+                Response.Cookies.Append("lid", userVM.Id.ToString());
 
                 Response.Cookies.Append("token", token);
 
@@ -322,6 +317,8 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitSomeOne(PatientSubmitMe user)
         {
+
+           
             int id = Int32.Parse(Request.Cookies["UserId"]);
             if (ModelState.IsValid)
             {

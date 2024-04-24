@@ -29,35 +29,37 @@
     <title>Document</title>
 </head>
 <body>
-    <header class="shadow">
-        <div class="imenu">
-            <button type="button" class="btn btn-outline-info" onclick="toggle()"><i class="bi bi-list"></i></button>
-        </div>
-        <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
-        <div class="right">
-            <div class="intro">
-                <p>Welcome:</p>
+    <div class="sticky-top">
+        <header class="shadow">
+            <div class="imenu">
+                <button type="button" class="btn btn-outline-info" onclick="toggle()"><i class="bi bi-list"></i></button>
             </div>
-            <div class="s intro"><span><b>test1</b></span></div>
-            <div class="ilogout">
-                <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right ">
+                <div class="intro">
+                    <p>Welcome:</p>
+                </div>
+                <div class="s intro mx-1"><span>@ViewBag.Name</span></div>
+                <div class="ilogout mx-1">
+                    <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+                </div>
+                <div class="Logout mx-1">
+                    <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientLogin"><button type="button" class="btn btn-outline-info">Logout</button></a>
+                </div>
+                <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
             </div>
-            <div class="Logout">
-                <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientLogin"><button type="button" class="btn btn-outline-info">Logout</button></a>
-            </div>
-            <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
-        </div>
-    </header>
+        </header>
 
-    <ul class="nav nav-tabs shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Patient" asp-action="PatientDashBoard" style="color: rgb(0, 0, 0);"><b>DashBoard</b></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Patient" asp-action="UserProfile" style="color: rgb(0, 0, 0);"><b>Profile</b></a>
-        </li>
+        <ul class="nav nav-underline shadow d-sm-flex" id="hide" style="padding-left: 2%;background-color: white;">
+            <li class="nav-item">
+                <a class="nav-link active" asp-controller="Patient" asp-action="PatientDashBoard" style="color: rgb(0, 0, 0);">DashBoard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Patient" asp-action="UserProfile" style="color: rgb(0, 0, 0);">Profile</a>
+            </li>
 
-    </ul>
+        </ul>
+    </div>
     <div class="he">
         <div class="he1 h4">
             <p>Submit information</p>
@@ -175,8 +177,8 @@
                     Upload
                 </button>
             </div>
-            <div class="mbt wt">
-                <div class="bt">
+            <div class="mbt wt ">
+                <div class="bt justify-content-end">
                     <button type="submit" class="btn btn-primary">
                         Submit
                     </button>

@@ -121,8 +121,8 @@ namespace HalloDoc.Controllers
             else
             {
                 string role = _loginServices.GetRole(patientLogin.Email);
-                string AdminName = _loginServices.GetUserName(id);
-                Response.Cookies.Append("AdminName", AdminName);
+                //string AdminName = _loginServices.GetUserName(id);
+                //Response.Cookies.Append("AdminName", AdminName);
                 string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
                 Response.Cookies.Append("token", token);
                 TempData["success"] = "Successfully Login";

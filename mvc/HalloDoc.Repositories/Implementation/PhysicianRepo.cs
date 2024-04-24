@@ -63,6 +63,11 @@ namespace HalloDoc.Repositories.Implementation
             return _DbContext.Physicians.FirstOrDefault(a => a.PhysicianId == physicianid);
         }
 
+        public Physician GetPhysicianForProfile(int? physicianid)
+        {
+            return _DbContext.Physicians.Include(a=>a.AspNetUser).Include(a=>a.PhysicianRegions).FirstOrDefault(a => a.PhysicianId == physicianid);
+        }
+
         public async Task<Physician> AddDatainPhysician(Physician physician)
         {
             _DbContext.Physicians.Add(physician);

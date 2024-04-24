@@ -30,8 +30,8 @@ namespace HallodocServices.Implementation
 
        public List<PatientDashBoard> patientDashBoards(int id)
         {
-            int uid = _requestRepo.GetUid(id);
-            List<Request> userrequest = _requestRepo.GetAllRequests(uid);
+            
+            List<Request> userrequest = _requestRepo.GetAllRequests(id);
             List<PatientDashBoard> dashboard = new List<PatientDashBoard>();
             for (int i = 0; i < userrequest.Count; i++)
             {

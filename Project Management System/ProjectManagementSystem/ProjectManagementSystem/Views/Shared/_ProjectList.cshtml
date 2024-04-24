@@ -1,0 +1,40 @@
+﻿@model List<ProjectManagementSystemServices.ModelView.ProjectList>
+
+
+<div class="table-responsive mt-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project Id</th>
+                <th>Project Name</th>
+                <th>Assignee</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>Domain</th>
+                <th>City</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.ProjectId</td>
+                    <td>@item.ProjectName</td>
+                    <td>@item.Assignee</td>
+                    <td>@item.ProjectDescription</td>
+                    <td>@item.DueDate.Value.ToString("MMM") @item.DueDate.Value.Day,@item.DueDate.Value.Year</td>
+                    <td>@item.DomainName</td>
+                    <td>@item.City</td>
+                    <td>
+                        <div class="d-flex">
+                            <button type="button" class="btn bg-info text-white mx-1" onclick="getRecord(@item.ProjectId)">Edit</button>
+                            <button type="button" class="btn bg-black text-white" onclick="deleteRecord(@item.ProjectId)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+        

@@ -1,0 +1,14 @@
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\bin\Debug\net7.0\ProjectManagementSystemRepo.deps.json
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\bin\Debug\net7.0\ProjectManagementSystemRepo.runtimeconfig.json
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\bin\Debug\net7.0\ProjectManagementSystemRepo.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\bin\Debug\net7.0\ProjectManagementSystemRepo.pdb
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.csproj.AssemblyReference.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.AssemblyInfoInputs.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.AssemblyInfo.cs
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.csproj.CoreCompileInputs.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\refint\ProjectManagementSystemRepo.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.pdb
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ProjectManagementSystemRepo.genruntimeconfig.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemRepo\obj\Debug\net7.0\ref\ProjectManagementSystemRepo.dll

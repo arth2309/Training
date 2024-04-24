@@ -139,7 +139,7 @@ namespace HallodocServices.Implementation
 
         public AdminProfile GetPhysician(int PhysicianId)
         {
-            Physician physician = _physicianRepo.GetPhysician(PhysicianId);
+            Physician physician = _physicianRepo.GetPhysicianForProfile(PhysicianId);
             List<Region> regions = _regionRepo.GetRegions();
             List<Role> roles = _roleRepo.GetRoleDataForPhysician();
             List<PhysicianRegion> physicianRegions = physician.PhysicianRegions.Where(a=>a.PhysicianId ==  PhysicianId).ToList();

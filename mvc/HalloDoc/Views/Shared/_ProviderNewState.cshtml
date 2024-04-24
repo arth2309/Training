@@ -215,11 +215,11 @@
     <ul class="pagination">
         @if (Model.HasPrevious)
         {
-            <li class="page-item " onclick="GetStatus(1,@(Model.CurrentPage-1),0)"><button class="page-link">Previous</button></li>
+            <li class="page-item " onclick="GetStatus(1,@(Model.CurrentPage-1),0)"><button class="page-link"><i class="bi bi-chevron-left"></i></button></li>
         }
         else
         {
-            <li class="page-item disabled"><button class="page-link">Previous</button></li>
+            <li class="page-item disabled"><button class="page-link"><i class="bi bi-chevron-left"></i></button></li>
         }
         @if (Model.TotalPages < 6)
         {
@@ -255,11 +255,11 @@
         }
         @if (Model.HasNext)
         {
-            <li class="page-item " onclick="GetStatus(1,@(Model.CurrentPage+1),0)"><button class="page-link">Next</button></li>
+            <li class="page-item " onclick="GetStatus(1,@(Model.CurrentPage+1),0)"><button class="page-link"><i class="bi bi-chevron-right"></i></button></li>
         }
         else
         {
-            <li class="page-item disabled"><button class="page-link">Next</button></li>
+            <li class="page-item disabled"><button class="page-link"><i class="bi bi-chevron-right"></i></button></li>
         }
     </ul>
 

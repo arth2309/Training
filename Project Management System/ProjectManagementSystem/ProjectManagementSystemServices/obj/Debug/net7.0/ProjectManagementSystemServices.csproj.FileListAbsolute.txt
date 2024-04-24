@@ -1,0 +1,17 @@
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\bin\Debug\net7.0\ProjectManagementSystemServices.deps.json
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\bin\Debug\net7.0\ProjectManagementSystemServices.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\bin\Debug\net7.0\ProjectManagementSystemServices.pdb
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.csproj.AssemblyReference.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.AssemblyInfoInputs.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.AssemblyInfo.cs
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.csproj.CoreCompileInputs.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\refint\ProjectManagementSystemServices.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.pdb
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ref\ProjectManagementSystemServices.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\bin\Debug\net7.0\ProjectManagementSystemServices.runtimeconfig.json
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.genruntimeconfig.cache
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\bin\Debug\net7.0\ProjectManagementSystemRepo.dll
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\bin\Debug\net7.0\ProjectManagementSystemRepo.pdb
+D:\Projects\assig\Project Management System\ProjectManagementSystem\ProjectManagementSystemServices\obj\Debug\net7.0\ProjectManagementSystemServices.csproj.CopyComplete
