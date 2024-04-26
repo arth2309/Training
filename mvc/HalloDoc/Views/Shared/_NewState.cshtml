@@ -10,7 +10,7 @@
         
 
 <div class="table-responsive d-none d-lg-flex" style="width:100%">
-    <table class="table" id="tableID" style="width:100%">
+    <table class="table table-hover" >
                 <thead class="table-light">
                     <tr>
                         <th scope="col">Name</th>
@@ -79,7 +79,10 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">
-                                <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#AssignCase" onclick="getRequestID(@item.RequestId)"><i class="bi bi-card-checklist"></i> Assign Case</a></li>
+                                    @if(item.physicianName == null)
+                                {
+                                    <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#AssignCase" onclick="getRequestID(@item.RequestId)"><i class="bi bi-card-checklist"></i> Assign Case</a></li>
+                                }
                                 <li><a class="dropdown-item btn" data-bs-toggle="modal" data-bs-target="#CancelCase" onclick="getRequestIdForCancelCase(@item.RequestId)"><i class="bi bi-x-circle"></i> Cancel Case</a></li>
                                     <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id><i class="bi bi-card-list"></i> View Case</a></li>
                                     <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>

@@ -287,7 +287,7 @@
             <div class="d-flex justify-content-end mt-3 mb-2">
                 <button type="submit" class="btn btn-info text-white mx-1">Save Changes</button>
                
-                <button type="button" class="btn btn-danger mx-1">Finalize</button>
+                <a asp-controller="Provider" asp-action="Finalize" asp-route-RequestId="@ViewBag.RequestId"><button type="button" class="btn btn-danger mx-1">Finalize</button> </a>
                 
                
                 <button type="button" class="btn btn-outline-info mx-1" onclick="window.location.reload()">Cancel</button>

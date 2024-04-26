@@ -73,21 +73,29 @@ header
 
 
 .table-success {
-    --bs-table-color:white;
+    --bs-table-color: white;
     --bs-table-bg: rgb(41, 167, 41);
+    --bs-table-hover-bg: #299329;
+    --bs-table-hover-color: white;
 }
 
 .table-warning {
     --bs-table-color: white;
     --bs-table-bg: #ed9124;
+    --bs-table-hover-bg: darkorange;
+    --bs-table-hover-color: white;
 }
 .table-primary {
     --bs-table-color: white;
     --bs-table-bg: #3a3ae7;
+    --bs-table-hover-bg: darkblue;
+    --bs-table-hover-color: white;
 }
 .table-danger {
     --bs-table-color: white;
     --bs-table-bg: #c12121;
+    --bs-table-hover-bg: darkred;
+    --bs-table-hover-color: white;
 }
 
 .arrow-down {

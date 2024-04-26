@@ -15,12 +15,15 @@ namespace HallodocServices.Implementation;
     private readonly IPatientLoginRepo _patientLoginRepo;
     private readonly IPasswordHashServices _passwordHashServices;
     private readonly IAspNetUserRepo _userRepo;
+    private readonly IRoleRepo _roleRepo;
 
-    public PatientLoginServices(IPatientLoginRepo patientLoginRepo,IPasswordHashServices passwordHashServices, IAspNetUserRepo userRepo)
+
+    public PatientLoginServices(IPatientLoginRepo patientLoginRepo,IPasswordHashServices passwordHashServices, IAspNetUserRepo userRepo,IRoleRepo roleRepo)
     {
         _patientLoginRepo = patientLoginRepo;
         _passwordHashServices = passwordHashServices;
         _userRepo = userRepo;
+        _roleRepo = roleRepo;
     }
     public int ValidateUser( PatientLogin patientlogin )
     {
@@ -56,6 +59,15 @@ namespace HallodocServices.Implementation;
         {
             userVM.Id = aspNetUser.PhysicianAspNetUsers!=null?aspNetUser.PhysicianAspNetUsers.FirstOrDefault(a => a.AspNetUserId == id).PhysicianId:0;
             userVM.UserName = aspNetUser.UserName;
+            int roleId1 = (int)aspNetUser.PhysicianAspNetUsers.FirstOrDefault(a => a.AspNetUserId == id).RoleId;
+            List<RoleMenu> roleMenu1 = _roleRepo.GetRoleMenuDataByroleid(roleId1);
+            List<int> menulist1 = new List<int>();
+            for (int i = 0; i < roleMenu1.Count; i++)
+            {
+                int menu = roleMenu1[i].MenuId;
+                menulist1.Add(menu);
+            }
+            userVM.MenuLists = menulist1;
         }
 
         else

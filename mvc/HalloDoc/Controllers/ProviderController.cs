@@ -55,6 +55,11 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult ProviderDashBoard()
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("24"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             int id = Int32.Parse(Request.Cookies["lid"]);
             AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1,1,0,id,null);
             ViewBag.Name = Request.Cookies["Name"];

@@ -215,7 +215,7 @@ namespace HallodocServices.Implementation
             aspNetUser.Email = adminProfile.Email;
             await _userRepo.UpdateTable(aspNetUser);
 
-            Physician physician = _physicianRepo.GetPhysician(adminProfile.AdminId);
+            Physician physician = _physicianRepo.GetPhysicianForProfile(adminProfile.AdminId);
             physician.FirstName = adminProfile.FirstName;
             physician.LastName =adminProfile.LastName;
             physician.Email = adminProfile.Email;

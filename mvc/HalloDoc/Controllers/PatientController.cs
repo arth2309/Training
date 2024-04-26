@@ -175,7 +175,7 @@ namespace HalloDoc.Controllers
         public IActionResult SubmitMe()
         {
             ViewBag.Name = Request.Cookies["Name"];
-            int id = Int32.Parse(Request.Cookies["UserId"]);
+            int id = Int32.Parse(Request.Cookies["lid"]);
             PatientSubmitMe showProfile = _sendRequestServices.SubmitMeData(id);
             return View(showProfile);
         }
@@ -299,7 +299,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitMe(PatientSubmitMe user)
         {
-            int id = Int32.Parse(Request.Cookies["UserId"]);
+            int id = Int32.Parse(Request.Cookies["lid"]);
             if (ModelState.IsValid)
             {
 

@@ -403,6 +403,7 @@ namespace HallodocServices.Implementation
                 requestNote1.RequestId = concludeCareVM.reqid;
                 requestNote1.PhysicianNotes = concludeCareVM.ProviderNotes;
                 requestNote1.CreatedDate = DateTime.Now;
+                requestNote1.CreatedBy = 1;
                 await _requestNoteRepo.AddTable(requestNote1);
             }
 

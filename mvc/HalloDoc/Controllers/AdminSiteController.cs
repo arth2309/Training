@@ -121,8 +121,6 @@ namespace HalloDoc.Controllers
             else
             {
                 string role = _loginServices.GetRole(patientLogin.Email);
-                //string AdminName = _loginServices.GetUserName(id);
-                //Response.Cookies.Append("AdminName", AdminName);
                 string token = _jwtServices.GenerateJWTAuthetication(patientLogin.Email);
                 Response.Cookies.Append("token", token);
                 TempData["success"] = "Successfully Login";
@@ -138,6 +136,8 @@ namespace HalloDoc.Controllers
                 }
                 else
                 {
+                    string serailList = string.Join(",", userVM.MenuLists);
+                    Response.Cookies.Append("list", serailList);
                     return RedirectToAction("ProviderDashBoard","Provider");
                 }
               
@@ -281,7 +281,7 @@ namespace HalloDoc.Controllers
         {
             TempData["Transfer"] = "Request is Transfered";
             var reqData = JsonSerializer.Deserialize<AdminAssignCase>(data);
-            var result = _assignCaseServices.AdminAssignCase(reqData);
+            var result = await _assignCaseServices.AdminTransferCase(reqData);
             return Json(new { result });
         }
 
@@ -313,7 +313,7 @@ namespace HalloDoc.Controllers
         public async Task<JsonResult> Delete(int id)
         {
             int reqId = _viewUploadsServices.GetReqIdService(id);
-            _viewUploadsServices.DeleteFileService(id);
+           await _viewUploadsServices.DeleteFileService(id);
             TempData["Delete"] = "File Deleted Successfully";
             return Json(new { redirect = Url.Action("ViewUploads", new { reqID = reqId }) });
         }
@@ -324,7 +324,7 @@ namespace HalloDoc.Controllers
         {
             if (adminViewUpoads.formFile != null)
             {
-                _viewUploadsServices.AddFileData(adminViewUpoads);
+              await  _viewUploadsServices.AddFileData(adminViewUpoads);
                 TempData["Upload"] = "File Uploaded Successfully";
                 return RedirectToAction("ViewUploads", new { reqID = adminViewUpoads.requestId });
             }
@@ -368,7 +368,7 @@ namespace HalloDoc.Controllers
         public async Task<JsonResult> ClearCase(int RequestId)
         {
             TempData["Clear"] = "Request is Cleared";
-            _clearCaseServices.ClearCase(RequestId);
+           await  _clearCaseServices.ClearCase(RequestId);
             return Json(new { redirect = Url.Action("AdminDashBoard") });
         }
 
@@ -395,7 +395,7 @@ namespace HalloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-                _sendOrderServices.AddDataServices(adminSendOrder);
+               await _sendOrderServices.AddDataServices(adminSendOrder);
                 TempData["Order"] = "Placed Order Successfully";
                 return RedirectToAction("AdminDashBoard");
             }

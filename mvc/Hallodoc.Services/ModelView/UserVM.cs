@@ -13,5 +13,7 @@ namespace HallodocServices.ModelView
         public string UserName { get; set; }
 
         public int RoleId { get; set; }
+
+        public List<int>? MenuLists { get; set; }
     }
 }
