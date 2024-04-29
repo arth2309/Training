@@ -56,7 +56,7 @@ namespace HalloDoc.Controllers
         public IActionResult ProviderDashBoard()
         {
             string MenuList = Request.Cookies["list"];
-            if (!MenuList.Contains("24"))
+            if (!MenuList.Contains("25"))
             {
                 return RedirectToAction("AccessDenied", "Patient");
             }
@@ -102,7 +102,13 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult ProviderViewCase(int rcid)
         {
-            
+
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("25"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
+
             AdminViewCase adminViewCase = _viewCaseServices.GetAdminViewCaseData(rcid);
             return View(adminViewCase);
         }
@@ -110,6 +116,11 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult ProviderViewNotes(int reqid)
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("25"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             ViewBag.ViewNotesReqid = reqid;
             AdminViewNote adminViewNote = _viewNoteServices.GetViewNote(reqid);
@@ -133,6 +144,11 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult MySchedule()
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("26"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             int id = Int32.Parse(Request.Cookies["lid"]);
       
@@ -150,6 +166,11 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult MyProfile()
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("27"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             int id = Int32.Parse(Request.Cookies["lid"]);
             AdminProfile adminProfile = _createPhysicianAccountServices.GetPhysician(id);
@@ -255,6 +276,12 @@ namespace HalloDoc.Controllers
         public IActionResult ProviderSendOrder(int reqID)
 
         {
+
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("25"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             ViewBag.reqID = reqID;
             return View();
@@ -276,6 +303,11 @@ namespace HalloDoc.Controllers
         public IActionResult ProviderViewUploads(int reqID)
 
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("25"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             AdminViewUpoads adminViewUpoads = _viewUploadsServices.GetUpoads(reqID);
             return View(adminViewUpoads);
@@ -333,6 +365,11 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult ConcludeCare(int RequestId)
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("25"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             ConcludeCareVM concludeCareVM = _createEncounterFormServices.GetConcludeCareFile(RequestId);
             return View(concludeCareVM);
@@ -371,6 +408,11 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult ProviderCreateRequest()
         {
+            string MenuList = Request.Cookies["list"];
+            if (!MenuList.Contains("25"))
+            {
+                return RedirectToAction("AccessDenied", "Patient");
+            }
             ViewBag.Name = Request.Cookies["Name"];
             return View();
         }

@@ -59,6 +59,7 @@ namespace HallodocServices.Implementation
         public PaginatedList<NewState> getStates(int status, int currentPage,int typeid,int regionid,string name)
         {
             List<RequestClient> requestClients = new List<RequestClient>();
+            requestClients = _iRequestClientRepo.GetNewStateData(status, typeid, regionid, name);
 
             if (status == 1)
             {

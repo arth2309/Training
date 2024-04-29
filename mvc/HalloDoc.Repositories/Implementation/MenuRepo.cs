@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HalloDoc.Repositories.DataContext;
+﻿using HalloDoc.Repositories.DataContext;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
 
@@ -13,21 +8,22 @@ namespace HalloDoc.Repositories.Implementation
     {
         private readonly ApplicationDbContext _context;
 
-        public MenuRepo(ApplicationDbContext context) 
+        public MenuRepo(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<Menu> getMenuByRole(int Roleid) 
+        public List<Menu> getMenuByRole(int Roleid)
         {
-            if(Roleid == 0)
+            if (Roleid == 0)
             {
                 return _context.Menus.ToList();
             }
-            else 
+            else
             {
-                return _context.Menus.Where(a=>a.AccountType == Roleid).ToList();
+                return _context.Menus.Where(a => a.AccountType == Roleid).ToList();
             }
         }
     }
+
 }

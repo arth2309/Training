@@ -14,20 +14,20 @@ namespace ProjectManagementSystemRepo.Implementation
     {
         private readonly ApplicationDbContext _context;
 
-        public ProjectRepo(ApplicationDbContext context) 
+        public ProjectRepo(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<Project> GetList(string name) 
-        { 
-            if(name == null)
+        public List<Project> GetList(string name = null)
+        {
+            if (name == null)
             {
-                return _context.Projects.Include(a=>a.DomainNavigation).ToList();
+                return _context.Projects.Include(a => a.DomainNavigation).ToList();
             }
             else
             {
-                return _context.Projects.Include(a=>a.DomainNavigation).Where(a=> a.ProjectName.Contains(name) || a.Assignee.Contains(name) || a.Description.Contains(name)).ToList();
+                return _context.Projects.Include(a => a.DomainNavigation).Where(a => a.ProjectName.Contains(name) || a.Assignee.Contains(name) || a.Description.Contains(name)).ToList();
             }
         }
 

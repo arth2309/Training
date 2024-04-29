@@ -449,7 +449,7 @@ namespace HallodocServices.Implementation
 
             Request user3 = new()
             {
-                RequestTypeId = 1,
+                RequestTypeId = 2,
                 UserId = _userRepo.GetUserId(user.Email),
                 FirstName = user.FFirstName,
                 LastName = user.FLastName,

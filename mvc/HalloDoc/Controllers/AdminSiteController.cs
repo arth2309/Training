@@ -58,10 +58,10 @@ namespace HalloDoc.Controllers
         private readonly IPatientRecordServices _patientRecordServices;
         private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
         private readonly IPatientSendRequestServices _patientSendRequestServices;
-        
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices,ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices,IPatientSendRequestServices patientSendRequestServices)
+
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices, ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices, IPatientSendRequestServices patientSendRequestServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -93,7 +93,7 @@ namespace HalloDoc.Controllers
             _patientRecordServices = patientRecordServices;
             _encryptionDecryptionServices = encryptionDecryptionServices;
             _patientSendRequestServices = patientSendRequestServices;
-         
+
         }
 
         public IActionResult AdminLogin()
@@ -128,19 +128,19 @@ namespace HalloDoc.Controllers
                 UserVM userVM = _loginServices.Object(id);
                 Response.Cookies.Append("Name", userVM.UserName);
                 Response.Cookies.Append("lid", userVM.Id.ToString());
-                if (role == "Admin")
-                {
-                   
-                    return RedirectToAction("AdminDashBoard");
-                    
-                }
-                else
+                if (role == "Provider")
                 {
                     string serailList = string.Join(",", userVM.MenuLists);
                     Response.Cookies.Append("list", serailList);
-                    return RedirectToAction("ProviderDashBoard","Provider");
+                    return RedirectToAction("ProviderDashBoard", "Provider");
+
+
                 }
-              
+                else
+                {
+                    return RedirectToAction("AdminDashBoard");
+                }
+
             }
 
 
@@ -152,6 +152,7 @@ namespace HalloDoc.Controllers
             Response.Cookies.Delete("Name");
             Response.Cookies.Delete("lid");
             Response.Cookies.Delete("token");
+            Response.Cookies.Delete("list");
             return RedirectToAction("AdminLogin");
         }
 
@@ -313,7 +314,7 @@ namespace HalloDoc.Controllers
         public async Task<JsonResult> Delete(int id)
         {
             int reqId = _viewUploadsServices.GetReqIdService(id);
-           await _viewUploadsServices.DeleteFileService(id);
+            await _viewUploadsServices.DeleteFileService(id);
             TempData["Delete"] = "File Deleted Successfully";
             return Json(new { redirect = Url.Action("ViewUploads", new { reqID = reqId }) });
         }
@@ -324,7 +325,7 @@ namespace HalloDoc.Controllers
         {
             if (adminViewUpoads.formFile != null)
             {
-              await  _viewUploadsServices.AddFileData(adminViewUpoads);
+                await _viewUploadsServices.AddFileData(adminViewUpoads);
                 TempData["Upload"] = "File Uploaded Successfully";
                 return RedirectToAction("ViewUploads", new { reqID = adminViewUpoads.requestId });
             }
@@ -341,12 +342,12 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public ActionResult? DownloadSelected(List<string> filesChecked)
         {
-            
-            
-                byte[] fileBytes = _viewUploadsServices.GetSelectedFilesAsZip(filesChecked);
-                return File(fileBytes, "application/zip", "files.zip");
-            
-           
+
+
+            byte[] fileBytes = _viewUploadsServices.GetSelectedFilesAsZip(filesChecked);
+            return File(fileBytes, "application/zip", "files.zip");
+
+
         }
 
 
@@ -368,7 +369,7 @@ namespace HalloDoc.Controllers
         public async Task<JsonResult> ClearCase(int RequestId)
         {
             TempData["Clear"] = "Request is Cleared";
-           await  _clearCaseServices.ClearCase(RequestId);
+            await _clearCaseServices.ClearCase(RequestId);
             return Json(new { redirect = Url.Action("AdminDashBoard") });
         }
 
@@ -395,7 +396,7 @@ namespace HalloDoc.Controllers
         {
             if (ModelState.IsValid)
             {
-               await _sendOrderServices.AddDataServices(adminSendOrder);
+                await _sendOrderServices.AddDataServices(adminSendOrder);
                 TempData["Order"] = "Placed Order Successfully";
                 return RedirectToAction("AdminDashBoard");
             }
@@ -505,10 +506,10 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> AdminResetPassword(AdminProfile adminProfile)
         {
-            
-                await _adminProfileServices.ResetPassword(adminProfile.Id, adminProfile.Password);
-            
-           
+
+            await _adminProfileServices.ResetPassword(adminProfile.Id, adminProfile.Password);
+
+
             return RedirectToAction("AdminProfile");
         }
 
@@ -640,10 +641,10 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUpdateAccessRole(AdminAccessRoleMV adminAccessRoleMV)
         {
-            
-           
+
+
             await _adminAccessRoleServices.CreateUpdateRole(adminAccessRoleMV);
-            if(adminAccessRoleMV.IsUpdate)
+            if (adminAccessRoleMV.IsUpdate)
             {
                 TempData["UpdateRole"] = "Role updated Successfully";
             }
@@ -651,9 +652,9 @@ namespace HalloDoc.Controllers
             {
                 TempData["AddRole"] = "Role added Successfully";
             }
-            
+
             return RedirectToAction("AdminAccountAccess");
-            
+
         }
 
         public IActionResult AdminAccountAccess()
@@ -719,7 +720,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ProviderResetPassword(int Id, string Password,int Pid)
+        public async Task<JsonResult> ProviderResetPassword(int Id, string Password, int Pid)
         {
             bool result = await _createPhysicianAccountServices.ResetPassword(Id, Password);
             return Json(new { redirect = Url.Action("EditProviderAccount", new { PhysicianId = Pid }) });
@@ -730,7 +731,7 @@ namespace HalloDoc.Controllers
         public async Task<IActionResult> EditProviderAccountInformation(AdminProfile adminProfile)
         {
             bool result = await _createPhysicianAccountServices.EditProviderAccountInformation(adminProfile);
-            return RedirectToAction("EditProviderAccount", new { PhysicianId = adminProfile.AdminId});
+            return RedirectToAction("EditProviderAccount", new { PhysicianId = adminProfile.AdminId });
         }
 
         [HttpPost]
@@ -748,10 +749,10 @@ namespace HalloDoc.Controllers
             return View(adminScheduling);
         }
 
-        public IActionResult SchedulingFilter(int Scheduling, int RegionId, string StartDay,string EndDay)
+        public IActionResult SchedulingFilter(int Scheduling, int RegionId, string StartDay, string EndDay)
         {
             List<SchedulingList> schedulingList = _schedulingServices.GetSchedulingList(RegionId, DateTime.Parse(StartDay), DateTime.Parse(EndDay));
-            MonthSchedulingVM monthSchedulingVM = _schedulingServices.GetMonthScheduling(RegionId,DateTime.Parse(StartDay), DateTime.Parse(EndDay));
+            MonthSchedulingVM monthSchedulingVM = _schedulingServices.GetMonthScheduling(RegionId, DateTime.Parse(StartDay), DateTime.Parse(EndDay));
             if (Scheduling == 1)
             {
                 return PartialView("_DayWiseScheduling", schedulingList);
@@ -762,7 +763,7 @@ namespace HalloDoc.Controllers
             }
             if (Scheduling == 3)
             {
-                return PartialView("_MonthWiseScheduling",monthSchedulingVM);
+                return PartialView("_MonthWiseScheduling", monthSchedulingVM);
             }
             else
             {
@@ -890,7 +891,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public async  Task<IActionResult> AddBusinessPage(BusinessVM businessVM)
+        public async Task<IActionResult> AddBusinessPage(BusinessVM businessVM)
         {
             if (ModelState.IsValid)
             {
@@ -901,7 +902,7 @@ namespace HalloDoc.Controllers
             {
                 return View(null);
             }
-           
+
         }
 
         public IActionResult UpdateBusinessPage(int VendorId)
@@ -929,7 +930,7 @@ namespace HalloDoc.Controllers
 
         [HttpGet]
         public async Task<JsonResult> DeleteVendor(int VendorId)
-        { 
+        {
             await _professionMenuServices.DeleteData(VendorId);
             return Json(new { Success = true });
         }
@@ -938,13 +939,13 @@ namespace HalloDoc.Controllers
         {
             ViewBag.Name = Request.Cookies["Name"];
             BlockedHistoryVM blockedHistoryVM = _blockHistoryServices.GetBlockHistoryData();
-            return View(blockedHistoryVM); 
+            return View(blockedHistoryVM);
         }
 
-        public IActionResult BlockedHistoryFilter(string Name,string Email,DateOnly Date,string Mobile,int CurrentPage)
+        public IActionResult BlockedHistoryFilter(string Name, string Email, DateOnly Date, string Mobile, int CurrentPage)
         {
-            PaginatedList<BlockedList> blockedLists = _blockHistoryServices.GetBlockHistoryDataFilter(Name,Mobile,Email,Date,CurrentPage);
-            return PartialView("_BlockList",blockedLists);
+            PaginatedList<BlockedList> blockedLists = _blockHistoryServices.GetBlockHistoryDataFilter(Name, Mobile, Email, Date, CurrentPage);
+            return PartialView("_BlockList", blockedLists);
         }
 
         public async Task<IActionResult> UnBlockRequest(int ReqId)
@@ -964,8 +965,8 @@ namespace HalloDoc.Controllers
 
         public IActionResult SearchRecordFilter(string PatientName, string ProviderName, int TypeId, string Email, string Mobile, DateOnly FDate, DateOnly TDate, int CurrentPage)
         {
-            PaginatedList<SearchRecordList> searchRecordLists = _searchRecordServices.GetListFilter(PatientName,ProviderName,TypeId,Email,Mobile,FDate,TDate,CurrentPage);
-            return PartialView("_RecordList",searchRecordLists);
+            PaginatedList<SearchRecordList> searchRecordLists = _searchRecordServices.GetListFilter(PatientName, ProviderName, TypeId, Email, Mobile, FDate, TDate, CurrentPage);
+            return PartialView("_RecordList", searchRecordLists);
         }
 
         public IActionResult SMSLogs()
@@ -990,7 +991,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult EmailLogFilter(string Name,int RoleId,string Email,DateOnly CDate,DateOnly SDate,int CurrentPage) 
+        public IActionResult EmailLogFilter(string Name, int RoleId, string Email, DateOnly CDate, DateOnly SDate, int CurrentPage)
         {
             PaginatedList<EmailLogList> emailLogLists = _emailLogServices.GetLogsFilter(Name, Email, SDate, CDate, RoleId, CurrentPage);
             return PartialView("_EmailLogList", emailLogLists);
@@ -1017,7 +1018,7 @@ namespace HalloDoc.Controllers
 
         public async Task<IActionResult> DeleteRecord(int RequestId)
         {
-            await  _searchRecordServices.Delete(RequestId);
+            await _searchRecordServices.Delete(RequestId);
             return RedirectToAction("SearchRecord");
         }
 
@@ -1029,10 +1030,10 @@ namespace HalloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult PatientHistoryFilter(string FirstName,string LastName,string Email,string Mobile,int CurrentPage)
+        public IActionResult PatientHistoryFilter(string FirstName, string LastName, string Email, string Mobile, int CurrentPage)
         {
-            PaginatedList<PatientHistoryList> patientHistoryLists = _patientHistoryServices.GetListFilter(FirstName,LastName,Email,Mobile,CurrentPage);
-            return PartialView("_PatientHistoryList",patientHistoryLists);
+            PaginatedList<PatientHistoryList> patientHistoryLists = _patientHistoryServices.GetListFilter(FirstName, LastName, Email, Mobile, CurrentPage);
+            return PartialView("_PatientHistoryList", patientHistoryLists);
         }
 
         public IActionResult PatientRecord(int UserId)
@@ -1043,9 +1044,9 @@ namespace HalloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult PatientRecordFilter(int UserId,int CurrentPage)
+        public IActionResult PatientRecordFilter(int UserId, int CurrentPage)
         {
-            PaginatedList<PatientRecordList> patientRecordLists = _patientRecordServices.GetRecordFilter(UserId,CurrentPage);
+            PaginatedList<PatientRecordList> patientRecordLists = _patientRecordServices.GetRecordFilter(UserId, CurrentPage);
             return PartialView("_PatientRecordList", patientRecordLists);
         }
 
@@ -1056,9 +1057,9 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public async  Task<IActionResult> CreateRequest(CreateRequestVM createRequestVM)
+        public async Task<IActionResult> CreateRequest(CreateRequestVM createRequestVM)
         {
-           bool request = await _patientSendRequestServices.CreateRequest(createRequestVM);
+            bool request = await _patientSendRequestServices.CreateRequest(createRequestVM);
             return RedirectToAction("AdminDashBoard");
         }
 

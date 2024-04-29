@@ -25,7 +25,7 @@ namespace ProjectManagementSystemServices.Implementation
             ProjectVM vm = new();
             List<ProjectList> lists = new List<ProjectList>();
 
-            List<Project> projects = _projectRepo.GetList(null);
+            List<Project> projects = _projectRepo.GetList();
 
             for(int i = 0; i < projects.Count; i++) 
             {

@@ -9,7 +9,7 @@ namespace ProjectManagementSystem.Controllers
     {
         private readonly IDashBoardServices _services;
 
-        public DashBoard(IDashBoardServices services) 
+        public DashBoard(IDashBoardServices services)
         {
             _services = services;
         }
@@ -19,13 +19,13 @@ namespace ProjectManagementSystem.Controllers
             return View(vm);
         }
 
-       
+
 
         [HttpGet]
         public IActionResult ProjectDashBoardFilter(string srchStr)
         {
-           List<ProjectList> list = _services.GetListFilter(srchStr);
-            return PartialView("_ProjectList",list);
+            List<ProjectList> list = _services.GetListFilter(srchStr);
+            return PartialView("_ProjectList", list);
         }
 
         [HttpGet]
@@ -38,29 +38,25 @@ namespace ProjectManagementSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUpdateForm(ProjectList projectList)
         {
-           
-           
-                if (projectList.ProjectId > 0)
-                {
-                    bool result = await _services.UpdateData(projectList);
-                    return RedirectToAction("ProjectDashBoard");
-                }
-                else
-                {
-                    bool result1 = await _services.AddData(projectList);
-                    return RedirectToAction("ProjectDashBoard");
-                }
-            
 
-           
-     
-            
+
+            if (projectList.ProjectId > 0)
+            {
+                bool result = await _services.UpdateData(projectList);
+                return RedirectToAction("ProjectDashBoard");
+            }
+            else
+            {
+                bool result1 = await _services.AddData(projectList);
+                return RedirectToAction("ProjectDashBoard");
+            }
+
         }
 
         [HttpGet]
         public IActionResult EmptyFormData()
         {
-            
+
             return PartialView("_TaskForm");
         }
 
@@ -68,7 +64,7 @@ namespace ProjectManagementSystem.Controllers
         public IActionResult GetFormData(int Pid)
         {
             ProjectList projectList = _services.GetData(Pid);
-            return PartialView("_TaskForm",projectList);
+            return PartialView("_TaskForm", projectList);
         }
 
     }

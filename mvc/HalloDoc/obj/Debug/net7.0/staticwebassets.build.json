@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JtugdIw3h50lc91MYsvvDZ6ax4DVStoPI3ZV/vmd6oo=",
+  "Hash": "tRKLTGmtKemjGlpv+lVIHS1DdGq8r6IMDvjAeTsiIJw=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -493,6 +493,23 @@
       "OriginalItemSpec": "wwwroot\\Files\\__ _Files___ _Files_Fig56. Patient site 1.png (6).png (2).png"
     },
     {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Encounter (6) (1).pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/__ _Files_Encounter (6) (1).pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\__ _Files_Encounter (6) (1).pdf"
+    },
+    {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (1).png.png",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -561,6 +578,23 @@
       "OriginalItemSpec": "wwwroot\\Files\\__ _Files_Fig56. Patient site 1.png (9).png.png"
     },
     {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_SRS-23-24-Trainees-14Feb24.pdf.pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/__ _Files_SRS-23-24-Trainees-14Feb24.pdf.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\__ _Files_SRS-23-24-Trainees-14Feb24.pdf.pdf"
+    },
+    {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\~ _Files_Session 2 (1).txt(2).txt",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -627,6 +661,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\~ _Files_Test Instructions.pdf.pdf"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\~ _Files_Test Instructions-1.pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/~ _Files_Test Instructions-1.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\~ _Files_Test Instructions-1.pdf"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\~ _Files_Test Instructions-2.pdf",

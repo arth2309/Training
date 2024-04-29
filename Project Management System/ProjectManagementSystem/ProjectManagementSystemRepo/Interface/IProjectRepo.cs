@@ -9,7 +9,7 @@ namespace ProjectManagementSystemRepo.Interface
 {
     public interface IProjectRepo
     {
-        List<Project> GetList(string name);
+        List<Project> GetList(string name=null);
         Project GetData(int id);
         Task<bool> RemoveData(Project project);
 
