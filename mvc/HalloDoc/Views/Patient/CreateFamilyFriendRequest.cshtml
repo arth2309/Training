@@ -51,15 +51,17 @@
     </div>
 
     <div class="ct1">
-        <div class="shadow  bg-body-tertiary rounded">
+        <div class="shadow sticky-top bg-body-tertiary rounded">
             <header>
-                <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+                <div class="img1">
+                    <img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;">
+                </div>
                 <div class="theme"><img src="~/images/icons8-moon-symbol-25.png" alt="theme" onclick="myFunction()"></div>
             </header>
         </div>
 
-        <div id="back" class="back">
-            <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> &lt; Back</a>
+        <div class="he">
+            <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> <button type="button" class="btn btn-outline-info">&lt; Back</button></a>
         </div>
         <div class="mainct shadow">
             <form asp-controller="Patient" asp-action="CreateFamilyFriendRequest" enctype="multipart/form-data">
@@ -202,7 +204,7 @@
 
         </div>
         <div class="t">
-            <div class="policy">Terms and conditions privacy policy</div>
+            <div class="policy">Terms and conditions | Privacy policy</div>
         </div>
 
     </div>

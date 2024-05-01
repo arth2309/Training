@@ -37,6 +37,15 @@
 
     }
 
+    @if (TempData["UpdateRole"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.success('@TempData["UpdateRole"]');
+        </script>
+
+    }
+
     <div class="modal fade" id="ProviderMessage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

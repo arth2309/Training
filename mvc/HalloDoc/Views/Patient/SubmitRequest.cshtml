@@ -9,14 +9,14 @@
 </head>
 <body>
     <div class="ct">
-        <header>
-            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 60px;"></div>
+        <header class="shadow-sm">
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 80px;"></div>
             <div class="theme"><b><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></b></div>
         </header>
         <div class="submit_request">
             <div class="he">
                 <div><p class="h1"><strong>I am a..</strong></p></div>
-                <a asp-controller="Patient" asp-action="Index"><div id="back">&lt Back</div></a>
+                <a asp-controller="Patient" asp-action="Index"><button type="button" class="btn btn-outline-info" id="back">&lt Back</button></a>
             </div>
             <div class="bt"><a asp-controller="Patient" asp-action="CreatePatientRequest" style="text-decoration: none;"><button type="button" class="btn btn-outline-primary wt b1" style="color: white;"><b>PATIENT</b></button></a></div>
             <div class="bt"><a asp-controller="Patient" asp-action="CreateFamilyFriendRequest" style="text-decoration: none;"><button type="button" class="btn btn-outline-info wt b2" style="color: white;"><b>FAMILY/FRIEND</b></button></a></div>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <footer>
-            <div class="policy"><p style="color: white;">Terms and conditions Privacy policy</p></div>
+            <div class="policy"><p style="color: white;" class="mb-0"><strong>Terms and conditions | Privacy policy</strong></p></div>
         </footer>
     </div>
 

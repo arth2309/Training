@@ -23,6 +23,7 @@ using HalloDoc.Repositories.PagedList;
 using System.Reflection;
 using System;
 using HalloDoc.Repositories.DataModels;
+using DocumentFormat.OpenXml.Drawing.Spreadsheet;
 
 namespace HalloDoc.Controllers
 {
@@ -98,12 +99,14 @@ namespace HalloDoc.Controllers
 
         public IActionResult AdminLogin()
         {
+            TempData["invalid-user"] = false;
             return View();
         }
 
         [HttpPost]
         public IActionResult AdminLogin(PatientLogin patientLogin)
         {
+           
             if (!ModelState.IsValid)
             {
                 return View(patientLogin);
@@ -116,7 +119,7 @@ namespace HalloDoc.Controllers
 
             {
                 TempData["invalid-user"] = true;
-                return View(patientLogin);
+                return View();
             }
             else
             {
@@ -643,15 +646,47 @@ namespace HalloDoc.Controllers
         {
 
 
-            await _adminAccessRoleServices.CreateUpdateRole(adminAccessRoleMV);
-            if (adminAccessRoleMV.IsUpdate)
+          
+
+            if(adminAccessRoleMV.Accountype == 0)
             {
-                TempData["UpdateRole"] = "Role updated Successfully";
+                TempData["RoleRequired"] = "Please Select Role";
+                if(adminAccessRoleMV.IsUpdate)
+                {
+                    return RedirectToAction("EditAccessRole");
+                }
+                else
+                {
+                    return RedirectToAction("AdminAccessRole");
+                }
             }
+
+           else if(adminAccessRoleMV.checkedBoxes == null ||  adminAccessRoleMV.checkedBoxes.Count<1)
+            {
+                TempData["AccessRequired"] = "Please Select Access";
+                if (adminAccessRoleMV.IsUpdate)
+                {
+                    return RedirectToAction("EditAccessRole", new { RoleId = adminAccessRoleMV.RoleId});
+                }
+                else
+                {
+                    return RedirectToAction("AdminAccessRole");
+                }
+            }
+
             else
             {
-                TempData["AddRole"] = "Role added Successfully";
+                await _adminAccessRoleServices.CreateUpdateRole(adminAccessRoleMV);
+                if (adminAccessRoleMV.IsUpdate)
+                {
+                    TempData["UpdateRole"] = "Role updated Successfully";
+                }
+                else
+                {
+                    TempData["AddRole"] = "Role added Successfully";
+                }
             }
+            
 
             return RedirectToAction("AdminAccountAccess");
 

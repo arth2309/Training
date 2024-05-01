@@ -11,13 +11,30 @@
     <link href="~/css/adminsite/adminaccessrole.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
 
 
 </head>
 <body>
 
+    @if (TempData["RoleRequired"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.error('@TempData["RoleRequired"]');
+        </script>
 
+    }
+
+    @if (TempData["AccessRequired"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.error('@TempData["AccessRequired"]');
+        </script>
+
+    }
 
 
     <div class="sticky-top bg-white shadow">

@@ -53,7 +53,10 @@
     </div>
 
     <div class="ct1">
-        <div class="shadow  bg-body-tertiary rounded">
+        <div>
+
+      
+        <div class="shadow sticky-top bg-body-tertiary rounded">
             <header>
                 <div class="img1">
                     <img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;">
@@ -62,8 +65,8 @@
             </header>
         </div>
 
-        <div id="back" class="back">
-            <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> &lt; Back</a>
+        <div class="he">
+            <a asp-controller="Patient" asp-action="SubmitRequest" style="text-decoration: none;color: rgb(0, 185, 225);"> <button type="button" class="btn btn-outline-info">&lt; Back</button></a>
         </div>
         <div class="mainct shadow">
             <form asp-controller="Patient" asp-action="CreatePatientRequest" enctype="multipart/form-data">
@@ -163,7 +166,7 @@
                 <p class="h4 vt">(optional) add photo or documents</p>
                 <div class="input-group mb-3 mt-1">
                     <input type="file" class="form-control" id="file-picker" asp-for="File">
-                    <button class="btn btn-info">
+                    <button type="button" class="btn btn-info text-white">
                         <i class="bi bi-cloud-arrow-up"></i>
                         Upload
                     </button>
@@ -180,8 +183,9 @@
             </form>
 
         </div>
+        </div>
         <div class="t">
-            <div class="policy">Terms and conditions privacy policy</div>
+            <div class="policy">Terms and conditions | Privacy policy</div>
         </div>
 
     </div>
