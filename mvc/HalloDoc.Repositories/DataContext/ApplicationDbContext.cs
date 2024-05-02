@@ -42,6 +42,10 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<HealthProfessionalType> HealthProfessionalTypes { get; set; }
 
+    public virtual DbSet<Invoice> Invoices { get; set; }
+
+    public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+
     public virtual DbSet<Menu> Menus { get; set; }
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -203,6 +207,24 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.HealthProfessionalId).HasName("HealthProfessionalType_pkey");
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("now()");
+        });
+
+        modelBuilder.Entity<Invoice>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceId).HasName("Invoice_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Invoices)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Invoice_PhysicianId_fkey");
+        });
+
+        modelBuilder.Entity<InvoiceDetail>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceDetailId).HasName("InvoiceDetails_pkey");
+
+            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceDetails)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InvoiceDetails_InvoiceId_fkey");
         });
 
         modelBuilder.Entity<Menu>(entity =>

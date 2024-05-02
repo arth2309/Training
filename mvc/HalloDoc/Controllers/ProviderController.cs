@@ -37,8 +37,9 @@ namespace HalloDoc.Controllers
         private readonly ISendOrderServices _sendOrderServices;
         private readonly IViewUploadsServices _viewUploadsServices;
         private readonly IPatientSendRequestServices _patientSendRequestServices;
+        private readonly IInvoicingServices _invoicingServices;
 
-        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices, IAssignCaseServices assignCaseServices, ISendOrderServices sendOrderServices, IViewUploadsServices viewUploadsServices, IPatientSendRequestServices patientSendRequestServices)
+        public ProviderController(IProviderDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ISchedulingServices schedulingServices, ICreatePhysicianAccountServices createPhysicianAccountServices, IEncounterFormServices createEncounterFormServices, IAssignCaseServices assignCaseServices, ISendOrderServices sendOrderServices, IViewUploadsServices viewUploadsServices, IPatientSendRequestServices patientSendRequestServices, IInvoicingServices invoicingServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -50,6 +51,7 @@ namespace HalloDoc.Controllers
             _sendOrderServices = sendOrderServices;
             _viewUploadsServices = viewUploadsServices;
             _patientSendRequestServices = patientSendRequestServices;
+            _invoicingServices = invoicingServices;
         }
 
         [CustomAuthorize("Provider")]
@@ -422,6 +424,31 @@ namespace HalloDoc.Controllers
         {
             bool request = await _patientSendRequestServices.CreateRequest(createRequestVM);
             return RedirectToAction("ProviderDashBoard");
+        }
+
+        public IActionResult TimeSheet()
+        {
+            ViewBag.Name = Request.Cookies["Name"];
+            int id = Int32.Parse(Request.Cookies["lid"]);
+            ViewBag.Id = id;
+            TimeSheetVM timeSheetVM = _invoicingServices.GetTimeSheet(id);
+            return View(timeSheetVM);
+        }
+
+        [HttpGet]
+        public IActionResult BiWeeklyList(int Val) 
+        {
+            int id = Int32.Parse(Request.Cookies["lid"]);
+            List<TimeSheetListVM> timeSheetListVMs = _invoicingServices.GetTimeSheetList(id,Val);
+            return PartialView("_TimeSheetList",timeSheetListVMs);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> SubmitBiWeeklyList(TimeSheetListVM timeSheetListVM)
+        {
+            bool result = await _invoicingServices.SubmitWeeklyList(timeSheetListVM);
+            return RedirectToAction("TimeSheet");
         }
 
     }

@@ -100,6 +100,11 @@ namespace HalloDoc.Repositories.Implementation
 
         }
 
+        public List<ShiftDetail> GetShiftCount(int PhysicianId)
+        {
+            return _context.ShiftDetails.Include(a=>a.Shift).Where(a=>a.Shift.PhysicianId == PhysicianId && a.ShiftDate.Month == DateTime.Now.AddMonths(-1).Month).ToList();
+        }
+
     }
 
     

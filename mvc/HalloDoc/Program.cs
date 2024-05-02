@@ -70,6 +70,8 @@ builder.Services.AddScoped<IPatientRecordServices, PatientRecordServices>();
 builder.Services.AddScoped<IEncryptionDecryptionServices, EncryptionDecryptionServices>();
 builder.Services.AddScoped<IResetPasswordServices , ResetPasswordServices>();
 builder.Services.AddScoped<IProviderDashBoardServices , ProviderDashBoardServices>();
+builder.Services.AddScoped<IInvoicingServices, InvoicingServices>();
+builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
 
 builder.Services.AddSession(
     options => {

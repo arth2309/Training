@@ -1,0 +1,137 @@
+﻿@model HallodocServices.ModelView.TimeSheetVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="~/css/adminsite/adminmyprofile.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+
+
+
+</head>
+<body>
+    <div class="sticky-top bg-white shadow">
+        <header>
+            <div class="d-flex d-lg-flex">
+                <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+            </div>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right">
+                <div class="intro mx-1"><p>Welcome:</p></div>
+                <div class="s intro mx-1"><span><b>@ViewBag.Name</b></span></div>
+                <div class="ilogout">
+                    <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button>
+                </div>
+                <div class="Logout">
+                    <button type="button" class="btn btn-outline-info mx-1">Logout</button>
+                </div>
+                <div class="theme mx-1" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+            </div>
+        </header>
+
+
+        <div class="offcanvas offcanvas-start d-lg-none" style="width:50%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome,@ViewBag.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body align-items-center nav-tabs p-0">
+
+
+                <a class="nav-link mt-3 ps-2 " asp-controller="Provider" asp-action="ProviderDashBoard">DashBoard</a>
+
+
+                <a class="nav-link  mt-3 ps-2 fw-semibold" style="background-color:#e5f8fd">Invoicing</a>
+
+
+
+                <a class="nav-link  mt-3 ps-2 " asp-controller="Provider" asp-action="MySchedule">MySchedule</a>
+
+
+                <a class="nav-link  mt-3 ps-2">My Profile</a>
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <ul class="nav nav-underline d-none d-lg-flex shadow" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+            <li class="nav-item ">
+                <a class="nav-link text-black" asp-controller="Provider" asp-action="ProviderDashBoard"><b>DashBoard</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black active"><b>Invoicing</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="Provider" asp-action="MySchedule"><b>My Schedule</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black"><b>My Profile</b></a>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div class="he">
+        <div class="he1 h4">
+            <p>TimeSheet</p>
+        </div>
+
+    </div>
+
+    <div class="ct shadow mb-2 pb-2 pt-2">
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="biWeeklyList(this.value)">
+                   @foreach (var item in Model.dateList)
+                    {
+                        <option value="@item.val"> @item.StartDate.Year/@item.StartDate.Month/@item.StartDate.Day -  @item.EndDate.Year/@item.EndDate.Month/@item.EndDate.Day </option>
+                    }
+                  
+                </select>
+            </div>
+
+            <div >
+                <button type="button" class="btn btn-outline-info">Finalize TimeSheet</button>
+            </div>
+       
+        </div>
+
+        <div id="bi-weekly-list">
+            @Html.Partial("~/Views/Shared/_TimeSheetList.cshtml",Model.timeSheetList)
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function biWeeklyList(temp)
+    {
+        $.ajax({
+            url:'/Provider/BiWeeklyList',
+            type:'GET',
+            data:{
+                Val: temp
+            },
+
+            success: function(res)
+            {
+                $('#bi-weekly-list').html(res);
+            }
+        });
+    }
+</script>

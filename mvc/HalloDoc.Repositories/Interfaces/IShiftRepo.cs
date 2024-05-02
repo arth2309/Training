@@ -26,5 +26,7 @@ namespace HalloDoc.Repositories.Interfaces
         List<ShiftDetail> GetShiftDetailForMonth(int RegionId,DateTime dateTime1, DateTime dateTime2);
 
         List<ShiftDetail> GetProviderScheduling(int PhysicianId, DateTime dateTime1, DateTime dateTime2);
+
+        List<ShiftDetail> GetShiftCount(int PhysicianId);
     }
 }

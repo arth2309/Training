@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HallodocServices.ModelView
+{
+    public class TimeSheetVM
+    {
+        public List<TimeSheetDateListVM>? dateList { get; set; }
+
+        public List<TimeSheetListVM>? timeSheetList { get; set; }
+    }
+}
