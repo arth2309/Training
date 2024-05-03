@@ -96,17 +96,17 @@
 
         <div class="d-flex justify-content-between">
             <div>
-                <select class="form-select form-select-lg mb-3" aria-label="Large select example" onchange="biWeeklyList(this.value)">
+                <select class="form-select form-select-lg mb-3" id="startdate1" aria-label="Large select example" onchange="biWeeklyList(this.value)">
                    @foreach (var item in Model.dateList)
                     {
-                        <option value="@item.val"> @item.StartDate.Year/@item.StartDate.Month/@item.StartDate.Day -  @item.EndDate.Year/@item.EndDate.Month/@item.EndDate.Day </option>
+                        <option value="@item.StartDate"> @item.StartDate.Year/@item.StartDate.Month/@item.StartDate.Day -  @item.EndDate.Year/@item.EndDate.Month/@item.EndDate.Day </option>
                     }
                   
                 </select>
             </div>
 
             <div >
-                <button type="button" class="btn btn-outline-info">Finalize TimeSheet</button>
+                <button type="button" class="btn btn-outline-info" onclick="biWeeklySheet()">Finalize TimeSheet</button>
             </div>
        
         </div>
@@ -119,13 +119,32 @@
 </html>
 
 <script>
+    
+    function biWeeklySheet()
+    {
+        $.ajax({
+            url:'/Provider/WeeklySheet',
+            type:'GET',
+            data:{
+                StartDate: $('#startdate1').val()
+            },
+            success: function(res)
+            {
+                window.location.href = res.redirect;
+            }
+        });
+    }
+</script>
+
+
+<script>
     function biWeeklyList(temp)
     {
         $.ajax({
             url:'/Provider/BiWeeklyList',
             type:'GET',
             data:{
-                Val: temp
+                StartTime: temp
             },
 
             success: function(res)

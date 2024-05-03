@@ -39,42 +39,12 @@
 
 else
 {
-    <form asp-controller="Provider" asp-action="SubmitBiWeeklyList">
-    <div class="table-responsive">
-        <table class="table">
-            <thead class="table-light">
-                <tr>
-                    <th>Date</th>
-                    <th>On-Call Hours</th>
-                    <th>Total Hours</th>
-                    <th>Weekend/Holiday</th>
-                    <th>Number of Housecalls</th>
-                    <th>Number of Phone consults</th>
-                </tr>
-            </thead>
-            <tbody>
-               
+   <div class="d-">
 
-                    <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
-                    <input type="hidden" name="StartDate" value="@Model[0].ShiftDate">
-                    <input type="hidden" name="EndDate" value="@Model[Model.Count()-1].ShiftDate">
-              
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
-                        <td>@item.callHours</td>
-                            <td><input class="form-control" name="TotalHours" type="number" value="@item.callHours" /></td>
-                            <td><input class="form-check-input" name="IsHoliday" type="checkbox" value="@item.ShiftDate"></td>
-                            <td><input class="form-control" name="NumberOfHouseCalls" type="number" value="0" /></td>
-                            <td><input class="form-control" name="NumberOfPhoneConsults" type="number" value="0"></td>
-                    </tr>
-                }
-
-           
-            </tbody>
-        </table>
-    </div>
-    <button type="submit" class="btn btn-info text-white">Submit</button>
-    </form>
+   </div>
 }
+
+
+
+
+

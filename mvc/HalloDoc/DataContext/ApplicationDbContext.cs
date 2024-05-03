@@ -42,6 +42,10 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<HealthProfessionalType> HealthProfessionalTypes { get; set; }
 
+    public virtual DbSet<Invoice> Invoices { get; set; }
+
+    public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+
     public virtual DbSet<Menu> Menus { get; set; }
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -55,6 +59,8 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<PhysicianRegion> PhysicianRegions { get; set; }
 
     public virtual DbSet<Region> Regions { get; set; }
+
+    public virtual DbSet<Reimbursement> Reimbursements { get; set; }
 
     public virtual DbSet<Request> Requests { get; set; }
 
@@ -178,6 +184,10 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<EmailLog>(entity =>
         {
             entity.HasKey(e => e.EmailLogId).HasName("EmailLog_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.EmailLogs).HasConstraintName("EmailLog_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.EmailLogs).HasConstraintName("EmailLog_RequestId_fkey");
         });
 
         modelBuilder.Entity<Encounter>(entity =>
@@ -199,6 +209,24 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.HealthProfessionalId).HasName("HealthProfessionalType_pkey");
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("now()");
+        });
+
+        modelBuilder.Entity<Invoice>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceId).HasName("Invoice_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Invoices)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Invoice_PhysicianId_fkey");
+        });
+
+        modelBuilder.Entity<InvoiceDetail>(entity =>
+        {
+            entity.HasKey(e => e.InvoiceDetailId).HasName("InvoiceDetails_pkey");
+
+            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceDetails)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("InvoiceDetails_InvoiceId_fkey");
         });
 
         modelBuilder.Entity<Menu>(entity =>
@@ -252,6 +280,11 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Region>(entity =>
         {
             entity.HasKey(e => e.RegionId).HasName("Region_pkey");
+        });
+
+        modelBuilder.Entity<Reimbursement>(entity =>
+        {
+            entity.HasKey(e => e.ReimbursementId).HasName("Reimbursement_pkey");
         });
 
         modelBuilder.Entity<Request>(entity =>
@@ -421,6 +454,10 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Smslog>(entity =>
         {
             entity.HasKey(e => e.SmslogId).HasName("SMSLog_pkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.Smslogs).HasConstraintName("SMSLog_PhysicianId_fkey");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Smslogs).HasConstraintName("SMSLog_RequestId_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>

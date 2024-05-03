@@ -428,18 +428,33 @@ namespace HalloDoc.Controllers
 
         public IActionResult TimeSheet()
         {
-            ViewBag.Name = Request.Cookies["Name"];
             int id = Int32.Parse(Request.Cookies["lid"]);
-            ViewBag.Id = id;
+            ViewBag.Name = Request.Cookies["Name"];
             TimeSheetVM timeSheetVM = _invoicingServices.GetTimeSheet(id);
             return View(timeSheetVM);
         }
 
-        [HttpGet]
-        public IActionResult BiWeeklyList(int Val) 
+        public IActionResult BiWeeklySheet()
         {
             int id = Int32.Parse(Request.Cookies["lid"]);
-            List<TimeSheetListVM> timeSheetListVMs = _invoicingServices.GetTimeSheetList(id,Val);
+            ViewBag.Id = id;
+            DateTime dateTime = DateTime.Parse(HttpContext.Session.GetString("startdate"));
+            List<TimeSheetListVM> timeSheetListVMs = _invoicingServices.GetTimeSheetList(1, dateTime);
+            return View(timeSheetListVMs);
+        }
+        public JsonResult WeeklySheet(DateTime StartDate)
+        {
+            
+            HttpContext.Session.SetString("startdate", StartDate.ToString());
+            return Json(new { redirect = Url.Action("BiWeeklySheet", "Provider")});
+        }
+
+
+        [HttpGet]
+        public IActionResult BiWeeklyList(DateTime StartTime) 
+        {
+            int id = Int32.Parse(Request.Cookies["lid"]);
+            List<TimeSheetListVM> timeSheetListVMs = _invoicingServices.GetTimeSheetList(id,StartTime);
             return PartialView("_TimeSheetList",timeSheetListVMs);
         }
 
