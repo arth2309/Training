@@ -1,4 +1,4 @@
-﻿@model List<HallodocServices.ModelView.TimeSheetListVM>
+﻿@model HallodocServices.ModelView.TimeSheetVM
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
     <link href="~/css/adminsite/adminmyprofile.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  
+
 
 
 
@@ -110,10 +110,10 @@
 
 
                         <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
-                        <input type="hidden" name="StartDate" value="@Model[0].ShiftDate">
-                        <input type="hidden" name="EndDate" value="@Model[Model.Count()-1].ShiftDate">
+                        <input type="hidden" name="StartDate" value="@Model.timeSheetList[0].ShiftDate">
+                        <input type="hidden" name="EndDate" value="@Model.timeSheetList[Model.timeSheetList.Count()-1].ShiftDate">
 
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.timeSheetList)
                         {
                             <tr>
                                 <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
@@ -131,6 +131,93 @@
             </div>
             <button type="submit" class="btn btn-info text-white">Submit</button>
         </form>
-       </div>
-       </body>
-       </html>
+    </div>
+
+    <div style="margin-left:20%">
+        <button class="btn btn-info text-white" onclick="toggleReceipt()">Add Reciept</button>
+    </div>
+
+    <div class="ct shadow mb-2 pb-2 pt-2" id="resheet">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Item</th>
+                        <th>Amount</th>
+                        <th>Bill</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.timeSheetList)
+                    {
+                        var reimbursement = Model.reimbursements.FirstOrDefault(a => DateOnly.FromDateTime((DateTime)a.Date) == DateOnly.FromDateTime((DateTime)item.ShiftDate));
+
+                        if (reimbursement != null)
+                        {
+                            <tr>
+                                <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
+
+                                <td>@reimbursement.Item</td>
+                                <td>@reimbursement.Amount</td>
+                                <td>
+                                    @reimbursement.File.Trim()
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-outline-info">Edit</button>
+                                        <a asp-controller="Provider" asp-action="DeleteReceipt" asp-route-id="@reimbursement.ReimbursementId"><button type="button" class="btn btn-outline-info">Delete</button></a>
+                                        <a href="~/Files/@reimbursement.File" target="_blank"><button type="button" class="btn btn-outline-info mx-1">View</button></a>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <form asp-controller="Provider" asp-action="AddReceipt" enctype="multipart/form-data">
+                            <tr>
+                                <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
+                                <input type="hidden" name="ShiftDate" value="@item.ShiftDate">
+                                <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
+                                <td><input name="Item" type="text" class="form-control" /></td>
+                                <td><input name="Amount" type="number" class="form-control"></td>
+                                <td>
+                                    <div class="input-group mb-3 mt-1">
+                                        <input name="bill" type="file" class="form-control" id="file-picker">
+                                        <button class="btn btn-info">
+                                            <i class="bi bi-cloud-arrow-up"></i>
+                                            Upload
+
+                                        </button>
+                                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                    </div>
+                                </td>
+                                <td><button type="submit" class="btn btn-outline-info">Submit</button></td>
+                            </tr>
+                            </form>
+                        }
+                        
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+        </div>
+</body>
+</html>
+
+
+<script>
+    function toggleReceipt() {
+        if ($('#resheet').hasClass('d-none')) {
+            $('#resheet').removeClass('d-none');
+        }
+        else {
+            $('#resheet').addClass('d-none');
+        }
+    }
+
+</script>

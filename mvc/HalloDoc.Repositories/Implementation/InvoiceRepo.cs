@@ -33,9 +33,34 @@ namespace HalloDoc.Repositories.Implementation
             return true;
         }
 
-        public List<InvoiceDetail> GetSubmitedDetail(int physicianList,DateTime startDate,DateTime endDate) 
+        public List<InvoiceDetail> GetSubmitedDetail(int physicianList, DateTime startDate, DateTime endDate)
         {
-            return _context.InvoiceDetails.Include(a=>a.Invoice).Where(a=>a.Invoice.PhysicianId == physicianList && DateOnly.FromDateTime(a.Date)>= DateOnly.FromDateTime(startDate) && DateOnly.FromDateTime(a.Date)<= DateOnly.FromDateTime(endDate)).ToList();
+            return _context.InvoiceDetails.Include(a => a.Invoice).Where(a => a.Invoice.PhysicianId == physicianList && DateOnly.FromDateTime(a.Date) >= DateOnly.FromDateTime(startDate) && DateOnly.FromDateTime(a.Date) <= DateOnly.FromDateTime(endDate)).ToList();
         }
+
+        public async Task<bool> AddDataInReimburesment(Reimbursement reimbursement)
+        {
+            _context.Reimbursements.Add(reimbursement);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public List<Reimbursement> GetReimbursements(int id, DateTime startDate, DateTime endDate)
+        {
+            return _context.Reimbursements.Where(a => a.PhysicianId == id && DateOnly.FromDateTime((DateTime)a.Date) >= DateOnly.FromDateTime(startDate) && DateOnly.FromDateTime((DateTime)a.Date) <= DateOnly.FromDateTime(endDate)).ToList();
+        }
+
+        public Reimbursement GetReimbursement(int id) 
+        {
+            return _context.Reimbursements.FirstOrDefault(a => a.ReimbursementId == id);
+        }
+
+        public async Task<bool> RemoveDataInReimburesment(Reimbursement reimbursement)
+        {
+            _context.Reimbursements.Remove(reimbursement);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

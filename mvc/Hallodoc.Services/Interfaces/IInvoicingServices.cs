@@ -14,5 +14,11 @@ namespace HallodocServices.Interfaces
         List<TimeSheetListVM> GetTimeSheetList(int id, DateTime startDate);
 
         Task<bool> SubmitWeeklyList(TimeSheetListVM timeSheetListVM);
+
+        Task<bool> GetReImbursementsSheet(ReImbursementVM reImbursementVM);
+
+        TimeSheetVM GetBiWeeklySheet(int id, DateTime date);
+
+        Task<bool> DeleteReImbursementsSheet(int id);
     }
 }

@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.InkML;
+﻿
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
 using HallodocServices.Interfaces;
@@ -142,6 +142,62 @@ namespace HallodocServices.Implementation
 
         }
 
+
+        public TimeSheetVM GetBiWeeklySheet(int id,DateTime date)
+        {
+
+            TimeSheetVM timeSheetVM = new TimeSheetVM();
+
+            List<TimeSheetListVM> list = new();
+            List<ShiftDetail> shiftDetails = _shiftrepo.GetShiftCount(id);
+            DateTime dateTime1;
+            DateTime dateTime2;
+            if (date.Day == 1)
+            {
+                dateTime1 = date;
+                dateTime2 = date.AddDays(13);
+            }
+            else
+            {
+               DateTime dateTime = new DateTime(date.Year,date.Month, 1);
+                dateTime1 = date;
+                dateTime2 = dateTime.AddMonths(1).AddDays(-1);
+
+            }
+
+            DateTime dateTime5 = date;
+            for (int i = 0; i <= (dateTime2.Day - dateTime1.Day); i++)
+            {
+                double diff = 0;
+                if (shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)) != null)
+                {
+                    List<ShiftDetail> shiftDetails1 = shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)).ToList();
+                    for (int j = 0; j < shiftDetails1.Count; j++)
+                    {
+                        double cal = (shiftDetails1[j].EndTime.Hour + (shiftDetails1[j].EndTime.Minute / (double)60)) - (shiftDetails1[j].StartTime.Hour + (shiftDetails1[j].StartTime.Minute / (double)60));
+                        diff = diff + cal;
+
+                    }
+                }
+                TimeSheetListVM timeSheetListVM = new();
+                timeSheetListVM.ShiftDate = dateTime5;
+                timeSheetListVM.IsSubmit = false;
+                timeSheetListVM.callHours = diff;
+                dateTime5 = dateTime5.AddDays(1);
+                list.Add(timeSheetListVM);
+
+            }
+
+           
+            List<Reimbursement> reimbursement = _invoicerepo.GetReimbursements(id,dateTime1,dateTime2);
+
+            timeSheetVM.timeSheetList = list;
+            timeSheetVM.reimbursements = reimbursement;
+
+            return timeSheetVM;
+        }
+
+
         public async Task<bool> SubmitWeeklyList(TimeSheetListVM timeSheetListVM)
         {
             Invoice invoice = new Invoice();
@@ -174,6 +230,40 @@ namespace HallodocServices.Implementation
 
             return true;
 
+        }
+
+        public async Task<bool> GetReImbursementsSheet(ReImbursementVM reImbursementVM)
+        {
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+            FileInfo fileInfo = new FileInfo(reImbursementVM.bill.FileName);
+            string fileName = reImbursementVM.bill.FileName;
+
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                reImbursementVM.bill.CopyTo(stream);
+            }
+
+            Reimbursement reimbursement = new Reimbursement();
+            reimbursement.Date = reImbursementVM.ShiftDate;
+            reimbursement.Item = reImbursementVM.Item;
+            reimbursement.CreatedDate = DateTime.Now;
+            reimbursement.Amount = reImbursementVM.Amount;
+            reimbursement.PhysicianId = reImbursementVM.PhysicianId;
+            reimbursement.File = fileName;
+            
+            bool result = await _invoicerepo.AddDataInReimburesment(reimbursement);
+            return result;
+            
+        }
+
+        public async Task<bool> DeleteReImbursementsSheet(int id)
+        {
+            Reimbursement reimbursement = _invoicerepo.GetReimbursement(id);
+            bool result = await  _invoicerepo.RemoveDataInReimburesment(reimbursement);
+            return result;
         }
     }
 }

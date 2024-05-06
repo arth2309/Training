@@ -110,3 +110,11 @@ input[type=file]::-webkit-file-upload-button {
     top: 0px;
     background-color: transparent;
 }
+
+input[type=file]::-webkit-file-upload-button {
+    display: none;
+}
+
+.input-group-text {
+    display: none;
+}

@@ -60,6 +60,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Region> Regions { get; set; }
 
+    public virtual DbSet<Reimbursement> Reimbursements { get; set; }
+
     public virtual DbSet<Request> Requests { get; set; }
 
     public virtual DbSet<RequestBusiness> RequestBusinesses { get; set; }
@@ -278,6 +280,11 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Region>(entity =>
         {
             entity.HasKey(e => e.RegionId).HasName("Region_pkey");
+        });
+
+        modelBuilder.Entity<Reimbursement>(entity =>
+        {
+            entity.HasKey(e => e.ReimbursementId).HasName("Reimbursement_pkey");
         });
 
         modelBuilder.Entity<Request>(entity =>

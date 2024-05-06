@@ -439,8 +439,8 @@ namespace HalloDoc.Controllers
             int id = Int32.Parse(Request.Cookies["lid"]);
             ViewBag.Id = id;
             DateTime dateTime = DateTime.Parse(HttpContext.Session.GetString("startdate"));
-            List<TimeSheetListVM> timeSheetListVMs = _invoicingServices.GetTimeSheetList(1, dateTime);
-            return View(timeSheetListVMs);
+            TimeSheetVM timeSheetVM = _invoicingServices.GetBiWeeklySheet(id,dateTime);
+            return View(timeSheetVM);
         }
         public JsonResult WeeklySheet(DateTime StartDate)
         {
@@ -464,6 +464,21 @@ namespace HalloDoc.Controllers
         {
             bool result = await _invoicingServices.SubmitWeeklyList(timeSheetListVM);
             return RedirectToAction("TimeSheet");
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> AddReceipt(ReImbursementVM reImbursementVM) 
+        {
+
+            bool result = await _invoicingServices.GetReImbursementsSheet(reImbursementVM);
+            return RedirectToAction("BiWeeklySheet");
+        }
+
+        public async Task<IActionResult> DeleteReceipt(int id)
+        {
+            bool result = await _invoicingServices.DeleteReImbursementsSheet(id);
+            return RedirectToAction("BiWeeklySheet");
         }
 
     }

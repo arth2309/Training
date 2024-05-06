@@ -15,5 +15,13 @@ namespace HalloDoc.Repositories.Interfaces
 
         List<InvoiceDetail>  GetSubmitedDetail(int physicianList, DateTime startDate, DateTime endDate);
 
-    }
+        Task<bool> AddDataInReimburesment(Reimbursement reimbursement);
+
+        List<Reimbursement> GetReimbursements(int id, DateTime startDate, DateTime endDate);
+
+        Reimbursement GetReimbursement(int id);
+
+        Task<bool> RemoveDataInReimburesment(Reimbursement reimbursement);
+
+        }
 }
