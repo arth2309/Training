@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0heRFmAslcjENUCcK/9wC7u3n8Z2KJFAwZqEDp3h01M=",
+  "Hash": "MxH9RQviEfIYBXpTIjtxLnBkF3Cl+jHnnzqTAE42uZE=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -491,6 +491,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\__ _Files___ _Files_Fig56. Patient site 1.png (6).png (2).png"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Assignment 5-PMS (3).pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/__ _Files_Assignment 5-PMS (3).pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\__ _Files_Assignment 5-PMS (3).pdf"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\__ _Files_Encounter (6) (1).pdf",

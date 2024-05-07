@@ -11,12 +11,26 @@
     <link href="~/css/adminsite/adminmyprofile.css" rel="stylesheet" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <style>
+        .form-control:disabled {
+            background-color: #ffffff;
+            opacity: 1;
+            border: none;
+        }
+    </style>
 </head>
 <body>
+
+    @if (TempData["Finalize"] != null)
+    {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+            toastr.error('@TempData["Finalize"]');
+        </script>
+
+    }
+
     <div class="sticky-top bg-white shadow">
         <header>
             <div class="d-flex d-lg-flex">
@@ -93,51 +107,91 @@
     </div>
 
     <div class="ct shadow mb-2 pb-2 pt-2">
-        <form asp-controller="Provider" asp-action="SubmitBiWeeklyList">
-            <div class="table-responsive">
+        @if (Model.timeSheetList[0].IsSubmit == true)
+        {
+            <div class="table-responsive mb-3">
                 <table class="table">
                     <thead class="table-light">
                         <tr>
-                            <th>Date</th>
-                            <th>On-Call Hours</th>
-                            <th>Total Hours</th>
-                            <th>Weekend/Holiday</th>
-                            <th>Number of Housecalls</th>
-                            <th>Number of Phone consults</th>
+                            <th>Shift Date</th>
+                            <th>Shift</th>
+                            <th>NightShift Weekend</th>
+                            <th>Housecall</th>
+                            <th>Housecall Nights Weekend</th>
+                            <th>Phone consults</th>
+                            <th>Phone consults Nights Weekend</th>
+                            <th>Batch Testing</th>
                         </tr>
                     </thead>
                     <tbody>
-
-
-                        <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
-                        <input type="hidden" name="StartDate" value="@Model.timeSheetList[0].ShiftDate">
-                        <input type="hidden" name="EndDate" value="@Model.timeSheetList[Model.timeSheetList.Count()-1].ShiftDate">
-
                         @foreach (var item in Model.timeSheetList)
                         {
                             <tr>
                                 <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
-                                <td>@item.callHours</td>
-                                <td><input class="form-control" name="TotalHours" type="number" value="@item.callHours" /></td>
-                                <td><input class="form-check-input" name="IsHoliday" type="checkbox" value="@item.ShiftDate"></td>
-                                <td><input class="form-control" name="NumberOfHouseCalls" type="number" value="0" /></td>
-                                <td><input class="form-control" name="NumberOfPhoneConsults" type="number" value="0"></td>
+                                <td>@item.ShiftCount</td>
+                                <td>0</td>
+                                <td>@item.NumberOfHouseCall</td>
+                                <td>0</td>
+                                <td>@item.NumberOfPhoneConsult</td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                         }
-
-
                     </tbody>
                 </table>
             </div>
-            <button type="submit" class="btn btn-info text-white">Submit</button>
-        </form>
+        }
+        else
+        {
+
+            <form asp-controller="Provider" asp-action="SubmitBiWeeklyList">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date</th>
+                                <th>On-Call Hours</th>
+                                <th>Total Hours</th>
+                                <th>Weekend/Holiday</th>
+                                <th>Number of Housecalls</th>
+                                <th>Number of Phone consults</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
+                            <input type="hidden" name="StartDate" value="@Model.timeSheetList[0].ShiftDate">
+                            <input type="hidden" name="EndDate" value="@Model.timeSheetList[Model.timeSheetList.Count()-1].ShiftDate">
+
+                            @foreach (var item in Model.timeSheetList)
+                            {
+                                <tr>
+                                    <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
+                                    <td>@item.callHours</td>
+                                    <td><input class="form-control" name="TotalHours" type="number" value="@item.callHours" /></td>
+                                    <td><input class="form-check-input" name="IsHoliday" type="checkbox" value="@item.ShiftDate"></td>
+                                    <td><input class="form-control" name="NumberOfHouseCalls" type="number" value="0" /></td>
+                                    <td><input class="form-control" name="NumberOfPhoneConsults" type="number" value="0"></td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white">Submit</button>
+                </div>
+            </form>
+        }
     </div>
 
-    <div style="margin-left:20%">
+    <div style="margin-left:20%" class="mb-3">
         <button class="btn btn-info text-white" onclick="toggleReceipt()">Add Reciept</button>
     </div>
 
-    <div class="ct shadow mb-2 pb-2 pt-2" id="resheet">
+    <div class="ct shadow mb-2 pb-2 pt-2 d-none" id="resheet">
         <div class="table-responsive">
             <table class="table">
                 <thead class="table-light">
@@ -156,23 +210,29 @@
 
                         if (reimbursement != null)
                         {
+                            <form asp-controller="Provider" asp-action="UpdateReceipt">
                             <tr>
                                 <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
 
-                                <td>@reimbursement.Item</td>
-                                <td>@reimbursement.Amount</td>
+                                <td><input disabled name="Item" type="text" class="form-control dis-@reimbursement.ReimbursementId" value="@reimbursement.Item" /></td>
+                                <td><input disabled name="Amount" type="number" class="form-control dis-@reimbursement.ReimbursementId" value="@reimbursement.Amount"></td>
+                                <input type="hidden" name="ReimbursementId" value="@reimbursement.ReimbursementId">
                                 <td>
-                                    @reimbursement.File.Trim()
+                                        @reimbursement.File.Trim()
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <button type="button" class="btn btn-outline-info">Edit</button>
-                                        <a asp-controller="Provider" asp-action="DeleteReceipt" asp-route-id="@reimbursement.ReimbursementId"><button type="button" class="btn btn-outline-info">Delete</button></a>
-                                        <a href="~/Files/@reimbursement.File" target="_blank"><button type="button" class="btn btn-outline-info mx-1">View</button></a>
+                                        <button type="button" class="btn btn-outline-info mx-1 edit-@reimbursement.ReimbursementId" onclick="edit(@reimbursement.ReimbursementId)">Edit</button>
+                                        <button type="submit" class="btn btn-outline-info mx-1 cancel-@reimbursement.ReimbursementId d-none">Save</button>
+                                        <button type="reset" class="btn btn-outline-info mx-1 cancel-@reimbursement.ReimbursementId d-none" onclick="cancel(@reimbursement.ReimbursementId)">Cancel</button>
+                                        <a asp-controller="Provider" asp-action="DeleteReceipt" asp-route-id="@reimbursement.ReimbursementId" class="mx-1 edit-@reimbursement.ReimbursementId"><button type="button" class="btn btn-outline-info">Delete</button></a>
+                                        <a href="~/Files/@reimbursement.File" target="_blank" class="mx-1 edit-@reimbursement.ReimbursementId"><button type="button" class="btn btn-outline-info mx-1">View</button></a>
                                     </div>
 
                                 </td>
+
                             </tr>
+                            </form>
                         }
                         else
                         {
@@ -186,7 +246,7 @@
                                 <td>
                                     <div class="input-group mb-3 mt-1">
                                         <input name="bill" type="file" class="form-control" id="file-picker">
-                                        <button class="btn btn-info">
+                                        <button type="button" class="btn btn-info">
                                             <i class="bi bi-cloud-arrow-up"></i>
                                             Upload
 
@@ -198,14 +258,20 @@
                             </tr>
                             </form>
                         }
-                        
+
                     }
 
                 </tbody>
             </table>
 
         </div>
-        </div>
+    </div>
+
+    <div class="d-flex justify-content-end" style="width:80%">
+        <button type="button" class="btn btn-info text-white" onclick="finalize()"> Finalize </button>
+        <input id="pid" value="@ViewBag.Id" type="hidden" />
+        <input id="shiftdate" type="hidden" value="@Model.timeSheetList[0].ShiftDate">
+    </div>
 </body>
 </html>
 
@@ -219,5 +285,41 @@
             $('#resheet').addClass('d-none');
         }
     }
+
+    function edit(temp) {
+        $('.dis-' + temp).prop("disabled", false);
+        $('.edit-' + temp).addClass('d-none');
+        $('.cancel-' + temp).removeClass('d-none');
+    }
+
+    function cancel(temp) {
+        $('.dis-' + temp).prop("disabled", true);
+        $('.edit-' + temp).removeClass('d-none');
+        $('.cancel-' + temp).addClass('d-none');
+    }
+
+    function finalize() {
+        $.ajax({
+            url: '/Provider/FinalizeTimeSheet',
+            type: 'GET',
+            data: {
+                PhysicianId: $('#pid').val(),
+                StartDate: $('#shiftdate').val()
+
+            },
+
+                success: function (res) {
+                if (res) {
+                    window.location.href = "/Provider/TimeSheet"
+
+                }
+                else {
+                    window.location.href = "/Provider/BiWeeklySheet";
+                }
+            }
+
+        });
+    }
+
 
 </script>

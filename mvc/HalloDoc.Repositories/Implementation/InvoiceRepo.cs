@@ -45,12 +45,19 @@ namespace HalloDoc.Repositories.Implementation
             return true;
         }
 
+        public async Task<bool> UpdateDataInReimburesment(Reimbursement reimbursement)
+        {
+            _context.Reimbursements.Update(reimbursement);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public List<Reimbursement> GetReimbursements(int id, DateTime startDate, DateTime endDate)
         {
             return _context.Reimbursements.Where(a => a.PhysicianId == id && DateOnly.FromDateTime((DateTime)a.Date) >= DateOnly.FromDateTime(startDate) && DateOnly.FromDateTime((DateTime)a.Date) <= DateOnly.FromDateTime(endDate)).ToList();
         }
 
-        public Reimbursement GetReimbursement(int id) 
+        public Reimbursement GetReimbursement(int? id) 
         {
             return _context.Reimbursements.FirstOrDefault(a => a.ReimbursementId == id);
         }
@@ -58,6 +65,18 @@ namespace HalloDoc.Repositories.Implementation
         public async Task<bool> RemoveDataInReimburesment(Reimbursement reimbursement)
         {
             _context.Reimbursements.Remove(reimbursement);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public Invoice GetInvoice(int id, DateTime StartDate)
+        {
+            return _context.Invoices.FirstOrDefault(a=>a.PhysicianId == id && DateOnly.FromDateTime(a.StartDate) == DateOnly.FromDateTime(StartDate));
+        }
+
+        public async Task<bool> UpdateInvoice(Invoice invoice)
+        {
+            _context.Invoices.Update(invoice);
             await _context.SaveChangesAsync();
             return true;
         }

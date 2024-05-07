@@ -17,11 +17,18 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<bool> AddDataInReimburesment(Reimbursement reimbursement);
 
+        Task<bool> UpdateDataInReimburesment(Reimbursement reimbursement);
+        
         List<Reimbursement> GetReimbursements(int id, DateTime startDate, DateTime endDate);
 
-        Reimbursement GetReimbursement(int id);
+        Reimbursement GetReimbursement(int? id);
 
         Task<bool> RemoveDataInReimburesment(Reimbursement reimbursement);
+
+        Invoice GetInvoice(int id, DateTime StartDate);
+
+        Task<bool> UpdateInvoice(Invoice invoice);
+
 
         }
 }

@@ -1,9 +1,15 @@
 ﻿@model List<HallodocServices.ModelView.TimeSheetListVM>
 
+    @if(Model[0].IsFinalize != true)
+{
+    <div class="d-flex justify-content-end" style="margin-top:-60px">
+        <button type="button" class="btn btn-outline-info" onclick="biWeeklySheet()">Finalize TimeSheet</button>
+    </div>
+}
 
 @if (Model[0].IsSubmit == true)
 {
-    <div class="table-responsive">
+    <div class="table-responsive mb-3">
         <table class="table">
             <thead class="table-light">
                 <tr>
@@ -34,13 +40,41 @@
             </tbody>
         </table>
     </div>
-
+    <div class="table-responsive">
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Item</th>
+                        <th>Amount</th>
+                        <th>Bill</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(Model!=null && Model[0].Reimbursements.Count > 0)
+                {
+                    @foreach (var item in Model[0].Reimbursements)
+                    {
+                        <tr>
+                        <td>@item.Date</td>
+                        <td>@item.Item</td>
+                        <td>@item.Amount</td>
+                        <td>@item.File</td>
+                            <td> <a href="~/Files/@item.File" target="_blank" ><button type="button" class="btn btn-outline-info mx-1">View</button></a></td>
+                        </tr>
+                    }
+                }
+               
+                    </tbody>
+                    </table>
+                    </div>
 }
 
 else
 {
-   <div class="d-">
-
+   <div class="d-flex justify-content-center">
+       No records found!!
    </div>
 }
 

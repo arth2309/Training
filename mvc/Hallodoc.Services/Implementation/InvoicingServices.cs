@@ -32,6 +32,8 @@ namespace HallodocServices.Implementation
             DateTime dateTime = DateTime.Now.AddMonths(-3);
             DateTime dateTime1 = new DateTime(dateTime.Year, dateTime.Month, 1);
 
+            
+
             for (int i = 0; i < 3; i++)
             {
 
@@ -71,16 +73,20 @@ namespace HallodocServices.Implementation
 
             DateTime dateTime1;
             DateTime dateTime2;
+
+            List<Reimbursement> reimbursements;
             if (startDate.Day == 1)
             {
                  dateTime1 = startDate;
                  dateTime2 = startDate.AddDays(13);
+                 reimbursements = _invoicerepo.GetReimbursements(id, dateTime1,dateTime2);
             }
             else
             {
                 DateTime dateTime = new DateTime(startDate.Year, startDate.Month, 1);
                 dateTime1 = startDate;
                 dateTime2 = dateTime.AddMonths(1).AddDays(-1);
+                reimbursements = _invoicerepo.GetReimbursements(id, dateTime1, dateTime2);
 
             }
 
@@ -92,15 +98,17 @@ namespace HallodocServices.Implementation
             {
                 for (int i = 0; i < invoiceDetails.Count; i++)
                 {
-
+                   
                     TimeSheetListVM timeSheetListVM = new();
                     timeSheetListVM.ShiftDate = invoiceDetails[i].Date;
                     timeSheetListVM.ShiftCount = shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(invoiceDetails[i].Date)).Count();
                     timeSheetListVM.IsSubmit = true;
+                    timeSheetListVM.IsFinalize = invoiceDetails[i].Invoice.IsFinalize == null?false:invoiceDetails[i].Invoice.IsFinalize;
                     timeSheetListVM.TotalHour = invoiceDetails[i].TotalHours;
                     timeSheetListVM.NumberOfHouseCall = invoiceDetails[i].NumberOfHouseCalls;
                     timeSheetListVM.NumberOfPhoneConsult = invoiceDetails[i].NumberOfPhoneConsults;
                     timeSheetListVM.IsWeekend = invoiceDetails[i].IsHoliday;
+                    timeSheetListVM.Reimbursements = reimbursements;
                     list.Add(timeSheetListVM);
 
                 }
@@ -164,27 +172,55 @@ namespace HallodocServices.Implementation
                 dateTime2 = dateTime.AddMonths(1).AddDays(-1);
 
             }
-
+            List<InvoiceDetail> invoiceDetails = _invoicerepo.GetSubmitedDetail(id, dateTime1, dateTime2);
             DateTime dateTime5 = date;
-            for (int i = 0; i <= (dateTime2.Day - dateTime1.Day); i++)
-            {
-                double diff = 0;
-                if (shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)) != null)
-                {
-                    List<ShiftDetail> shiftDetails1 = shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)).ToList();
-                    for (int j = 0; j < shiftDetails1.Count; j++)
-                    {
-                        double cal = (shiftDetails1[j].EndTime.Hour + (shiftDetails1[j].EndTime.Minute / (double)60)) - (shiftDetails1[j].StartTime.Hour + (shiftDetails1[j].StartTime.Minute / (double)60));
-                        diff = diff + cal;
 
-                    }
+            if (invoiceDetails.Count > 0)
+            {
+                for (int i = 0; i < invoiceDetails.Count; i++)
+                {
+
+                    TimeSheetListVM timeSheetListVM = new();
+                    timeSheetListVM.ShiftDate = invoiceDetails[i].Date;
+                    timeSheetListVM.ShiftCount = shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(invoiceDetails[i].Date)).Count();
+                    timeSheetListVM.IsSubmit = true;
+                    timeSheetListVM.TotalHour = invoiceDetails[i].TotalHours;
+                    timeSheetListVM.NumberOfHouseCall = invoiceDetails[i].NumberOfHouseCalls;
+                    timeSheetListVM.NumberOfPhoneConsult = invoiceDetails[i].NumberOfPhoneConsults;
+                    timeSheetListVM.IsWeekend = invoiceDetails[i].IsHoliday;
+
+                    list.Add(timeSheetListVM);
+
                 }
-                TimeSheetListVM timeSheetListVM = new();
-                timeSheetListVM.ShiftDate = dateTime5;
-                timeSheetListVM.IsSubmit = false;
-                timeSheetListVM.callHours = diff;
-                dateTime5 = dateTime5.AddDays(1);
-                list.Add(timeSheetListVM);
+
+
+            }
+
+            else
+            {
+
+
+                for (int i = 0; i <= (dateTime2.Day - dateTime1.Day); i++)
+                {
+                    double diff = 0;
+                    if (shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)) != null)
+                    {
+                        List<ShiftDetail> shiftDetails1 = shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)).ToList();
+                        for (int j = 0; j < shiftDetails1.Count; j++)
+                        {
+                            double cal = (shiftDetails1[j].EndTime.Hour + (shiftDetails1[j].EndTime.Minute / (double)60)) - (shiftDetails1[j].StartTime.Hour + (shiftDetails1[j].StartTime.Minute / (double)60));
+                            diff = diff + cal;
+
+                        }
+                    }
+                    TimeSheetListVM timeSheetListVM = new();
+                    timeSheetListVM.ShiftDate = dateTime5;
+                    timeSheetListVM.IsSubmit = false;
+                    timeSheetListVM.callHours = diff;
+                    dateTime5 = dateTime5.AddDays(1);
+                    list.Add(timeSheetListVM);
+
+                }
 
             }
 
@@ -235,24 +271,33 @@ namespace HallodocServices.Implementation
         public async Task<bool> GetReImbursementsSheet(ReImbursementVM reImbursementVM)
         {
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
-            FileInfo fileInfo = new FileInfo(reImbursementVM.bill.FileName);
-            string fileName = reImbursementVM.bill.FileName;
-
-            string fileNameWithPath = Path.Combine(path, fileName);
-
-            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-            {
-                reImbursementVM.bill.CopyTo(stream);
-            }
-
             Reimbursement reimbursement = new Reimbursement();
+
+            if (reImbursementVM.bill!=null)
+            {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                FileInfo fileInfo = new FileInfo(reImbursementVM.bill.FileName);
+                string fileName = reImbursementVM.bill.FileName;
+
+
+
+                string fileNameWithPath = Path.Combine(path, fileName);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    reImbursementVM.bill.CopyTo(stream);
+                }
+
+                reimbursement.File = fileName;
+            }
+            
+
             reimbursement.Date = reImbursementVM.ShiftDate;
             reimbursement.Item = reImbursementVM.Item;
             reimbursement.CreatedDate = DateTime.Now;
             reimbursement.Amount = reImbursementVM.Amount;
             reimbursement.PhysicianId = reImbursementVM.PhysicianId;
-            reimbursement.File = fileName;
+            
             
             bool result = await _invoicerepo.AddDataInReimburesment(reimbursement);
             return result;
@@ -264,6 +309,30 @@ namespace HallodocServices.Implementation
             Reimbursement reimbursement = _invoicerepo.GetReimbursement(id);
             bool result = await  _invoicerepo.RemoveDataInReimburesment(reimbursement);
             return result;
+        }
+
+        public async Task<bool> UpDateReImbursementsSheet(ReImbursementVM reImbursementVM)
+        {
+            Reimbursement reimbursement = _invoicerepo.GetReimbursement(reImbursementVM.ReimbursementId);
+            reimbursement.Item = reImbursementVM.Item;
+            reimbursement.Amount = reImbursementVM.Amount;
+            bool result = await _invoicerepo.UpdateDataInReimburesment(reimbursement);
+            return result;
+        }
+
+        public async Task<bool> Finalize(int id,DateTime startDate)
+        {
+            Invoice invoice = _invoicerepo.GetInvoice(id, startDate);
+            if (invoice == null) 
+            {
+                return false;
+            }
+            else
+            {
+                invoice.IsFinalize = true;
+                await _invoicerepo.UpdateInvoice(invoice);
+                return true;
+            }
         }
     }
 }

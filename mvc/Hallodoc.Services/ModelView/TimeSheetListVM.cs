@@ -12,7 +12,9 @@ namespace HallodocServices.ModelView
       public  int? ShiftCount { get; set; }
       public DateTime? ShiftDate { get; set; }
 
-      public bool IsSubmit { get; set; }
+       public bool IsSubmit { get; set; }
+      
+      public bool? IsFinalize { get; set; }
       
      public double? callHours { get; set; }
 
@@ -35,5 +37,7 @@ namespace HallodocServices.ModelView
     public  DateTime StartDate { get; set; }
         
     public DateTime EndDate { get; set;}
+
+    public List<Reimbursement>? Reimbursements { get; set; }
     }
 }

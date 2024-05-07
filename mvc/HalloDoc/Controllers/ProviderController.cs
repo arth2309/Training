@@ -475,10 +475,31 @@ namespace HalloDoc.Controllers
             return RedirectToAction("BiWeeklySheet");
         }
 
+             public async Task<IActionResult> UpdateReceipt(ReImbursementVM reImbursementVM)
+        {
+
+            bool result = await _invoicingServices.UpDateReImbursementsSheet(reImbursementVM);
+            return RedirectToAction("BiWeeklySheet");
+        }
+
         public async Task<IActionResult> DeleteReceipt(int id)
         {
             bool result = await _invoicingServices.DeleteReImbursementsSheet(id);
             return RedirectToAction("BiWeeklySheet");
+        }
+
+        [HttpGet]
+        
+        public async Task<JsonResult> FinalizeTimeSheet(int PhysicianId,DateTime StartDate)
+        {
+            bool result = await _invoicingServices.Finalize(PhysicianId, StartDate);
+
+            if(!result)
+            {
+                TempData["Finalize"] = "First Submit sheet";
+            }
+            
+            return Json(result);
         }
 
     }
