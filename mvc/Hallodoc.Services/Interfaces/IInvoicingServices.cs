@@ -24,5 +24,11 @@ namespace HallodocServices.Interfaces
         Task<bool> UpDateReImbursementsSheet(ReImbursementVM reImbursementVM);
 
         Task<bool> Finalize(int id, DateTime startDate);
+
+        Task<bool> Approve(int id, DateTime startDate);
+
+        TimeSheetVM GetProviderTimeSheet();
+
+        Task<bool> UpDateTimeSheet(TimeSheetListVM timeSheetListVMs);
     }
 }

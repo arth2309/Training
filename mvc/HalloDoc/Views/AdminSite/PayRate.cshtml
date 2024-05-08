@@ -1,0 +1,361 @@
+﻿@model HallodocServices.ModelView.PayrateVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/css/adminsite/scheduling.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <title>Document</title>
+
+
+
+</head>
+
+<body>
+
+    <div class="sticky-top bg-white shadow">
+        <header>
+            <div class="d-flex d-lg-flex">
+                <button type="button" class="btn btn-outline-info d-flex d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><i class="bi bi-list"></i></button>
+            </div>
+            <div class="img1"><img src="~/images/Fig56. Patient site 1.png" alt="hallodoc" style="height: 90px;"></div>
+            <div class="right">
+                <div class="intro mx-1"><p>Welcome:</p></div>
+                <div class="s intro mx-1"><span><b>@ViewBag.Name</b></span></div>
+                <div class="ilogout">
+                    <a asp-controller="AdminSite" asp-action="AdminLogout">  <button type="button" class="btn btn-outline-info"><i class="bi bi-box-arrow-right"></i></button> </a>
+                </div>
+                <div class="Logout">
+                    <a asp-controller="AdminSite" asp-action="AdminLogout"><button type="button" class="btn btn-outline-info mx-1">Logout</button> </a>
+                </div>
+                <div class="theme mx-1" onclick="toggleTheme()"><img src="~/images/icons8-moon-symbol-25.png" alt="theme"></div>
+            </div>
+        </header>
+
+
+        <div class="offcanvas offcanvas-start d-lg-none" style="width:40%" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Welcome,@ViewBag.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body align-items-center nav-tabs p-0">
+
+
+                <a class="nav-link mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminDashBoard">DashBoard</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="ProviderLocation">Provider Location</a>
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminMyProfile">
+                    My Profile
+                </a>
+
+
+                <a class="nav-link  mt-3 ps-2 dropdown" data-bs-toggle="dropdown">Providers</a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
+                    <li><a class="dropdown-item">Invoicing</a></li>
+                </ul>
+
+                <a class="nav-link  mt-3 ps-2 fw-semibold" style="background-color:#e5f8fd">Partners</a>
+
+
+                <a class="nav-link  mt-3 ps-2" asp-controller="AdminSite" asp-action="AdminAccountAccess">Access</a>
+
+
+                <a class="nav-link  mt-3 ps-2" data-bs-toggle="dropdown">Records</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="PatientHistory">Patient Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="BlockedHistory">Blocked History</a></li>
+                </ul>
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <ul class="nav nav-underline d-none d-lg-flex" id="hide" style="padding-left: 2%; margin-bottom: 40px;">
+            <li class="nav-item ">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>DashBoard</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="ProviderLocation"><b>Provider Location</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminMyProfile"><b>My Profile</b></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Providers</b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="AdminProviderInformation">Provider</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="Scheduling">Scheduling</a></li>
+                    <li><a class="dropdown-item">Invoicing</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active"><b>Partners</b></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-black" asp-controller="AdminSite" asp-action="AdminAccountAccess"><b>Access</b></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link text-black btn" data-bs-toggle="dropdown"><b>Records</b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SearchRecord">Search Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="PatientHistory">Patient Records</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="EmailLogs">Email Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="SMSLogs">SMS Logs</a></li>
+                    <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="BlockedHistory">Blocked History</a></li>
+                </ul>
+            </li>
+
+        </ul>
+
+    </div>
+    <div class="he">
+        <div class="he1 h4">
+            <p>Payrate</p>
+        </div>
+        <div class="he2">
+            <button type="button" class="btn btn-outline-info" onclick="history.back()">&lt Back</button>
+        </div>
+    </div>
+    <div class="ct bg-white pt-2 pb-3 px-3  shadow">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Payrate</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                @if (Model != null)
+                {
+                    <tbody>
+                        <form asp-controller="AdminSite" asp-action="UpDateNightShiftWeekend">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>NightShift_Weekend</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="NightShiftWeekend">
+                                    <label for="floatingInput">Payrate</label>
+                                    <span asp-validation-for="NightShiftWeekend" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+
+                        <form asp-controller="AdminSite" asp-action="UpdateShift">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>Shift</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="Shift">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="Shift" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+                        <form asp-controller="AdminSite" asp-action="UpdateHouseCallsWeekend">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>HouseCalls_Nights_Weekend</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="HouseCallsNightWeekend">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="HouseCallsNightWeekend" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+                        <form asp-controller="AdminSite" asp-action="UpdatePhoneConsults">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>PhoneConsults</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="PhoneConsults">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="PhoneConsults" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+                        <form asp-controller="AdminSite" asp-action="UpdatePhoneConsultsWeekend">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>PhoneConsults_Nights_Weekend</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="PhoneConsultsNightWeekend">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="PhoneConsultsNightWeekend" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+                        <form asp-controller="AdminSite" asp-action="UpdateBatchTesting">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>BatchTesting</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="BatchTesting">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="BatchTesting" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+                        <form asp-controller="AdminSite" asp-action="UpdateHouseCalls">
+                            <input type="hidden" asp-for="PhysicianId">
+                        <tr>
+                            <td>HouseCalls</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="HouseCalls">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="HouseCalls" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td><button type="submit" class="btn btn-info text-white">Edit</button></td>
+                        </tr>
+                        </form>
+                    </tbody>
+                }
+
+                else
+                {
+                    <form asp-controller="AdminSite" asp-action="AddPayrate">
+                    <tbody>
+                        <tr>
+                            <td>NightShift_Weekend</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="NightShiftWeekend">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="NightShiftWeekend" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Shift</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="Shift">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="Shift" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HouseCalls_Nights_Weekend</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="HouseCallsNightWeekend">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="HouseCallsNightWeekend" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PhoneConsults</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="PhoneConsults">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="PhoneConsults" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PhoneConsults_Nights_Weekend</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="PhoneConsultsNightWeekend">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="PhoneConsultsNightWeekend" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>BatchTesting</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="BatchTesting">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="BatchTesting" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HouseCalls</td>
+                            <td>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingInput" placeholder="Payrate" asp-for="HouseCalls">
+                                    <label for="floatingInput">Payrate</label>
+                                     <span asp-validation-for="HouseCalls" class="text-danger"></span>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tr>
+
+                        <td colspan="3">
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-info text-white">Submit</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <input type="hidden" asp-for="PhysicianId" value="@ViewBag.Id">
+                    </form>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

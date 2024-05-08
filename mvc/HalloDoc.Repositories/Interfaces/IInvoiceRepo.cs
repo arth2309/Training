@@ -29,6 +29,8 @@ namespace HalloDoc.Repositories.Interfaces
 
         Task<bool> UpdateInvoice(Invoice invoice);
 
+        Task<bool> UpdateDataInInvoiceDetail(InvoiceDetail invoiceDetail);
+
 
         }
 }

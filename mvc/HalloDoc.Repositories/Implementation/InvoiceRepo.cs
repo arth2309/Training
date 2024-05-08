@@ -35,7 +35,7 @@ namespace HalloDoc.Repositories.Implementation
 
         public List<InvoiceDetail> GetSubmitedDetail(int physicianList, DateTime startDate, DateTime endDate)
         {
-            return _context.InvoiceDetails.Include(a => a.Invoice).Where(a => a.Invoice.PhysicianId == physicianList && DateOnly.FromDateTime(a.Date) >= DateOnly.FromDateTime(startDate) && DateOnly.FromDateTime(a.Date) <= DateOnly.FromDateTime(endDate)).ToList();
+            return _context.InvoiceDetails.Include(a => a.Invoice).Where(a => a.Invoice.PhysicianId == physicianList && DateOnly.FromDateTime(a.Date) >= DateOnly.FromDateTime(startDate) && DateOnly.FromDateTime(a.Date) <= DateOnly.FromDateTime(endDate)).OrderBy(a=>a.Date).ToList();
         }
 
         public async Task<bool> AddDataInReimburesment(Reimbursement reimbursement)
@@ -77,6 +77,13 @@ namespace HalloDoc.Repositories.Implementation
         public async Task<bool> UpdateInvoice(Invoice invoice)
         {
             _context.Invoices.Update(invoice);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateDataInInvoiceDetail(InvoiceDetail invoiceDetail)
+        {
+            _context.InvoiceDetails.Update(invoiceDetail);
             await _context.SaveChangesAsync();
             return true;
         }

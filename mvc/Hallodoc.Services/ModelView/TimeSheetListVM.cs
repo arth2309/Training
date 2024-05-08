@@ -12,9 +12,13 @@ namespace HallodocServices.ModelView
       public  int? ShiftCount { get; set; }
       public DateTime? ShiftDate { get; set; }
 
+      public string? PhysicianName { get; set; }
+
        public bool IsSubmit { get; set; }
       
       public bool? IsFinalize { get; set; }
+
+      public bool? IsApproved { get; set; }
       
      public double? callHours { get; set; }
 

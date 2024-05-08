@@ -44,6 +44,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFkbWluUHJvdmlkZXJJbmZvcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/ApproveBiWeeklySheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEFwcHJvdmVCaVdlZWtseVNoZWV0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/BlockedHistory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXEJsb2NrZWRIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -92,8 +96,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBhdGllbnRSZWNvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/PayRate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFBheVJhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/ProfessionMenu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFByb2Zlc3Npb25NZW51LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/ProviderBiWeeklySheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5TaXRlXFByb3ZpZGVyQmlXZWVrbHlTaGVldC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/AdminSite/ProviderLocation.cshtml]
@@ -518,6 +530,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderScheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlclNjaGVkdWxpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/assig/mvc/HalloDoc/Views/Shared/_ProviderTimeSheetList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm92aWRlclRpbWVTaGVldExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/assig/mvc/HalloDoc/Views/Shared/_RecordList.cshtml]

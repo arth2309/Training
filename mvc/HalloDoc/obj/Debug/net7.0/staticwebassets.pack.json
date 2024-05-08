@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\Files\\Encounter (1).pdf"
     },
     {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Encounter (10).pdf",
+      "PackagePath": "staticwebassets\\Files\\Encounter (10).pdf"
+    },
+    {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Encounter (11).pdf",
       "PackagePath": "staticwebassets\\Files\\Encounter (11).pdf"
     },
@@ -99,6 +103,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-01-19 160841.png.png",
       "PackagePath": "staticwebassets\\Files\\Screenshot 2024-01-19 160841.png.png"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-04-18 104617.png",
+      "PackagePath": "staticwebassets\\Files\\Screenshot 2024-04-18 104617.png"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\Screenshot 2024-04-18 121953.png",
@@ -335,6 +343,10 @@
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\RegionWisePhysician.js",
       "PackagePath": "staticwebassets\\js\\RegionWisePhysician.js"
+    },
+    {
+      "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\adminTimeSheet.js",
+      "PackagePath": "staticwebassets\\js\\adminTimeSheet.js"
     },
     {
       "Id": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\js\\blockList.js",

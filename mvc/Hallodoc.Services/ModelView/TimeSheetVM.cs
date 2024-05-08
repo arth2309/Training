@@ -14,5 +14,7 @@ namespace HallodocServices.ModelView
         public List<TimeSheetListVM>? timeSheetList { get; set; }
 
         public List<Reimbursement>? reimbursements { get; set; }
+
+        public List<Physician>? physicians { get; set; }
     }
 }

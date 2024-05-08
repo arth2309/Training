@@ -16,11 +16,13 @@ namespace HallodocServices.Implementation
 
         private readonly IShiftRepo _shiftrepo;
         private readonly IInvoiceRepo _invoicerepo;
+        private readonly IPhysicianRepo _physicianrepo;
 
-        public InvoicingServices(IShiftRepo shiftrepo, IInvoiceRepo invoicerepo)
+        public InvoicingServices(IShiftRepo shiftrepo, IInvoiceRepo invoicerepo, IPhysicianRepo physicianrepo)
         {
             _shiftrepo = shiftrepo;
             _invoicerepo = invoicerepo;
+            _physicianrepo = physicianrepo;
         }
 
         public TimeSheetVM GetTimeSheet(int id)
@@ -70,6 +72,7 @@ namespace HallodocServices.Implementation
         {
             List<TimeSheetListVM> list = new();
             List<ShiftDetail> shiftDetails = _shiftrepo.GetShiftCount(id);
+            Physician physician = _physicianrepo.GetPhysician(id);
 
             DateTime dateTime1;
             DateTime dateTime2;
@@ -108,6 +111,8 @@ namespace HallodocServices.Implementation
                     timeSheetListVM.NumberOfHouseCall = invoiceDetails[i].NumberOfHouseCalls;
                     timeSheetListVM.NumberOfPhoneConsult = invoiceDetails[i].NumberOfPhoneConsults;
                     timeSheetListVM.IsWeekend = invoiceDetails[i].IsHoliday;
+                    timeSheetListVM.IsApproved = invoiceDetails[i].Invoice.Status == 2 ? true : false; 
+                    timeSheetListVM.PhysicianName = physician.FirstName + " " + physician.LastName;
                     timeSheetListVM.Reimbursements = reimbursements;
                     list.Add(timeSheetListVM);
 
@@ -136,6 +141,7 @@ namespace HallodocServices.Implementation
                     timeSheetListVM.ShiftDate = dateTime5;
                     timeSheetListVM.ShiftCount = shiftDetails.Where(a => DateOnly.FromDateTime(a.ShiftDate) == DateOnly.FromDateTime(dateTime5)).Count();
                     timeSheetListVM.IsSubmit = false;
+                    timeSheetListVM.PhysicianName = physician.FirstName + " " + physician.LastName;
                     timeSheetListVM.callHours = diff;
                     dateTime5 = dateTime5.AddDays(1);
                     list.Add(timeSheetListVM);
@@ -334,5 +340,87 @@ namespace HallodocServices.Implementation
                 return true;
             }
         }
+
+        public async Task<bool> Approve(int id, DateTime startDate)
+        {
+            Invoice invoice = _invoicerepo.GetInvoice(id, startDate);
+            invoice.Status = 2;
+            await _invoicerepo.UpdateInvoice(invoice);
+            return true;
+            
+        }
+
+        public TimeSheetVM GetProviderTimeSheet()
+        {
+            TimeSheetVM vm = new();
+
+            List<TimeSheetDateListVM> timeSheetDateListVMs = new();
+
+            DateTime dateTime = DateTime.Now.AddMonths(-3);
+            DateTime dateTime1 = new DateTime(dateTime.Year, dateTime.Month, 1);
+
+
+
+            for (int i = 0; i < 3; i++)
+            {
+
+                TimeSheetDateListVM dateList = new();
+                TimeSheetDateListVM dateList1 = new();
+
+                DateTime dateTime2 = dateTime1.AddDays(13);
+                DateTime dateTime3 = dateTime1.AddDays(14);
+                DateTime dateTime4 = dateTime1.AddMonths(1).AddDays(-1);
+
+                dateList.StartDate = dateTime1;
+                dateList.EndDate = dateTime2;
+                dateList.val = 1;
+                dateList1.StartDate = dateTime3;
+                dateList1.EndDate = dateTime4;
+                dateList1.val = 2;
+
+                timeSheetDateListVMs.Add(dateList);
+                timeSheetDateListVMs.Add(dateList1);
+
+                dateTime1 = dateTime1.AddMonths(1);
+
+            }
+
+
+            vm.dateList = timeSheetDateListVMs;
+            List<Physician> physicians = _physicianrepo.GetPhysiciansList();
+            vm.physicians = physicians;
+            DateTime dateTime5 = new DateTime(dateTime.Year, dateTime.Month, 1);
+            vm.timeSheetList = GetTimeSheetList(physicians[0].PhysicianId, dateTime5);
+
+            return vm;
+        }
+
+
+        public async Task<bool> UpDateTimeSheet(TimeSheetListVM timeSheetListVMs)
+        {
+            List<InvoiceDetail> invoiceDetails = _invoicerepo.GetSubmitedDetail(timeSheetListVMs.PhysicianId, timeSheetListVMs.StartDate, timeSheetListVMs.EndDate);
+            for(int i = 0; i< invoiceDetails.Count; i++)
+            {
+                InvoiceDetail invoiceDetail = invoiceDetails[i];
+                invoiceDetail.TotalHours = timeSheetListVMs.TotalHours[i];
+                invoiceDetail.NumberOfPhoneConsults = timeSheetListVMs.NumberOfPhoneConsults[i];
+                invoiceDetail.NumberOfHouseCalls = timeSheetListVMs.NumberOfHouseCalls[i];
+                if(timeSheetListVMs.IsHoliday != null)
+                {
+                    invoiceDetail.IsHoliday = timeSheetListVMs.IsHoliday.Contains(invoiceDetail.Date) ? true : false;
+                }
+                else
+                {
+                    invoiceDetail.IsHoliday = false;
+                }
+                
+                bool result =  await _invoicerepo.UpdateDataInInvoiceDetail(invoiceDetail);
+
+            }
+            return true;
+                
+        }
+
+
     }
 }

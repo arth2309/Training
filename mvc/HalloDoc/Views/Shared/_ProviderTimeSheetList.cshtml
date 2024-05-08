@@ -1,0 +1,97 @@
+﻿@model List<HallodocServices.ModelView.TimeSheetListVM>
+
+@if (Model[0].IsApproved == true)
+{
+    <div class="table-responsive mb-3">
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th>Shift Date</th>
+                    <th>Shift</th>
+                    <th>NightShift Weekend</th>
+                    <th>Housecall</th>
+                    <th>Housecall Nights Weekend</th>
+                    <th>Phone consults</th>
+                    <th>Phone consults Nights Weekend</th>
+                    <th>Batch Testing</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
+                        <td>@item.ShiftCount</td>
+                        <td>0</td>
+                        <td>@item.NumberOfHouseCall</td>
+                        <td>0</td>
+                        <td>@item.NumberOfPhoneConsult</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Item</th>
+                    <th>Amount</th>
+                    <th>Bill</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model[0].Reimbursements.Count > 0)
+                {
+                    @foreach (var item in Model[0].Reimbursements)
+                    {
+                        <tr>
+                            <td>@item.Date</td>
+                            <td>@item.Item</td>
+                            <td>@item.Amount</td>
+                            <td>@item.File</td>
+                            <td> <a href="~/Files/@item.File" target="_blank" ><button type="button" class="btn btn-outline-info mx-1">View</button></a></td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+
+else if(Model[0].IsFinalize == true)
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model[0].ShiftDate.Value.ToString("MMM") @Model[0].ShiftDate.Value.Day,@Model[0].ShiftDate.Value.Year</td>
+                    <td>@Model[Model.Count - 1].ShiftDate.Value.ToString("MMM") @Model[Model.Count - 1].ShiftDate.Value.Day,@Model[Model.Count - 1].ShiftDate.Value.Year</td>
+                    <td>Pending</td>
+                    <td><button class="btn btn-outline-info" onclick="biWeeklySheet()">Approve</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+else
+{
+    <div>
+        @Model[0].PhysicianName has not Finalize TimeSheet in Specified Period
+    </div>
+   
+}

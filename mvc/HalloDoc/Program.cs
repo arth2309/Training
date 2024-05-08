@@ -72,6 +72,8 @@ builder.Services.AddScoped<IResetPasswordServices , ResetPasswordServices>();
 builder.Services.AddScoped<IProviderDashBoardServices , ProviderDashBoardServices>();
 builder.Services.AddScoped<IInvoicingServices, InvoicingServices>();
 builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
+builder.Services.AddScoped<IPayrateServices, PayrateServices>();
+builder.Services.AddScoped<IPayrateRepo, PayrateRepo>();
 
 builder.Services.AddSession(
     options => {

@@ -20,13 +20,13 @@ namespace HalloDoc.Repositories.Implementation
 
         public List<Physician> GetPhysiciansData(int regionId)
         {
-            return  _DbContext.Physicians.Where(a=>a.RegionId == regionId).ToList();
+            return _DbContext.Physicians.Where(a => a.RegionId == regionId).ToList();
 
         }
 
         public List<Physician> GetPhysiciansListForScheduling(int regionId)
         {
-            if(regionId == 0)
+            if (regionId == 0)
             {
                 return _DbContext.Physicians.ToList();
             }
@@ -46,14 +46,14 @@ namespace HalloDoc.Repositories.Implementation
             else
             {
 
-                physicianNotifications = _DbContext.PhysicianNotifications.Include(a => a.Physician).Where(a => a.Physician.RegionId == regionId).OrderBy(a=>a.PhysicianId).ToList();
+                physicianNotifications = _DbContext.PhysicianNotifications.Include(a => a.Physician).Where(a => a.Physician.RegionId == regionId).OrderBy(a => a.PhysicianId).ToList();
                 return physicianNotifications;
             }
         }
 
         public List<Physician> GetPhysiciansList()
         {
-            return _DbContext.Physicians.ToList();
+            return _DbContext.Physicians.OrderBy(a => a.PhysicianId).ToList();
 
         }
 
@@ -65,7 +65,7 @@ namespace HalloDoc.Repositories.Implementation
 
         public Physician GetPhysicianForProfile(int? physicianid)
         {
-            return _DbContext.Physicians.Include(a=>a.AspNetUser).Include(a=>a.PhysicianRegions).FirstOrDefault(a => a.PhysicianId == physicianid);
+            return _DbContext.Physicians.Include(a => a.AspNetUser).Include(a => a.PhysicianRegions).FirstOrDefault(a => a.PhysicianId == physicianid);
         }
 
         public async Task<Physician> AddDatainPhysician(Physician physician)
@@ -121,6 +121,6 @@ namespace HalloDoc.Repositories.Implementation
             return physicianRegion;
         }
 
-        
+
     }
 }

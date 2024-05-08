@@ -218,7 +218,7 @@
             <input type="hidden" id="aid" asp-for="Id" />
             <input type="hidden" id="pid" asp-for="AdminId" />
             <div class="mt-2 d-flex justify-content-end">
-                <button type="button" class="btn btn-info text-white mx-1">Enter payRate</button>
+                <a asp-controller="AdminSite" asp-action="PayRate" asp-route-PhysicianId="@Model.AdminId"> <button type="button" class="btn btn-info text-white mx-1">Enter payRate</button> </a>
                 <button type="button" class="btn btn-info text-white mx-1 e2" onclick="Edit2()">Edit</button>
                 <button type="submit" class="btn btn-info text-white mx-1 s2 d-none">Submit</button>
                 <button type="reset" class="btn btn-danger text-white mx-1 s2 d-none" onclick="Cancel2()">Cancel</button>

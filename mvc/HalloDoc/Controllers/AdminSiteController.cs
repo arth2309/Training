@@ -25,6 +25,7 @@ using System;
 using HalloDoc.Repositories.DataModels;
 using DocumentFormat.OpenXml.Drawing.Spreadsheet;
 
+
 namespace HalloDoc.Controllers
 {
     public class AdminSiteController : Controller
@@ -59,10 +60,12 @@ namespace HalloDoc.Controllers
         private readonly IPatientRecordServices _patientRecordServices;
         private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
         private readonly IPatientSendRequestServices _patientSendRequestServices;
+        private readonly IInvoicingServices _invoicingServices;
+        private readonly IPayrateServices _payrateServices;    
 
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices, ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices, IPatientSendRequestServices patientSendRequestServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices, ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices, IPatientSendRequestServices patientSendRequestServices, IInvoicingServices invoicingServices, IPayrateServices payrateServices)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -94,7 +97,8 @@ namespace HalloDoc.Controllers
             _patientRecordServices = patientRecordServices;
             _encryptionDecryptionServices = encryptionDecryptionServices;
             _patientSendRequestServices = patientSendRequestServices;
-
+            _invoicingServices = invoicingServices;
+            _payrateServices = payrateServices;
         }
 
         public IActionResult AdminLogin()
@@ -1103,6 +1107,122 @@ namespace HalloDoc.Controllers
         {
             bool result = await _dashBoardServices.SendEmailForSupport(adminDashBoard.Description);
             return RedirectToAction("AdminDashBoard");
+        }
+
+        public IActionResult ProviderBiWeeklySheet()
+        {
+            TimeSheetVM timeSheetVM = _invoicingServices.GetProviderTimeSheet();
+            return View(timeSheetVM);
+        }
+
+        [HttpGet]
+        public IActionResult GetProviderTimeSheet(int PhysicianId,DateTime StartDate)
+        {
+            List<TimeSheetListVM> timeSheetListVM = _invoicingServices.GetTimeSheetList(PhysicianId, StartDate);
+            return PartialView("_ProviderTimeSheetList",timeSheetListVM);
+        }
+        public IActionResult ApproveBiWeeklySheet()
+        {
+           int id = Int32.Parse(HttpContext.Session.GetString("pid"));
+            ViewBag.Id = id;
+            DateTime dateTime = DateTime.Parse(HttpContext.Session.GetString("startdate1"));
+            TimeSheetVM timeSheetVM = _invoicingServices.GetBiWeeklySheet(id, dateTime);
+            return View(timeSheetVM);
+        }
+
+        [HttpGet]
+        public JsonResult WeeklySheet(int id,DateTime StartDate)
+        {
+
+            HttpContext.Session.SetString("pid", id.ToString());
+            HttpContext.Session.SetString("startdate1", StartDate.ToString());
+            return Json(new { redirect = Url.Action("ApproveBiWeeklySheet", "AdminSite") });
+        }
+
+        [HttpPost]
+       public async  Task<IActionResult> UpdateTimeSheet(TimeSheetListVM timeSheetVM)
+        {
+            bool result = await _invoicingServices.UpDateTimeSheet(timeSheetVM);
+            return RedirectToAction("ApproveBiWeeklySheet");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> ApproveTimeSheet(int PhysicianId, DateTime StartDate)
+        {
+            bool result = await _invoicingServices.Approve(PhysicianId, StartDate);
+            return Json(result);
+        }
+
+        public IActionResult PayRate(int PhysicianId)
+        {
+            ViewBag.Id = PhysicianId;
+            PayrateVM payrateVM = _payrateServices.GetPayrate(PhysicianId);
+            if(payrateVM != null) 
+            {
+                return View(payrateVM);
+            }
+            else
+            {
+                return View();
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPayrate(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.AddPayrate(payrateVM);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> UpDateNightShiftWeekend(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdateNightShiftWeekend(payrateVM.NightShiftWeekend, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateShift(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdateShift(payrateVM.Shift, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateHouseCallsWeekend(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdateHouseCallsWeekend(payrateVM.HouseCallsNightWeekend, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePhoneConsults(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdatePhoneConsults(payrateVM.PhoneConsults, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePhoneConsultsWeekend(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdatePhoneConsultsWeekend(payrateVM.PhoneConsultsNightWeekend, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBatchTesting(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdateBatchTesting(payrateVM.BatchTesting, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateHouseCalls(PayrateVM payrateVM)
+        {
+            bool result = await _payrateServices.UpdateHouseCalls(payrateVM.HouseCalls, payrateVM.PhysicianId);
+            return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
         }
 
 
