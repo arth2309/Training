@@ -27,8 +27,4 @@ public partial class PhysicianPayrate
     public int? BatchTesting { get; set; }
 
     public int? HouseCalls { get; set; }
-
-    [ForeignKey("PhysicianId")]
-    [InverseProperty("PhysicianPayrates")]
-    public virtual Physician? Physician { get; set; }
 }

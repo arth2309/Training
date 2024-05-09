@@ -16,7 +16,6 @@
         .form-control:disabled {
             background-color: #ffffff;
             opacity: 1;
-           
         }
     </style>
 </head>
@@ -111,48 +110,72 @@
 
 
         <form asp-controller="AdminSite" asp-action="UpdateTimeSheet">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Date</th>
-                                <th>On-Call Hours</th>
-                                <th>Total Hours</th>
-                                <th>Weekend/Holiday</th>
-                                <th>Number of Housecalls</th>
-                                <th>Number of Phone consults</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>On-Call Hours</th>
+                            <th>Total Hours</th>
+                            <th>Weekend/Holiday</th>
+                            <th>Number of Housecalls</th>
+                            <th>Number of Phone consults</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
 
-                            <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
-                            <input type="hidden" name="StartDate" value="@Model.timeSheetList[0].ShiftDate">
-                            <input type="hidden" name="EndDate" value="@Model.timeSheetList[Model.timeSheetList.Count()-1].ShiftDate">
+                        <input type="hidden" name="PhysicianId" value="@ViewBag.Id">
+                        <input type="hidden" name="StartDate" value="@Model.timeSheetList[0].ShiftDate">
+                        <input type="hidden" name="EndDate" value="@Model.timeSheetList[Model.timeSheetList.Count()-1].ShiftDate">
 
-                            @foreach (var item in Model.timeSheetList)
-                            {
+                        <input type="hidden" id="start" value="@Model.timeSheetList[0].ShiftDate.Value.Day" />
+                        <input type="hidden" id="end" value="@Model.timeSheetList[Model.timeSheetList.Count-1].ShiftDate.Value.Day" />
+
+                        @foreach (var item in Model.timeSheetList)
+                        {
                             string chk = item.IsWeekend == true ? "checked" : "";
 
-                                <tr>
-                                    <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
-                                    <td>@item.callHours</td>
-                                    <td><input class="form-control" name="TotalHours" type="number" value="@item.TotalHour" /></td>
-                                    <td><input class="form-check-input" name="IsHoliday" type="checkbox" value="@item.ShiftDate" @chk ></td>
-                                    <td><input class="form-control" name="NumberOfHouseCalls" type="number" value="@item.NumberOfHouseCall" /></td>
-                                    <td><input class="form-control" name="NumberOfPhoneConsults" type="number" value="@item.NumberOfPhoneConsult"></td>
-                                </tr>
-                            }
+                            <tr>
+                                <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
+                                <td>@item.callHours</td>
+                                <td><input class="form-control" name="TotalHours" id="total-hour-@item.ShiftDate.Value.Day" type="number" value="@item.TotalHour" oninput="shifttotal()" /></td>
+                                <td><input class="form-check-input" name="IsHoliday" type="checkbox" value="@item.ShiftDate" @chk onclick="weekendtotal()"></td>
+                                <td><input class="form-control" name="NumberOfHouseCalls" id="house-call-@item.ShiftDate.Value.Day" type="number" value="@item.NumberOfHouseCall" oninput="housecalltotal()" /></td>
+                                <td><input class="form-control" name="NumberOfPhoneConsults" id="phone-consult-@item.ShiftDate.Value.Day" type="number" value="@item.NumberOfPhoneConsult" oninput="phoneconsulttotal()"></td>
+                                <td></td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>PayRate</td>
+                            <td></td>
+                            <td><input class="form-control" id="shift-payrate" type="number" value="@(Model.physicianPayrate.Shift == null?0 : Model.physicianPayrate.Shift)" /></td>
+                            <td><input class="form-control" id="weekend-payrate" type="number" value="@(Model.physicianPayrate.NightShiftWeekend == null?0 : Model.physicianPayrate.NightShiftWeekend)" /></td>
+                            <td><input class="form-control" id="house-call-payrate" type="number" value="@(Model.physicianPayrate.HouseCalls == null?0 : Model.physicianPayrate.HouseCalls)" /></td>
+                            <td><input class="form-control" id="phone-consult-payrate" type="number" value="@(Model.physicianPayrate.PhoneConsults == null?0 : Model.physicianPayrate.PhoneConsults)" /></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>Invoice Total</td>
+                            <td></td>
+                            <td><input disabled id="shift-total" class="form-control" type="number" /></td>
+                            <td><input disabled id="weekend-total" class="form-control" type="number" /></td>
+                            <td><input id="house-call-total" class="form-control" type="number" /></td>
+                            <td><input id="phone-consult-total" class="form-control" type="number" /></td>
+                            <td><input id="total" class="form-control" type="number" /></td>
+                        </tr>
 
 
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-info text-white">Submit</button>
-                </div>
-            </form>
-        
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-info text-white">Submit</button>
+            </div>
+        </form>
+
     </div>
 
     <div style="margin-left:20%" class="mb-3">
@@ -189,7 +212,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                
+
                                         <a href="~/Files/@reimbursement.File" target="_blank" class="mx-1 edit-@reimbursement.ReimbursementId"><button type="button" class="btn btn-outline-info mx-1">View</button></a>
                                     </div>
 
@@ -200,17 +223,17 @@
                         }
                         else
                         {
-                          
+
                             <tr>
                                 <td>@item.ShiftDate.Value.ToString("MMM") @item.ShiftDate.Value.Day,@item.ShiftDate.Value.Year</td>
                                 <td><input disabled name="Item" type="text" class="form-control" /></td>
                                 <td><input disabled name="Amount" type="number" class="form-control"></td>
                                 <td>
-                                   <input disabled type="text" class="form-control" style="background-color:#faf9f9">
+                                    <input disabled type="text" class="form-control" style="background-color:#faf9f9">
                                 </td>
-                               <td></td>
+                                <td></td>
                             </tr>
-                           
+
                         }
 
                     }
@@ -231,6 +254,13 @@
 
 
 <script>
+    window.onload = () => {
+        shifttotal();
+        housecalltotal();
+        phoneconsulttotal();
+        weekendtotal();
+       
+    }
     function toggleReceipt() {
         if ($('#resheet').hasClass('d-none')) {
             $('#resheet').removeClass('d-none');
@@ -240,7 +270,7 @@
         }
     }
 
-   
+
 
     function approve() {
         $.ajax({
@@ -253,16 +283,80 @@
             },
 
             success: function (res) {
-        
-                    window.location.href = "/AdminSite/ProviderBiWeeklySheet"
 
-               
+                window.location.href = "/AdminSite/ProviderBiWeeklySheet"
+
+
             }
 
         });
     }
 
-    
+
+    function shifttotal() {
+        var start = $('#start').val();
+        var end = $('#end').val();
+        var temp = 0;
+        for (var i = start; i <= end; i++) {
+            temp = temp + parseInt($('#total-hour-' + i).val());
+        }
+
+        temp = temp * parseInt(($('#shift-payrate').val()));
+        $('#shift-total').val(temp);
+
+        total();
+
+    }
+
+    function weekendtotal() {
+        var temp = 0;
+        var checkedBoxes = document.querySelectorAll('input[name=IsHoliday]:checked');
+        temp = temp + checkedBoxes.length;
+        temp = temp * parseInt(($('#weekend-payrate').val()));
+        $('#weekend-total').val(temp);
+
+        total();
+
+
+    }
+
+    function housecalltotal() {
+        var start = $('#start').val();
+        var end = $('#end').val();
+        var temp = 0;
+        for (var i = start; i <= end; i++) {
+            temp = temp + parseInt($('#house-call-' + i).val());
+        }
+
+        temp = temp * parseInt(($('#house-call-payrate').val()));
+        $('#house-call-total').val(temp);
+
+        total();
+
+    }
+
+    function phoneconsulttotal() {
+        var start = $('#start').val();
+        var end = $('#end').val();
+        var temp = 0;
+        for (var i = start; i <= end; i++) {
+            temp = temp + parseInt($('#phone-consult-' + i).val());
+        }
+
+        temp = temp * parseInt(($('#phone-consult-payrate').val()));
+        $('#phone-consult-total').val(temp);
+
+        total();
+
+    }
+
+    function total()
+    {
+        var temp = 0;
+        temp = temp + parseInt($('#shift-total').val()) + parseInt($('#house-call-total').val()) + parseInt($('#weekend-total').val()) + parseInt($('#phone-consult-total').val());
+        $('#total').val(temp);
+
+    }
 
 
 </script>

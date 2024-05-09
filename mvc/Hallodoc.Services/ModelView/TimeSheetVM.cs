@@ -16,5 +16,7 @@ namespace HallodocServices.ModelView
         public List<Reimbursement>? reimbursements { get; set; }
 
         public List<Physician>? physicians { get; set; }
+
+        public PhysicianPayrate? physicianPayrate { get; set; }
     }
 }

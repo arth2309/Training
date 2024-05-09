@@ -17,12 +17,14 @@ namespace HallodocServices.Implementation
         private readonly IShiftRepo _shiftrepo;
         private readonly IInvoiceRepo _invoicerepo;
         private readonly IPhysicianRepo _physicianrepo;
+        private readonly IPayrateRepo _payraterepo;
 
-        public InvoicingServices(IShiftRepo shiftrepo, IInvoiceRepo invoicerepo, IPhysicianRepo physicianrepo)
+        public InvoicingServices(IShiftRepo shiftrepo, IInvoiceRepo invoicerepo, IPhysicianRepo physicianrepo, IPayrateRepo payraterepo)
         {
             _shiftrepo = shiftrepo;
             _invoicerepo = invoicerepo;
             _physicianrepo = physicianrepo;
+            _payraterepo = payraterepo;
         }
 
         public TimeSheetVM GetTimeSheet(int id)
@@ -181,6 +183,8 @@ namespace HallodocServices.Implementation
             List<InvoiceDetail> invoiceDetails = _invoicerepo.GetSubmitedDetail(id, dateTime1, dateTime2);
             DateTime dateTime5 = date;
 
+            PhysicianPayrate physicianPayrate = _payraterepo.GetData(id);
+
             if (invoiceDetails.Count > 0)
             {
                 for (int i = 0; i < invoiceDetails.Count; i++)
@@ -194,7 +198,6 @@ namespace HallodocServices.Implementation
                     timeSheetListVM.NumberOfHouseCall = invoiceDetails[i].NumberOfHouseCalls;
                     timeSheetListVM.NumberOfPhoneConsult = invoiceDetails[i].NumberOfPhoneConsults;
                     timeSheetListVM.IsWeekend = invoiceDetails[i].IsHoliday;
-
                     list.Add(timeSheetListVM);
 
                 }
@@ -235,7 +238,7 @@ namespace HallodocServices.Implementation
 
             timeSheetVM.timeSheetList = list;
             timeSheetVM.reimbursements = reimbursement;
-
+            timeSheetVM.physicianPayrate = physicianPayrate;
             return timeSheetVM;
         }
 

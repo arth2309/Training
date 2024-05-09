@@ -269,8 +269,6 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<PhysicianPayrate>(entity =>
         {
             entity.HasKey(e => e.PayrateId).HasName("PhysicianPayrate_pkey");
-
-            entity.HasOne(d => d.Physician).WithMany(p => p.PhysicianPayrates).HasConstraintName("PhysicianPayrate_PhysicianId_fkey");
         });
 
         modelBuilder.Entity<PhysicianRegion>(entity =>

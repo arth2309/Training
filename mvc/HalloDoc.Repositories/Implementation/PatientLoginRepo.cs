@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using HalloDoc.Repositories.DataModels;
 using HalloDoc.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using HalloDoc.Repositories.DataContext;
 
 namespace HalloDoc.Repositories.Implementation;
 
 public class PatientLoginRepo : IPatientLoginRepo
 {
-    private readonly HalloDoc.Repositories.DataContext.ApplicationDbContext _dbcontext;
+    private readonly ApplicationDbContext _dbcontext;
 
-    public PatientLoginRepo(HalloDoc.Repositories.DataContext.ApplicationDbContext dbcontext)
+    public PatientLoginRepo(ApplicationDbContext dbcontext)
     {
         _dbcontext = dbcontext;
     }
