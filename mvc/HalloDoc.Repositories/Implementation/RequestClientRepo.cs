@@ -68,7 +68,7 @@ namespace HalloDoc.Repositories.Implementation
             (name == null || a.FirstName.Contains(name) || a.LastName.Contains(name)) &&
             ((status == 1 && a.Request.Status == 1 && a.Request.PhysicianId == null) || a.Request.Status == status);
 
-            return _dbcontext.RequestClients.Include(r => r.Request).Where(predicate).ToList();
+            return _dbcontext.RequestClients.Include(r => r.Request).ThenInclude(p=>p.Physician).Where(predicate).ToList();
 
 
         }

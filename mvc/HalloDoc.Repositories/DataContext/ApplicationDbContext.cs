@@ -32,6 +32,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<CaseTag> CaseTags { get; set; }
 
+    public virtual DbSet<Chat> Chats { get; set; }
+
     public virtual DbSet<Concierge> Concierges { get; set; }
 
     public virtual DbSet<EmailLog> EmailLogs { get; set; }
@@ -174,6 +176,19 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<CaseTag>(entity =>
         {
             entity.HasKey(e => e.CaseTagId).HasName("CaseTag_pkey");
+        });
+
+        modelBuilder.Entity<Chat>(entity =>
+        {
+            entity.HasKey(e => e.ChatId).HasName("Chat_pkey");
+
+            entity.HasOne(d => d.Reciever).WithMany(p => p.ChatRecievers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Chat_RecieverId_fkey");
+
+            entity.HasOne(d => d.Sender).WithMany(p => p.ChatSenders)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Chat_SenderId_fkey");
         });
 
         modelBuilder.Entity<Concierge>(entity =>

@@ -3,6 +3,9 @@ using HalloDoc.Repositories.Interfaces;
 using HalloDoc.Repositories.Implementation;
 using HallodocServices.Interfaces;
 using HallodocServices.Implementation;
+using HalloDoc.Hubs;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +40,7 @@ builder.Services.AddScoped<IProfessionRepo, ProfessionRepo>();
 builder.Services.AddScoped<IVendorRepo, VendorRepo>();
 builder.Services.AddScoped<IOrderDetailRepo, OrderDetailRepo>();
 builder.Services.AddScoped<IClearCaseServices, ClearCaseServices>();
-builder.Services.AddScoped<ISendAgreementServices,SendAgreementServices>();
+builder.Services.AddScoped<ISendAgreementServices, SendAgreementServices>();
 builder.Services.AddScoped<IPasswordHashServices, PasswordHashServices>();
 builder.Services.AddScoped<IPatientUserProfileServices, PatientUserProfileServices>();
 builder.Services.AddScoped<IPatientShowDocumentsServices, PatientShowDocumentsServices>();
@@ -55,7 +58,7 @@ builder.Services.AddScoped<IEncounterRepo, EncounterRepo>();
 builder.Services.AddScoped<IRoleRepo, RoleRepo>();
 builder.Services.AddScoped<ICreateAdminAccountServices, CreateAdminAccountServices>();
 builder.Services.AddScoped<ICreatePhysicianAccountServices, CreatePhysicianAccountServices>();
-builder.Services.AddScoped<ISchedulingServices, SchedulingServices>();  
+builder.Services.AddScoped<ISchedulingServices, SchedulingServices>();
 builder.Services.AddScoped<IShiftRepo, ShiftRepo>();
 builder.Services.AddScoped<IProviderLocationServices, ProviderLocationServices>();
 builder.Services.AddScoped<IProfessionMenuServices, ProfessionMenuServices>();
@@ -68,21 +71,29 @@ builder.Services.AddScoped<ISearchRecordServices, SearchRecordServices>();
 builder.Services.AddScoped<IPatientHistoryServices, PatientHistoryServices>();
 builder.Services.AddScoped<IPatientRecordServices, PatientRecordServices>();
 builder.Services.AddScoped<IEncryptionDecryptionServices, EncryptionDecryptionServices>();
-builder.Services.AddScoped<IResetPasswordServices , ResetPasswordServices>();
-builder.Services.AddScoped<IProviderDashBoardServices , ProviderDashBoardServices>();
+builder.Services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
+builder.Services.AddScoped<IProviderDashBoardServices, ProviderDashBoardServices>();
 builder.Services.AddScoped<IInvoicingServices, InvoicingServices>();
 builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
 builder.Services.AddScoped<IPayrateServices, PayrateServices>();
 builder.Services.AddScoped<IPayrateRepo, PayrateRepo>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IChatRepo,ChatRepo>();
 
 builder.Services.AddSession(
-    options => {
+    options =>
+    {
         options.Cookie.Name = ".MySession";
         options.IdleTimeout = TimeSpan.FromMinutes(20);
         options.Cookie.HttpOnly = true;
         options.Cookie.IsEssential = true;
     }
 );
+
+builder.Services.AddSignalR(o =>
+{
+    o.EnableDetailedErrors = true;
+});
 
 
 
@@ -108,6 +119,8 @@ app.UseSession();
 
 
 app.UseAuthorization();
+app.MapHub<Chathub>("/chathub");
+
 
 app.MapControllerRoute(
     name: "default",

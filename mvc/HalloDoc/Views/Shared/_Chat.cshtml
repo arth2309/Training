@@ -1,0 +1,83 @@
+﻿@model List<HallodocServices.ModelView.ChatVM>
+
+<div id="chat-1">
+    <style>
+        .senderChat {
+            max-width: fit-content;
+            margin-right: 0;
+            margin-left: auto;
+        }
+
+        .receiverChat {
+            max-width: fit-content;
+        }
+    </style>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="chat" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header bg-info text-white">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="messagesList">
+
+           @if(Model != null)
+           {
+                @foreach (var item in Model)
+                {
+                        @if (item.RecieverId == ViewBag.RecieverId)
+                        {
+                            <div class="bg-info-subtle rounded-1 border d-flex justify-content-end my-2 senderChat p-2">@item.Chat</div>
+                        }
+                        else
+                        {
+                            <div class="bg-light-subtle rounded-1 border d-flex justify-content-start my-2 receiverChat p-2">@item.Chat</div>
+                        }
+
+
+                }
+           }
+                
+        </div>
+        <div class="sticky-bottom row w-100" style="bottom:0px ;position:absolute; padding:3%">
+            <div class="col-10">
+                <input id="messageInput" class="form-control" />
+                    <input id="rceid" type="hidden" value="@ViewBag.RecieverId" />
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                <button id="sendButton" class="btn btn-info text-white"><i class="bi bi-send"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script>
+    "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+
+    //Disable the send button until connection is established.
+    document.getElementById("sendButton").disabled = true;
+
+    connection.on("ReceiveMessage", function (message) {
+            var div = document.createElement("div");
+            div.classList.add("bg-info-subtle", "rounded-1", "border", "d-flex", "justify-content-end", "my-2", "senderChat", "p-2");
+            document.getElementById("messagesList").appendChild(div);
+            div.textContent = `${message}`;
+    });
+
+    connection.start().then(function () {
+        document.getElementById("sendButton").disabled = false;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var message = document.getElementById("messageInput").value;
+            connection.invoke("SendMessage", parseInt($('#sid').val()), parseInt($('#rceid').val()), message).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
+    });
+</script>
+
+</div>

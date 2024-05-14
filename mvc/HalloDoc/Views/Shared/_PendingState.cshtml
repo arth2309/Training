@@ -31,7 +31,7 @@
 
             @foreach (var item in Model)
             {
-
+                <input type="hidden" id="admin-chat-@item.RequestId" value="@item.RecieverId">
                 string backcolor;
                 @if (@item.RequestTypeId == 1)
                 {
@@ -66,13 +66,14 @@
                     
                     <td>@Html.DisplayFor(modelItem => item.Notes)</td>
 
-                    <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
+                    <td><button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas" data-bs-target="#chat" aria-controls="offcanvasExample" onclick="chat(@item.RequestId)"><i class="bi bi-person"></i>Provider</button></td>
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">
                                 Action
                             </button>
                             <ul class="dropdown-menu">
+                               
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewCase" asp-route-rcid=@item.id><i class="bi bi-card-list"></i> View Case</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewUploads" asp-route-reqID="@item.RequestId"><i class="bi bi-cloud-arrow-up"></i> View Uploads</a></li>
                                 <li><a class="dropdown-item" asp-controller="AdminSite" asp-action="ViewNotes" asp-route-reqid="@item.RequestId"><i class="bi bi-book"></i> View Notes</a></li>

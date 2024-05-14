@@ -314,3 +314,4 @@ D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\itext.bouncy-castle-adapter.dll
 D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\bc-fips-1.0.2.dll
 D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\bcpkix-fips-1.0.2.dll
 D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\itext.bouncy-castle-fips-adapter.dll
+D:\Projects\assig\mvc\HalloDoc\bin\Debug\net7.0\libman.json

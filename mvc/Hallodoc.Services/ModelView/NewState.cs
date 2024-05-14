@@ -70,6 +70,10 @@ namespace HallodocServices.ModelView
 
         public bool? IsFinalize { get; set; }
 
+        public int? SenderId { get; set; }
+
+        public int? RecieverId { get; set; }
+
        
     }
 }

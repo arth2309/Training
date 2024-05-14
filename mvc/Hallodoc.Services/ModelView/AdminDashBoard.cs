@@ -23,5 +23,7 @@ namespace HallodocServices.ModelView
 
         [Required]
         public string? Description { get; set; }
+
+        public List<ChatVM>? ChatVMs { get; set; }
     }
 }

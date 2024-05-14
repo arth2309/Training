@@ -144,6 +144,8 @@
 
     }
    
+    <partial name="~/Views/Shared/_Chat.cshtml" model="Model.ChatVMs"></partial>
+
     <div class="modal fade" id="ClearCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -529,7 +531,7 @@
         </div>
 
        
-
+        <input type="hidden" id="sid" value="@ViewBag.Id" />
 
     </div>
    <script>
@@ -586,6 +588,25 @@
 
         function removeValidationTransfer() {
             $('#tdes').text("");
+        }
+
+
+        function chat(temp)
+        {
+            $.ajax({
+                url:'/AdminSite/Chat',
+                type:'GET',
+                data:{
+                    SenderId: $('#sid').val(),
+                    RecieverId: $('#admin-chat-' + temp).val()
+                },
+                success: function(res)
+                {
+                    console.log(res);
+                    $('#chat-1').html(res);
+                    $('#chat').offcanvas('show');
+                }
+            });
         }
    </script>
    

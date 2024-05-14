@@ -178,6 +178,7 @@ namespace HallodocServices.Implementation
                     newState.StrMonth = requestClients[i].StrMonth;
                     newState.year = requestClients[i].IntYear;
                     newState.day = requestClients[i].IntDate;
+                    newState.RecieverId = requestClients[i].Request.PhysicianId != null ? requestClients[i].Request.Physician.AspNetUserId : 0;
 
                 };
                 newStates.Add(newState);

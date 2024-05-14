@@ -61,11 +61,12 @@ namespace HalloDoc.Controllers
         private readonly IEncryptionDecryptionServices _encryptionDecryptionServices;
         private readonly IPatientSendRequestServices _patientSendRequestServices;
         private readonly IInvoicingServices _invoicingServices;
-        private readonly IPayrateServices _payrateServices;    
+        private readonly IPayrateServices _payrateServices;
+        private readonly IChatService _chatService;
 
 
 
-        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices, ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices, IPatientSendRequestServices patientSendRequestServices, IInvoicingServices invoicingServices, IPayrateServices payrateServices)
+        public AdminSiteController(IAdminDashBoardServices dashBoardServices, IViewCaseServices viewCaseServices, IViewNoteServices viewNoteServices, ICancelCaseServices cancelCaseServices, IAssignCaseServices assignCaseServices, IBlockCaseServices blockCaseServices, IViewUploadsServices viewUploadsServices, IJwtServices jwtServices, IPatientLoginServices loginServices, ISendOrderServices sendOrderServices, IClearCaseServices clearCaseServices, ISendAgreementServices sendAgreementServices, ICloseCaseServices closeCaseServices, IAdminProfileServices adminProfileServices, IAdminProviderInfoServices adminProviderInfoServices, IAdminAccessRoleServices adminAccessRoleServices, IEncounterFormServices encounterFormServices, ICreateAdminAccountServices createAdminAccountServices, ICreatePhysicianAccountServices createPhysicianAccountServices, ISchedulingServices schedulingServices, IProviderLocationServices providerLocationServices, IProfessionMenuServices professionMenuServices, IBlockHistoryServices blockHistoryServices, IEmailLogServices emailLogServices, ISMSLogServices sMSLogServices, ISearchRecordServices searchRecordServices, IPatientHistoryServices patientHistoryServices, IPatientRecordServices patientRecordServices, IEncryptionDecryptionServices encryptionDecryptionServices, IPatientSendRequestServices patientSendRequestServices, IInvoicingServices invoicingServices, IPayrateServices payrateServices, IChatService chatService)
         {
             _dashBoardServices = dashBoardServices;
             _viewCaseServices = viewCaseServices;
@@ -99,6 +100,7 @@ namespace HalloDoc.Controllers
             _patientSendRequestServices = patientSendRequestServices;
             _invoicingServices = invoicingServices;
             _payrateServices = payrateServices;
+            _chatService = chatService;
         }
 
         public IActionResult AdminLogin()
@@ -133,6 +135,7 @@ namespace HalloDoc.Controllers
                 TempData["success"] = "Successfully Login";
 
                 UserVM userVM = _loginServices.Object(id);
+                Response.Cookies.Append("sid",id.ToString());
                 Response.Cookies.Append("Name", userVM.UserName);
                 Response.Cookies.Append("lid", userVM.Id.ToString());
                 if (role == "Provider")
@@ -167,6 +170,7 @@ namespace HalloDoc.Controllers
         public IActionResult AdminDashBoard()
         {
             ViewBag.Name = Request.Cookies["Name"];
+            ViewBag.Id = Request.Cookies["sid"]; 
             AdminDashBoard adminDashBoard = _dashBoardServices.newStates(1, 1, 0, 0, null);
             return View(adminDashBoard);
         }
@@ -1170,8 +1174,12 @@ namespace HalloDoc.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddPayrate(PayrateVM payrateVM)
-        {
-            bool result = await _payrateServices.AddPayrate(payrateVM);
+      {
+            if(ModelState.IsValid) 
+            {
+                bool result = await _payrateServices.AddPayrate(payrateVM);
+            }
+           
             return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
         }
 
@@ -1223,6 +1231,14 @@ namespace HalloDoc.Controllers
         {
             bool result = await _payrateServices.UpdateHouseCalls(payrateVM.HouseCalls, payrateVM.PhysicianId);
             return RedirectToAction("PayRate", new { PhysicianId = payrateVM.PhysicianId });
+        }
+
+        [HttpGet]
+        public IActionResult Chat(int SenderId,int RecieverId)
+        {
+            List<ChatVM> chatVMs = _chatService.GetChatlist(SenderId, RecieverId); 
+            ViewBag.RecieverId = RecieverId;
+            return PartialView("_Chat",chatVMs);
         }
 
 
