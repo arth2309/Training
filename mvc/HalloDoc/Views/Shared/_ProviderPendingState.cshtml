@@ -25,6 +25,7 @@
 
             @foreach (var item in Model)
             {
+                <input type="hidden" id="admin-chat-@item.RequestId" value="@item.RecieverId">
 
                 if (Model != null)
                 {
@@ -62,7 +63,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City),@Html.DisplayFor(modelItem => item.State)</td>
 
 
-                    <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Admin</button></td>
+                    <td><button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas" data-bs-target="#chat" aria-controls="offcanvasExample" onclick="chat(@item.RequestId)"><i class="bi bi-person"></i>Admin</button></td>
                     <td>
                         
                             <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">

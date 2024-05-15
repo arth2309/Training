@@ -9,7 +9,7 @@ namespace HallodocServices.Interfaces
 {
     public interface IChatService
     {
-        List<ChatVM> GetChatlist(int SenderId, int RecieverId);
+        List<ChatVM> GetChatlist(int SenderId, int RecieverId,int RequestId);
         Task<bool> AddChat(ChatVM chatVM);
     }
 }

@@ -17,9 +17,9 @@ namespace HallodocServices.Implementation
         {
             _chatRepo = chatRepo;
         }
-        public List<ChatVM> GetChatlist(int SenderId,int RecieverId)
+        public List<ChatVM> GetChatlist(int SenderId,int RecieverId, int RequestId)
         {
-            List<Chat> chats = _chatRepo.GetChats(SenderId,RecieverId);
+            List<Chat> chats = _chatRepo.GetChats(SenderId,RecieverId,RequestId);
             List<ChatVM> chatVMs = new List<ChatVM>();
 
             foreach(var chat in chats) 
@@ -29,6 +29,7 @@ namespace HallodocServices.Implementation
                 chatVM.RecieverId = chat.RecieverId;
                 chatVM.CreatedDate = chat.CreatedDate;
                 chatVM.Chat = chat.Chat1;
+                chatVM.RequestId = chat.RequestId;
                 chatVMs.Add(chatVM);
             }
 
@@ -42,6 +43,7 @@ namespace HallodocServices.Implementation
             chat.RecieverId = chatVM.RecieverId;
             chat.CreatedDate = DateTime.Now;
             chat.Chat1 = chatVM.Chat;
+            chat.RequestId = chatVM.RequestId;
             bool result = await _chatRepo.AddData(chat);
             return result;
         }

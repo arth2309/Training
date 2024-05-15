@@ -25,9 +25,9 @@ namespace HalloDoc.Repositories.Implementation
             return true;
         }
 
-        public List<Chat> GetChats(int SenderId,int RecieverId) 
+        public List<Chat> GetChats(int SenderId,int RecieverId, int RequestId) 
         {
-            return _context.Chats.Where(a => (a.SenderId == SenderId && a.RecieverId == RecieverId) || (a.SenderId == RecieverId && a.RecieverId == SenderId) ).ToList();
+            return _context.Chats.Where(a => (a.SenderId == SenderId && a.RecieverId == RecieverId && a.RequestId == RequestId) || (a.SenderId == RecieverId && a.RecieverId == SenderId && a.RequestId == RequestId) ).OrderBy(a=>a.CreatedDate).ToList();
         }
     }
            

@@ -90,6 +90,9 @@ public partial class Request
     public int? CreatedUserId { get; set; }
 
     [InverseProperty("Request")]
+    public virtual ICollection<Chat> Chats { get; set; } = new List<Chat>();
+
+    [InverseProperty("Request")]
     public virtual ICollection<EmailLog> EmailLogs { get; set; } = new List<EmailLog>();
 
     [ForeignKey("PhysicianId")]

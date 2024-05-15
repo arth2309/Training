@@ -16,5 +16,7 @@ namespace HallodocServices.ModelView
         public DateTime CreatedDate { get; set; }
 
         public string? Chat { get; set; } 
+
+        public int RequestId { get; set; }
     }
 }

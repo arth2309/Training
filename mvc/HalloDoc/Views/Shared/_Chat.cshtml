@@ -1,6 +1,6 @@
 ﻿@model List<HallodocServices.ModelView.ChatVM>
 
-<div id="chat-1">
+
     <style>
         .senderChat {
             max-width: fit-content;
@@ -13,71 +13,186 @@
         }
     </style>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="chat" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header bg-info text-white">
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <div id="messagesList">
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="chat" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header bg-info text-white">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onclick="stopConnection()"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="messagesList" class="mb-5">
 
-           @if(Model != null)
-           {
-                @foreach (var item in Model)
+                @if (Model != null)
                 {
-                        @if (item.RecieverId == ViewBag.RecieverId)
+
+                    @if (Model.Count > 0)
+                    {
+
+                    <input id="lastConversationDate" type="hidden" value="@Model[Model.Count-1].CreatedDate" />
+
+                        DateTime dateTime = new DateTime(1, 1, 1);
+                        var Date = DateOnly.FromDateTime(dateTime);
+                        @foreach (var item in Model)
                         {
-                            <div class="bg-info-subtle rounded-1 border d-flex justify-content-end my-2 senderChat p-2">@item.Chat</div>
-                        }
-                        else
-                        {
-                            <div class="bg-light-subtle rounded-1 border d-flex justify-content-start my-2 receiverChat p-2">@item.Chat</div>
-                        }
+                            @if (DateOnly.FromDateTime(item.CreatedDate) != Date)
+                            {
+                            <div id="today" class="d-flex justify-content-center">
+                              
+                            </div>
+
+                                @if (DateOnly.FromDateTime(@item.CreatedDate) == DateOnly.FromDateTime(DateTime.Now))
+                                {
+                                    <div class="d-flex justify-content-center">
+                                        <div class="bg-secondary-subtle rounded-2 p-2">Today</div>
+                                    </div>
+                                }
+                                else if (DateOnly.FromDateTime(@item.CreatedDate) == DateOnly.FromDateTime(DateTime.Now.AddDays(-1)))
+                                {
+                                    <div class="d-flex justify-content-center">
+                                        <div class="bg-secondary-subtle rounded-2 p-2">
+                                            Yesterday
+                                        </div>
+                                    </div>
+                                }
+                                else if (DateOnly.FromDateTime(@item.CreatedDate) >= DateOnly.FromDateTime(DateTime.Now.AddDays(-6)))
+                                {
+                                    <div class="d-flex justify-content-center">
+                                        <div class="bg-secondary-subtle rounded-2 p-2">
+                                            @item.CreatedDate.DayOfWeek
+                                        </div>
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div class="d-flex justify-content-center">
+                                        <div class="bg-secondary-subtle rounded-2 p-2">
+                                            @item.CreatedDate.Day @item.CreatedDate.ToString("MMM") @item.CreatedDate.Year
+                                        </div>
+                                    </div>
+                                }
+
+                                Date = DateOnly.FromDateTime(item.CreatedDate);
+                            }
+                            @if (item.RecieverId == ViewBag.RecieverId)
+                            {
+                                <div class="my-2">
+                                <div class="d-flex justify-content-end">
+                                    <div class="bg-info-subtle rounded-1  flex-wrap senderChat p-2">
+                                        @item.Chat
+                                        
+                                        </div>
+                                    <div class="arrow-right"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-end" style="font-size:small">@item.CreatedDate.Hour : @item.CreatedDate.ToString("mm")</div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="bg-light-subtle rounded-1 border border-secondary-subtle d-flex justify-content-start my-2 receiverChat p-2">@item.Chat</div>
+                            }
 
 
+                        }
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-center">
+                            <div class="bg-secondary-subtle rounded-2 p-2">Today</div>
+                        </div>
+                    }
                 }
-           }
-                
-        </div>
-        <div class="sticky-bottom row w-100" style="bottom:0px ;position:absolute; padding:3%">
-            <div class="col-10">
-                <input id="messageInput" class="form-control" />
-                    <input id="rceid" type="hidden" value="@ViewBag.RecieverId" />
+               
+
             </div>
-            <div class="col-2 d-flex justify-content-end">
-                <button id="sendButton" class="btn btn-info text-white"><i class="bi bi-send"></i></button>
+            <div class="sticky-bottom row w-100 bg-white" style="bottom:0px ;position:absolute; padding:3%">
+                <div class="col-10">
+                    <input id="messageInput" class="form-control" oninput="sendChat()"/>
+                    <input id="rceid" type="hidden" value="@ViewBag.RecieverId" />
+                    <input id="reqid" type="hidden" value="@ViewBag.RequestId" />
+               
+                </div>
+                <div class="col-2 d-flex justify-content-end d-none" id="sendchat">
+                    <button id="sendButton" class="btn btn-info text-white"><i class="bi bi-send"></i></button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-<script>
-    "use strict";
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script>
+        "use strict";
 
-    var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 
-    //Disable the send button until connection is established.
-    document.getElementById("sendButton").disabled = true;
+        
 
-    connection.on("ReceiveMessage", function (message) {
-            var div = document.createElement("div");
-            div.classList.add("bg-info-subtle", "rounded-1", "border", "d-flex", "justify-content-end", "my-2", "senderChat", "p-2");
-            document.getElementById("messagesList").appendChild(div);
-            div.textContent = `${message}`;
-    });
+        //Disable the send button until connection is established.
+        document.getElementById("sendButton").disabled = true;
 
-    connection.start().then(function () {
-        document.getElementById("sendButton").disabled = false;
-    }).catch(function (err) {
-        return console.error(err.toString());
-    });
-    document.getElementById("sendButton").addEventListener("click", function (event) {
-        var message = document.getElementById("messageInput").value;
-            connection.invoke("SendMessage", parseInt($('#sid').val()), parseInt($('#rceid').val()), message).catch(function (err) {
+        connection.on("ReceiveMessage", function (ReceiverId, message) {
+
+        var date = document.getElementById("lastConversationDate").value.slice(0, 10);
+        var today = new Date().toLocaleDateString();
+        console.log(date.trim() + "=" + today);
+        if (date.trim() != today) {
+            var showDate = document.createElement("div");
+            showDate.classList.add("bg-secondary-subtle", "rounded-2",  "p-2");
+            document.getElementById("messagesList").appendChild(showDate);
+            showDate.textContent = "Today";
+        }
+
+            if (ReceiverId == parseInt($('#rceid').val()))
+            {
+                var div1 = document.createElement("div");
+                div1.classList.add("bg-info-subtle", "rounded-1", "border", "d-flex", "justify-content-end", "my-2", "senderChat", "p-2");
+                document.getElementById("messagesList").append(div1);
+                div1.textContent = `${message}`;
+                
+            }
+            else
+            {
+                var div1 = document.createElement("div");
+                div1.classList.add("bg-light-subtle", "rounded-1", "border", "d-flex", "justify-content-start", "my-2", "receiverChat", "p-2");
+                document.getElementById("messagesList").append(div1);
+                div1.textContent = `${message}`;
+              
+            }
+
+        document.getElementById("messageInput").value = '';
+          
+        });
+
+        connection.start().then(function () {
+            document.getElementById("sendButton").disabled = false;
+        }).catch(function (err) {
             return console.error(err.toString());
         });
-        event.preventDefault();
-    });
-</script>
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            var message = document.getElementById("messageInput").value;
+            connection.invoke("SendMessage", parseInt($('#sid').val()), parseInt($('#rceid').val()), parseInt($('#reqid').val()), message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
 
-</div>
+        function stopConnection()
+        {
+            connection.stop();
+        }
+
+    function sendChat()
+    {
+        var message = document.getElementById("messageInput").value;
+
+        
+        if(message != '')
+        {
+
+            document.getElementById("sendchat").classList.remove("d-none");
+        }
+        else
+        {
+            document.getElementById("sendchat").classList.add("d-none");
+        }
+    }
+    </script>
+

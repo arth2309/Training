@@ -22,9 +22,15 @@ public partial class Chat
     [Column("chat", TypeName = "character varying")]
     public string Chat1 { get; set; } = null!;
 
+    public int RequestId { get; set; }
+
     [ForeignKey("RecieverId")]
     [InverseProperty("ChatRecievers")]
     public virtual AspNetUser Reciever { get; set; } = null!;
+
+    [ForeignKey("RequestId")]
+    [InverseProperty("Chats")]
+    public virtual Request Request { get; set; } = null!;
 
     [ForeignKey("SenderId")]
     [InverseProperty("ChatSenders")]

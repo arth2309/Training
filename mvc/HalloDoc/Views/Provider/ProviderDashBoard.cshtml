@@ -121,9 +121,10 @@
         </script>
 
     }
-   
 
-   
+
+    <div id="chat-1">
+    </div>
 
     <div class="modal fade" id="sendlink" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -397,8 +398,8 @@
                     </svg>
                     Concierge
                         </button >
-              
 
+                    <input type="hidden" id="sid" value="@ViewBag.Id" />
             </div>
         </div>
         <div id="states">
@@ -422,6 +423,23 @@
                     window.location.reload();
                 }
 
+            });
+        }
+
+        function chat(temp) {
+            $.ajax({
+                url: '/AdminSite/Chat',
+                type: 'GET',
+                data: {
+                    SenderId: $('#sid').val(),
+                    RecieverId: 3,
+                    RequestId: temp
+                },
+                success: function (res) {
+                    console.log(res);
+                    $('#chat-1').html(res);
+                    $('#chat').offcanvas('show');
+                }
             });
         }
         </script>

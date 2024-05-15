@@ -186,6 +186,10 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Chat_RecieverId_fkey");
 
+            entity.HasOne(d => d.Request).WithMany(p => p.Chats)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Chat_RequestId_fkey");
+
             entity.HasOne(d => d.Sender).WithMany(p => p.ChatSenders)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Chat_SenderId_fkey");

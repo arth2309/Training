@@ -57,6 +57,7 @@ namespace HalloDoc.Controllers
         [CustomAuthorize("Provider")]
         public IActionResult ProviderDashBoard()
         {
+            ViewBag.Id = Request.Cookies["sid"];
             string MenuList = Request.Cookies["list"];
             if (!MenuList.Contains("25"))
             {

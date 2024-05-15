@@ -14,17 +14,19 @@ namespace HalloDoc.Hubs
         {
             _chatService = chatService;
         }
-        public async Task SendMessage(int SenderId,int ReceiverId,string message)
+        public async Task SendMessage(int SenderId,int ReceiverId,int RequestId,string message)
         {
+           await  Clients.All.SendAsync("ReceiveMessage",ReceiverId,message);
             ChatVM chatVM = new();
             
                 chatVM.SenderId = SenderId;
                 chatVM.RecieverId = ReceiverId;
                 chatVM.CreatedDate = DateTime.Now;
                 chatVM.Chat = message;
-            bool result = await _chatService.AddChat(chatVM);
+                chatVM.RequestId = RequestId;
+            bool result =  await _chatService.AddChat(chatVM);
             
-           await  Clients.All.SendAsync("ReceiveMessage",message);
+          
         }
     }
 }

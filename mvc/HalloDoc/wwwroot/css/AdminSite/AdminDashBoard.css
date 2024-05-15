@@ -105,6 +105,33 @@ header
     border-right: 12px solid transparent;
 }
 
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 1.5px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #cff4fc;
+}
+
+    .triangle-left {
+    width: 0;
+    height: 0;
+    border-top: 23px solid transparent;
+    border-bottom: 23px solid transparent;
+    border-right: 23px solid red;
+}
+
+.inner-triangle {
+    position: relative;
+    top: -20px;
+    left: 2px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid blue;
+}
+
 .vwbtn {
     z-index: 2;
     margin-top: -30px;

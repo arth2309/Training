@@ -11,6 +11,6 @@ namespace HalloDoc.Repositories.Interfaces
     {
         Task<bool> AddData(Chat chat);
 
-        List<Chat> GetChats(int SenderId, int RecieverId);
+        List<Chat> GetChats(int SenderId, int RecieverId, int RequestId);
     }
 }
