@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wndD+R3whmS1gIRTTwTQuXjif7ktvZW39jmg6PptA4s=",
+  "Hash": "/X/IYmAut+pwAe8mE2Ug7dxLqEAHjjYC6+TOfD+naV0=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1273,6 +1273,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Files\\Updated-Training-Plan-20March24.pdf"
+    },
+    {
+      "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\Files\\User.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Files/User.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Files\\User.png"
     },
     {
       "Identity": "D:\\Projects\\assig\\mvc\\HalloDoc\\wwwroot\\images\\11116016_415.jpg",

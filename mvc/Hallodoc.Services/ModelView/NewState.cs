@@ -74,6 +74,10 @@ namespace HallodocServices.ModelView
 
         public int? RecieverId { get; set; }
 
+        public int? UserId { get; set; }
+
+        public string? providerPhoto { get; set; }
+
        
     }
 }

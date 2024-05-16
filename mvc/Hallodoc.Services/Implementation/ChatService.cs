@@ -47,5 +47,13 @@ namespace HallodocServices.Implementation
             bool result = await _chatRepo.AddData(chat);
             return result;
         }
+
+        public string MakeGroup(int SenderId,int RecieverId,int RequestId)
+        {
+            int[] groups = { SenderId, RecieverId, RequestId };
+            Array.Sort(groups);
+            string groupname = "Group_" + groups[0] +"_" + groups[1] + "_" + groups[2];
+            return groupname;
+        }
     }
 }

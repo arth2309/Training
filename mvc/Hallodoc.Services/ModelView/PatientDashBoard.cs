@@ -25,5 +25,11 @@ namespace HallodocServices.ModelView
         public DateTime CreatedDate { get; set; }
 
         public int count { get; set; }
+
+        public int? PhysicianAspUserId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string? photo { get; set; }
     }
 }

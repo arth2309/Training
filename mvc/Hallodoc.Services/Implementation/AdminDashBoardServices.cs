@@ -179,6 +179,8 @@ namespace HallodocServices.Implementation
                     newState.year = requestClients[i].IntYear;
                     newState.day = requestClients[i].IntDate;
                     newState.RecieverId = requestClients[i].Request.PhysicianId != null ? requestClients[i].Request.Physician.AspNetUserId : 0;
+                    newState.providerPhoto = requestClients[i].Request.Physician!= null ? requestClients[i].Request.Physician.Photo : "good";
+                    newState.UserId = requestClients[i].Request.User!=null?requestClients[i].Request.User.AspNetUserId:0;
 
                 };
                 newStates.Add(newState);

@@ -536,6 +536,7 @@
 
     </div>
    <script>
+      
         function ExportData() {
             var status = window.sessionStorage.getItem("status");
             var typeId = window.sessionStorage.getItem("typeid");
@@ -600,13 +601,35 @@
                 data:{
                     SenderId: $('#sid').val(),
                     RecieverId: $('#admin-chat-' + temp).val(),
+                    Photo: $('#provider-photo-' + temp).val(),
                     RequestId: temp
                 },
                 success: function(res)
                 {
-                    console.log(res);
+                   
                     $('#chat-1').html(res);
                     $('#chat').offcanvas('show');
+                }
+            });
+        }
+
+        function chatPatient(temp)
+        {
+            $.ajax({
+                url: '/AdminSite/Chat',
+                type: 'GET',
+                data: {
+                    SenderId: $('#sid').val(),
+                    RecieverId: $('#patient-chat-' + temp).val(),
+                    Photo: "User.png",
+                    RequestId: temp
+                },
+                success: function (res) {
+                   
+                    $('#chat-1').html(res);
+                    $('#chat').offcanvas('show');
+                    var offcanvascontent = document.getElementById("chat-messages");
+                    offcanvascontent.scrollTop = offcanvascontent.scrollHeight;
                 }
             });
         }

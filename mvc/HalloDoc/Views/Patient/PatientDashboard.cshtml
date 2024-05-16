@@ -8,7 +8,7 @@
     <meta name="viewport" content="width==device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link href="~/css/patient/patientdashboard.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
@@ -35,8 +35,8 @@
                 </div>
                 <div class="modal-body">
                     <div style="display: flex; justify-content: center;">
-                        <a style="text-decoration:none" asp-controller="Patient" asp-action="SubmitMe"> <button  type="button" class="btn btn-info text-white mx-1">me</button> </a>
-                     <a style="text-decoration:none" asp-controller="Patient" asp-action="SubmitSomeOne">    <button type="button" class="btn btn-outline-info mx-1">Someone else</button> </a>
+                        <a style="text-decoration:none" asp-controller="Patient" asp-action="SubmitMe"> <button type="button" class="btn btn-info text-white mx-1">me</button> </a>
+                        <a style="text-decoration:none" asp-controller="Patient" asp-action="SubmitSomeOne">    <button type="button" class="btn btn-outline-info mx-1">Someone else</button> </a>
                     </div>
                     <br>
                     <div class="d-flex">
@@ -81,6 +81,8 @@
         </ul>
     </div>
 
+   <div id="chat-1">
+</div>
     <div class="h5" style="margin-top: 50px;margin-left: 1%;">Medical History</div>
     <div class="mainct shadow">
         <div style="display: flex;background-color: white;">
@@ -90,35 +92,42 @@
             <div class="request ">
                 <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#myModal">Create New Request</button>
             </div>
-            </div>
-        
-        <table class="table" >
+        </div>
+
+        <table class="table">
             <thead class="table-light">
                 <tr>
                     <th>
-                       Created Date
+                        Created Date
                     </th>
-                    
+
                     <th>
-                       status
+                        status
+                    </th>
+
+                    <th>
+                        Chat With
                     </th>
 
                     <th>
                         document
                     </th>
-                    
+
 
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
+                    <input type="hidden" id="patient-chat-@item.RequestId" value="@item.UserId" />
+                    <input type="hidden" id="provider-chat-@item.RequestId" value="@item.PhysicianAspUserId" />
+                    <input type="hidden" id="photo-@item.RequestId" value="@item.photo" />
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.CreatedDate)
                         </td>
                         <td>
-                            @if (item.Status==1)
+                            @if (item.Status == 1)
                             {
                                 @Html.Raw("Unassigned")
                             }
@@ -179,18 +188,31 @@
                                 @Html.Raw("CCApprovedByAdmin")
                             }
                         </td>
+
                         <td>
-                            @if(@item.count == 0)
-                            {
-                                
-                            }
-                            else
-                            {
-                    
-                                <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientDashboardDoc" asp-route-id="@item.RequestId"> <button type="button" class="btn btn-outline-info">@item.count Document</button></a>
-                            }
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-outline-info mx-1" data-bs-toggle="offcanvas" data-bs-target="#chat" aria-controls="offcanvasExample" onclick="chatAdmin(@item.RequestId)"><i class="bi bi-person"></i>Admin</button>
+                                @if (item.PhysicianAspUserId != 0)
+                                {
+                                    <button type="button" class="btn btn-outline-info mx-1" data-bs-toggle="offcanvas" data-bs-target="#chat" aria-controls="offcanvasExample" onclick="chatProvider(@item.RequestId)"><i class="bi bi-person"></i>Provider</button>
+
+                                }
+                            </div>
+
                         </td>
                         
+                        <td>
+                                @if (@item.count == 0)
+                                {
+
+                                }
+                                else
+                                {
+
+                                <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientDashboardDoc" asp-route-id="@item.RequestId"> <button type="button" class="btn btn-outline-info">@item.count Document</button></a>
+                                }
+                        </td>
+
                     </tr>
                 }
             </tbody>
@@ -270,7 +292,7 @@
                                 @Html.Raw("CCApprovedByAdmin")
                             }
                             <div>
-                               
+
                                 @if (@item.count == 0)
                                 {
 
@@ -280,18 +302,54 @@
 
                                     <a style="text-decoration:none" asp-controller="Patient" asp-action="PatientDashboardDoc" asp-route-id="@item.RequestId"> <button type="button" class="btn btn-outline-info">@item.count Document</button></a>
                                 }
-                                </div>
-                           
-                           </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-               
+
             }
-            
-     
+
+
         </div>
     </div>
+    <script>
+        function chatProvider(temp) {
+            $.ajax({
+                url: '/AdminSite/Chat',
+                type: 'GET',
+                data: {
+                    SenderId: $('#patient-chat-' + temp).val(),
+                    RecieverId: $('#provider-chat-' + temp).val(),
+                    Photo: $('#photo-' + temp).val(),
+                    RequestId: temp
+                },
+                success: function (res) {
+                    console.log(res);
+                    $('#chat-1').html(res);
+                    $('#chat').offcanvas('show');
+                }
+            });
+        }
 
+        function chatAdmin(temp) {
+            $.ajax({
+                url: '/AdminSite/Chat',
+                type: 'GET',
+                data: {
+                    SenderId: $('#patient-chat-'+ temp).val(),
+                    RecieverId: 3,
+                    Photo: "User.png",
+                    RequestId: temp
+                },
+                success: function (res) {
+                    console.log(res);
+                    $('#chat-1').html(res);
+                    $('#chat').offcanvas('show');
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>

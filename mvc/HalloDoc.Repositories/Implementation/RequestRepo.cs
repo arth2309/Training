@@ -26,7 +26,7 @@ namespace HalloDoc.Repositories.Implementation
         
         public List<Request> GetAllRequests(int uid)
         {
-            List<Request> requests = _dbcontext.Requests.Include(a=>a.Physician).Include(a=>a.RequestWiseFiles).Where(a=>a.UserId == uid).ToList();
+            List<Request> requests = _dbcontext.Requests.Include(a=>a.Physician).Include(a=>a.RequestWiseFiles).Include(a=>a.User).Where(a=>a.UserId == uid).ToList();
             return requests;
         }
         public Request GetRequest(int id)

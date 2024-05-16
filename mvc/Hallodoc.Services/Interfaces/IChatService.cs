@@ -11,5 +11,6 @@ namespace HallodocServices.Interfaces
     {
         List<ChatVM> GetChatlist(int SenderId, int RecieverId,int RequestId);
         Task<bool> AddChat(ChatVM chatVM);
+        string MakeGroup(int SenderId, int RecieverId, int RequestId);
     }
 }

@@ -44,6 +44,9 @@ namespace HallodocServices.Implementation
                     Status = userrequest[i].Status,
                     CreatedDate = userrequest[i].CreatedDate,
                     count = requestWiseFiles.Count,
+                    PhysicianAspUserId = userrequest[i].Physician != null ? userrequest[i].Physician.AspNetUserId : 0,
+                    photo = userrequest[i].Physician != null ? userrequest[i].Physician.Photo : "User.png",
+                    UserId = userrequest[i].User != null ? userrequest[i].User.AspNetUserId : 0
                 };
                 dashboard.Add(dashboard1);
             }

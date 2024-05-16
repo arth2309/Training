@@ -1234,11 +1234,13 @@ namespace HalloDoc.Controllers
         }
 
         [HttpGet]
-        public IActionResult Chat(int SenderId,int RecieverId, int RequestId)
+        public IActionResult Chat(int SenderId,int RecieverId,string Photo, int RequestId)
         {
             List<ChatVM> chatVMs = _chatService.GetChatlist(SenderId, RecieverId, RequestId); 
+            ViewBag.SenderId = SenderId;
             ViewBag.RecieverId = RecieverId;
             ViewBag.RequestId = RequestId;
+            ViewBag.Photo = Photo;
             return PartialView("_Chat",chatVMs);
         }
 

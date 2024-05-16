@@ -23,6 +23,9 @@
 
             @foreach (var item in Model)
             {
+                <input type="hidden" id="admin-chat-@item.RequestId" value="@item.RecieverId">
+                <input type="hidden" id="patient-chat-@item.RequestId" value="@item.UserId">
+                <input type="hidden" id="provider-photo-@item.RequestId" value="@item.providerPhoto" />
                 string backcolor;
                 @if (@item.RequestTypeId == 1)
                 {
@@ -51,7 +54,16 @@
                     <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
                     <td><button type="button" class="btn btn-outline-light"><i class="bi bi-telephone"></i>@Html.DisplayFor(modelItem => item.Mobile)</button></td>
                     <td>@Html.DisplayFor(modelItem => item.Street),@Html.DisplayFor(modelItem => item.City),@Html.DisplayFor(modelItem => item.State)</td>
-                    <td><button type="button" class="btn btn-outline-light"><i class="bi bi-person"></i>Provider</button></td>
+                    <td>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-outline-light mx-1" data-bs-toggle="offcanvas" data-bs-target="#chat" aria-controls="offcanvasExample" onclick="chatPatient(@item.RequestId)"><i class="bi bi-person"></i>Patient</button>
+                            @if (item.RecieverId != 0)
+                            {
+                                <button type="button" class="btn btn-outline-light mx-1" data-bs-toggle="offcanvas" data-bs-target="#chat" aria-controls="offcanvasExample" onclick="chat(@item.RequestId)"><i class="bi bi-person"></i>Provider</button>
+                            }
+
+                        </div>
+                    </td>
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-outline-light" data-bs-toggle="dropdown" aria-expanded="false">

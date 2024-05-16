@@ -15,11 +15,15 @@
 
 <div class="offcanvas offcanvas-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="chat" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header bg-info text-white">
+            <div>
+            <img src="~/files/@ViewBag.Photo" style="height: 50px;width: 61px;" >
+           </div>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onclick="stopConnection()"></button>
         </div>
-        <div class="offcanvas-body">
+    <div class="offcanvas-body" id="chat-messages">
+       
             <div id="messagesList" class="mb-5">
-
+            
                 @if (Model != null)
                 {
 
@@ -63,7 +67,7 @@
 
                                 else
                                 {
-                                    <div class="d-flex justify-content-center">
+                                    <div class="d-flex justify-content-center ">
                                         <div class="bg-secondary-subtle rounded-2 p-2">
                                             @item.CreatedDate.Day @item.CreatedDate.ToString("MMM") @item.CreatedDate.Year
                                         </div>
@@ -100,17 +104,21 @@
                         </div>
                     }
                 }
-               
 
+          
             </div>
-            <div class="sticky-bottom row w-100 bg-white" style="bottom:0px ;position:absolute; padding:3%">
-                <div class="col-10">
+            <div class="sticky-bottom row w-100 " style="bottom:0px ;position:absolute; padding:3%">
+                <div class="col-12 d-flex justify-content-end rounded-circle">
+                <button class="btn btn-info text-white d-none" onclick="scrollDown()" id="myBtn"><i class="bi bi-chevron-double-down"></i></button>
+                </div>
+                <div class="col-10 bg-white">
                     <input id="messageInput" class="form-control" oninput="sendChat()"/>
                     <input id="rceid" type="hidden" value="@ViewBag.RecieverId" />
                     <input id="reqid" type="hidden" value="@ViewBag.RequestId" />
+                    <input id="snid" type="hidden" value="@ViewBag.SenderId" /> 
                
                 </div>
-                <div class="col-2 d-flex justify-content-end d-none" id="sendchat">
+                <div class="col-2 d-flex justify-content-end d-none bg-white" id="sendchat">
                     <button id="sendButton" class="btn btn-info text-white"><i class="bi bi-send"></i></button>
                 </div>
             </div>
@@ -119,13 +127,21 @@
 
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script>
+    var content = document.getElementById("chat-messages");
+
+   content.onscroll = function () 
+   {
+        showButton();
+        };
+    
+       
         "use strict";
 
         var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 
         
 
-        //Disable the send button until connection is established.
+      
         document.getElementById("sendButton").disabled = true;
 
         connection.on("ReceiveMessage", function (ReceiverId, message) {
@@ -160,22 +176,41 @@
         document.getElementById("messageInput").value = '';
           
         });
-
+       
+        
+  
         connection.start().then(function () {
             document.getElementById("sendButton").disabled = false;
+
+        var offcanvascontent = document.getElementById("chat-messages");
+        if (offcanvascontent.scrollHeight > offcanvascontent.offsetHeight) {
+            $('#chat-messages').addClass('d-flex flex-column-reverse');
+        }
+        else {
+            $('#chat-messages').removeClass('d-flex flex-column-reverse');
+        }
+        console.log("hii");
+
+        connection.invoke("JoinRoom", parseInt($('#snid').val()), parseInt($('#rceid').val()), parseInt($('#reqid').val())).catch(function (err) {
+            return console.error(err.toString());
+        });
         }).catch(function (err) {
             return console.error(err.toString());
         });
         document.getElementById("sendButton").addEventListener("click", function (event) {
             var message = document.getElementById("messageInput").value;
-            connection.invoke("SendMessage", parseInt($('#sid').val()), parseInt($('#rceid').val()), parseInt($('#reqid').val()), message).catch(function (err) {
+       
+            connection.invoke("SendMessage", parseInt($('#snid').val()), parseInt($('#rceid').val()), parseInt($('#reqid').val()), message).catch(function (err) {
                 return console.error(err.toString());
             });
             event.preventDefault();
         });
 
-        function stopConnection()
+       async function stopConnection()
         {
+           await  connection.invoke("LeaveRoom", parseInt($('#snid').val()), parseInt($('#rceid').val()), parseInt($('#reqid').val())).catch(function (err) {
+            return console.error(err.toString());
+        });
             connection.stop();
         }
 
@@ -194,5 +229,64 @@
             document.getElementById("sendchat").classList.add("d-none");
         }
     }
+
+    function scrollbody()
+    {
+    var offcanvascontent = document.getElementById("chat-messages");
+    if (offcanvascontent.scrollHeight > offcanvascontent.offsetHeight) {
+        $('#chat-messages').addClass('d-flex', 'flex-column-reverse');
+    }
+    else {
+        $('#chat-messages').removeClass('d-flex', 'flex-column-reverse');
+    }
+    console.log("hii");
+    }
+
+    function showButton()
+    {
+        var offcanvascontent = document.getElementById("chat-messages");
+        if(offcanvascontent.scrollTop<-40)
+        {
+            $('#myBtn').removeClass('d-none');
+        }
+        else
+        {
+            $('#myBtn').addClass('d-none');
+        }
+    
+    }
+
     </script>
+
+<script>
+    // Get the button
+  
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("mybutton").style.display = "block";
+        } else {
+            document.getElementById("mybutton").style.display = "none";
+        }
+    }
+
+   
+   
+
+    function scrollDown() {
+       
+        var offcanvascontent = document.getElementById("chat-messages");
+        offcanvascontent.scrollTop = offcanvascontent.scrollHeight;
+        console.log(offcanvascontent.scrollHeight);
+        console.log(offcanvascontent.offsetHeight);
+    }
+
+    
+
+    
+</script>
+
 
