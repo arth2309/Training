@@ -34,7 +34,20 @@ namespace HalloDoc.Hubs
           
         }
 
-        public async Task JoinRoom(int SenderId, int ReceiverId, int RequestId)
+        public async Task SendFile(int SenderId, int ReceiverId, int RequestId, byte[] fileContent)
+        {
+            // Save file to a directory
+            string groupname = _chatService.MakeGroup(SenderId, ReceiverId, RequestId);
+            var path = Path.Combine("wwwroot/uploads",groupname );
+            await File.WriteAllBytesAsync(path, fileContent);
+
+            // Notify clients
+            var fileUrl = $"/uploads/{groupname}";
+            await Clients.All.SendAsync("ReceiveFile", groupname, fileUrl);
+        }
+    
+
+    public async Task JoinRoom(int SenderId, int ReceiverId, int RequestId)
         {
             string groupname = _chatService.MakeGroup(SenderId,ReceiverId,RequestId);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupname);

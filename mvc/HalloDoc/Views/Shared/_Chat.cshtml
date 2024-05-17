@@ -11,14 +11,28 @@
         .receiverChat {
             max-width: fit-content;
         }
+
+
+    .offcanvas-draggable {
+        cursor: move;
+    }
+
+    .draggable-active {
+        position: fixed;
+    }
+    
+
     </style>
 
-<div class="offcanvas offcanvas-end" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="chat" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header bg-info text-white">
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="chat" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header bg-info text-white d-flex justify-content-between">
             <div>
             <img src="~/files/@ViewBag.Photo" style="height: 50px;width: 61px;" >
            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onclick="stopConnection()"></button>
+        <div class="d-flex">
+            <div id="toggleDraggable"> <i class="bi bi-arrows-fullscreen"></i></div>
+            <button type="button" class="btn-close mx-1" data-bs-dismiss="offcanvas" aria-label="Close" onclick="stopConnection()"></button>
+        </div>
         </div>
     <div class="offcanvas-body" id="chat-messages">
        
@@ -108,24 +122,29 @@
           
             </div>
             <div class="sticky-bottom row w-100 " style="bottom:0px ;position:absolute; padding:3%">
-                <div class="col-12 d-flex justify-content-end rounded-circle">
-                <button class="btn btn-info text-white d-none" onclick="scrollDown()" id="myBtn"><i class="bi bi-chevron-double-down"></i></button>
+                <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-info text-white d-none rounded-circle" onclick="scrollDown()" id="myBtn"><i class="bi bi-chevron-double-down"></i></button>
                 </div>
                 <div class="col-10 bg-white">
-                    <input id="messageInput" class="form-control" oninput="sendChat()"/>
+                    <input id="messageInput" class="form-control" oninput="sendChat()" placeholder="Type a Message"/>
                     <input id="rceid" type="hidden" value="@ViewBag.RecieverId" />
                     <input id="reqid" type="hidden" value="@ViewBag.RequestId" />
                     <input id="snid" type="hidden" value="@ViewBag.SenderId" /> 
                
                 </div>
-                <div class="col-2 d-flex justify-content-end d-none bg-white" id="sendchat">
+                <div class="col-2 d-flex justify-content-center d-none bg-white" id="sendchat">
                     <button id="sendButton" class="btn btn-info text-white"><i class="bi bi-send"></i></button>
                 </div>
+            <div  class="col-2 d-flex justify-content-center  bg-white" id="sendfile">
+                <button id="sendButton" class="btn btn-info text-white"><i class="bi bi-paperclip"></i></button>
+                <input type="file" id="fileInput" class="d-none" />
+            </div>
             </div>
         </div>
     </div>
 
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>*@
     <script>
     var content = document.getElementById("chat-messages");
 
@@ -174,6 +193,7 @@
             }
 
         document.getElementById("messageInput").value = '';
+        sendChat();
           
         });
        
@@ -206,6 +226,8 @@
             event.preventDefault();
         });
 
+
+
        async function stopConnection()
         {
            await  connection.invoke("LeaveRoom", parseInt($('#snid').val()), parseInt($('#rceid').val()), parseInt($('#reqid').val())).catch(function (err) {
@@ -219,14 +241,16 @@
         var message = document.getElementById("messageInput").value;
 
         
-        if(message != '')
+        if(message.trim() != '')
         {
 
             document.getElementById("sendchat").classList.remove("d-none");
+            document.getElementById("sendfile").classList.add("d-none");
         }
         else
         {
             document.getElementById("sendchat").classList.add("d-none");
+            document.getElementById("sendfile").classList.remove("d-none");
         }
     }
 
@@ -239,7 +263,7 @@
     else {
         $('#chat-messages').removeClass('d-flex', 'flex-column-reverse');
     }
-    console.log("hii");
+   
     }
 
     function showButton()
@@ -259,34 +283,140 @@
     </script>
 
 <script>
-    // Get the button
-  
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("mybutton").style.display = "block";
-        } else {
-            document.getElementById("mybutton").style.display = "none";
-        }
-    }
-
-   
-   
-
-    function scrollDown() {
+ 
+    function scrollDown() 
+    {
        
         var offcanvascontent = document.getElementById("chat-messages");
         offcanvascontent.scrollTop = offcanvascontent.scrollHeight;
-        console.log(offcanvascontent.scrollHeight);
-        console.log(offcanvascontent.offsetHeight);
+
+      
+        
     }
 
-    
-
-    
+    document.getElementById('sendfile').addEventListener('click', function () {
+        document.getElementById('fileInput').click();
+        console.log("hii")
+    });
 </script>
+
+@*<script>
+    $(document).ready(function () {
+        const offcanvasElement = document.getElementById('chat');
+        const toggleDraggableBtn = document.getElementById('toggleDraggable');
+        let isDragging = false, offsetX, offsetY, originalPosition = {};
+
+        toggleDraggableBtn.addEventListener('click', function () {
+            if (offcanvasElement.classList.contains('draggable-active')) {
+                offcanvasElement.classList.remove('draggable-active');
+                offcanvasElement.style.left = originalPosition.left;
+                offcanvasElement.style.top = originalPosition.top;
+                
+            } else {
+                originalPosition = {
+                    left: offcanvasElement.style.left,
+                    top: offcanvasElement.style.top
+                };
+                offcanvasElement.classList.add('draggable-active');
+                
+            }
+        });
+
+        offcanvasElement.addEventListener('mousedown', (e) => {
+            if (offcanvasElement.classList.contains('draggable-active')) {
+                isDragging = true;
+                offsetX = e.clientX - offcanvasElement.getBoundingClientRect().left;
+                offsetY = e.clientY - offcanvasElement.getBoundingClientRect().top;
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                offcanvasElement.style.left = `${e.clientX - offsetX}px`;
+                offcanvasElement.style.top = `${e.clientY - offsetY}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    });
+</script>
+*@
+
+<script>
+    $(document).ready(function () {
+        const offcanvasElement = document.getElementById('chat');
+        const toggleDraggableBtn = document.getElementById('toggleDraggable');
+        let isDragging = false, offsetX, offsetY, originalPosition = {};
+
+        toggleDraggableBtn.addEventListener('click', function () {
+            if (offcanvasElement.classList.contains('draggable-active')) {
+                offcanvasElement.classList.remove('draggable-active');
+                offcanvasElement.style.left = originalPosition.left;
+                offcanvasElement.style.top = originalPosition.top;
+                $('#chat').removeClass('h-50');
+               
+            } else {
+                originalPosition = {
+                    left: offcanvasElement.style.left,
+                    top: offcanvasElement.style.top
+                };
+                offcanvasElement.classList.add('draggable-active');
+                $('#chat').addClass('h-50');
+               
+
+            }
+        });
+
+        offcanvasElement.addEventListener('mousedown', (e) => {
+            if (offcanvasElement.classList.contains('draggable-active')) {
+                isDragging = true;
+                offsetX = e.clientX - offcanvasElement.getBoundingClientRect().left;
+                offsetY = e.clientY - offcanvasElement.getBoundingClientRect().top;
+            }
+        });
+
+        //document.addEventListener('mousemove', (e) => {
+        //    if (isDragging) {
+        //        const clientX = e.clientX - offsetX;
+        //        const clientY = e.clientY - offsetY;
+        //        offcanvasElement.style.left = `${Math.max(clientX, 0)}px`; // Prevent dragging beyond the left edge
+        //        offcanvasElement.style.top = `${Math.max(clientY, 0)}px`; // Prevent dragging beyond the top edge
+        //    }
+        //});
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const clientX = e.clientX - offsetX;
+                const clientY = e.clientY - offsetY;
+                const maxLeft = window.innerWidth - offcanvasElement.offsetWidth;
+                const maxTop = window.innerHeight - offcanvasElement.offsetHeight;
+
+                // Calculate the new position while keeping the element within the viewport
+                const newLeft = Math.min(Math.max(clientX, 0), maxLeft);
+                const newTop = Math.min(Math.max(clientY, 0), maxTop);
+
+                offcanvasElement.style.left = `${newLeft}px`;
+                offcanvasElement.style.top = `${newTop}px`;
+            }
+        });
+
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        var isClickInsideOffcanvas =  document.getElementById("chat").contains(event.target);
+
+        if (!isClickInsideOffcanvas) {
+         console.log("hii");
+        }
+    });
+</script>
+
+
 
 
