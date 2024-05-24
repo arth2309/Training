@@ -120,6 +120,7 @@ app.UseSession();
 
 app.UseAuthorization();
 app.MapHub<Chathub>("/chathub");
+app.MapHub<NotificationHub>("/notificationhub");
 
 
 app.MapControllerRoute(
